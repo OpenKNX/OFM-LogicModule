@@ -3,7 +3,6 @@
 #include "LogicChannel.h"
 #include "Timer.h"
 #include "TimerRestore.h"
-// #include "IFlashUserData.h"
 
 #define USERDATA_MAGIC_OFFSET 0 // start of magic word in flash
 #define USERDATA_DPT_OFFSET 4   // start of DPT storage in flash
@@ -51,17 +50,13 @@ class Logic : public OpenKNX::Module
     ~Logic();
 
     // static
-    //static void onInputKoHandler(GroupObject &iKo);
     static char *initDiagnose(GroupObject &iKo);
     static char *getDiagnoseBuffer();
-    // static void addLoopCallback(loopCallback iLoopCallback, void *iThis);
 
     // instance
     void addKoLookup(uint16_t iKoNumber, uint8_t iChannelId, uint8_t iIOIndex);
     bool getKoLookup(uint16_t iKoNumber, sKoLookup **iKoLookup = nullptr);
 
-    //const uint8_t *getFlash();
-    // void writeAllInputsToEEPROMFacade();
     void processAllInternalInputs(LogicChannel *iChannel, bool iValue);
     void processAfterStartupDelay();
     void processReadRequests();
@@ -81,8 +76,6 @@ class Logic : public OpenKNX::Module
     static Timer &sTimer;
     static TimerRestore &sTimerRestore;
     static char sDiagnoseBuffer[16];
-    // static sLoopCallbackParams sLoopCallbacks[5];
-    // static uint8_t sNumLoopCallbacks;
 
     LogicChannel *mChannel[LOG_ChannelsFirmware];
     uint8_t mNumChannels; // Number of channels defined in knxprod
@@ -92,8 +85,6 @@ class Logic : public OpenKNX::Module
     sKoLookup mKoLookup[cCountKoLookups]; // max 3*4*100 = 1200 Byte, too much?
     uint16_t mNumKoLookups = 0;
 
-    //const uint8_t *mFlashBuffer = nullptr; // Pointer to stored flash content
-
     LogicChannel *getChannel(uint8_t iChannelId);
     uint8_t getChannelId(LogicChannel *iChannel);
     void prepareChannels();
@@ -102,6 +93,4 @@ class Logic : public OpenKNX::Module
 
     void sendHoliday();
     void processTimerRestore();
-
-    // void loopSubmodules();
 };

@@ -22,7 +22,7 @@ LogicChannel::LogicChannel(uint8_t iChannelNumber)
 {
     _channelIndex = iChannelNumber;
     mChannelId = iChannelNumber;
-    // initialize most important runtime field
+    // initialize most important runtime fields
     pCurrentPipeline = 0;
     pValidActiveIO = 0;
     pTriggerIO = 0;
@@ -114,28 +114,28 @@ int32_t LogicChannel::getSIntParam(uint16_t iParamIndex)
     return knx.paramInt(calcParamIndex(iParamIndex));
 }
 
-float LogicChannel::getFloat(uint8_t *data)
-{
+// float LogicChannel::getFloat(uint8_t *data)
+// {
 
-    union Float
-    {
-        float lFloat;
-        uint8_t lBytes[sizeof(float)];
-    };
+//     union Float
+//     {
+//         float lFloat;
+//         uint8_t lBytes[sizeof(float)];
+//     };
 
-    Float myFloat;
+//     Float myFloat;
 
-    myFloat.lBytes[0] = data[3];
-    myFloat.lBytes[1] = data[2];
-    myFloat.lBytes[2] = data[1];
-    myFloat.lBytes[3] = data[0];
-    return myFloat.lFloat;
-}
+//     myFloat.lBytes[0] = data[3];
+//     myFloat.lBytes[1] = data[2];
+//     myFloat.lBytes[2] = data[1];
+//     myFloat.lBytes[3] = data[0];
+//     return myFloat.lFloat;
+// }
 
 float LogicChannel::getFloatParam(uint16_t iParamIndex)
 {
     uint16_t lIndex = calcParamIndex(iParamIndex);
-    float lFloat = getFloat(knx.paramData(lIndex));
+    float lFloat = knx.paramFloat(lIndex, Float_Enc_IEEE754Single);
     return lFloat;
 }
 
