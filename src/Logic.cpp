@@ -10,42 +10,6 @@ Timer &Logic::sTimer = Timer::instance();                      // singleton
 TimerRestore &Logic::sTimerRestore = TimerRestore::instance(); // singleton
 
 char Logic::sDiagnoseBuffer[16] = {0};
-// sLoopCallbackParams Logic::sLoopCallbacks[5] = {nullptr};
-// uint8_t Logic::sNumLoopCallbacks = 0;
-
-// callbacks have to be static members
-// void Logic::onInputKoHandler(GroupObject &iKo) {
-//     LogicChannel::sLogic->processInputKo(iKo);
-// }
-
-// void Logic::addLoopCallback(loopCallback iLoopCallback, void *iThis) {
-//     sLoopCallbackParams lParams;
-//     lParams.callback = iLoopCallback;
-//     lParams.instance = iThis;
-//     Logic::sLoopCallbacks[sNumLoopCallbacks++] = lParams;
-// }
-
-// implement IFlashUserData
-// const uint8_t *Logic::restore(const uint8_t *iBuffer)
-// {
-//     return LogicChannel::sLogic->loadFromFlash(iBuffer);
-// }
-
-// uint8_t *Logic::save(uint8_t *iBuffer)
-// {
-//     return LogicChannel::sLogic->saveToFlash(iBuffer);
-// }
-
-// uint16_t Logic::saveSize()
-// {
-//     return 1004; // just the size for logic
-// }
-
-// bool Logic::powerOn()
-// {
-//     return true;
-// }
-// end of IFlashUserData
 
 uint16_t Logic::flashSize()
 {
@@ -118,6 +82,8 @@ bool Logic::getKoLookup(uint16_t iKoNumber, sKoLookup **iKoLookup)
     return false;
 }
 
+
+// REVIEW
 // bool Logic::prepareChannels()
 void Logic::prepareChannels()
 {
@@ -136,14 +102,16 @@ void Logic::prepareChannels()
 void Logic::processAllInternalInputs(LogicChannel *iChannel, bool iValue)
 {
     // search for any internal input associated to this channel
+    uint8_t lChannelId = getChannelId(iChannel);
     for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
     {
         LogicChannel *lChannel = mChannel[lIndex];
-        uint8_t lChannelId = getChannelId(iChannel);
         lChannel->processInternalInputs(lChannelId, iValue);
     }
 }
 
+
+// REVIEW
 void Logic::processAfterStartupDelay()
 {
     log("afterStartupDelay");
@@ -266,7 +234,7 @@ void Logic::processInputKo(GroupObject &iKo)
             PCA9632_SetColor(0, 0, 0);
     }
 #endif
-    // TODO: Wäre dieser Check nicht im LogicChannel besser aufgehoben?
+    // REVIEW: Wäre dieser Check nicht im LogicChannel besser aufgehoben?
     else if (iKo.asap() >= LOG_KoOffset + LOG_KoKOfE1 && iKo.asap() < LOG_KoOffset + LOG_KoKOfE1 + mNumChannels * LOG_KoBlockSize)
     {
         uint16_t lKoNumber = iKo.asap() - LOG_KoOffset - LOG_KoKOfE1;
@@ -330,40 +298,6 @@ bool Logic::processDiagnoseCommand()
             lResult = true;
             break;
         }
-            // TODO Watchdog in Common ausgelaggert
-            //         case 'w': {
-            //             // Watchdog information
-            // #ifdef WATCHDOG
-            //             if (((knx.paramByte(LOG_Watchdog) & LOG_WatchdogMask) >> LOG_WatchdogShift) == 0)
-            //             {
-            //                 snprintf(sDiagnoseBuffer, 15, "WD not active");
-            //             }
-            //             else if (gWatchdogResetCause & WDT_RCAUSE_EXT)
-            //             {
-            //                 snprintf(sDiagnoseBuffer, 15, "WD reset button");
-            //             }
-            //             else if (gWatchdogResetCause & WDT_RCAUSE_POR)
-            //             {
-            //                 snprintf(sDiagnoseBuffer, 15, "WD bus reset");
-            //             }
-            //             else if (gWatchdogResetCause & WDT_RCAUSE_SYSTEM)
-            //             {
-            //                 snprintf(sDiagnoseBuffer, 15, "WD ETS program");
-            //             }
-            //             else if (gWatchdogResetCause & WDT_RCAUSE_WDT)
-            //             {
-            //                 snprintf(sDiagnoseBuffer, 15, "WD watchdog");
-            //             }
-            //             else
-            //             {
-            //                 snprintf(sDiagnoseBuffer, 15, "WD unknown");
-            //             }
-            // #else
-            //             snprintf(sDiagnoseBuffer, 15, "WD no compile");
-            // #endif
-            //             lResult = true;
-            //             break;
-            //         }
         default:
             lResult = false;
             break;
@@ -411,19 +345,6 @@ void Logic::debug()
 
 void Logic::setup()
 {
-    // Wire.end();   // seems to end hangs on I2C bus
-    // Wire.begin(); // we use I2C in logic, so we setup the bus. It is not critical to setup it more than once
-    // #ifdef WATCHDOG
-    //     if ((knx.paramByte(LOG_Watchdog) & LOG_WatchdogMask) >> LOG_WatchdogShift) {
-    //         // used for Diagnose command
-    //         gWatchdogResetCause = Watchdog.resetCause();
-    //         // setup watchdog to prevent endless loops
-    //         int lWatchTime = Watchdog.enable(16384, false);
-    //         log("Watchdog started with a watchtime of %i Seconds\n", lWatchTime / 1000);
-    //     }
-    // #endif
-    // TODO Setup wird nur aufgerufen wenn der knx auch configured ist. Daher gehört der Watchdog in die Common Klasse
-
     // check for hidden parameters
     log("Setting: Buzzer available: %d", ParamLOG_BuzzerInstalled);
     log("Setting: RGBLed available: %d", ParamLOG_LedInstalled);
@@ -444,19 +365,7 @@ void Logic::setup()
 #ifdef BUZZER_PIN
     pinMode(BUZZER_PIN, OUTPUT);
 #endif
-    // we set just a callback if it is not set from a potential caller
-    // if (GroupObject::classCallback() == 0) GroupObject::classCallback(Logic::onInputKoHandler);
-    // we store some input values in case of restart or ets programming
-    // if (iSaveSupported) openknx.flashUserData()->first(this);
-
-    // prepareChannels();
-    // TODO: getFloat  nicht zentraler besser aufgehoben
-    float lLat = LogicChannel::getFloat(knx.paramData(LOG_Latitude));
-    float lLon = LogicChannel::getFloat(knx.paramData(LOG_Longitude));
-    // sTimer.setup(8.639751, 49.310209, 1, true, 0xFFFFFFFF);
-    uint8_t lTimezone = ParamLOG_Timezone;
-    bool lUseSummertime = ParamLOG_UseSummertime;
-    sTimer.setup(lLon, lLat, lTimezone, lUseSummertime, knx.paramInt(LOG_Neujahr));
+    sTimer.setup(ParamLOG_Longitude, ParamLOG_Latitude, ParamLOG_Timezone, ParamLOG_UseSummertime, knx.paramInt(LOG_Neujahr)); //do not fetch just ParamLOG_Neujahr here, we need the whole bitfield
     // for TimerRestore we prepare all Timer channels
     for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
     {
@@ -466,25 +375,10 @@ void Logic::setup()
 }
 void Logic::loop()
 {
-    // TODO: loop wird nur ausgeführt wenn knx.configured()
-    // Watchdog in OpenKNX::Common umgezogen
-    // Loop wird nur aufgerufen wenn configured daher muss der WATCHDOG mit ins Common
-    //     if (!knx.configured())
-    //         return;
-    // #ifdef WATCHDOG
-    //     if (delayCheck(gWatchdogDelay, 1000) && ((knx.paramByte(LOG_Watchdog) & LOG_WatchdogMask) >> LOG_WatchdogShift))
-    //     {
-    //         Watchdog.reset();
-    //         gWatchdogDelay = millis();
-    //     }
-    // #endif
     if(!openknx.afterStartupDelay())
         return;
 
     sTimer.loop(); // clock and timer async methods
-    // TODO: loopSubmodules deaktiviert
-    // loopSubmodules();
-
     // we loop on all channels and execute pipeline
     // for (uint8_t lIndex = 0; lIndex < mNumChannels && knx.configured(); lIndex++)
     for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
@@ -493,23 +387,15 @@ void Logic::loop()
         if (sTimer.minuteChanged())
             lChannel->startTimerInput();
         lChannel->loop();
-        // loopSubmodules();
     }
     // if (sTimer.minuteChanged() && knx.configured())
     if (sTimer.minuteChanged())
     {
         sendHoliday();
         sTimer.clearMinuteChanged();
-        // loopSubmodules();
     }
     processTimerRestore();
 }
-
-// TODO obsolete?
-// const uint8_t *Logic::getFlash()
-// {
-//     return mFlashBuffer;
-// }
 
 // start timer implementation
 void Logic::processTimerRestore()
@@ -558,31 +444,15 @@ void Logic::sendHoliday()
     if (sTimer.holidayChanged())
     {
         // write the newly calculated holiday information into KO (can be read externally)
-        knx.getGroupObject(LOG_KoHoliday1).valueNoSend(sTimer.holidayToday(), getDPT(VAL_DPT_5));
-        knx.getGroupObject(LOG_KoHoliday2).valueNoSend(sTimer.holidayTomorrow(), getDPT(VAL_DPT_5));
+        
+        KoLOG_Holiday1.valueNoSend(sTimer.holidayToday(), getDPT(VAL_DPT_5));
+        KoLOG_Holiday2.valueNoSend(sTimer.holidayTomorrow(), getDPT(VAL_DPT_5));
         sTimer.clearHolidayChanged();
-        if (knx.paramByte(LOG_HolidaySend & LOG_HolidaySendMask))
+        if (ParamLOG_HolidaySend)
         {
             // and send it, if requested by application setting
-            knx.getGroupObject(LOG_KoHoliday1).objectWritten();
-            knx.getGroupObject(LOG_KoHoliday2).objectWritten();
+            KoLOG_Holiday1.objectWritten();
+            KoLOG_Holiday2.objectWritten();
         }
     }
 }
-
-// void Logic::loopSubmodules() {
-//     static uint8_t sCount = 0;
-//     uint8_t lCount = sCount / 2;
-//     openknx.loop();
-//     // we call submodules half as often as knx.loop();
-//     if (lCount * 2 == sCount && lCount < sNumLoopCallbacks && knx.configured())
-//     {
-//         sLoopCallbacks[lCount].callback(sLoopCallbacks[lCount].instance);
-//     }
-//     sCount = (lCount < sNumLoopCallbacks) ? sCount + 1 : 0;
-//     // for (uint8_t i = 0; i < sNumLoopCallbacks; i++)
-//     // {
-//     //     sLoopCallbacks[i].callback(sLoopCallbacks[i].instance);
-//     //     knx.loop();
-//     // }
-// }

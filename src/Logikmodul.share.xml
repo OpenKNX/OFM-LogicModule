@@ -522,7 +522,7 @@
                 <TypeNumber SizeInBit="16" Type="signedInt" minInclusive="-32768" maxInclusive="32767" />
               </ParameterType>
               <ParameterType Id="%AID%_PT-ValueDpt9" Name="ValueDpt9">
-                <TypeFloat Encoding="IEEE-754 Single" minInclusive="-671088" maxInclusive="670760" />
+                <TypeFloat  Encoding="IEEE-754 Single" minInclusive="-671088" maxInclusive="670760" />
               </ParameterType>
               <ParameterType Id="%AID%_PT-ValueRGB" Name="ValueRGB">
                 <TypeNumber SizeInBit="32" Type="signedInt" minInclusive="0" maxInclusive="16777216" />

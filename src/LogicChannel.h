@@ -330,7 +330,7 @@ class LogicChannel : public OpenKNX::Channel
     static Logic *sLogic;
     static uint16_t calcKoNumber(uint8_t iIOIndex, uint8_t iChannelId);
     static GroupObject *getKoForChannel(uint8_t iIOIndex, uint8_t iChannelId);
-    static float getFloat(uint8_t *data);
+    // static float getFloat(uint8_t *data);
 
     // instance
     bool checkDpt(uint8_t iIOIndex, uint8_t iDpt);
