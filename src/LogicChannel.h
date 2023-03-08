@@ -210,8 +210,6 @@ class LogicChannel : public OpenKNX::Channel
     int channelDebug(const char *format, ...);
     bool debugFilter();
 #endif
-    bool mFlashLoadedInput1[LOG_ChannelsFirmware];
-    bool mFlashLoadedInput2[LOG_ChannelsFirmware];
     uint32_t calcParamIndex(uint16_t iParamIndex);
     uint16_t calcKoNumber(uint8_t iIOIndex);
     uint8_t getByteParam(uint16_t iParamIndex);
@@ -353,7 +351,6 @@ class LogicChannel : public OpenKNX::Channel
     void saveKoDpt(uint8_t iIOIndex);
     void saveKoValue(uint8_t iIOIndex);
 
-    // bool prepareChannel();
     void prepareChannel();
     void loop();
 };

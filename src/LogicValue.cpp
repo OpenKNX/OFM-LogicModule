@@ -424,7 +424,7 @@ LogicValue& LogicValue::operator+=(const float value)
 
 LogicValue LogicValue::operator+(LogicValue const& value)
 {
-    if (_type == FloatType || value._type == FloatType) 
+    if (_type == FloatType || value._type == FloatType)
     {
         LogicValue lValue = floatValue() + value.floatValue();
         return lValue;
@@ -438,7 +438,7 @@ LogicValue LogicValue::operator+(LogicValue const& value)
 
 LogicValue LogicValue::operator-(LogicValue const& value)
 {
-    if (_type == FloatType || value._type == FloatType) 
+    if (_type == FloatType || value._type == FloatType)
     {
         LogicValue lValue = floatValue() - value.floatValue();
         return lValue;
@@ -452,7 +452,7 @@ LogicValue LogicValue::operator-(LogicValue const& value)
 
 LogicValue LogicValue::operator*(LogicValue const& value)
 {
-    if (_type == FloatType || value._type == FloatType) 
+    if (_type == FloatType || value._type == FloatType)
     {
         LogicValue lValue = floatValue() * value.floatValue();
         return lValue;
@@ -466,7 +466,7 @@ LogicValue LogicValue::operator*(LogicValue const& value)
 
 LogicValue LogicValue::operator/(LogicValue const& value)
 {
-    if (_type == FloatType || value._type == FloatType) 
+    if (_type == FloatType || value._type == FloatType)
     {
         LogicValue lValue = floatValue() / value.floatValue();
         return lValue;
@@ -841,7 +841,7 @@ float LogicValue::floatValue() const
     switch (_type)
     {
         case FloatType:
-            return _value.floatValue;        
+            return _value.floatValue;
          case BoolType:
             return _value.boolValue ? 1 : 0;
         case UCharType:
@@ -889,3 +889,21 @@ const char* LogicValue::stringValue() const
     }
     return 0;
 }
+
+// LogicValue::LogicValue(float value)
+// {
+//     _value.doubleValue = value;
+//     _type = DoubleType;
+// }
+
+// LogicValue& LogicValue::operator=(const float value)
+// {
+//     _value.doubleValue = value;
+//     _type = DoubleType;
+//     return *this;
+// }
+
+// LogicValue::operator float() const
+// {
+//     return doubleValue();
+// }

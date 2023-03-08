@@ -124,24 +124,16 @@ void Logic::processAfterStartupDelay()
 
     // TODO: Check if how to realize handling adequate to Commons v1 implementation
     // TODO FIXME: Repeated Reading
-    // TODO FIXME: Include Implementation for DPT19
-    if (ParamLOG_ReadTimeDate)
-    {
-        eTimeValid lValid = sTimer.isTimerValid();
-        if (lValid != tmMinutesValid)
-            knx.getGroupObject(LOG_KoTime).requestObjectRead();
-        if (lValid != tmDateValid)
-            knx.getGroupObject(LOG_KoDate).requestObjectRead();
-    }
+    // TODO FIXME: Implementation for DPT19
 }
 
 void Logic::processReadRequests()
 {
     // TODO obsolete durch kompakteres firstLoop()
-    /*
-    static bool sLogicProcessReadRequestsCalled = false;
+    // static bool sLogicProcessReadRequestsCalled = false;
     static uint32_t sDelay = 19000;
 
+    /*
     // the following code should be called only once after initial startup delay
     if (!sLogicProcessReadRequestsCalled) {
         if (knx.paramByte(LOG_VacationRead) & LOG_VacationReadMask)
@@ -153,12 +145,15 @@ void Logic::processReadRequests()
         prepareChannels();
         sLogicProcessReadRequestsCalled = true;
     }
+    */
+
     // date and time are red from bus every 30 seconds until a response is received
-    if ((knx.paramByte(LOG_ReadTimeDate) & LOG_ReadTimeDateMask))
+    if (ParamLOG_ReadTimeDate)
     {
         eTimeValid lValid = sTimer.isTimerValid();
         if (delayCheck(sDelay, 30000) && lValid != tmValid)
         {
+            log("Time Valid? %i", lValid);
             sDelay = millis();
             if (knx.paramByte(LOG_CombinedTimeDate) & LOG_CombinedTimeDateMask) {
                 // combined date and time
@@ -166,18 +161,18 @@ void Logic::processReadRequests()
             } else {
                 // date and time from separate KOs
                 if (lValid != tmMinutesValid)
-                    knx.getGroupObject(LOG_KoTime).requestObjectRead();
+                    KoLOG_Time.requestObjectRead();
                 if (lValid != tmDateValid)
-                    knx.getGroupObject(LOG_KoDate).requestObjectRead();
+                    KoLOG_Date.requestObjectRead();
             }
         }
         // if date and/or time is known, we read also summertime information
         if (sDelay > 0 && lValid == tmValid)
         {
             sDelay = 0;
-            knx.getGroupObject(LOG_KoIsSummertime).requestObjectRead();
+            KoLOG_IsSummertime.requestObjectRead();
         }
-    }    */
+    }
 }
 
 void Logic::readFlash(const uint8_t *iBuffer, const uint16_t iSize)
@@ -460,14 +455,11 @@ void Logic::setup()
 #ifdef BUZZER_PIN
     pinMode(BUZZER_PIN, OUTPUT);
 #endif
-
-    // sTimer.setup(8.639751, 49.310209, 1, true, 0xFFFFFFFF);
-    bool lTimezoneSign = (knx.paramByte(LOG_TimezoneSign) & LOG_TimezoneSignMask) >> LOG_TimezoneSignShift;
-    int8_t lTimezone = (knx.paramByte(LOG_TimezoneValue) & LOG_TimezoneValueMask) >> LOG_TimezoneValueShift;
+    bool lTimezoneSign = ParamLOG_TimezoneSign;
+    int8_t lTimezone = ParamLOG_TimezoneValue;
     lTimezone = lTimezone * (lTimezoneSign ? -1 : 1);
-    bool lUseSummertime = (((knx.paramByte(LOG_SummertimeAll) & LOG_SummertimeAllMask) >> LOG_SummertimeAllShift) == VAL_STIM_FROM_INTERN);
-    sTimer.setup(ParamLOG_Longitude, ParamLOG_Latitude, lTimezone, lUseSummertime, knx.paramInt(LOG_Neujahr)); //do not fetch just ParamLOG_Neujahr here, we need the whole bitfield
-
+    bool lUseSummertime = (ParamLOG_SummertimeAll == VAL_STIM_FROM_INTERN);
+    sTimer.setup(ParamLOG_Longitude, ParamLOG_Latitude, ParamLOG_Timezone, lUseSummertime, knx.paramInt(LOG_Neujahr)); //do not fetch just ParamLOG_Neujahr here, we need the whole bitfield
     // for TimerRestore we prepare all Timer channels
     for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
     {
@@ -477,43 +469,33 @@ void Logic::setup()
 }
 void Logic::loop()
 {
-    // static uint32_t sLogicLoopTime;
-
     if(!openknx.afterStartupDelay())
         return;
-
-    // sLogicLoopTime = millis();
+    processReadRequests();
     sTimer.loop(); // clock and timer async methods
-    // printDebug("sTimer.loop() takes: %i\n", millis() - sLogicLoopTime);
-    // sLogicLoopTime = millis();
-    // TODO: loopSubmodules deaktiviert
-    // loopSubmodules();
-    // printDebug("loopSubmodules() takes: %i\n", millis() - sLogicLoopTime);
-
-    // sLogicLoopTime = millis();
     // we loop on all channels and execute pipeline
+
+
     // for (uint8_t lIndex = 0; lIndex < mNumChannels && knx.configured(); lIndex++)
-    for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
+    // for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
+    while (openknx.freeLoopTime())
     {
-        LogicChannel *lChannel = mChannel[lIndex];
+        LogicChannel *lChannel = mChannel[mLoopIterator++];
         if (sTimer.minuteChanged())
             lChannel->startTimerInput();
         lChannel->loop();
+        // the following operations are done only once after iteration of all channels
+        if (mLoopIterator >= mNumChannels)
+        {
+            mLoopIterator = 0;
+            if (sTimer.minuteChanged())
+            {
+                sendHoliday();
+                sTimer.clearMinuteChanged();
+            }
+            processTimerRestore();
+        }
     }
-    // printDebug("channelLoop() takes: %i\n", millis() - sLogicLoopTime);
-    // if (sTimer.minuteChanged() && knx.configured())
-    if (sTimer.minuteChanged())
-    {
-        // sLogicLoopTime = millis();
-        sendHoliday();
-        sTimer.clearMinuteChanged();
-        // loopSubmodules();
-        // printDebug("HolidayLoop() takes: %i\n", millis() - sLogicLoopTime);
-    }
-    // sLogicLoopTime = millis();
-    processTimerRestore();
-    // printDebug("TimerRestore() takes: %i\n", millis() - sLogicLoopTime);
-
 }
 
 // start timer implementation
