@@ -120,22 +120,13 @@ void Logic::processAfterStartupDelay()
         KoLOG_Vacation.requestObjectRead();
 
     prepareChannels();
-
-    if (ParamLOG_ReadTimeDate)
-    {
-        eTimeValid lValid = sTimer.isTimerValid();
-        if (lValid != tmMinutesValid)
-            knx.getGroupObject(LOG_KoTime).requestObjectRead();
-        if (lValid != tmDateValid)
-            knx.getGroupObject(LOG_KoDate).requestObjectRead();
-    }
 }
 
 void Logic::processReadRequests()
 {
     // TODO obsolete durch kompakteres firstLoop()
     // static bool sLogicProcessReadRequestsCalled = false;
-    // static uint32_t sDelay = 19000;
+    static uint32_t sDelay = 19000;
 
     // // the following code should be called only once after initial startup delay
     // if (!sLogicProcessReadRequestsCalled)
@@ -149,20 +140,26 @@ void Logic::processReadRequests()
     //     prepareChannels();
     //     sLogicProcessReadRequestsCalled = true;
     // }
-    // // date and time are red from bus every minute until a response is received
-    // if ((knx.paramByte(LOG_ReadTimeDate) & LOG_ReadTimeDateMask))
-    // {
-    //     eTimeValid lValid = sTimer.isTimerValid();
-    //     log("VALID? %i", lValid);
-    //     if (delayCheck(sDelay, 30000) && lValid != tmValid)
-    //     {
-    //         sDelay = millis();
-    //         if (lValid != tmMinutesValid)
-    //             knx.getGroupObject(LOG_KoTime).requestObjectRead();
-    //         if (lValid != tmDateValid)
-    //             knx.getGroupObject(LOG_KoDate).requestObjectRead();
-    //     }
-    // }
+    // date and time are red from bus every minute until a response is received
+    if (ParamLOG_ReadTimeDate)
+    {
+        eTimeValid lValid = sTimer.isTimerValid();
+        if (delayCheck(sDelay, 30000) && lValid != tmValid)
+        {
+            log("Time Valid? %i", lValid);
+            sDelay = millis();
+            if (lValid != tmMinutesValid)
+                KoLOG_Time.requestObjectRead();
+            if (lValid != tmDateValid)
+                KoLOG_Date.requestObjectRead();
+        }
+        // if date and/or time is known, we read also summertime information
+        if (sDelay > 0 && lValid == tmValid)
+        {
+            sDelay = 0;
+            KoLOG_IsSummertime.requestObjectRead();
+        }
+    }
 }
 
 void Logic::readFlash(const uint8_t *iBuffer, const uint16_t iSize)
@@ -204,18 +201,62 @@ void Logic::processInputKo(GroupObject &iKo)
         LogicChannel *lChannel = mChannel[lKoLookup->channelIndex];
         lChannel->processInput(lKoLookup->ioIndex);
     }
-    if (iKo.asap() == LOG_KoTime)
-    {
-        struct tm lTmp = iKo.value(getDPT(VAL_DPT_10));
-        sTimer.setTimeFromBus(&lTmp);
-    }
-    else if (iKo.asap() == LOG_KoDate)
-    {
-        struct tm lTmp = iKo.value(getDPT(VAL_DPT_11));
+    if (iKo.asap() == LOG_KoTime) {
+        if (knx.paramByte(LOG_CombinedTimeDate) & LOG_CombinedTimeDateMask) {
+            KNXValue value = "";
+
+            // first ensure we have a valid data-time content
+            // (including the correct length)
+            if (iKo.tryValue(value, getDPT(VAL_DPT_19))) {
+
+                // use raw value, as current version of knx do not provide access to all fields
+                // TODO DPT19: check integration of extended DPT19 access into knx or OpenKNX-Commons
+                // size is ensured to be 8 Byte
+                uint8_t *raw = iKo.valueRef();
+
+                /*
+                const bool flagFault = raw[6] & 0x80;
+                // ignore working day (WD, NWD): raw[6] & 0x40, raw[6] & 0x20
+                const bool flagNoYear = raw[6] & 0x10;
+                const bool flagNoDate = raw[6] & 0x08;
+                // ignore NDOW: raw[6] & 0x04
+                const bool flagNoTime = raw[6] & 0x02;
+                const bool flagSuti = raw[6] & 0x01;
+                // ignore quality of clock (CLQ): raw[7] & 0x80
+                // ignore synchronisation source reliablity (SRC): raw[7] & 0x40
+                */
+
+                // ignore inputs with:
+                // * F - fault
+                // * NY - missing year
+                // * ND - missing date
+                // * NT - missing time
+                if (!(raw[6] & (DPT19_FAULT | DPT19_NO_YEAR | DPT19_NO_DATE | DPT19_NO_TIME))) {
+                    struct tm lTmp = value;
+                    sTimer.setDateTimeFromBus(&lTmp);
+                    const bool lSummertime = raw[6] & DPT19_SUMMERTIME;
+                    if (((knx.paramByte(LOG_SummertimeAll) & LOG_SummertimeAllMask) >> LOG_SummertimeAllShift) == VAL_STIM_FROM_DPT19)
+                        sTimer.setIsSummertime(lSummertime);
+                }
+            }
+        } else {
+            KNXValue value = "";
+            // ensure we have a valid time content
+            if (iKo.tryValue(value, getDPT(VAL_DPT_10))) {
+                struct tm lTmp = value;
+                sTimer.setTimeFromBus(&lTmp);
+            }
+        }
+    } else if (iKo.asap() == LOG_KoDate) {
+        KNXValue value = "";
+        // ensure we have a valid date content
+        if (iKo.tryValue(value, getDPT(VAL_DPT_11))) {
+            struct tm lTmp = value;
         sTimer.setDateFromBus(&lTmp);
     }
-    else if (iKo.asap() == LOG_Diagnose)
-    {
+    } else if (iKo.asap() == LOG_KoIsSummertime) {
+        sTimer.setIsSummertime(iKo.value(getDPT(VAL_DPT_1)));
+    } else if (iKo.asap() == LOG_KoDiagnose) {
         processDiagnoseCommand(iKo);
     }
 #ifdef BUZZER_PIN
@@ -266,7 +307,12 @@ bool Logic::processDiagnoseCommand()
             // Command l<nn>: Logic inputs and output of last execution
             // find channel and dispatch
             uint8_t lIndex = (sDiagnoseBuffer[1] - '0') * 10 + sDiagnoseBuffer[2] - '0' - 1;
-            lResult = mChannel[lIndex]->processDiagnoseCommand(sDiagnoseBuffer);
+            if (lIndex < LOG_ChannelCount) {
+                lResult = mChannel[lIndex]->processDiagnoseCommand(sDiagnoseBuffer);
+            } else {
+                // ignore invalid channel
+                lResult = false;
+            }
             break;
         }
         case 't': {
@@ -283,18 +329,49 @@ bool Logic::processDiagnoseCommand()
             break;
         }
         case 'r': {
-            // return sunrise and sunset
-            sTime *lSunrise = sTimer.getSunInfo(SUN_SUNRISE);
-            sTime *lSunset = sTimer.getSunInfo(SUN_SUNSET);
-            // this if prevents stupid warnings
-            if (lSunrise->hour < 24 && lSunrise->minute < 60 && lSunset->hour < 24 && lSunset->minute < 60)
+            if (sDiagnoseBuffer[1] == 'e')
+            {
+                // return sunrise and sunset for a specific elevation teSDD,
+                // where S=Sign(+,-) and DD ist elevation in degree
+                if (sDiagnoseBuffer[2] == '-' || sDiagnoseBuffer[2] == '+')
+                {
+                    double lDegree = ((sDiagnoseBuffer[3] - '0') * 10 + sDiagnoseBuffer[4] - '0');
+                    uint8_t lMinute = ((sDiagnoseBuffer[5] - '0') * 10 + sDiagnoseBuffer[6] - '0'); 
+                    lDegree = (lDegree + lMinute / 60.0) * (sDiagnoseBuffer[2] == '+' ? 1 : -1);
+                    sTime lSunrise;
+                    sTime lSunset;
+                    sTimer.getSunDegree(SUN_SUNRISE, lDegree, &lSunrise);
+                    sTimer.getSunDegree(SUN_SUNSET, lDegree, &lSunset);
+                    // this if prevents stupid warnings
+                    if (lSunrise.hour >= 0 && lSunrise.hour < 24 && lSunrise.minute >= 0 && lSunrise.minute < 60 && lSunset.hour >= 0 && lSunset.hour < 24 && lSunset.minute >= 0 && lSunset.minute < 60)
+                        snprintf(sDiagnoseBuffer, 15, "R%02d:%02d S%02d:%02d", lSunrise.hour, lSunrise.minute, lSunset.hour, lSunset.minute);
+                }
+                else
+                {
+                    snprintf(sDiagnoseBuffer, 15, "TRY re-0600");
+                }
+                lResult = true;
+            }
+            else
+            {
+                // return sunrise and sunset
+                sTime *lSunrise = sTimer.getSunInfo(SUN_SUNRISE);
+                sTime *lSunset = sTimer.getSunInfo(SUN_SUNSET);
+                // this if prevents stupid warnings
+                if (lSunrise->hour >= 0 && lSunrise->hour < 24 && lSunrise->minute >= 0 && lSunrise->minute < 60 && lSunset->hour >= 0 && lSunset->hour < 24 && lSunset->minute >= 0 && lSunset->minute < 60)
                 snprintf(sDiagnoseBuffer, 15, "R%02d:%02d S%02d:%02d", lSunrise->hour, lSunrise->minute, lSunset->hour, lSunset->minute);
-            lResult = true;
+                lResult = true;
+            }
             break;
         }
         case 'o': {
             // calculate easter date
             snprintf(sDiagnoseBuffer, 15, "O%02d.%02d", sTimer.getEaster()->day, sTimer.getEaster()->month);
+            lResult = true;
+            break;
+        }
+        case 'm': {
+            snprintf(sDiagnoseBuffer, 15, "%i", freeMemory());
             lResult = true;
             break;
         }
@@ -365,7 +442,11 @@ void Logic::setup()
 #ifdef BUZZER_PIN
     pinMode(BUZZER_PIN, OUTPUT);
 #endif
-    sTimer.setup(ParamLOG_Longitude, ParamLOG_Latitude, ParamLOG_Timezone, ParamLOG_UseSummertime, knx.paramInt(LOG_Neujahr)); //do not fetch just ParamLOG_Neujahr here, we need the whole bitfield
+    bool lTimezoneSign = ParamLOG_TimezoneSign;
+    int8_t lTimezone = ParamLOG_TimezoneValue;
+    lTimezone = lTimezone * (lTimezoneSign ? -1 : 1);
+    bool lUseSummertime = (ParamLOG_SummertimeAll == VAL_STIM_FROM_INTERN);
+    sTimer.setup(ParamLOG_Longitude, ParamLOG_Latitude, ParamLOG_Timezone, lUseSummertime, knx.paramInt(LOG_Neujahr)); //do not fetch just ParamLOG_Neujahr here, we need the whole bitfield
     // for TimerRestore we prepare all Timer channels
     for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
     {
@@ -377,24 +458,31 @@ void Logic::loop()
 {
     if(!openknx.afterStartupDelay())
         return;
-
+    processReadRequests();
     sTimer.loop(); // clock and timer async methods
     // we loop on all channels and execute pipeline
+    
+        
     // for (uint8_t lIndex = 0; lIndex < mNumChannels && knx.configured(); lIndex++)
-    for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
+    // for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
+    while (openknx.freeLoopTime())
     {
-        LogicChannel *lChannel = mChannel[lIndex];
+        LogicChannel *lChannel = mChannel[mLoopIterator++];
         if (sTimer.minuteChanged())
             lChannel->startTimerInput();
         lChannel->loop();
+        // the following operations are done only once after iteration of all channels
+        if (mLoopIterator >= mNumChannels)
+        {
+            mLoopIterator = 0;
+            if (sTimer.minuteChanged())
+            {
+                sendHoliday();
+                sTimer.clearMinuteChanged();
+            }
+            processTimerRestore();
+        }
     }
-    // if (sTimer.minuteChanged() && knx.configured())
-    if (sTimer.minuteChanged())
-    {
-        sendHoliday();
-        sTimer.clearMinuteChanged();
-    }
-    processTimerRestore();
 }
 
 // start timer implementation
