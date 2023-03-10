@@ -88,7 +88,7 @@ bool Logic::getKoLookup(uint16_t iKoNumber, sKoLookup **iKoLookup)
 void Logic::prepareChannels()
 {
     // bool lResult = false;
-    log("prepareChannels");
+    logInfo("prepareChannels");
     for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
     {
         // Important: lResult has to be the last argument in this OR,
@@ -114,7 +114,7 @@ void Logic::processAllInternalInputs(LogicChannel *iChannel, bool iValue)
 // REVIEW
 void Logic::processAfterStartupDelay()
 {
-    log("afterStartupDelay");
+    logInfo("afterStartupDelay");
 
     if (ParamLOG_VacationRead)
         KoLOG_Vacation.requestObjectRead();
@@ -146,7 +146,7 @@ void Logic::processReadRequests()
         eTimeValid lValid = sTimer.isTimerValid();
         if (delayCheck(sDelay, 30000) && lValid != tmValid)
         {
-            log("Time Valid? %i", lValid);
+            logInfoP("Time Valid? %i", lValid);
             sDelay = millis();
             if (lValid != tmMinutesValid)
                 KoLOG_Time.requestObjectRead();
@@ -405,26 +405,26 @@ void Logic::outputDiagnose(GroupObject &iKo)
 {
     sDiagnoseBuffer[15] = 0;
     iKo.value(sDiagnoseBuffer, getDPT(VAL_DPT_16));
-    log("Diagnose: %s\n", sDiagnoseBuffer);
+    logInfo("Diagnose: %s\n", sDiagnoseBuffer);
 }
 
 void Logic::debug()
 {
-    log("Logik-LOG_ChannelsFirmware (in Firmware): %d\n", LOG_ChannelsFirmware);
-    log("Logik-gNumChannels (in knxprod):  %d\n", mNumChannels);
+    logInfoP("Logik-LOG_ChannelsFirmware (in Firmware): %d\n", LOG_ChannelsFirmware);
+    logInfoP("Logik-gNumChannels (in knxprod):  %d\n", mNumChannels);
 
-    // log("Aktuelle Zeit: %s", sTimer.getTimeAsc());
+    // logInfo("Aktuelle Zeit: %s", sTimer.getTimeAsc());
     sTimer.debug();
 #ifdef ARDUINO_ARCH_RP2040
-    log("Free Heap: %i\n", rp2040.getFreeHeap());
+    logInfoP("Free Heap: %i\n", rp2040.getFreeHeap());
 #endif
 }
 
 void Logic::setup()
 {
     // check for hidden parameters
-    log("Setting: Buzzer available: %d", ParamLOG_BuzzerInstalled);
-    log("Setting: RGBLed available: %d", ParamLOG_LedInstalled);
+    logInfoP("Setting: Buzzer available: %d", ParamLOG_BuzzerInstalled);
+    logInfoP("Setting: RGBLed available: %d", ParamLOG_LedInstalled);
     // setup channels, not possible in constructor, because knx is not configured there
     // get number of channels from knxprod
     mNumChannels = ParamLOG_NumChannels;
@@ -458,23 +458,24 @@ void Logic::loop()
 {
     if(!openknx.afterStartupDelay())
         return;
+    uint32_t lLoopTime = millis();
     processReadRequests();
     sTimer.loop(); // clock and timer async methods
     // we loop on all channels and execute pipeline
     
-        
-    // for (uint8_t lIndex = 0; lIndex < mNumChannels && knx.configured(); lIndex++)
+    uint8_t lChannelsProcessed = 0;
     // for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
-    while (openknx.freeLoopTime())
+    while (lChannelsProcessed < mNumChannels && openknx.freeLoopTime())
     {
-        LogicChannel *lChannel = mChannel[mLoopIterator++];
+        LogicChannel *lChannel = mChannel[mChannelIterator++];
         if (sTimer.minuteChanged())
             lChannel->startTimerInput();
         lChannel->loop();
+        lChannelsProcessed++;
         // the following operations are done only once after iteration of all channels
-        if (mLoopIterator >= mNumChannels)
+        if (mChannelIterator >= mNumChannels)
         {
-            mLoopIterator = 0;
+            mChannelIterator = 0;
             if (sTimer.minuteChanged())
             {
                 sendHoliday();
@@ -483,6 +484,10 @@ void Logic::loop()
             processTimerRestore();
         }
     }
+    if (lChannelsProcessed < mNumChannels)
+        logInfoP("did not process all channels during loop, just %i channels", lChannelsProcessed);
+    if (millis()-lLoopTime > 1)
+        logInfoP("LoopTime: %i", millis()-lLoopTime);
 }
 
 // start timer implementation

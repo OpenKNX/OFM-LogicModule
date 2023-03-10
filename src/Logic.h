@@ -79,7 +79,7 @@ class Logic : public OpenKNX::Module
 
     LogicChannel *mChannel[LOG_ChannelsFirmware];
     uint8_t mNumChannels; // Number of channels defined in knxprod
-    uint8_t mLoopIterator = 0;
+    uint8_t mChannelIterator = 0;
 
     // we need a lookup for external KO
     static const uint16_t cCountKoLookups = LOG_ChannelsFirmware * 3;

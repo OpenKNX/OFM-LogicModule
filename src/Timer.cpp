@@ -410,15 +410,15 @@ void Timer::debug()
 {
     if (mTimeValid & tmMinutesValid) 
     {
-        openknx.log("LogicTimer", "Aktuelle Zeit: %s", getTimeAsc());
+        logInfo("LogicTimer", "Aktuelle Zeit: %s", getTimeAsc());
     }
 #if LOGIC_TRACE
     if (mTimeValid & tmDateValid) 
     {
-        openknx.log("LogicTimer", "\nFeiertage %d: ", getYear());
+        logInfo("LogicTimer", "\nFeiertage %d: ", getYear());
         calculateHolidays(true);
-        openknx.log("LogicTimer", "\nEnd of holiday debug\n");
-        openknx.log("LogicTimer", "Sonnenaufgang: %02d:%02d, Sonnenuntergang: %02d:%02d\n\n", mSunrise.hour, mSunrise.minute, mSunset.hour, mSunset.minute);
+        logInfo("LogicTimer", "\nEnd of holiday debug\n");
+        logInfo("LogicTimer", "Sonnenaufgang: %02d:%02d, Sonnenuntergang: %02d:%02d\n\n", mSunrise.hour, mSunrise.minute, mSunset.hour, mSunset.minute);
     }
 #endif
 }
@@ -456,7 +456,7 @@ void Timer::calculateHolidays(bool iDebugOutput)
         if (lHoliday.month > REMOVED)
         {
             if (iDebugOutput)
-                openknx.log("LogicTimer", "%02d.%02d., ", lHoliday.day, lHoliday.month);
+                logInfo("LogicTimer", "%02d.%02d., ", lHoliday.day, lHoliday.month);
             if (isEqualDate(lHoliday, lToday))
                 lHolidayToday = i + 1;
             if (isEqualDate(lHoliday, lTomorrow))

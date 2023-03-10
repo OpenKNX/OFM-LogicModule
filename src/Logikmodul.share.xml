@@ -1109,7 +1109,6 @@
                 <Parameter Id="%AID%_UP-%T%000150" Name="BuzzerLoud"   ParameterType="%AID%_PT-BuzzerFrequency" Offset="4" BitOffset="0" Text="Frequenz für Buzzer (laut)"   SuffixText="Hz" Value="2400" />
               </Union>
               <Union SizeInBit="8">
-                <!-- 5 Bit frei -->
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="25" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%T%000151" Name="LedMapping" ParameterType="%AID%_PT-RGBMapping" Offset="0" BitOffset="0" Text="Lötpad A / B / C entspicht" Value="1" />
                 <Parameter Id="%AID%_UP-%T%000144" Name="Timezone" ParameterType="%AID%_PT-Timezone" Offset="0" BitOffset="3" Text="Zeitzone" Value="1" />
@@ -1291,7 +1290,6 @@
                 <ParameterSeparator Id="%AID%_PS-47" Text="Damit der Sonnenauf- und Untergang korrekt berechnet werden kann, muss man genaue Geokoordinaten des Standorts angeben. Standardwert ist Frankfurt/Main. Ferner wird die Zeitzone des Ortes benötigt und die Information, ob gerade die Sommerzeit aktiv ist." />
                 <ParameterRefRef RefId="%AID%_UP-%T%000142_R-%T%00014201" />
                 <ParameterRefRef RefId="%AID%_UP-%T%000143_R-%T%00014301" />
-                <ParameterSeparator Id="%AID%_PS-46" Text="Ferner wird die Zeitzone des Ortes benötigt und ob die Zeit auf dem Bus auch die Sommerzeit berücksichtigt." />
                 <ParameterRefRef RefId="%AID%_UP-%T%000144_R-%T%00014401" />
                 <ParameterSeparator Id="%AID%_PS-46" Text="Die Information 'Sommerzeit aktiv' kann je nach Zeitzone und geographischer Lage auf verschiedene Arten ermittelt werden." />
                 <choose ParamRefId="%AID%_UP-%T%000144_R-%T%00014401">

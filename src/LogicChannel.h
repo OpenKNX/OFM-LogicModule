@@ -203,10 +203,12 @@ class LogicChannel : public OpenKNX::Channel
 {
   private:
     // instance
-    uint8_t mChannelId;
+    // uint8_t mChannelId;
 #if LOGIC_TRACE
     static char sFilter[30];
-    int channelDebug(const char *format, ...);
+    static char sTimeOutputBuffer[10];
+    char* logTimeBase(uint16_t iParamIndex);
+    int logChannel(const char *format, ...);
     bool debugFilter();
 #endif
     uint32_t calcParamIndex(uint16_t iParamIndex);
@@ -306,8 +308,10 @@ class LogicChannel : public OpenKNX::Channel
     // static
     static Timer &sTimer;
     static TimerRestore &sTimerRestore;
-
+    
     // instance
+    char pLogPrefix[4];
+    virtual const std::string logPrefix() override;
     /* Runtime information per channel */
     uint8_t pTriggerIO;        // Bitfield: Which input (0-3) triggered processing, Bit 4-7 are not used
     uint8_t pValidActiveIO;    // Bitfield: validity flags for input (0-3) values and active inputs (4-7)
