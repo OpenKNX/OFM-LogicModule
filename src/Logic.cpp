@@ -112,7 +112,6 @@ void Logic::processAllInternalInputs(LogicChannel *iChannel, bool iValue)
 }
 
 
-// REVIEW
 void Logic::processAfterStartupDelay()
 {
     logInfo("afterStartupDelay");
@@ -490,6 +489,7 @@ void Logic::loop()
         if (mChannelIterator >= mNumChannels)
         {
             mChannelIterator = 0;
+            // here we do actions which happen after all channels are iterated
             if (sTimer.minuteChanged())
             {
                 sendHoliday();
