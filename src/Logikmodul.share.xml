@@ -106,9 +106,9 @@
               </ParameterType>
               <ParameterType Id="%AID%_PT-Trigger" Name="Trigger">
                 <TypeRestriction Base="Value" SizeInBit="8">
-                  <Enumeration Text="nur bei geändertem Ergebnis" Value="0" Id="%AID%_PT-Trigger_EN-0" />
-                  <Enumeration Text="nur bei geändertem Ergebnis, aber erstes Telegramm immer senden" Value="32" Id="%AID%_PT-Trigger_EN-2" />
-                  <Enumeration Text="nur bei geändertem Ergebnis, aber erstes Telegramm nicht senden" Value="16" Id="%AID%_PT-Trigger_EN-3" />
+                  <Enumeration Text="bei geändertem Eingangstelegramm" Value="0" Id="%AID%_PT-Trigger_EN-0" />
+                  <Enumeration Text="bei geändertem Eingangstelegramm, aber erstes Telegramm immer senden" Value="32" Id="%AID%_PT-Trigger_EN-2" />
+                  <Enumeration Text="bei geändertem Eingangstelegramm, aber erstes Telegramm nicht senden" Value="16" Id="%AID%_PT-Trigger_EN-3" />
                   <Enumeration Text="bei jedem Eingangstelegramm" Value="15" Id="%AID%_PT-Trigger_EN-15" />
                   <Enumeration Text="bei jedem Eingangstelegramm, aber erstes Telegramm nicht senden" Value="31" Id="%AID%_PT-Trigger_EN-31" />
                   <Enumeration Text="bei folgenden Eingangstelegrammen" Value="1" Id="%AID%_PT-Trigger_EN-1" />
@@ -117,9 +117,9 @@
               </ParameterType>
               <ParameterType Id="%AID%_PT-TriggerTime" Name="TriggerTime">
                 <TypeRestriction Base="Value" SizeInBit="8">
-                  <Enumeration Text="nur bei geändertem Ergebnis" Value="0" Id="%AID%_PT-TriggerTime_EN-0" />
-                  <Enumeration Text="nur bei geändertem Ergebnis, aber erstes Telegramm immer senden" Value="32" Id="%AID%_PT-TriggerTime_EN-2" />
-                  <Enumeration Text="nur bei geändertem Ergebnis, aber erstes Telegramm nicht senden" Value="16" Id="%AID%_PT-TriggerTime_EN-3" />
+                  <Enumeration Text="bei geändertem Eingangstelegramm" Value="0" Id="%AID%_PT-TriggerTime_EN-0" />
+                  <Enumeration Text="bei geändertem Eingangstelegramm, aber erstes Telegramm immer senden" Value="32" Id="%AID%_PT-TriggerTime_EN-2" />
+                  <Enumeration Text="bei geändertem Eingangstelegramm, aber erstes Telegramm nicht senden" Value="16" Id="%AID%_PT-TriggerTime_EN-3" />
                   <Enumeration Text="bei jedem Eingangstelegramm" Value="15" Id="%AID%_PT-TriggerTime_EN-15" />
                   <Enumeration Text="bei jedem Eingangstelegramm, aber erstes Telegramm nicht senden" Value="31" Id="%AID%_PT-TriggerTime_EN-31" />
                 </TypeRestriction>

@@ -39,7 +39,7 @@ LogicChannel::~LogicChannel()
  * Debug helper
  * ***************************/
 
-const std::string LogicChannel::logPrefix()
+const std::string LogicChannel::logPrefix() 
 {
     return std::string(pLogPrefix);
 }
@@ -464,7 +464,7 @@ LogicValue LogicChannel::getParamByDpt(uint8_t iDpt, uint16_t iParamIndex)
             LogicValue lValue = getIntParam(iParamIndex);
             return lValue;
         }
-        case VAL_DPT_9:
+        case VAL_DPT_9: 
         case VAL_DPT_14: {
             LogicValue lValue = getFloatParam(iParamIndex);
             return lValue;
@@ -531,7 +531,7 @@ LogicValue LogicChannel::getInputValue(uint8_t iIOIndex, uint8_t *eDpt)
             //     lValue =
             //         lKo->valueRef()[0] + 256 * lKo->valueRef()[1] + 65536 * lKo->valueRef()[2];
             //     break;
-            case VAL_DPT_9:
+            case VAL_DPT_9: 
             case VAL_DPT_14: {
                 LogicValue lValue = (float)lKo->value(getDPT(*eDpt));
                 return lValue;
@@ -804,7 +804,7 @@ void LogicChannel::stopRepeatInput(uint8_t iIOIndex)
         case IO_Input1:
             lRepeatInputBit = PIP_REPEAT_INPUT1;
             lRepeatTime = ParamLOG_fE1RepeatTimeMS;
-            lJustOneTelegram = ParamLOG_fE1DefaultRepeat;
+            lJustOneTelegram = ParamLOG_fE1DefaultRepeat; 
             break;
         case IO_Input2:
             lRepeatInputBit = PIP_REPEAT_INPUT2;
@@ -1052,8 +1052,8 @@ void LogicChannel::startLogic(uint8_t iIOIndex, bool iValue)
 {
     // invert input
     bool lValue = iValue;
-    uint16_t lParamBase = (iIOIndex == BIT_EXT_INPUT_1) ? LOG_fE1 :
-                          (iIOIndex == BIT_EXT_INPUT_2) ? LOG_fE2 :
+    uint16_t lParamBase = (iIOIndex == BIT_EXT_INPUT_1) ? LOG_fE1 : 
+                          (iIOIndex == BIT_EXT_INPUT_2) ? LOG_fE2 : 
                           (iIOIndex == BIT_INT_INPUT_1) ? LOG_fI1 : LOG_fI2;
     uint8_t lInput = getByteParam(lParamBase);
     if (iIOIndex == BIT_INT_INPUT_1)
@@ -1203,7 +1203,7 @@ void LogicChannel::processLogic()
                                     break;
                             }
                         }
-                            break;
+                        break;
                         case VAL_Gate_Open_Open: // was open and stays open
                             lNewOutput = (lCurrentInputs & (BIT_EXT_INPUT_1 | BIT_INT_INPUT_1));
                             lValidOutput = true;
@@ -1333,10 +1333,6 @@ void LogicChannel::startStairlight(bool iOutput)
                 startOffDelay();
             // stairlight should be switched off
             bool lOff = ParamLOG_fOStairOff;
-            // bool lOff = paramLOG_fOStairOff;
-            // bool lOff = LOG::fOStairOff(channelIndex());
-            // bool lOff = fOStairOff(channelIndex());
-            // lOff = paramlog
             if (lOff)
             {
                 // stairlight might be switched off,
@@ -1734,10 +1730,14 @@ void LogicChannel::processInternalInputs(uint8_t iChannelId, bool iValue)
     }
 }
 
-bool LogicChannel::processDiagnoseCommand(char *cBuffer)
+bool LogicChannel::processDiagnoseCommand(const char *iInput, char *eOutput, uint8_t iLine)
 {
     bool lResult = false;
-    switch (cBuffer[0])
+
+    if (iLine > 0)
+        return lResult;
+
+    switch (iInput[0])
     {
         case 'l': {
             char v[5];
@@ -1770,7 +1770,7 @@ bool LogicChannel::processDiagnoseCommand(char *cBuffer)
                 v[4] = 'x';
             }
             // list state of logic of last execution
-            sprintf(cBuffer, "A%c B%c C%c D%c Q%c", v[0], v[1], v[2], v[3], v[4]);
+            sprintf(eOutput, "A%c B%c C%c D%c Q%c", v[0], v[1], v[2], v[3], v[4]);
             lResult = true;
             break;
         }
@@ -1961,7 +1961,7 @@ void LogicChannel::saveKoDpt(uint8_t iIOIndex)
         }
     }
 
-    // logInfo("LogicChannel", "%02X ", lDpt);
+    // logInfoP("%02X ", lDpt);
     openknx.flash.writeByte(lDpt);
 }
 
@@ -2443,7 +2443,7 @@ bool LogicChannel::checkSunLimit(Timer &iTimer, uint8_t iSunInfo, uint8_t iTimer
 
 bool LogicChannel::checkSunDegree(Timer &iTimer, uint8_t iSunInfo, uint8_t iTimerIndex, uint16_t iBitfield, bool iSkipWeekday, bool iHandleAsSunday, bool iDown)
 {
-    uint8_t lDegree = ((iBitfield & 0x7E00) >> 9);
+    uint8_t lDegree = ((iBitfield & 0x7E00) >> 9); 
     uint8_t lMinute = ((iBitfield & 0x01F8) >> 3);
     sTime lTime;
     iTimer.getSunDegree(iSunInfo, (lDegree + lMinute / 60.0) * (iDown ? -1.0 : 1.0), &lTime);
@@ -2468,7 +2468,7 @@ void LogicChannel::startTimerRestoreState()
                 pCurrentPipeline |= PIP_TIMER_RESTORE_STATE;
                 pCurrentPipeline &= ~PIP_TIMER_RESTORE_STEP; // ensure first processing step is set to 1
             }
-            logInfo("LogicChannel", "TimerRestore activated for channel %d", channelIndex() + 1);
+            logInfoP("TimerRestore activated for channel %d", channelIndex() + 1);
         }
     }
 }
@@ -2507,7 +2507,7 @@ void LogicChannel::processTimerRestoreState(TimerRestore &iTimer)
 
     int16_t lDayTime = iTimer.getHour() * 100 + iTimer.getMinute();
 
-    logInfo("LogicChannel", "Processing TimerRestore on Channel %d for Day %02d.%02d.%02d", channelIndex() + 1, iTimer.getDay(), iTimer.getMonth(), iTimer.getYear());
+    logInfoP("Processing TimerRestore on Channel %d for Day %02d.%02d.%02d", channelIndex() + 1, iTimer.getDay(), iTimer.getMonth(), iTimer.getYear());
     // first we process settings valid for whole timer
     // vacation is not processed (always skipped)
 
@@ -2548,67 +2548,67 @@ void LogicChannel::processTimerRestoreState(TimerRestore &iTimer)
                     case VAL_Tim_PointInTime:
                         lCurrentResult = getPointInTime(iTimer, lTimerIndex, lBitfield, lIsYearTimer, lHandleAsSunday);
                         if (lCurrentResult > -1)
-                            logInfo("LogicChannel", "TimerRestore: Found PointInTime %04d with value %d", lCurrentResult, lCurrentValue);
+                            logInfoP("TimerRestore: Found PointInTime %04d with value %d", lCurrentResult, lCurrentValue);
                         break;
                     case VAL_Tim_Sunrise_Plus:
                         lCurrentResult = getSunAbs(iTimer, SUN_SUNRISE, lTimerIndex, lBitfield, lIsYearTimer, lHandleAsSunday, false);
                         if (lCurrentResult > -1)
-                            logInfo("LogicChannel", "TimerRestore: Found SunrisePlus %04d with value %d", lCurrentResult, lCurrentValue);
+                            logInfoP("TimerRestore: Found SunrisePlus %04d with value %d", lCurrentResult, lCurrentValue);
                         break;
                     case VAL_Tim_Sunrise_Minus:
                         lCurrentResult = getSunAbs(iTimer, SUN_SUNRISE, lTimerIndex, lBitfield, lIsYearTimer, lHandleAsSunday, true);
                         if (lCurrentResult > -1)
-                            logInfo("LogicChannel", "TimerRestore: Found SunriseMinus %04d with value %d", lCurrentResult, lCurrentValue);
+                            logInfoP("TimerRestore: Found SunriseMinus %04d with value %d", lCurrentResult, lCurrentValue);
                         break;
                     case VAL_Tim_Sunset_Plus:
                         lCurrentResult = getSunAbs(iTimer, SUN_SUNSET, lTimerIndex, lBitfield, lIsYearTimer, lHandleAsSunday, false);
                         if (lCurrentResult > -1)
-                            logInfo("LogicChannel", "TimerRestore: Found SunsetPlus %04d with value %d", lCurrentResult, lCurrentValue);
+                            logInfoP("TimerRestore: Found SunsetPlus %04d with value %d", lCurrentResult, lCurrentValue);
                         break;
                     case VAL_Tim_Sunset_Minus:
                         lCurrentResult = getSunAbs(iTimer, SUN_SUNSET, lTimerIndex, lBitfield, lIsYearTimer, lHandleAsSunday, true);
                         if (lCurrentResult > -1)
-                            logInfo("LogicChannel", "TimerRestore: Found SunsetMinus %04d with value %d", lCurrentResult, lCurrentValue);
+                            logInfoP("TimerRestore: Found SunsetMinus %04d with value %d", lCurrentResult, lCurrentValue);
                         break;
                     case VAL_Tim_Sunrise_Earliest:
                         lCurrentResult = getSunLimit(iTimer, SUN_SUNRISE, lTimerIndex, lBitfield, lIsYearTimer, lHandleAsSunday, false);
                         if (lCurrentResult > -1)
-                            logInfo("LogicChannel", "TimerRestore: Found SunriseEarliest %04d with value %d", lCurrentResult, lCurrentValue);
+                            logInfoP("TimerRestore: Found SunriseEarliest %04d with value %d", lCurrentResult, lCurrentValue);
                         break;
                     case VAL_Tim_Sunrise_Latest:
                         lCurrentResult = getSunLimit(iTimer, SUN_SUNRISE, lTimerIndex, lBitfield, lIsYearTimer, lHandleAsSunday, true);
                         if (lCurrentResult > -1)
-                            logInfo("LogicChannel", "TimerRestore: Found SunriseLatest %04d with value %d", lCurrentResult, lCurrentValue);
+                            logInfoP("TimerRestore: Found SunriseLatest %04d with value %d", lCurrentResult, lCurrentValue);
                         break;
                     case VAL_Tim_Sunset_Earliest:
                         lCurrentResult = getSunLimit(iTimer, SUN_SUNSET, lTimerIndex, lBitfield, lIsYearTimer, lHandleAsSunday, false);
                         if (lCurrentResult > -1)
-                            logInfo("LogicChannel", "TimerRestore: Found SunsetEarliest %04d with value %d", lCurrentResult, lCurrentValue);
+                            logInfoP("TimerRestore: Found SunsetEarliest %04d with value %d", lCurrentResult, lCurrentValue);
                         break;
                     case VAL_Tim_Sunset_Latest:
                         lCurrentResult = getSunLimit(iTimer, SUN_SUNSET, lTimerIndex, lBitfield, lIsYearTimer, lHandleAsSunday, true);
                         if (lCurrentResult > -1)
-                            logInfo("LogicChannel", "TimerRestore: Found SunsetLatest %04d with value %d", lCurrentResult, lCurrentValue);
+                            logInfoP("TimerRestore: Found SunsetLatest %04d with value %d", lCurrentResult, lCurrentValue);
                         break;
                     case VAL_Tim_Sunrise_DegreeUp:
                         lCurrentResult = getSunDegree(sTimer, SUN_SUNRISE, lTimerIndex, lBitfield, lIsYearTimer, lHandleAsSunday, false);
                         if (lCurrentResult > -1)
-                            logInfo("LogicChannel", "TimerRestore: Found SunriseDegreeUp %04d with value %d", lCurrentResult, lCurrentValue);
+                            logInfoP("TimerRestore: Found SunriseDegreeUp %04d with value %d", lCurrentResult, lCurrentValue);
                         break;
                     case VAL_Tim_Sunset_DegreeUp:
                         lCurrentResult = getSunDegree(sTimer, SUN_SUNSET, lTimerIndex, lBitfield, lIsYearTimer, lHandleAsSunday, false);
                         if (lCurrentResult > -1)
-                            logInfo("LogicChannel", "TimerRestore: Found SunsetDegreeUp %04d with value %d", lCurrentResult, lCurrentValue);
+                            logInfoP("TimerRestore: Found SunsetDegreeUp %04d with value %d", lCurrentResult, lCurrentValue);
                         break;
                     case VAL_Tim_Sunrise_DegreeDown:
                         lCurrentResult = getSunDegree(sTimer, SUN_SUNRISE, lTimerIndex, lBitfield, lIsYearTimer, lHandleAsSunday, true);
                         if (lCurrentResult > -1)
-                            logInfo("LogicChannel", "TimerRestore: Found SunriseDegreeDown %04d with value %d", lCurrentResult, lCurrentValue);
+                            logInfoP("TimerRestore: Found SunriseDegreeDown %04d with value %d", lCurrentResult, lCurrentValue);
                         break;
                     case VAL_Tim_Sunset_DegreeDown:
                         lCurrentResult = getSunDegree(sTimer, SUN_SUNSET, lTimerIndex, lBitfield, lIsYearTimer, lHandleAsSunday, true);
                         if (lCurrentResult > -1)
-                            logInfo("LogicChannel", "TimerRestore: Found SunsetDegreeDown %04d with value %d", lCurrentResult, lCurrentValue);
+                            logInfoP("TimerRestore: Found SunsetDegreeDown %04d with value %d", lCurrentResult, lCurrentValue);
                         break;
                     default:
                         break;
@@ -2627,7 +2627,7 @@ void LogicChannel::processTimerRestoreState(TimerRestore &iTimer)
     }
     if (lResult > -1)
     {
-        logInfo("LogicChannel", "TimerRestore: Found timer %04d with value %d, starting processing", lResult, lValue);
+        logInfoP("TimerRestore: Found timer %04d with value %d, starting processing", lResult, lValue);
         startLogic(BIT_EXT_INPUT_2, lValue);
         // we also add that this input was used and is now valid
         pValidActiveIO |= BIT_EXT_INPUT_2;
@@ -2635,7 +2635,7 @@ void LogicChannel::processTimerRestoreState(TimerRestore &iTimer)
     }
     else
     {
-        logInfo("LogicChannel", "TimerRestore: There are no timers for this day");
+        logInfoP("TimerRestore: There are no timers for this day");
     }
 }
 
@@ -2695,7 +2695,7 @@ int16_t LogicChannel::getSunLimit(Timer &iTimer, uint8_t iSunInfo, uint8_t iTime
 
 int16_t LogicChannel::getSunDegree(Timer &iTimer, uint8_t iSunInfo, uint8_t iTimerIndex, uint16_t iBitfield, bool iSkipWeekday, bool iHandleAsSunday, bool iDown)
 {
-    uint8_t lDegree = ((iBitfield & 0x7E00) >> 9);
+    uint8_t lDegree = ((iBitfield & 0x7E00) >> 9); 
     uint8_t lMinute = ((iBitfield & 0x01F8) >> 3);
     sTime lTime;
     iTimer.getSunDegree(iSunInfo, (lDegree + lMinute / 60.0) * (iDown ? -1.0 : 1.0), &lTime);
@@ -2705,5 +2705,5 @@ int16_t LogicChannel::getSunDegree(Timer &iTimer, uint8_t iSunInfo, uint8_t iTim
 
 const std::string LogicChannel::name()
 {
-    return "Logic";
+    return "LogicChannel";
 }

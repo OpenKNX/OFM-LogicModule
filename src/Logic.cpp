@@ -10,8 +10,6 @@ uint8_t Logic::sMagicWord[] = {0xAE, 0x49, 0xD2, 0x9F};
 Timer &Logic::sTimer = Timer::instance();                      // singleton
 TimerRestore &Logic::sTimerRestore = TimerRestore::instance(); // singleton
 
-char Logic::sDiagnoseBuffer[16] = {0};
-
 uint16_t Logic::flashSize()
 {
     // Version + Data (Channel * Inputs * (Dpt + Value))
@@ -25,7 +23,7 @@ const std::string Logic::name()
 
 const std::string Logic::version()
 {
-    return "1.4.2";
+    return "1.7";
 }
 
 Logic::Logic()
@@ -94,7 +92,7 @@ bool Logic::getKoLookup(uint16_t iKoNumber, sKoLookup **iKoLookup)
 void Logic::prepareChannels()
 {
     // bool lResult = false;
-    logInfo("prepareChannels");
+    logInfoP("prepareChannels");
     for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
     {
         // Important: lResult has to be the last argument in this OR,
@@ -119,7 +117,7 @@ void Logic::processAllInternalInputs(LogicChannel *iChannel, bool iValue)
 
 void Logic::processAfterStartupDelay()
 {
-    logInfo("afterStartupDelay");
+    logInfoP("afterStartupDelay");
 
     if (ParamLOG_VacationRead)
         KoLOG_Vacation.requestObjectRead();
@@ -274,8 +272,6 @@ void Logic::processInputKo(GroupObject &iKo)
         }
     } else if (iKo.asap() == LOG_KoIsSummertime) {
         sTimer.setIsSummertime(iKo.value(getDPT(VAL_DPT_1)));
-    } else if (iKo.asap() == LOG_KoDiagnose) {
-        processDiagnoseCommand(iKo);
     }
 #ifdef BUZZER_PIN
     else if (iKo.asap() == LOG_KoBuzzerLock)
@@ -294,6 +290,8 @@ void Logic::processInputKo(GroupObject &iKo)
     }
 #endif
     // REVIEW: Wäre dieser Check nicht im LogicChannel besser aufgehoben?
+    // Nein, denn dann müsste man alle channels durchgehen, um den richtigen zu finden
+    // So wird nur der Kanal berechnet, der dann final prozessiert wird.
     else if (iKo.asap() >= LOG_KoOffset + LOG_KoKOfE1 && iKo.asap() < LOG_KoOffset + LOG_KoKOfE1 + mNumChannels * LOG_KoBlockSize)
     {
         uint16_t lKoNumber = iKo.asap() - LOG_KoOffset - LOG_KoKOfE1;
@@ -304,32 +302,27 @@ void Logic::processInputKo(GroupObject &iKo)
     }
 }
 
-char *Logic::initDiagnose(GroupObject &iKo)
-{
-    memcpy(sDiagnoseBuffer, iKo.valueRef(), 14);
-    return sDiagnoseBuffer;
-}
-
-char *Logic::getDiagnoseBuffer()
-{
-    return sDiagnoseBuffer;
-}
-
-bool Logic::processDiagnoseCommand()
+bool Logic::processDiagnoseCommand(const char *iInput, char *eOutput, uint8_t iLine)
 {
     bool lResult = false;
+
+    if (iLine > 0)
+        return lResult;
+
     // diagnose is interactive and reacts on commands
-    switch (sDiagnoseBuffer[0])
+    switch (iInput[0])
     {
+        case 'v': {
+            snprintf(eOutput, 15, "Logic %s", version().c_str());
+            lResult = true;
+            break;
+        }
         case 'l': {
             // Command l<nn>: Logic inputs and output of last execution
             // find channel and dispatch
-            uint8_t lIndex = (sDiagnoseBuffer[1] - '0') * 10 + sDiagnoseBuffer[2] - '0' - 1;
+            uint8_t lIndex = (iInput[1] - '0') * 10 + iInput[2] - '0' - 1;
             if (lIndex < LOG_ChannelCount) {
-                lResult = mChannel[lIndex]->processDiagnoseCommand(sDiagnoseBuffer);
-            } else {
-                // ignore invalid channel
-                lResult = false;
+                lResult = mChannel[lIndex]->processDiagnoseCommand(iInput, eOutput, iLine);
             }
             break;
         }
@@ -342,31 +335,33 @@ bool Logic::processDiagnoseCommand()
             uint8_t lMonth = sTimer.getMonth();
             // this if prevents stupid warnings
             if (lHour < 24 && lMinute < 60 && lSecond < 60 && lDay < 32 && lMonth < 13)
-                snprintf(sDiagnoseBuffer, 15, "%02d:%02d:%02d %02d.%02d", lHour, lMinute, lSecond, lDay, lMonth);
-            lResult = true;
+            {
+                snprintf(eOutput, 15, "%02d:%02d:%02d %02d.%02d", lHour, lMinute, lSecond, lDay, lMonth);
+                lResult = true;
+            }
             break;
         }
         case 'r': {
-            if (sDiagnoseBuffer[1] == 'e')
+            if (iInput[1] == 'e')
             {
                 // return sunrise and sunset for a specific elevation teSDD,
                 // where S=Sign(+,-) and DD ist elevation in degree
-                if (sDiagnoseBuffer[2] == '-' || sDiagnoseBuffer[2] == '+')
+                if (iInput[2] == '-' || iInput[2] == '+')
                 {
-                    double lDegree = ((sDiagnoseBuffer[3] - '0') * 10 + sDiagnoseBuffer[4] - '0');
-                    uint8_t lMinute = ((sDiagnoseBuffer[5] - '0') * 10 + sDiagnoseBuffer[6] - '0');
-                    lDegree = (lDegree + lMinute / 60.0) * (sDiagnoseBuffer[2] == '+' ? 1 : -1);
+                    double lDegree = ((iInput[3] - '0') * 10 + iInput[4] - '0');
+                    uint8_t lMinute = ((iInput[5] - '0') * 10 + iInput[6] - '0');
+                    lDegree = (lDegree + lMinute / 60.0) * (iInput[2] == '+' ? 1 : -1);
                     sTime lSunrise;
                     sTime lSunset;
                     sTimer.getSunDegree(SUN_SUNRISE, lDegree, &lSunrise);
                     sTimer.getSunDegree(SUN_SUNSET, lDegree, &lSunset);
                     // this if prevents stupid warnings
                     if (lSunrise.hour >= 0 && lSunrise.hour < 24 && lSunrise.minute >= 0 && lSunrise.minute < 60 && lSunset.hour >= 0 && lSunset.hour < 24 && lSunset.minute >= 0 && lSunset.minute < 60)
-                        snprintf(sDiagnoseBuffer, 15, "R%02d:%02d S%02d:%02d", lSunrise.hour, lSunrise.minute, lSunset.hour, lSunset.minute);
+                        snprintf(eOutput, 15, "R%02d:%02d S%02d:%02d", lSunrise.hour, lSunrise.minute, lSunset.hour, lSunset.minute);
                 }
                 else
                 {
-                    snprintf(sDiagnoseBuffer, 15, "TRY re-0600");
+                    snprintf(eOutput, 15, "TRY re-0600");
                 }
                 lResult = true;
             }
@@ -377,64 +372,39 @@ bool Logic::processDiagnoseCommand()
                 sTime *lSunset = sTimer.getSunInfo(SUN_SUNSET);
                 // this if prevents stupid warnings
                 if (lSunrise->hour >= 0 && lSunrise->hour < 24 && lSunrise->minute >= 0 && lSunrise->minute < 60 && lSunset->hour >= 0 && lSunset->hour < 24 && lSunset->minute >= 0 && lSunset->minute < 60)
-                    snprintf(sDiagnoseBuffer, 15, "R%02d:%02d S%02d:%02d", lSunrise->hour, lSunrise->minute, lSunset->hour, lSunset->minute);
-                lResult = true;
+                {
+                    snprintf(eOutput, 15, "R%02d:%02d S%02d:%02d", lSunrise->hour, lSunrise->minute, lSunset->hour, lSunset->minute);
+                    lResult = true;
+                }
             }
             break;
         }
         case 'o': {
             // calculate easter date
-            snprintf(sDiagnoseBuffer, 15, "O%02d.%02d", sTimer.getEaster()->day, sTimer.getEaster()->month);
+            snprintf(eOutput, 15, "O%02d.%02d", sTimer.getEaster()->day, sTimer.getEaster()->month);
             lResult = true;
             break;
         }
         case 'm': {
-            snprintf(sDiagnoseBuffer, 15, "%i", freeMemory());
+            snprintf(eOutput, 15, "%i", freeMemory());
             lResult = true;
             break;
         }
         default:
-            lResult = false;
             break;
     }
     return lResult;
 }
 
-void Logic::processDiagnoseCommand(GroupObject &iKo)
-{
-    // this method is called as soon as iKo is changed
-    // an external change is expected
-    // because this iKo also is changed within this method,
-    // the method is called again. This might result in
-    // an endless loop. This is prevented by the isCalled pattern.
-    static bool sIsCalled = false;
-    if (!sIsCalled)
-    {
-        sIsCalled = true;
-        // diagnose is interactive and reacts on commands
-        initDiagnose(iKo);
-        if (processDiagnoseCommand())
-            outputDiagnose(iKo);
-        sIsCalled = false;
-    }
-};
-
-void Logic::outputDiagnose(GroupObject &iKo)
-{
-    sDiagnoseBuffer[15] = 0;
-    iKo.value(sDiagnoseBuffer, getDPT(VAL_DPT_16));
-    logInfo("Diagnose: %s\n", sDiagnoseBuffer);
-}
-
 void Logic::debug()
 {
-    logInfoP("Logik-LOG_ChannelsFirmware (in Firmware): %d\n", LOG_ChannelsFirmware);
-    logInfoP("Logik-gNumChannels (in knxprod):  %d\n", mNumChannels);
+    logInfoP("Logik-LOG_ChannelsFirmware (in Firmware): %d", LOG_ChannelsFirmware);
+    logInfoP("Logik-gNumChannels (in knxprod):  %d", mNumChannels);
 
-    // logInfo("Aktuelle Zeit: %s", sTimer.getTimeAsc());
+    // logInfoP("Aktuelle Zeit: %s", sTimer.getTimeAsc());
     sTimer.debug();
 #ifdef ARDUINO_ARCH_RP2040
-    logInfoP("Free Heap: %i\n", rp2040.getFreeHeap());
+    logInfoP("Free Heap: %i", rp2040.getFreeHeap());
 #endif
 }
 
@@ -449,7 +419,7 @@ void Logic::setup()
     if (LOG_ChannelsFirmware < mNumChannels)
     {
         char lErrorText[80];
-        sprintf(lErrorText, "FATAL: Firmware compiled for %d channels, but knxprod needs %d channels!\n", LOG_ChannelsFirmware, mNumChannels);
+        sprintf(lErrorText, "FATAL: Firmware compiled for %d channels, but knxprod needs %d channels!", LOG_ChannelsFirmware, mNumChannels);
         fatalError(FATAL_LOG_WRONG_CHANNEL_COUNT, lErrorText);
     }
     for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
@@ -480,7 +450,7 @@ void Logic::loop()
     processReadRequests();
     sTimer.loop(); // clock and timer async methods
     // we loop on all channels and execute pipeline
-
+    
     uint8_t lChannelsProcessed = 0;
     // for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
     while (lChannelsProcessed < mNumChannels && openknx.freeLoopTime())
@@ -556,7 +526,7 @@ void Logic::sendHoliday()
     if (sTimer.holidayChanged())
     {
         // write the newly calculated holiday information into KO (can be read externally)
-
+        
         KoLOG_Holiday1.valueNoSend(sTimer.holidayToday(), getDPT(VAL_DPT_5));
         KoLOG_Holiday2.valueNoSend(sTimer.holidayTomorrow(), getDPT(VAL_DPT_5));
         sTimer.clearHolidayChanged();

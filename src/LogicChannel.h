@@ -344,7 +344,7 @@ class LogicChannel : public OpenKNX::Channel
     bool checkDpt(uint8_t iIOIndex, uint8_t iDpt);
     void processInput(uint8_t iIOIndex);
     void processInternalInputs(uint8_t iChannelId, bool iValue);
-    bool processDiagnoseCommand(char* cBuffer);
+    bool processDiagnoseCommand(const char *iInput, char *eOutput, uint8_t iLine) override;
     void startTimerInput();
     void startTimerRestoreState();
     void stopTimerRestoreState();
