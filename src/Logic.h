@@ -49,10 +49,6 @@ class Logic : public OpenKNX::Module
     Logic();
     ~Logic();
 
-    // static
-    static char *initDiagnose(GroupObject &iKo);
-    static char *getDiagnoseBuffer();
-
     // instance
     void addKoLookup(uint16_t iKoNumber, uint8_t iChannelId, uint8_t iIOIndex);
     bool getKoLookup(uint16_t iKoNumber, sKoLookup **iKoLookup = nullptr);
@@ -61,7 +57,7 @@ class Logic : public OpenKNX::Module
     void processAfterStartupDelay();
     void processReadRequests();
     void processInputKo(GroupObject &iKo);
-    bool processDiagnoseCommand();
+    bool processDiagnoseCommand(const char *iInput, char *eOutput, uint8_t iLine) override;
     void outputDiagnose(GroupObject &iKo);
     void debug();
     void setup();
@@ -70,12 +66,12 @@ class Logic : public OpenKNX::Module
     void writeFlash() override;
     uint16_t flashSize() override;
     const std::string name() override;
+    const std::string version() override;
 
   private:
     static uint8_t sMagicWord[];
     static Timer &sTimer;
     static TimerRestore &sTimerRestore;
-    static char sDiagnoseBuffer[16];
 
     LogicChannel *mChannel[LOG_ChannelsFirmware];
     uint8_t mNumChannels; // Number of channels defined in knxprod
