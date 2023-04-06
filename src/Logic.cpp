@@ -122,11 +122,11 @@ void Logic::processAfterStartupDelay()
 
     prepareChannels();
 
-    // TODO: Check if how to realize handling adequate to Commons v1 implementation
     // TODO FIXME: Repeated Reading
     // TODO FIXME: Implementation for DPT19
 }
 
+// REVIEW: Check if handling is equivalent to Commons v1 implementation
 void Logic::processReadRequests()
 {
     // TODO obsolete durch kompakteres firstLoop()
