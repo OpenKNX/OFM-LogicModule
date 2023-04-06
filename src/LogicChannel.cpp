@@ -22,7 +22,6 @@ char LogicChannel::sTimeOutputBuffer[10] = "";
 LogicChannel::LogicChannel(uint8_t iChannelNumber)
 {
     _channelIndex = iChannelNumber;
-    mChannelId = iChannelNumber;
     // initialize most important runtime fields
     pCurrentPipeline = 0;
     pValidActiveIO = 0;
