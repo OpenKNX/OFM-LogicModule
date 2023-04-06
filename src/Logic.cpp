@@ -155,9 +155,9 @@ void Logic::processReadRequests()
         {
             log("Time Valid? %i", lValid);
             sDelay = millis();
-            if (knx.paramByte(LOG_CombinedTimeDate) & LOG_CombinedTimeDateMask) {
+            if (ParamLOG_CombinedTimeDate) {
                 // combined date and time
-                knx.getGroupObject(LOG_KoTime).requestObjectRead();
+                KoLOG_Time.requestObjectRead();
             } else {
                 // date and time from separate KOs
                 if (lValid != tmMinutesValid)
@@ -215,7 +215,7 @@ void Logic::processInputKo(GroupObject &iKo)
         lChannel->processInput(lKoLookup->ioIndex);
     }
     if (iKo.asap() == LOG_KoTime) {
-        if (knx.paramByte(LOG_CombinedTimeDate) & LOG_CombinedTimeDateMask) {
+        if (ParamLOG_CombinedTimeDate) {
             KNXValue value = "";
 
             // first ensure we have a valid data-time content
@@ -248,6 +248,7 @@ void Logic::processInputKo(GroupObject &iKo)
                     struct tm lTmp = value;
                     sTimer.setDateTimeFromBus(&lTmp);
                     const bool lSummertime = raw[6] & DPT19_SUMMERTIME;
+                    // TODO check using ParamLOG_SummertimeAll
                     if (((knx.paramByte(LOG_SummertimeAll) & LOG_SummertimeAllMask) >> LOG_SummertimeAllShift) == VAL_STIM_FROM_DPT19)
                         sTimer.setIsSummertime(lSummertime);
                 }
