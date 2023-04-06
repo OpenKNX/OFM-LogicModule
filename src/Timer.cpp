@@ -643,6 +643,7 @@ void Timer::sunRadDec(double d, double *RA, double *dec, double *r)
     /* Convert to spherical coordinates */
     *RA = atan2d(y, x);
     *dec = atan2d(z, sqrt(x * x + y * y));
+
 }
 
 /******************************************************************/
