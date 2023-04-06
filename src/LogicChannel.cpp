@@ -1335,8 +1335,8 @@ void LogicChannel::startStairlight(bool iOutput)
             // stairlight should be switched off
             bool lOff = ParamLOG_fOStairOff;
             // bool lOff = paramLOG_fOStairOff;
-            // bool lOff = LOG::fOStairOff(mChannelId);
-            // bool lOff = fOStairOff(mChannelId);
+            // bool lOff = LOG::fOStairOff(channelIndex());
+            // bool lOff = fOStairOff(channelIndex());
             // lOff = paramlog
             if (lOff)
             {
