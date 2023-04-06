@@ -151,4 +151,3 @@ class Timer
 #define asind(x) (RADEG * asin(x))
 #define acosd(x) (RADEG * acos(x))
 #define atan2d(y, x) (RADEG * atan2(y, x))
-#define atan2d(y, x) (RADEG * atan2(y, x))
