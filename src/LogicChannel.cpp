@@ -1154,6 +1154,7 @@ void LogicChannel::processLogic()
                 // E2 OR I2 are the gate inputs
                 // Invalid data is handled as ???
                 {
+                    // remark: pCurrentIn & BIT_FIRST_PROCESSING == 0 means, first processing was NOT done
                     // Invalid gate is a closed gate (0), as described in app doc
                     // if the behaviour should be changed (invalid is open),
                     // just change the init (for gate and previous) to true.
@@ -1176,7 +1177,7 @@ void LogicChannel::processLogic()
                         if (lIsTriggeredGate)
                             pCurrentIn &= ~(BIT_EXT_INPUT_2 | BIT_INT_INPUT_2);
                     }
-                    uint8_t lGateState = 2 * lPreviousGate + lGate;
+                    uint8_t lGateState = 2 * lPreviousGate + lGate;                    
                     uint8_t lOnGateTrigger = 0xFF;
                     switch (lGateState)
                     {
