@@ -8,9 +8,7 @@
 #include "TimerRestore.h"
 #include "LogicValue.h"
 #include "KnxHelper.h"
-#include "EepromManager.h"
 #include "knxprod.h"
-#include "HardwareDevices.h"
 
 #define SAVE_BUFFER_START_PAGE 0 // All stored KO data begin at this page and takes 40 pages,
 #define SAVE_BUFFER_NUM_PAGES 41 // so next store should start at page 41
