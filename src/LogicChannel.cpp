@@ -1,5 +1,5 @@
 #include "LogicChannel.h"
-#include "Helper.h"
+#include "OpenKNX.h"
 #include "Logic.h"
 #include "LogicFunction.h"
 #include "PCA9632.h"
