@@ -1,5 +1,4 @@
 #include "Logic.h"
-#include "Helper.h"
 #include "OpenKNX.h"
 #include "PCA9632.h"
 #include "Timer.h"
@@ -406,7 +405,7 @@ void Logic::setup()
     {
         char lErrorText[80];
         sprintf(lErrorText, "FATAL: Firmware compiled for %d channels, but knxprod needs %d channels!", LOG_ChannelsFirmware, mNumChannels);
-        fatalError(FATAL_LOG_WRONG_CHANNEL_COUNT, lErrorText);
+        openknx.hardware.fatalError(FATAL_LOG_WRONG_CHANNEL_COUNT, lErrorText);
     }
     for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
     {
