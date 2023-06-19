@@ -1731,52 +1731,50 @@ void LogicChannel::processInternalInputs(uint8_t iChannelId, bool iValue)
     }
 }
 
-bool LogicChannel::processDiagnoseCommand(const char *iInput, char *eOutput, uint8_t iLine)
+bool LogicChannel::processCommand(const std::string iCmd, bool iDebugKo)
 {
     bool lResult = false;
-
-    if (iLine > 0)
+    if (iCmd.substr(0, 8) != "logic ch" || iCmd.length() < 9)
         return lResult;
 
-    switch (iInput[0])
+    if (iCmd.length() > 9)
     {
-        case 'l': {
-            char v[5];
-            // here we find the last IO state
-            uint8_t lValidInput = pValidActiveIO & BIT_INPUT_MASK;
-            uint8_t lCurrentIO = pCurrentIODebug & 0x1F;
-            // input values
-            for (uint8_t i = 0; i < 4; i++)
+        char v[5];
+        // here we find the last IO state
+        uint8_t lValidInput = pValidActiveIO & BIT_INPUT_MASK;
+        uint8_t lCurrentIO = pCurrentIODebug & 0x1F;
+        // input values
+        for (uint8_t i = 0; i < 4; i++)
+        {
+            if (lValidInput & 1)
             {
-                if (lValidInput & 1)
-                {
-                    // input is valid, we present its value
-                    v[i] = (lCurrentIO & 1) ? '1' : '0';
-                }
-                else
-                {
-                    // invalid input
-                    v[i] = 'x';
-                }
-                lValidInput >>= 1;
-                lCurrentIO >>= 1;
-            }
-            // output value
-            if ((pCurrentPipeline & PIP_RUNNING) && (pCurrentIn & BIT_FIRST_PROCESSING))
-            {
-                v[4] = (lCurrentIO & 1) ? '1' : '0';
+                // input is valid, we present its value
+                v[i] = (lCurrentIO & 1) ? '1' : '0';
             }
             else
             {
-                v[4] = 'x';
+                // invalid input
+                v[i] = 'x';
             }
-            // list state of logic of last execution
-            sprintf(eOutput, "A%c B%c C%c D%c Q%c", v[0], v[1], v[2], v[3], v[4]);
-            lResult = true;
-            break;
+            lValidInput >>= 1;
+            lCurrentIO >>= 1;
         }
-        default:
-            break;
+        // output value
+        if ((pCurrentPipeline & PIP_RUNNING) && (pCurrentIn & BIT_FIRST_PROCESSING))
+        {
+            v[4] = (lCurrentIO & 1) ? '1' : '0';
+        }
+        else
+        {
+            v[4] = 'x';
+        }
+        // list state of logic of last execution
+        logInfoP("Inputs: A%c B%c C%c D%c, Output: Q%c", v[0], v[1], v[2], v[3], v[4]);
+        if (iDebugKo)
+        {
+            openknx.console.writeDiagenoseKo("A%c B%c C%c D%c Q%c", v[0], v[1], v[2], v[3], v[4]);
+        }
+        lResult = true;
     }
     return lResult;
 }

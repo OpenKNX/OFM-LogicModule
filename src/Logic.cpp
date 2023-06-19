@@ -300,96 +300,98 @@ void Logic::processInputKo(GroupObject &iKo)
     }
 }
 
-bool Logic::processDiagnoseCommand(const char *iInput, char *eOutput, uint8_t iLine)
+void Logic::showHelp()
+{
+    openknx.console.printHelpLine("logic chNN", "list logic channel NN, i.e. logic ch05");
+    openknx.console.printHelpLine("logic time", "print current time");
+    openknx.console.printHelpLine("logic sun",  "print  sunrise and sunset times");
+    openknx.console.printHelpLine("logic sun+DDMM", "print sunrise/sunset at elevation +/- degree/minute");
+}
+
+bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
 {
     bool lResult = false;
-
-    if (iLine > 0)
+    if (iCmd.substr(0, 6) != "logic " || iCmd.length() < 7)
         return lResult;
 
-    // diagnose is interactive and reacts on commands
-    switch (iInput[0])
+    if (iCmd.substr(6, 2) == "ch")
     {
-        case 'v': {
-            snprintf(eOutput, 15, "Logic %s", version().c_str());
-            lResult = true;
-            break;
+        // Command ch<nn>: Logic inputs and output of last execution
+        // find channel and dispatch
+        uint16_t lIndex = std::stoi(iCmd.substr(8, 2)) - 1;
+        if (lIndex < LOG_ChannelCount) {
+            lResult = mChannel[lIndex]->processCommand(iCmd, iDebugKo);
         }
-        case 'l': {
-            // Command l<nn>: Logic inputs and output of last execution
-            // find channel and dispatch
-            uint8_t lIndex = (iInput[1] - '0') * 10 + iInput[2] - '0' - 1;
-            if (lIndex < LOG_ChannelCount) {
-                lResult = mChannel[lIndex]->processDiagnoseCommand(iInput, eOutput, iLine);
+    }
+    else if (iCmd.substr(6, 4) == "time")
+    {
+        // return internal time (might differ from external)
+        uint8_t lHour = sTimer.getHour();
+        uint8_t lMinute = sTimer.getMinute();
+        uint8_t lSecond = sTimer.getSecond();
+        uint8_t lDay = sTimer.getDay();
+        uint8_t lMonth = sTimer.getMonth();
+        // this if prevents stupid warnings
+        if (lHour < 24 && lMinute < 60 && lSecond < 60 && lDay < 32 && lMonth < 13)
+        {
+            logInfoP("Module time: %02d:%02d:%02d, Date: %02d.%02d", lHour, lMinute, lSecond, lDay, lMonth);
+            if (iDebugKo)
+            {
+                openknx.console.writeDiagenoseKo("%02d:%02d:%02d %02d.%02d", lHour, lMinute, lSecond, lDay, lMonth);
             }
-            break;
         }
-        case 't': {
-            // return internal time (might differ from external
-            uint8_t lHour = sTimer.getHour();
-            uint8_t lMinute = sTimer.getMinute();
-            uint8_t lSecond = sTimer.getSecond();
-            uint8_t lDay = sTimer.getDay();
-            uint8_t lMonth = sTimer.getMonth();
+        lResult = true;
+    }
+    else if (iCmd.substr(6, 3) == "sun")
+    {
+        if (iCmd.substr(9, 1) == "-" || iCmd.substr(9, 1) == "+")
+        {
+            // return sunrise and sunset for a specific elevation teSDD,
+            // where S=Sign(+,-) and DD ist elevation in degree
+            double lDegree = std::stod(iCmd.substr(9, 3));
+            uint8_t lMinute = std::stoi(iCmd.substr(12, 2));
+            lDegree = (lDegree + lMinute / 60.0);
+            sTime lSunrise;
+            sTime lSunset;
+            sTimer.getSunDegree(SUN_SUNRISE, lDegree, &lSunrise);
+            sTimer.getSunDegree(SUN_SUNSET, lDegree, &lSunset);
             // this if prevents stupid warnings
-            if (lHour < 24 && lMinute < 60 && lSecond < 60 && lDay < 32 && lMonth < 13)
+            if (lSunrise.hour >= 0 && lSunrise.hour < 24 && lSunrise.minute >= 0 && lSunrise.minute < 60 && lSunset.hour >= 0 && lSunset.hour < 24 && lSunset.minute >= 0 && lSunset.minute < 60)
             {
-                snprintf(eOutput, 15, "%02d:%02d:%02d %02d.%02d", lHour, lMinute, lSecond, lDay, lMonth);
-                lResult = true;
-            }
-            break;
-        }
-        case 'r': {
-            if (iInput[1] == 'e')
-            {
-                // return sunrise and sunset for a specific elevation teSDD,
-                // where S=Sign(+,-) and DD ist elevation in degree
-                if (iInput[2] == '-' || iInput[2] == '+')
+                logInfoP("Sunrise: %02d:%02d Sunset: %02d:%02d", lSunrise.hour, lSunrise.minute, lSunset.hour, lSunset.minute);
+                if (iDebugKo)
                 {
-                    double lDegree = ((iInput[3] - '0') * 10 + iInput[4] - '0');
-                    uint8_t lMinute = ((iInput[5] - '0') * 10 + iInput[6] - '0');
-                    lDegree = (lDegree + lMinute / 60.0) * (iInput[2] == '+' ? 1 : -1);
-                    sTime lSunrise;
-                    sTime lSunset;
-                    sTimer.getSunDegree(SUN_SUNRISE, lDegree, &lSunrise);
-                    sTimer.getSunDegree(SUN_SUNSET, lDegree, &lSunset);
-                    // this if prevents stupid warnings
-                    if (lSunrise.hour >= 0 && lSunrise.hour < 24 && lSunrise.minute >= 0 && lSunrise.minute < 60 && lSunset.hour >= 0 && lSunset.hour < 24 && lSunset.minute >= 0 && lSunset.minute < 60)
-                        snprintf(eOutput, 15, "R%02d:%02d S%02d:%02d", lSunrise.hour, lSunrise.minute, lSunset.hour, lSunset.minute);
-                }
-                else
-                {
-                    snprintf(eOutput, 15, "TRY re-0600");
+                    openknx.console.writeDiagenoseKo("R%02d:%02d S%02d:%02d", lSunrise.hour, lSunrise.minute, lSunset.hour, lSunset.minute);
                 }
                 lResult = true;
             }
-            else
+        }
+        else
+        {
+            // return sunrise and sunset
+            sTime *lSunrise = sTimer.getSunInfo(SUN_SUNRISE);
+            sTime *lSunset = sTimer.getSunInfo(SUN_SUNSET);
+            // this if prevents stupid warnings
+            if (lSunrise->hour >= 0 && lSunrise->hour < 24 && lSunrise->minute >= 0 && lSunrise->minute < 60 && lSunset->hour >= 0 && lSunset->hour < 24 && lSunset->minute >= 0 && lSunset->minute < 60)
             {
-                // return sunrise and sunset
-                sTime *lSunrise = sTimer.getSunInfo(SUN_SUNRISE);
-                sTime *lSunset = sTimer.getSunInfo(SUN_SUNSET);
-                // this if prevents stupid warnings
-                if (lSunrise->hour >= 0 && lSunrise->hour < 24 && lSunrise->minute >= 0 && lSunrise->minute < 60 && lSunset->hour >= 0 && lSunset->hour < 24 && lSunset->minute >= 0 && lSunset->minute < 60)
+                logInfoP("Sunrise: %02d:%02d Sunset: %02d:%02d", lSunrise->hour, lSunrise->minute, lSunset->hour, lSunset->minute);
+                if (iDebugKo)
                 {
-                    snprintf(eOutput, 15, "R%02d:%02d S%02d:%02d", lSunrise->hour, lSunrise->minute, lSunset->hour, lSunset->minute);
-                    lResult = true;
+                    openknx.console.writeDiagenoseKo("R%02d:%02d S%02d:%02d", lSunrise->hour, lSunrise->minute, lSunset->hour, lSunset->minute);
                 }
+                lResult = true;
             }
-            break;
         }
-        case 'o': {
-            // calculate easter date
-            snprintf(eOutput, 15, "O%02d.%02d", sTimer.getEaster()->day, sTimer.getEaster()->month);
-            lResult = true;
-            break;
+    }
+    else if (iCmd.substr(6, 6) == "easter")
+    {
+        // calculate easter date
+        logInfoP("Easter date: %02d.%02d", sTimer.getEaster()->day, sTimer.getEaster()->month);
+        if (iDebugKo)
+        {
+            openknx.console.writeDiagenoseKo("O%02d.%02d", sTimer.getEaster()->day, sTimer.getEaster()->month);
         }
-        case 'm': {
-            snprintf(eOutput, 15, "%i", freeMemory());
-            lResult = true;
-            break;
-        }
-        default:
-            break;
+        lResult = true;
     }
     return lResult;
 }
