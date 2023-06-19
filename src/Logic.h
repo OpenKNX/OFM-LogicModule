@@ -57,8 +57,8 @@ class Logic : public OpenKNX::Module
     void processAfterStartupDelay();
     void processReadRequests();
     void processInputKo(GroupObject &iKo);
-    bool processDiagnoseCommand(const char *iInput, char *eOutput, uint8_t iLine) override;
-    void outputDiagnose(GroupObject &iKo);
+    void showHelp() override;
+    bool processCommand(const std::string cmd, bool debugKo) override;
     void debug();
     void setup();
     void loop();
