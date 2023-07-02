@@ -3,6 +3,11 @@
 #include <ctime>
 #include "OpenKNX.h"
 
+// Experimental Inclusion of RTC-Timer in RP2040
+// @see https://www.raspberrypi.com/documentation/pico-sdk/hardware.html#rtc_example
+#include "hardware/rtc.h"
+#include "pico/util/datetime.h"
+
 sDay Timer::cHolidays[cHolidaysCount] = {
     {1, 1},
     {6, 1},
@@ -142,6 +147,30 @@ void Timer::calculateSunriseSunset()
     convertToLocalTime(set, &mSunset);
 }
 
+// Experimental Inclusion of RTC-Timer in RP2040
+void Timer::setHardwareDateTime(tm *iDateTime)
+{
+    datetime_t t = {
+            .year  = (int16_t)iDateTime->tm_year,
+            .month = (int8_t)iDateTime->tm_mon,
+            .day   = (int8_t)iDateTime->tm_mday,
+            .dotw  = (int8_t)iDateTime->tm_wday, // 0=Sunday
+            .hour  = (int8_t)iDateTime->tm_hour,
+            .min   = (int8_t)iDateTime->tm_min,
+            .sec   = (int8_t)iDateTime->tm_sec,
+    };
+
+    // Start the RTC
+    rtc_init();
+    rtc_set_datetime(&t);
+
+    // "clk_sys is >2000x faster than clk_rtc, 
+    // so datetime is not updated immediately when rtc_get_datetime() is called.
+    // tbe delay is up to 3 RTC clock cycles (which is 64us with the default clock settings)"
+    // [https://www.raspberrypi.com/documentation/pico-sdk/hardware.html#rtc_example]
+    sleep_us(64);
+}
+
 void Timer::setTimeFromBus(tm *iTime)
 {
     if (mNow.tm_min != iTime->tm_min || mNow.tm_hour != iTime->tm_hour)
@@ -152,6 +181,12 @@ void Timer::setTimeFromBus(tm *iTime)
     mktime(&mNow);
     mTimeDelay = millis();
     mTimeValid = static_cast<eTimeValid>(mTimeValid | tmMinutesValid);
+
+    // Experimental Inclusion of RTC-Timer in RP2040
+    if (mTimeValid == tmValid)
+    {
+        // TODO check setting hardware-clock
+    }
 }
 
 void Timer::setDateFromBus(tm *iDate)
@@ -176,6 +211,12 @@ void Timer::setDateFromBus(tm *iDate)
     mTimeDelay = millis();
     if (mNow.tm_year >= MINYEAR-1900)
         mTimeValid = static_cast<eTimeValid>(mTimeValid | tmDateValid);
+
+    // Experimental Inclusion of RTC-Timer in RP2040
+    if (mTimeValid == tmValid)
+    {
+        // TODO check setting hardware-clock
+    }
 }
 
 void Timer::setDateTimeFromBus(tm *iDateTime)
@@ -183,6 +224,9 @@ void Timer::setDateTimeFromBus(tm *iDateTime)
     // TODO DPT19: check optimizations
     setTimeFromBus(iDateTime);
     setDateFromBus(iDateTime);
+
+    // Experimental Inclusion of RTC-Timer in RP2040
+    setHardwareDateTime(iDateTime);
 }
 
 bool Timer::minuteChanged()

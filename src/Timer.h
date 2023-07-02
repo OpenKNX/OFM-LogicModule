@@ -41,6 +41,10 @@ enum eTimeValid
 
 class Timer
 {
+  private:
+    // Experimental Inclusion of UTC-Timer in RP2040
+    void setHardwareDateTime(tm *iDateTime);
+
   protected:
     static const uint8_t cHolidaysCount = 32;
     static sDay cHolidays[cHolidaysCount];
