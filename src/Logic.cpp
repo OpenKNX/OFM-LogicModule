@@ -27,6 +27,9 @@ const std::string Logic::version()
 Logic::Logic()
 {
     LogicChannel::sLogic = this;
+    // init KoLookup (robustness)
+    addKoLookup(0, 0, 0);
+    mNumKoLookups = 0;
 }
 
 Logic::~Logic()
@@ -65,12 +68,14 @@ void Logic::addKoLookup(uint16_t iKoNumber, uint8_t iChannelId, uint8_t iIOIndex
 bool Logic::getKoLookup(uint16_t iKoNumber, sKoLookup **iKoLookup)
 {
     sKoLookup *lIterator = *iKoLookup;
+    uint16_t lIterationCount = 0;
     if (*iKoLookup == 0)
         lIterator = &mKoLookup[0];
     else
         lIterator++;
-    while (lIterator->koNumber > 0)
+    while (lIterator->koNumber > 0 && lIterationCount < mNumKoLookups)
     {
+        lIterationCount++;
         if (lIterator->koNumber == iKoNumber)
         {
             *iKoLookup = lIterator;
@@ -83,7 +88,6 @@ bool Logic::getKoLookup(uint16_t iKoNumber, sKoLookup **iKoLookup)
     }
     return false;
 }
-
 
 // REVIEW
 // bool Logic::prepareChannels()
@@ -111,7 +115,6 @@ void Logic::processAllInternalInputs(LogicChannel *iChannel, bool iValue)
         lChannel->processInternalInputs(lChannelId, iValue);
     }
 }
-
 
 void Logic::processAfterStartupDelay()
 {
@@ -202,13 +205,16 @@ void Logic::processInputKo(GroupObject &iKo)
         LogicChannel *lChannel = mChannel[lKoLookup->channelIndex];
         lChannel->processInput(lKoLookup->ioIndex);
     }
-    if (iKo.asap() == LOG_KoTime) {
-        if (knx.paramByte(LOG_CombinedTimeDate) & LOG_CombinedTimeDateMask) {
+    if (iKo.asap() == LOG_KoTime)
+    {
+        if (knx.paramByte(LOG_CombinedTimeDate) & LOG_CombinedTimeDateMask)
+        {
             KNXValue value = "";
 
             // first ensure we have a valid data-time content
             // (including the correct length)
-            if (iKo.tryValue(value, getDPT(VAL_DPT_19))) {
+            if (iKo.tryValue(value, getDPT(VAL_DPT_19)))
+            {
 
                 // use raw value, as current version of knx do not provide access to all fields
                 // TODO DPT19: check integration of extended DPT19 access into knx or OpenKNX-Commons
@@ -232,7 +238,8 @@ void Logic::processInputKo(GroupObject &iKo)
                 // * NY - missing year
                 // * ND - missing date
                 // * NT - missing time
-                if (!(raw[6] & (DPT19_FAULT | DPT19_NO_YEAR | DPT19_NO_DATE | DPT19_NO_TIME))) {
+                if (!(raw[6] & (DPT19_FAULT | DPT19_NO_YEAR | DPT19_NO_DATE | DPT19_NO_TIME)))
+                {
                     struct tm lTmp = value;
                     sTimer.setDateTimeFromBus(&lTmp);
                     const bool lSummertime = raw[6] & DPT19_SUMMERTIME;
@@ -240,22 +247,30 @@ void Logic::processInputKo(GroupObject &iKo)
                         sTimer.setIsSummertime(lSummertime);
                 }
             }
-        } else {
+        }
+        else
+        {
             KNXValue value = "";
             // ensure we have a valid time content
-            if (iKo.tryValue(value, getDPT(VAL_DPT_10))) {
+            if (iKo.tryValue(value, getDPT(VAL_DPT_10)))
+            {
                 struct tm lTmp = value;
                 sTimer.setTimeFromBus(&lTmp);
             }
         }
-    } else if (iKo.asap() == LOG_KoDate) {
+    }
+    else if (iKo.asap() == LOG_KoDate)
+    {
         KNXValue value = "";
         // ensure we have a valid date content
-        if (iKo.tryValue(value, getDPT(VAL_DPT_11))) {
+        if (iKo.tryValue(value, getDPT(VAL_DPT_11)))
+        {
             struct tm lTmp = value;
-        sTimer.setDateFromBus(&lTmp);
+            sTimer.setDateFromBus(&lTmp);
+        }
     }
-    } else if (iKo.asap() == LOG_KoIsSummertime) {
+    else if (iKo.asap() == LOG_KoIsSummertime)
+    {
         sTimer.setIsSummertime(iKo.value(getDPT(VAL_DPT_1)));
     }
 #ifdef BUZZER_PIN
@@ -291,11 +306,11 @@ void Logic::showHelp()
 {
     openknx.console.printHelpLine("logic chNN", "list logic channel NN, i.e. logic ch05");
     openknx.console.printHelpLine("logic time", "print current time");
-    openknx.console.printHelpLine("logic sun",  "print  sunrise and sunset times");
+    openknx.console.printHelpLine("logic sun", "print  sunrise and sunset times");
     openknx.console.printHelpLine("logic sun+DDMM", "print sunrise/sunset at elevation +/- degree/minute");
 }
 
-bool Logic::processCommand(const std::string iCmd, bool iDebugKo) 
+bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
 {
     bool lResult = false;
     if (iCmd.substr(0, 6) != "logic " || iCmd.length() < 7)
@@ -306,10 +321,11 @@ bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
         // Command ch<nn>: Logic inputs and output of last execution
         // find channel and dispatch
         uint16_t lIndex = std::stoi(iCmd.substr(8, 2)) - 1;
-        if (lIndex < LOG_ChannelCount) {
+        if (lIndex < LOG_ChannelCount)
+        {
             lResult = mChannel[lIndex]->processCommand(iCmd, iDebugKo);
         }
-    } 
+    }
     else if (iCmd.substr(6, 4) == "time")
     {
         // return internal time (might differ from external)
@@ -322,13 +338,13 @@ bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
         if (lHour < 24 && lMinute < 60 && lSecond < 60 && lDay < 32 && lMonth < 13)
         {
             logInfoP("Module time: %02d:%02d:%02d, Date: %02d.%02d", lHour, lMinute, lSecond, lDay, lMonth);
-            if (iDebugKo) 
+            if (iDebugKo)
             {
                 openknx.console.writeDiagenoseKo("%02d:%02d:%02d %02d.%02d", lHour, lMinute, lSecond, lDay, lMonth);
             }
         }
         lResult = true;
-    } 
+    }
     else if (iCmd.substr(6, 3) == "sun")
     {
         if (iCmd.substr(9, 1) == "-" || iCmd.substr(9, 1) == "+")
@@ -336,7 +352,7 @@ bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
             // return sunrise and sunset for a specific elevation teSDD,
             // where S=Sign(+,-) and DD ist elevation in degree
             double lDegree = std::stod(iCmd.substr(9, 3));
-            uint8_t lMinute = std::stoi(iCmd.substr(12, 2)); 
+            uint8_t lMinute = std::stoi(iCmd.substr(12, 2));
             lDegree = (lDegree + lMinute / 60.0);
             sTime lSunrise;
             sTime lSunset;
@@ -346,7 +362,7 @@ bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
             if (lSunrise.hour >= 0 && lSunrise.hour < 24 && lSunrise.minute >= 0 && lSunrise.minute < 60 && lSunset.hour >= 0 && lSunset.hour < 24 && lSunset.minute >= 0 && lSunset.minute < 60)
             {
                 logInfoP("Sunrise: %02d:%02d Sunset: %02d:%02d", lSunrise.hour, lSunrise.minute, lSunset.hour, lSunset.minute);
-                if (iDebugKo) 
+                if (iDebugKo)
                 {
                     openknx.console.writeDiagenoseKo("R%02d:%02d S%02d:%02d", lSunrise.hour, lSunrise.minute, lSunset.hour, lSunset.minute);
                 }
@@ -360,21 +376,21 @@ bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
             sTime *lSunset = sTimer.getSunInfo(SUN_SUNSET);
             // this if prevents stupid warnings
             if (lSunrise->hour >= 0 && lSunrise->hour < 24 && lSunrise->minute >= 0 && lSunrise->minute < 60 && lSunset->hour >= 0 && lSunset->hour < 24 && lSunset->minute >= 0 && lSunset->minute < 60)
-            { 
+            {
                 logInfoP("Sunrise: %02d:%02d Sunset: %02d:%02d", lSunrise->hour, lSunrise->minute, lSunset->hour, lSunset->minute);
-                if (iDebugKo) 
+                if (iDebugKo)
                 {
                     openknx.console.writeDiagenoseKo("R%02d:%02d S%02d:%02d", lSunrise->hour, lSunrise->minute, lSunset->hour, lSunset->minute);
                 }
                 lResult = true;
             }
         }
-    } 
+    }
     else if (iCmd.substr(6, 6) == "easter")
     {
         // calculate easter date
         logInfoP("Easter date: %02d.%02d", sTimer.getEaster()->day, sTimer.getEaster()->month);
-        if (iDebugKo) 
+        if (iDebugKo)
         {
             openknx.console.writeDiagenoseKo("O%02d.%02d", sTimer.getEaster()->day, sTimer.getEaster()->month);
         }
@@ -421,7 +437,7 @@ void Logic::setup()
     int8_t lTimezone = ParamLOG_TimezoneValue;
     lTimezone = lTimezone * (lTimezoneSign ? -1 : 1);
     bool lUseSummertime = (ParamLOG_SummertimeAll == VAL_STIM_FROM_INTERN);
-    sTimer.setup(ParamLOG_Longitude, ParamLOG_Latitude, ParamLOG_Timezone, lUseSummertime, knx.paramInt(LOG_Neujahr)); //do not fetch just ParamLOG_Neujahr here, we need the whole bitfield
+    sTimer.setup(ParamLOG_Longitude, ParamLOG_Latitude, ParamLOG_Timezone, lUseSummertime, knx.paramInt(LOG_Neujahr)); // do not fetch just ParamLOG_Neujahr here, we need the whole bitfield
     // for TimerRestore we prepare all Timer channels
     for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
     {
@@ -431,13 +447,13 @@ void Logic::setup()
 }
 void Logic::loop()
 {
-    if(!openknx.afterStartupDelay())
+    if (!openknx.afterStartupDelay())
         return;
     uint32_t lLoopTime = millis();
     processReadRequests();
     sTimer.loop(); // clock and timer async methods
     // we loop on all channels and execute pipeline
-    
+
     uint8_t lChannelsProcessed = 0;
     // for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
     while (lChannelsProcessed < mNumChannels && openknx.freeLoopTime())
@@ -462,8 +478,8 @@ void Logic::loop()
     }
     if (lChannelsProcessed < mNumChannels)
         logInfoP("did not process all channels during loop, just %i channels", lChannelsProcessed);
-    if (millis()-lLoopTime > 1)
-        logInfoP("LoopTime: %i", millis()-lLoopTime);
+    if (millis() - lLoopTime > 1)
+        logInfoP("LoopTime: %i", millis() - lLoopTime);
 }
 
 // start timer implementation
@@ -513,7 +529,7 @@ void Logic::sendHoliday()
     if (sTimer.holidayChanged())
     {
         // write the newly calculated holiday information into KO (can be read externally)
-        
+
         KoLOG_Holiday1.valueNoSend(sTimer.holidayToday(), getDPT(VAL_DPT_5));
         KoLOG_Holiday2.valueNoSend(sTimer.holidayTomorrow(), getDPT(VAL_DPT_5));
         sTimer.clearHolidayChanged();
