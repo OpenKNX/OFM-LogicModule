@@ -504,42 +504,47 @@ LogicValue LogicChannel::getInputValue(uint8_t iIOIndex, uint8_t *eDpt)
     }
     else
     {
-        GroupObject *lKo = getKo(iIOIndex);
-        // based on dpt, we read the correct c type.
-        switch (*eDpt)
-        {
-            case VAL_DPT_2: {
-                LogicValue lValue = lKo->valueRef()[0];
-                return lValue;
-            }
-            case VAL_DPT_6: {
-                LogicValue lValue = (int8_t)lKo->value(getDPT(VAL_DPT_6));
-                return lValue;
-            }
-            case VAL_DPT_8: {
-                LogicValue lValue = (int16_t)lKo->value(getDPT(VAL_DPT_8));
-                return lValue;
-            }
-            case VAL_DPT_12: {
-                LogicValue lValue = (uint32_t)lKo->value(getDPT(VAL_DPT_12));
-                return lValue;
-            }
-            // case VAL_DPT_7:
-            //     LogicValue lValue = lKo->valueRef()[0] + 256 * lKo->valueRef()[1];
-            //     break;
-            // case VAL_DPT_232:
-            //     lValue =
-            //         lKo->valueRef()[0] + 256 * lKo->valueRef()[1] + 65536 * lKo->valueRef()[2];
-            //     break;
-            case VAL_DPT_9: 
-            case VAL_DPT_14: {
-                LogicValue lValue = (float)lKo->value(getDPT(*eDpt));
-                return lValue;
-            } // case VAL_DPT_17:
-            default: {
-                LogicValue lValue = (int32_t)lKo->value(getDPT(*eDpt));
-                return lValue;
-            }
+        return getKoValue(iIOIndex, eDpt);
+    }
+}
+
+LogicValue LogicChannel::getKoValue(uint8_t iIOIndex, uint8_t *eDpt)
+{
+    GroupObject *lKo = getKo(iIOIndex);
+    // based on dpt, we read the correct c type.
+    switch (*eDpt)
+    {
+        case VAL_DPT_2: {
+            LogicValue lValue = lKo->valueRef()[0];
+            return lValue;
+        }
+        case VAL_DPT_6: {
+            LogicValue lValue = (int8_t)lKo->value(getDPT(VAL_DPT_6));
+            return lValue;
+        }
+        case VAL_DPT_8: {
+            LogicValue lValue = (int16_t)lKo->value(getDPT(VAL_DPT_8));
+            return lValue;
+        }
+        case VAL_DPT_12: {
+            LogicValue lValue = (uint32_t)lKo->value(getDPT(VAL_DPT_12));
+            return lValue;
+        }
+        // case VAL_DPT_7:
+        //     LogicValue lValue = lKo->valueRef()[0] + 256 * lKo->valueRef()[1];
+        //     break;
+        // case VAL_DPT_232:
+        //     lValue =
+        //         lKo->valueRef()[0] + 256 * lKo->valueRef()[1] + 65536 * lKo->valueRef()[2];
+        //     break;
+        case VAL_DPT_9: 
+        case VAL_DPT_14: {
+            LogicValue lValue = (float)lKo->value(getDPT(*eDpt));
+            return lValue;
+        } // case VAL_DPT_17:
+        default: {
+            LogicValue lValue = (int32_t)lKo->value(getDPT(*eDpt));
+            return lValue;
         }
     }
 }
@@ -629,7 +634,8 @@ void LogicChannel::writeFunctionValue(uint16_t iParamIndex)
     LogicValue lE1 = getInputValue(BIT_EXT_INPUT_1, &lDptE1);
     LogicValue lE2 = getInputValue(BIT_EXT_INPUT_2, &lDptE2);
     uint8_t lDptOut = getByteParam(LOG_fODpt);
-    LogicValue lValue = LogicFunction::callFunction(lFunction, lDptE1, lE1, lDptE2, lE2, &lDptOut);
+    LogicValue lKoValue = getKoValue(IO_Output, &lDptOut);
+    LogicValue lValue = LogicFunction::callFunction(lFunction, lDptE1, lE1, lDptE2, lE2, &lDptOut, lKoValue);
     writeValue(lValue, lDptOut);
 }
 

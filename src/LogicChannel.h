@@ -235,6 +235,7 @@ class LogicChannel : public OpenKNX::Channel
     LogicValue getParamForDelta(uint8_t iDpt, uint16_t iParamIndex);
     LogicValue getParamByDpt(uint8_t iDpt, uint16_t iParamIndex);
     LogicValue getInputValue(uint8_t iIOIndex, uint8_t *eDpt);
+    LogicValue getKoValue(uint8_t iIOIndex, uint8_t *eDpt);
     void writeConstantValue(uint16_t iParamIndex);
     void writeParameterValue(uint8_t iIOIndex);
     void writeFunctionValue(uint16_t iParamIndex);
