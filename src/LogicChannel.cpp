@@ -539,7 +539,12 @@ LogicValue LogicChannel::getKoValue(uint8_t iIOIndex, uint8_t *eDpt)
         //     break;
         case VAL_DPT_9: 
         case VAL_DPT_14: {
-            LogicValue lValue = (float)lKo->value(getDPT(*eDpt));
+            LogicValue lValue = NO_NUM;
+            bool lInitialized = lKo->commFlag() != ComFlag::Uninitialized;
+            if (lInitialized && iIOIndex < IO_Output)
+                lInitialized == lKo->commFlag() != ComFlag::Transmitting;
+            if (lInitialized)
+                lValue = (float)lKo->value(getDPT(*eDpt));
             return lValue;
         } // case VAL_DPT_17:
         default: {
