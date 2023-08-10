@@ -90,6 +90,10 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 
 Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer das Gesamtdokument lesen muss, um Neuerungen zu erfahren.
 
+01.08.2023: Firmware 1.5, Applikation 1.5
+
+* NEU: Mathematische Funktion "Glättung" von Werten eingeführt
+* NEU: Output Converter "Wert eines KO senden" eingeführt
 18.02.2023: Firmware 1.4.2, Applikation 1.4
 
 * Überflüssige Libraries entfernt, keine funktionalen Änderungen.
@@ -2012,6 +2016,28 @@ Die Werte von E1 und E2 werden zuerst nach Boolean konvertiert. Dabei gilt:
     E ungleich 0 --> true  bzw. 1
 
 Ist nur ein Eingang aktiv, ist der andere 0.
+
+#### **A = Glättung(E1, E2)**
+
+Der Wert E1 wird mit Hilfe eines Dämpfungswertes E2 geglättet ausgegeben und erlaubt es so, einen Messwertverlauf zu glätten, indem starke Wertschwankungen ausgeglichen werden.
+
+Die Glättung wird nach folgender Formel berechnet:
+
+A<sub>neu</sub> = A<sub>alt</sub> + (E1 - A<sub>alt</sub>) / E2
+
+wobei A<sub>neu</sub> der neue Berechnete Wert des KO ist, das den neuen Wert sendet und A<sub>alt</sub> der letzte (vorherige) Wert ist, der gesendet wurde.
+
+Ist noch kein Glättungswert berechnet worden (A<sub>alt</sub> ist initial), so gilt
+
+A<sub>neu</sub> = E1
+
+Die Funktion nimmt somit initial den ersten Messwert als Startwert.
+
+> Achtung: Der Initialwert für die Berechnung kann auch von außen gesetzt werden, indem am Ausgangs-KO ein S-Flag gesetzt wird und das KO dann mit dem Initialwert beschrieben wird. 
+
+Die Funktion kann zwar mit allen Eingangs-DPT arbeiten, ist aber besonders für DPT9 und DPT14 geeignet und auch nur mit diesen getestet.
+
+Die Funktion liefert 0, wenn nur einer der beiden Eingänge aktiv sein sollte oder E2 = 0 ist.
 
 ### **Benutzerfunktionen**
 

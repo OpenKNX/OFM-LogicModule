@@ -1,14 +1,14 @@
 #pragma once
+#include "KnxHelper.h"
+#include "LogicValue.h"
 #include "OpenKNX.h"
+#include "Timer.h"
+#include "TimerRestore.h"
+#include "knxprod.h"
+#include <Wire.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <Wire.h>
-#include "Timer.h"
-#include "TimerRestore.h"
-#include "LogicValue.h"
-#include "KnxHelper.h"
-#include "knxprod.h"
 
 #define SAVE_BUFFER_START_PAGE 0 // All stored KO data begin at this page and takes 40 pages,
 #define SAVE_BUFFER_NUM_PAGES 41 // so next store should start at page 41
@@ -72,6 +72,7 @@
 #define VAL_Out_Buzzer 6
 #define VAL_Out_RGBLed 7
 #define VAL_Out_Function 8
+#define VAL_Out_OtherKO 9
 
 // enum output filter
 #define VAL_AllowRepeat_All 0
@@ -95,11 +96,11 @@
 #define BIT_PREVIOUS_GATE 0x40
 #define BIT_INITIAL_GATE 0x80
 
-#define BIT_OUTPUT_LOGIC 0x01    
+#define BIT_OUTPUT_LOGIC 0x01
 #define BIT_OUTPUT_BLINK 0x02
 #define BIT_OUTPUT_PREVIOUS 0x04
 #define BIT_OUTPUT_INITIAL 0x08
-#define BIT_OUTPUT_DEBUG 0x10    
+#define BIT_OUTPUT_DEBUG 0x10
 
 // enum fo IOIndex
 #define IO_Absolute 0
@@ -108,24 +109,24 @@
 #define IO_Output 3
 
 // pipeline steps
-#define PIP_STARTUP 1                     // startup delay for each channel
-#define PIP_REPEAT_INPUT1 2               // send read requests for input 1
-#define PIP_REPEAT_INPUT2 4               // send read requests for input 2
-#define PIP_CONVERT_INPUT1 8              // convert input value 1 to bool
-#define PIP_CONVERT_INPUT2 16             // convert input value 2 to bool
-#define PIP_LOGIC_EXECUTE 32              // do logical step
-#define PIP_STAIRLIGHT 64                 // do stairlight delay
-#define PIP_BLINK 128                     // do blinking during stairlight
-#define PIP_ON_DELAY 256                  // delay on signal
-#define PIP_OFF_DELAY 512                 // delay off signal
-#define PIP_OUTPUT_FILTER_ON 1024         // Filter repeated signals
-#define PIP_OUTPUT_FILTER_OFF 2048        // Filter repeated signals
-#define PIP_ON_REPEAT 4096                // repeat on signal
-#define PIP_OFF_REPEAT 8192               // repeat off signal
-#define PIP_TIMER_INPUT 16384             // process timer as input signal
-#define PIP_RUNNING 32768                 // is a currently running channel
-#define PIP_TIMER_RESTORE_STATE 65536     // timer restore is active for this channel
-#define PIP_TIMER_RESTORE_STEP 131072     // timer restore for this channel was processed an other day back
+#define PIP_STARTUP 1                 // startup delay for each channel
+#define PIP_REPEAT_INPUT1 2           // send read requests for input 1
+#define PIP_REPEAT_INPUT2 4           // send read requests for input 2
+#define PIP_CONVERT_INPUT1 8          // convert input value 1 to bool
+#define PIP_CONVERT_INPUT2 16         // convert input value 2 to bool
+#define PIP_LOGIC_EXECUTE 32          // do logical step
+#define PIP_STAIRLIGHT 64             // do stairlight delay
+#define PIP_BLINK 128                 // do blinking during stairlight
+#define PIP_ON_DELAY 256              // delay on signal
+#define PIP_OFF_DELAY 512             // delay off signal
+#define PIP_OUTPUT_FILTER_ON 1024     // Filter repeated signals
+#define PIP_OUTPUT_FILTER_OFF 2048    // Filter repeated signals
+#define PIP_ON_REPEAT 4096            // repeat on signal
+#define PIP_OFF_REPEAT 8192           // repeat off signal
+#define PIP_TIMER_INPUT 16384         // process timer as input signal
+#define PIP_RUNNING 32768             // is a currently running channel
+#define PIP_TIMER_RESTORE_STATE 65536 // timer restore is active for this channel
+#define PIP_TIMER_RESTORE_STEP 131072 // timer restore for this channel was processed an other day back
 
 #define TIMD_WEEKDAY_MASK 0x0007
 #define TIMD_WEEKDAY_SHIFT 0
@@ -208,7 +209,7 @@ class LogicChannel : public OpenKNX::Channel
 #if LOGIC_TRACE
     static char sFilter[30];
     static char sTimeOutputBuffer[10];
-    char* logTimeBase(uint16_t iParamIndex);
+    char *logTimeBase(uint16_t iParamIndex);
     int logChannel(const char *format, ...);
     bool debugFilter();
 #endif
@@ -221,7 +222,7 @@ class LogicChannel : public OpenKNX::Channel
     uint32_t getIntParam(uint16_t iParamIndex);
     int32_t getSIntParam(uint16_t iParamIndex);
     float getFloatParam(uint16_t iParamIndex);
-    uint8_t* getStringParam(uint16_t iParamIndex);
+    uint8_t *getStringParam(uint16_t iParamIndex);
     uint32_t getTimeDelayParam(uint16_t iParamIndex, bool iAsSeconds = false);
     GroupObject *getKo(uint8_t iIOIndex);
     Dpt &getKoDPT(uint8_t iIOIndex);
@@ -229,16 +230,19 @@ class LogicChannel : public OpenKNX::Channel
     void knxWriteInt(uint8_t iIOIndex, int32_t iValue);
     void knxWriteRawInt(uint8_t iIOIndex, int32_t iValue);
     void knxWriteFloat(uint8_t iIOIndex, float iValue);
-    void knxWriteString(uint8_t iIOIndex, const char* iValue);
+    void knxWriteString(uint8_t iIOIndex, const char *iValue);
     void knxRead(uint8_t iIOIndex);
     void knxResetDevice(uint16_t iParamIndex);
     LogicValue getParamForDelta(uint8_t iDpt, uint16_t iParamIndex);
     LogicValue getParamByDpt(uint8_t iDpt, uint16_t iParamIndex);
     LogicValue getInputValue(uint8_t iIOIndex, uint8_t *eDpt);
-    LogicValue getKoValue(uint8_t iIOIndex, uint8_t *eDpt);
+    LogicValue getKoValue(uint8_t iIOIndex, uint8_t iDpt);
+    LogicValue getKoValue(GroupObject *iKo, uint8_t iDpt, bool iIsInput);
+    LogicValue getOtherKoValue(uint16_t iKoNumber, uint8_t iDptParamIndex);
     void writeConstantValue(uint16_t iParamIndex);
     void writeParameterValue(uint8_t iIOIndex);
     void writeFunctionValue(uint16_t iParamIndex);
+    void writeOtherKoValue(uint16_t iParamIndex, uint16_t iDptIndex);
     void writeValue(LogicValue iValue, uint8_t iDpt);
     void setRGBColor(uint16_t iParamIndex);
     void setBuzzer(uint16_t iParamIndex);
@@ -292,7 +296,6 @@ class LogicChannel : public OpenKNX::Channel
     const std::string name() override;
 
   protected:
-
     union uInputProcessing
     {
         struct
@@ -321,7 +324,7 @@ class LogicChannel : public OpenKNX::Channel
     uint8_t pCurrentOut;       // Bitfield: logic output (0), blink output (1), previous output (2), initial output (3), debug output (4)
     uint32_t pCurrentPipeline; // Bitfield: indicator for current pipeline step
 
-    uint8_t pCurrentIODebug;   // Bitfield: current input (0-3), logic output (4)
+    uint8_t pCurrentIODebug; // Bitfield: current input (0-3), logic output (4)
     // uint32_t pRepeatInput1Delay;  // used also for timer preparation
     // uint32_t pRepeatInput2Delay;  // used also for timer processing
     uInputProcessing pInputProcessing;
@@ -346,7 +349,7 @@ class LogicChannel : public OpenKNX::Channel
     bool checkDpt(uint8_t iIOIndex, uint8_t iDpt);
     void processInput(uint8_t iIOIndex);
     void processInternalInputs(uint8_t iChannelId, bool iValue);
-    bool processCommand(const std::string iCmd, bool iDebugKo); 
+    bool processCommand(const std::string iCmd, bool iDebugKo);
     void startTimerInput();
     void startTimerRestoreState();
     void stopTimerRestoreState();

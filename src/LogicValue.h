@@ -64,6 +64,9 @@ class LogicValue
     LogicValue operator-(const int32_t value);
     LogicValue operator-(const float value);
 
+    bool isInitial();
+    void isInitial(bool iValue);
+
   private:
     bool boolValue() const;
     uint8_t ucharValue() const;
@@ -114,6 +117,9 @@ class LogicValue
         StringType,
     };
 
+    void setType(ValueType iType);
+
     ValueType _type;
     Value _value;
+    bool _isInitial = false;
 };

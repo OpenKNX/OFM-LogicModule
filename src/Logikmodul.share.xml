@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <?xml-model href="../../Organization/knxprod-support/knx_project_20/knx-editor.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <KNX xmlns:op="http://github.com/OpenKNX/OpenKNXproducer" xmlns="http://knx.org/xml/project/20" CreatedBy="KNX MT" ToolVersion="5.1.255.16695">
   <ManufacturerData>
@@ -58,7 +58,7 @@
                   <Enumeration Text="Zwei getrennte KO Uhrzeit und Datum" Value="0" Id="%AID%_PT-TimeKoType_EN-0" />
                   <Enumeration Text="Ein kombiniertes KO Uhrzeit/Datum" Value="1" Id="%AID%_PT-TimeKoType_EN-1" />
                 </TypeRestriction>
-              </ParameterType>              
+              </ParameterType>
               <ParameterType Id="%AID%_PT-OffsetTemp" Name="OffsetTemp">
                 <TypeNumber SizeInBit="8" Type="signedInt" minInclusive="-100" maxInclusive="100" />
               </ParameterType>
@@ -106,9 +106,9 @@
               </ParameterType>
               <ParameterType Id="%AID%_PT-Trigger" Name="Trigger">
                 <TypeRestriction Base="Value" SizeInBit="8">
-                  <Enumeration Text="bei geändertem Eingangstelegramm" Value="0" Id="%AID%_PT-Trigger_EN-0" />
-                  <Enumeration Text="bei geändertem Eingangstelegramm, aber erstes Telegramm immer senden" Value="32" Id="%AID%_PT-Trigger_EN-2" />
-                  <Enumeration Text="bei geändertem Eingangstelegramm, aber erstes Telegramm nicht senden" Value="16" Id="%AID%_PT-Trigger_EN-3" />
+                  <Enumeration Text="nur bei geändertem Ergebnis" Value="0" Id="%AID%_PT-Trigger_EN-0" />
+                  <Enumeration Text="nur bei geändertem Ergebnis, aber erstes Telegramm immer senden" Value="32" Id="%AID%_PT-Trigger_EN-2" />
+                  <Enumeration Text="nur bei geändertem Ergebnis, aber erstes Telegramm nicht senden" Value="16" Id="%AID%_PT-Trigger_EN-3" />
                   <Enumeration Text="bei jedem Eingangstelegramm" Value="15" Id="%AID%_PT-Trigger_EN-15" />
                   <Enumeration Text="bei jedem Eingangstelegramm, aber erstes Telegramm nicht senden" Value="31" Id="%AID%_PT-Trigger_EN-31" />
                   <Enumeration Text="bei folgenden Eingangstelegrammen" Value="1" Id="%AID%_PT-Trigger_EN-1" />
@@ -117,9 +117,9 @@
               </ParameterType>
               <ParameterType Id="%AID%_PT-TriggerTime" Name="TriggerTime">
                 <TypeRestriction Base="Value" SizeInBit="8">
-                  <Enumeration Text="bei geändertem Eingangstelegramm" Value="0" Id="%AID%_PT-TriggerTime_EN-0" />
-                  <Enumeration Text="bei geändertem Eingangstelegramm, aber erstes Telegramm immer senden" Value="32" Id="%AID%_PT-TriggerTime_EN-2" />
-                  <Enumeration Text="bei geändertem Eingangstelegramm, aber erstes Telegramm nicht senden" Value="16" Id="%AID%_PT-TriggerTime_EN-3" />
+                  <Enumeration Text="nur bei geändertem Ergebnis" Value="0" Id="%AID%_PT-TriggerTime_EN-0" />
+                  <Enumeration Text="nur bei geändertem Ergebnis, aber erstes Telegramm immer senden" Value="32" Id="%AID%_PT-TriggerTime_EN-2" />
+                  <Enumeration Text="nur bei geändertem Ergebnis, aber erstes Telegramm nicht senden" Value="16" Id="%AID%_PT-TriggerTime_EN-3" />
                   <Enumeration Text="bei jedem Eingangstelegramm" Value="15" Id="%AID%_PT-TriggerTime_EN-15" />
                   <Enumeration Text="bei jedem Eingangstelegramm, aber erstes Telegramm nicht senden" Value="31" Id="%AID%_PT-TriggerTime_EN-31" />
                 </TypeRestriction>
@@ -435,6 +435,7 @@
                   <Enumeration Text="Ja - Wert vorgeben" Value="1" Id="%AID%_PT-OutputSend_EN-1" />
                   <Enumeration Text="Ja - Wert von Eingang 1" Value="2" Id="%AID%_PT-OutputSend_EN-2" />
                   <Enumeration Text="Ja - Wert von Eingang 2" Value="3" Id="%AID%_PT-OutputSend_EN-3" />
+                  <Enumeration Text="Ja - Wert eines KO" Value="9" Id="%AID%_PT-OutputSend_EN-9" />
                   <Enumeration Text="Ja - Wert einer Funktion" Value="8" Id="%AID%_PT-OutputSend_EN-8" />
                   <Enumeration Text="Ja - Read Request senden" Value="4" Id="%AID%_PT-OutputSend_EN-4" />
                   <Enumeration Text="Ja - 'Gerät zurücksetzen' senden" Value="5" Id="%AID%_PT-OutputSend_EN-5" />
@@ -446,6 +447,7 @@
                   <Enumeration Text="Ja - Wert vorgeben" Value="1" Id="%AID%_PT-OutputSendBuzzer_EN-1" />
                   <Enumeration Text="Ja - Wert von Eingang 1" Value="2" Id="%AID%_PT-OutputSendBuzzer_EN-2" />
                   <Enumeration Text="Ja - Wert von Eingang 2" Value="3" Id="%AID%_PT-OutputSendBuzzer_EN-3" />
+                  <Enumeration Text="Ja - Wert eines KO" Value="9" Id="%AID%_PT-OutputSendBuzzer_EN-9" />
                   <Enumeration Text="Ja - Wert einer Funktion" Value="8" Id="%AID%_PT-OutputSendBuzzer_EN-8" />
                   <Enumeration Text="Ja - Read Request senden" Value="4" Id="%AID%_PT-OutputSendBuzzer_EN-4" />
                   <Enumeration Text="Ja - 'Gerät zurücksetzen' senden" Value="5" Id="%AID%_PT-OutputSendBuzzer_EN-5" />
@@ -458,6 +460,7 @@
                   <Enumeration Text="Ja - Wert vorgeben" Value="1" Id="%AID%_PT-OutputSendLed_EN-1" />
                   <Enumeration Text="Ja - Wert von Eingang 1" Value="2" Id="%AID%_PT-OutputSendLed_EN-2" />
                   <Enumeration Text="Ja - Wert von Eingang 2" Value="3" Id="%AID%_PT-OutputSendLed_EN-3" />
+                  <Enumeration Text="Ja - Wert eines KO" Value="9" Id="%AID%_PT-OutputSendLed_EN-9" />
                   <Enumeration Text="Ja - Wert einer Funktion" Value="8" Id="%AID%_PT-OutputSendLed_EN-8" />
                   <Enumeration Text="Ja - Read Request senden" Value="4" Id="%AID%_PT-OutputSendLed_EN-4" />
                   <Enumeration Text="Ja - 'Gerät zurücksetzen' senden" Value="5" Id="%AID%_PT-OutputSendLed_EN-5" />
@@ -470,6 +473,7 @@
                   <Enumeration Text="Ja - Wert vorgeben" Value="1" Id="%AID%_PT-OutputSendAll_EN-1" />
                   <Enumeration Text="Ja - Wert von Eingang 1" Value="2" Id="%AID%_PT-OutputSendAll_EN-2" />
                   <Enumeration Text="Ja - Wert von Eingang 2" Value="3" Id="%AID%_PT-OutputSendAll_EN-3" />
+                  <Enumeration Text="Ja - Wert eines KO" Value="9" Id="%AID%_PT-OutputSendAll_EN-9" />
                   <Enumeration Text="Ja - Wert einer Funktion" Value="8" Id="%AID%_PT-OutputSendAll_EN-8" />
                   <Enumeration Text="Ja - Read Request senden" Value="4" Id="%AID%_PT-OutputSendAll_EN-4" />
                   <Enumeration Text="Ja - 'Gerät zurücksetzen' senden" Value="5" Id="%AID%_PT-OutputSendAll_EN-5" />
@@ -493,6 +497,7 @@
                   <Enumeration Text="A = Min(E1, E2) (Minimum)" Value="6" Id="%AID%_PT-ValueFunction_EN-6" />
                   <Enumeration Text="A = Max(E1, E2) (Maximum)" Value="7" Id="%AID%_PT-ValueFunction_EN-7" />
                   <Enumeration Text="A = B2I(E1, E2) (Bool zu Int)" Value="14" Id="%AID%_PT-ValueFunction_EN-14" />
+                  <Enumeration Text="A = Glättung(E1, E2)" Value="15" Id="%AID%_PT-ValueFunction_EN-15" />
                   <Enumeration Text="A = Benutzerfunktion_01(E1, E2)" Value="201" Id="%AID%_PT-ValueFunction_EN-201" />
                   <Enumeration Text="A = Benutzerfunktion_02(E1, E2)" Value="202" Id="%AID%_PT-ValueFunction_EN-202" />
                   <Enumeration Text="A = Benutzerfunktion_03(E1, E2)" Value="203" Id="%AID%_PT-ValueFunction_EN-203" />
@@ -1051,10 +1056,10 @@
                 <Parameter Id="%AID%_UP-%T%000139" Name="HolidayKo" ParameterType="%AID%_PT-OnOffYesNo" Offset="0" BitOffset="6" Text="Feiertage auf dem Bus verfügbar machen?" Value="0" />
                 <Parameter Id="%AID%_UP-%T%000140" Name="VacationRead" ParameterType="%AID%_PT-OnOffYesNo" Offset="0" BitOffset="7" Text="Nach Neustart Urlaubsinfo lesen?" Value="0" />
                 <Parameter Id="%AID%_UP-%T%000141" Name="HolidaySend" ParameterType="%AID%_PT-OnOffYesNo" Offset="1" BitOffset="0" Text="Nach Neuberechnung Feiertagsinfo senden?" Value="0" />
-                <Parameter Id="%AID%_UP-%T%000159" Name="SummertimeAll" ParameterType="%AID%_PT-SummertimeAll" Offset="1" BitOffset="0" Text="Sommerzeit ermitteln durch" Value="2" /> 
-                <Parameter Id="%AID%_UP-%T%000160" Name="SummertimeDE" ParameterType="%AID%_PT-SummertimeDE" Offset="1" BitOffset="0" Text="Sommerzeit ermitteln durch" Value="2" /> 
-                <Parameter Id="%AID%_UP-%T%000161" Name="SummertimeWorld" ParameterType="%AID%_PT-SummertimeWorld" Offset="1" BitOffset="0" Text="Sommerzeit ermitteln durch" Value="0" /> 
-                <Parameter Id="%AID%_UP-%T%000162" Name="SummertimeKO" ParameterType="%AID%_PT-SummertimeKO" Offset="1" BitOffset="0" Text="Sommerzeit ermitteln durch" Value="0" /> 
+                <Parameter Id="%AID%_UP-%T%000159" Name="SummertimeAll" ParameterType="%AID%_PT-SummertimeAll" Offset="1" BitOffset="0" Text="Sommerzeit ermitteln durch" Value="2" />
+                <Parameter Id="%AID%_UP-%T%000160" Name="SummertimeDE" ParameterType="%AID%_PT-SummertimeDE" Offset="1" BitOffset="0" Text="Sommerzeit ermitteln durch" Value="2" />
+                <Parameter Id="%AID%_UP-%T%000161" Name="SummertimeWorld" ParameterType="%AID%_PT-SummertimeWorld" Offset="1" BitOffset="0" Text="Sommerzeit ermitteln durch" Value="0" />
+                <Parameter Id="%AID%_UP-%T%000162" Name="SummertimeKO" ParameterType="%AID%_PT-SummertimeKO" Offset="1" BitOffset="0" Text="Sommerzeit ermitteln durch" Value="0" />
                 <!-- 2 Bit free -->
                 <Parameter Id="%AID%_UP-%T%000146" Name="Diagnose" ParameterType="%AID%_PT-OnOffYesNo" Offset="1" BitOffset="4" Text="Diagnoseobjekt anzeigen" Value="0" />
                 <Parameter Id="%AID%_UP-%T%000147" Name="Watchdog" ParameterType="%AID%_PT-OnOffYesNo" Offset="1" BitOffset="5" Text="Watchdog aktivieren" Value="0" />

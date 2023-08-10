@@ -466,6 +466,8 @@
                 <Parameter Id="%AID%_UP-%T%%CCC%122" Name="f%C%OOnPALine"   ParameterType="%AID%_PT-PALine"        Offset="0" BitOffset="4" Text="" Value="1" />
                 <Parameter Id="%AID%_UP-%T%%CCC%123" Name="f%C%OOnPADevice" ParameterType="%AID%_PT-PADevice"      Offset="1" BitOffset="0" Text="" Value="1" />
                 <Parameter Id="%AID%_UP-%T%%CCC%279" Name="f%C%OOnFunction" ParameterType="%AID%_PT-ValueFunction" Offset="0" BitOffset="0" Text="    Wert für EIN ermitteln als" Value="1" />
+                <Parameter Id="%AID%_UP-%T%%CCC%435" Name="f%C%OOnKONumber" ParameterType="%AID%_PT-KONumber"      Offset="0" BitOffset="0" Text="    Nummer des Kommunikationsobjekts" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%437" Name="f%C%OOnKODpt"    ParameterType="%AID%_PT-InputDpt"      Offset="2" BitOffset="0" Text="    DPT des Kommunikationsobjekts" Value="0" />
               </Union>
               <Union SizeInBit="8">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="67" BitOffset="0" />
@@ -495,6 +497,8 @@
                 <Parameter Id="%AID%_UP-%T%%CCC%125" Name="f%C%OOffPALine"   ParameterType="%AID%_PT-PALine"        Offset="0" BitOffset="4" Text="" Value="1" />
                 <Parameter Id="%AID%_UP-%T%%CCC%126" Name="f%C%OOffPADevice" ParameterType="%AID%_PT-PADevice"      Offset="1" BitOffset="0" Text="" Value="1" />
                 <Parameter Id="%AID%_UP-%T%%CCC%280" Name="f%C%OOffFunction" ParameterType="%AID%_PT-ValueFunction" Offset="0" BitOffset="0" Text="    Wert für AUS ermitteln als" Value="1" />
+                <Parameter Id="%AID%_UP-%T%%CCC%436" Name="f%C%OOffKONumber" ParameterType="%AID%_PT-KONumber"      Offset="0" BitOffset="0" Text="    Nummer des Kommunikationsobjekts" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%438" Name="f%C%OOffKODpt"    ParameterType="%AID%_PT-InputDpt"      Offset="2" BitOffset="0" Text="    DPT des Kommunikationsobjekts" Value="0" />
               </Union>
               <Union SizeInBit="32">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="82" BitOffset="0" />
@@ -704,9 +708,9 @@
               <ParameterRef Id="%AID%_UP-%T%%CCC%139_R-%T%%CCC%13901" RefId="%AID%_UP-%T%%CCC%139" />
               <ParameterRef Id="%AID%_UP-%T%%CCC%140_R-%T%%CCC%14001" RefId="%AID%_UP-%T%%CCC%140" />
               <ParameterRef Id="%AID%_UP-%T%%CCC%141_R-%T%%CCC%14101" RefId="%AID%_UP-%T%%CCC%141" />
-              <ParameterRef Id="%AID%_UP-%T%%CCC%142_R-%T%%CCC%14201" RefId="%AID%_UP-%T%%CCC%142" Text="Von-Wert"       />
+              <ParameterRef Id="%AID%_UP-%T%%CCC%142_R-%T%%CCC%14201" RefId="%AID%_UP-%T%%CCC%142" Text="Von-Wert" />
               <ParameterRef Id="%AID%_UP-%T%%CCC%142_R-%T%%CCC%14202" RefId="%AID%_UP-%T%%CCC%142" Text="Ausschalt-Wert" />
-              <ParameterRef Id="%AID%_UP-%T%%CCC%143_R-%T%%CCC%14301" RefId="%AID%_UP-%T%%CCC%143" Text="Bis-Wert"       />
+              <ParameterRef Id="%AID%_UP-%T%%CCC%143_R-%T%%CCC%14301" RefId="%AID%_UP-%T%%CCC%143" Text="Bis-Wert" />
               <ParameterRef Id="%AID%_UP-%T%%CCC%143_R-%T%%CCC%14302" RefId="%AID%_UP-%T%%CCC%143" Text="Einschalt-Wert" />
               <ParameterRef Id="%AID%_P-%T%%CCC%144_R-%T%%CCC%14401" RefId="%AID%_P-%T%%CCC%144" />
               <ParameterRef Id="%AID%_P-%T%%CCC%145_R-%T%%CCC%14501" RefId="%AID%_P-%T%%CCC%145" />
@@ -1015,6 +1019,10 @@
               <ParameterRef Id="%AID%_UP-%T%%CCC%432_R-%T%%CCC%43201" RefId="%AID%_UP-%T%%CCC%432" />
               <ParameterRef Id="%AID%_UP-%T%%CCC%433_R-%T%%CCC%43301" RefId="%AID%_UP-%T%%CCC%433" />
               <ParameterRef Id="%AID%_UP-%T%%CCC%434_R-%T%%CCC%43401" RefId="%AID%_UP-%T%%CCC%434" />
+              <ParameterRef Id="%AID%_UP-%T%%CCC%435_R-%T%%CCC%43501" RefId="%AID%_UP-%T%%CCC%435" />
+              <ParameterRef Id="%AID%_UP-%T%%CCC%436_R-%T%%CCC%43601" RefId="%AID%_UP-%T%%CCC%436" />
+              <ParameterRef Id="%AID%_UP-%T%%CCC%437_R-%T%%CCC%43701" RefId="%AID%_UP-%T%%CCC%437" />
+              <ParameterRef Id="%AID%_UP-%T%%CCC%438_R-%T%%CCC%43801" RefId="%AID%_UP-%T%%CCC%438" />
             </ParameterRefs>
             <ComObjectTable>
               <ComObject Id="%AID%_O-%T%%CCC%000" Name="KOf%C%E1" Text="Eingang 1" Number="%K0%" FunctionText="Logik %C%, Eingang 1" ObjectSize="4 Bytes" ReadFlag="Disabled" WriteFlag="Enabled"  CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled"  ReadOnInitFlag="Disabled" />
@@ -1150,10 +1158,18 @@
                           </when>
                         </choose>
                       </when>
+                      <when test="0 16 32">
+                        <ParameterSeparator Id="%AID%_PS-nnn" Text="'Nur bei geändertem Ergebnis' bezieht sich nicht auf das Ergebnis des gesamten Logikanals, sondern auf das Ergebnis der oben angegebenen Logikfunktion BEVOR die Ausgangs-Pipeline beginnt!" UIHint="Information" />
+                      </when>
                     </choose>
                   </when>
                   <when test="5">
                     <ParameterRefRef RefId="%AID%_UP-%T%%CCC%167_R-%T%%CCC%16701" />
+                    <choose ParamRefId="%AID%_UP-%T%%CCC%167_R-%T%%CCC%16701">
+                      <when test="0 16 32">
+                        <ParameterSeparator Id="%AID%_PS-nnn" Text="'Nur bei geändertem Ergebnis' bezieht sich nicht auf das Ergebnis des gesamten Logikkanals, sondern nur auf einen geänderten Wert der Zeitschaltuhr!" UIHint="Information" />
+                      </when>
+                    </choose>
                   </when>
                 </choose>
                 <Channel Id="%AID%_CH-L%CC%" Name="f%CC%Logic" Number="L%CC%" Text="Logik %CC%: {{0: ...}}" TextParameterRefId="%AID%_P-%T%%CCC%001_R-%T%%CCC%00101">
@@ -1274,11 +1290,11 @@
                             <ParameterRefRef RefId="%AID%_P-%T%%CCC%128_R-%T%%CCC%12801" />
                             <choose ParamRefId="%AID%_P-%T%%CCC%003_R-%T%%CCC%00301">
                               <when test="4">
-                                <ParameterSeparator Id="%AID%_PS-nnn" Text="Bei TOR gilt: Dateneingang ist Eingang 1 (ODER Kanalausgang X)" UIHint="Information"/>
+                                <ParameterSeparator Id="%AID%_PS-nnn" Text="Bei TOR gilt: Dateneingang ist Eingang 1 (ODER Kanalausgang X)" UIHint="Information" />
                                 <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                               </when>
                               <when test="6">
-                                <ParameterSeparator Id="%AID%_PS-nnn" Text="Bei SCHALTER gilt: EINgeschaltet wird mit Eingang 1 bzw. Kanalausgang X. Dabei wird das Einschalttelegramm ausgewertet, wie bei 2 hörenden GA auf einem KO." UIHint="Information"/>
+                                <ParameterSeparator Id="%AID%_PS-nnn" Text="Bei SCHALTER gilt: EINgeschaltet wird mit Eingang 1 bzw. Kanalausgang X. Dabei wird das Einschalttelegramm ausgewertet, wie bei 2 hörenden GA auf einem KO." UIHint="Information" />
                                 <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                               </when>
                             </choose>
@@ -2041,16 +2057,16 @@
                                 <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                               </when>
                               <when test="6">
-                                <ParameterSeparator Id="%AID%_PS-nnn" Text="Bei SCHALTER gilt: AUSgeschaltet wird mit Eingang 2 bzw. Kanalausgang Y. Dabei wird das Einschalttelegramm ausgewertet, wie bei 2 hörenden GA auf einem KO." UIHint="Information"/>
+                                <ParameterSeparator Id="%AID%_PS-nnn" Text="Bei SCHALTER gilt: AUSgeschaltet wird mit Eingang 2 bzw. Kanalausgang Y. Dabei wird das Einschalttelegramm ausgewertet, wie bei 2 hörenden GA auf einem KO." UIHint="Information" />
                                 <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                               </when>
                             </choose>
                             <choose ParamRefId="%AID%_UP-%T%%CCC%028_R-%T%%CCC%02801">
-                              <when test="2" >
+                              <when test="2">
                                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Hinweis: Egal wie der Eingangswert bestimmt wird (Vorbelegung, Bus, Intervall, Hysterese, ...), invertiert wird immer erst direkt bevor die Logik ausgeführt wird! Will man also beim invertierten Eingang eine Vorbelegung haben, wird auch diese invertiert!" UIHint="Information" />
                                 <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                               </when>
-                              <when test="!=0" >
+                              <when test="!=0">
                                 <!-- E2 choose KO -->
                                 <ParameterRefRef RefId="%AID%_UP-%T%%CCC%379_R-%T%%CCC%37901" />
                                 <choose ParamRefId="%AID%_UP-%T%%CCC%379_R-%T%%CCC%37901">
@@ -2698,7 +2714,7 @@
                                 <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                               </when>
                               <when test="6">
-                                <ParameterSeparator Id="%AID%_PS-nnn" Text="Bei SCHALTER gilt: EINgeschaltet wird mit Eingang 1 bzw. Kanalausgang X, AUSgeschaltet wird mit Eingang 2 bzw. Kanalausgang Y. Dabei wird das Einschalttelegramm ausgewertet, wie bei 2 hörenden GA auf einem KO." UIHint="Information"/>
+                                <ParameterSeparator Id="%AID%_PS-nnn" Text="Bei SCHALTER gilt: EINgeschaltet wird mit Eingang 1 bzw. Kanalausgang X, AUSgeschaltet wird mit Eingang 2 bzw. Kanalausgang Y. Dabei wird das Einschalttelegramm ausgewertet, wie bei 2 hörenden GA auf einem KO." UIHint="Information" />
                                 <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                               </when>
                             </choose>
@@ -2744,7 +2760,7 @@
                                     <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                                   </when>
                                   <when test="6">
-                                    <ParameterSeparator Id="%AID%_PS-nnn" Text="Bei SCHALTER gilt: EINgeschaltet wird mit Eingang 1 bzw. Kanalausgang X, AUSgeschaltet wird mit Eingang 2 bzw. Kanalausgang Y. Dabei wird das Einschalttelegramm ausgewertet, wie bei 2 hörenden GA auf einem KO." UIHint="Information"/>
+                                    <ParameterSeparator Id="%AID%_PS-nnn" Text="Bei SCHALTER gilt: EINgeschaltet wird mit Eingang 1 bzw. Kanalausgang X, AUSgeschaltet wird mit Eingang 2 bzw. Kanalausgang Y. Dabei wird das Einschalttelegramm ausgewertet, wie bei 2 hörenden GA auf einem KO." UIHint="Information" />
                                     <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                                   </when>
                                 </choose>
@@ -3375,6 +3391,10 @@
                           <when test="8">
                             <ParameterRefRef RefId="%AID%_UP-%T%%CCC%279_R-%T%%CCC%27901" />
                           </when>
+                          <when test="9">
+                            <ParameterRefRef RefId="%AID%_UP-%T%%CCC%435_R-%T%%CCC%43501" />
+                            <ParameterRefRef RefId="%AID%_UP-%T%%CCC%437_R-%T%%CCC%43701" />
+                          </when>
                         </choose>
                         <choose ParamRefId="%AID%_UP-%T%000035_R-%T%00003501">
                           <when test="0">
@@ -3485,7 +3505,25 @@
                           <when test="8">
                             <ParameterRefRef RefId="%AID%_UP-%T%%CCC%280_R-%T%%CCC%28001" />
                           </when>
+                          <when test="9">
+                            <ParameterRefRef RefId="%AID%_UP-%T%%CCC%436_R-%T%%CCC%43601" />
+                            <ParameterRefRef RefId="%AID%_UP-%T%%CCC%438_R-%T%%CCC%43801" />
+                          </when>
                         </choose>
+                        <!-- Warning for "Send value of KO", just present once -->
+                        <choose ParamRefId="%AID%_UP-%T%%CCC%136_R-%T%%CCC%13601">
+                          <when test="9">
+                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Beim Senden vom 'Wert eines KO' ist der DPT des zu sendenden KO sehr wichtig. Er muss korrekt angegeben werden, da er nicht automatisch ermittelt werden kann." UIHint="Information" />
+                          </when>
+                          <when test="!=9">
+                          <choose ParamRefId="%AID%_UP-%T%%CCC%139_R-%T%%CCC%13901">
+                            <when test="9">
+                              <ParameterSeparator Id="%AID%_PS-nnn" Text="Beim Senden vom 'Wert eines KO' ist der DPT des zu sendenden KO sehr wichtig. Er muss korrekt angegeben werden, da er nicht automatisch ermittelt werden kann." UIHint="Information" />
+                            </when>
+                          </choose>
+                          </when>
+                        </choose>
+
                         <!-- Ask for alarm output in case RGB or Buzzer is acive -->
                         <choose ParamRefId="%AID%_P-%T%%CCC%278_R-%T%%CCC%27801">
                           <when test="1">

@@ -1,12 +1,12 @@
-#include "LogicFunction.h"
 #include "KnxHelper.h"
+#include "LogicFunction.h"
 #include "OpenKNX/Helper.h"
 
 // user functions, may be implemented by Enduser
 // for DPT-Check you can use constants beginning with VAL_DPT_*
 LogicValue LogicFunction::userFunction01(uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
 {
-    if ((float)iOld == NO_NUM)
+    if (iOld.isInitial())
         return E1;
     else
         return iOld + (E1 - iOld) / E2;

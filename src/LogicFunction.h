@@ -4,7 +4,7 @@
 // #include <KnxHelper.h>
 #include <LogicValue.h>
 
-#define NUM_NATIVE_FUNCTIONS 14
+#define NUM_NATIVE_FUNCTIONS 15
 
 class LogicFunction
 {
@@ -30,6 +30,7 @@ class LogicFunction
     static LogicValue nativeLShift(uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld);
     static LogicValue nativeRShift(uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld);
     static LogicValue nativeBool2Int(uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld);
+    static LogicValue nativeSmooth(uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld);
 
     // user functions (empty, implemented by user)
     static LogicValue userFunction01(uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld);

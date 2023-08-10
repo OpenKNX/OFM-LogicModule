@@ -1,5 +1,5 @@
-#include "KnxHelper.h"
 #include "LogicFunction.h"
+#include "KnxHelper.h"
 // #include "LogicValue.h"
 
 // native functions, implemented as a simple example how to use user functions
@@ -75,6 +75,17 @@ LogicValue LogicFunction::nativeBool2Int(uint8_t DptE1, LogicValue E1, uint8_t D
     return (uint8_t)((bool)E2 * 2 + (bool)E1);
 }
 
+LogicValue LogicFunction::nativeSmooth(uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
+{
+    if (E1.isInitial() || E2.isInitial())
+        return 0.0f;
+    if ((bool)E2 == 0)
+        return 0.0f;
+    if (iOld.isInitial())
+        return E1;
+    else
+        return iOld + (E1 - iOld) / E2;
+}
 
 // do not touch after this point
 
@@ -82,8 +93,7 @@ LogicFunction::LogicFunction(){};
 
 LogicFunction::~LogicFunction(){};
 
-LogicValue (*LogicFunction::nativeFunction[NUM_NATIVE_FUNCTIONS])(uint8_t, LogicValue, uint8_t, LogicValue, uint8_t *, LogicValue)
-{
+LogicValue (*LogicFunction::nativeFunction[NUM_NATIVE_FUNCTIONS])(uint8_t, LogicValue, uint8_t, LogicValue, uint8_t *, LogicValue){
     nativeAdd,
     nativeSubtract,
     nativeMultiply,
@@ -98,7 +108,7 @@ LogicValue (*LogicFunction::nativeFunction[NUM_NATIVE_FUNCTIONS])(uint8_t, Logic
     nativeLShift,
     nativeRShift,
     nativeBool2Int,
-    };
+    nativeSmooth};
 
 LogicValue (*LogicFunction::userFunction[30])(uint8_t, LogicValue, uint8_t, LogicValue, uint8_t *, LogicValue){
     userFunction01,

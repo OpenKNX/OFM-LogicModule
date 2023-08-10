@@ -1,11 +1,11 @@
 #include "LogicChannel.h"
-#include "OpenKNX.h"
 #include "Logic.h"
 #include "LogicFunction.h"
+#include "OpenKNX.h"
 #include "PCA9632.h"
 
 #ifndef abs
-#define abs(x) ((x) > 0 ? (x) : -(x))
+    #define abs(x) ((x) > 0 ? (x) : -(x))
 #endif
 
 Logic *LogicChannel::sLogic = nullptr;
@@ -39,35 +39,36 @@ LogicChannel::~LogicChannel()
  * Debug helper
  * ***************************/
 
-const std::string LogicChannel::logPrefix() 
+const std::string LogicChannel::logPrefix()
 {
     return std::string(pLogPrefix);
 }
 
 #if LOGIC_TRACE
-char* LogicChannel::logTimeBase(uint16_t iParamIndex) {
+char *LogicChannel::logTimeBase(uint16_t iParamIndex)
+{
     uint16_t lTime = getWordParam(iParamIndex);
     switch (lTime & 0xC000)
     {
-    case 0x0000:
-        /* seconds */
-        sprintf(sTimeOutputBuffer, "%5i s", lTime & 0x3FFF);
-        break;
-    case 0x4000:
-        /* minutes */
-        sprintf(sTimeOutputBuffer, "%5i m", lTime & 0x3FFF);
-        break;
-    case 0x8000:
-        /* hours */
-        sprintf(sTimeOutputBuffer, "%5i h", lTime & 0x3FFF);
-        break;
-    case 0xC000:
-        /* 1/10 s*/
-        sprintf(sTimeOutputBuffer, "%5.1f s", (lTime & 0x3FFF) / 10.0);
-        break;
-    default:
-        sprintf(sTimeOutputBuffer, "(no time)");
-        break;
+        case 0x0000:
+            /* seconds */
+            sprintf(sTimeOutputBuffer, "%5i s", lTime & 0x3FFF);
+            break;
+        case 0x4000:
+            /* minutes */
+            sprintf(sTimeOutputBuffer, "%5i m", lTime & 0x3FFF);
+            break;
+        case 0x8000:
+            /* hours */
+            sprintf(sTimeOutputBuffer, "%5i h", lTime & 0x3FFF);
+            break;
+        case 0xC000:
+            /* 1/10 s*/
+            sprintf(sTimeOutputBuffer, "%5.1f s", (lTime & 0x3FFF) / 10.0);
+            break;
+        default:
+            sprintf(sTimeOutputBuffer, "(no time)");
+            break;
     }
     return sTimeOutputBuffer;
 }
@@ -437,47 +438,57 @@ LogicValue LogicChannel::getParamByDpt(uint8_t iDpt, uint16_t iParamIndex)
 {
     switch (iDpt)
     {
-        case VAL_DPT_1: {
+        case VAL_DPT_1:
+        {
             LogicValue lValue = getByteParam(iParamIndex) != 0;
             return lValue;
         }
         case VAL_DPT_2:
         case VAL_DPT_5:
         case VAL_DPT_17:
-        case VAL_DPT_5001: {
+        case VAL_DPT_5001:
+        {
             LogicValue lValue = getByteParam(iParamIndex);
             return lValue;
         }
-        case VAL_DPT_6: {
+        case VAL_DPT_6:
+        {
             LogicValue lValue = getSByteParam(iParamIndex);
             return lValue;
         }
-        case VAL_DPT_7: {
+        case VAL_DPT_7:
+        {
             LogicValue lValue = getWordParam(iParamIndex);
             return lValue;
         }
-        case VAL_DPT_8: {
+        case VAL_DPT_8:
+        {
             LogicValue lValue = getSWordParam(iParamIndex);
             return lValue;
         }
-        case VAL_DPT_232: {
+        case VAL_DPT_232:
+        {
             LogicValue lValue = getIntParam(iParamIndex);
             return lValue;
         }
-        case VAL_DPT_9: 
-        case VAL_DPT_14: {
+        case VAL_DPT_9:
+        case VAL_DPT_14:
+        {
             LogicValue lValue = getFloatParam(iParamIndex);
             return lValue;
         }
-        case VAL_DPT_12: {
+        case VAL_DPT_12:
+        {
             LogicValue lValue = getIntParam(iParamIndex);
             return lValue;
         }
-        case VAL_DPT_13: {
+        case VAL_DPT_13:
+        {
             LogicValue lValue = getSIntParam(iParamIndex);
             return lValue;
         }
-        default: {
+        default:
+        {
             LogicValue lValue = getIntParam(iParamIndex);
             return lValue;
         }
@@ -504,31 +515,48 @@ LogicValue LogicChannel::getInputValue(uint8_t iIOIndex, uint8_t *eDpt)
     }
     else
     {
-        return getKoValue(iIOIndex, eDpt);
+        return getKoValue(iIOIndex, *eDpt);
     }
 }
 
-LogicValue LogicChannel::getKoValue(uint8_t iIOIndex, uint8_t *eDpt)
+LogicValue LogicChannel::getOtherKoValue(uint16_t iKoNumber, uint8_t iDptParamIndex)
+{
+    GroupObject *lKo = &knx.getGroupObject(iKoNumber);
+    uint8_t lDpt = getByteParam(iDptParamIndex);
+    return getKoValue(lKo, lDpt, false);
+}
+
+LogicValue LogicChannel::getKoValue(uint8_t iIOIndex, uint8_t iDpt)
 {
     GroupObject *lKo = getKo(iIOIndex);
+    return getKoValue(lKo, iDpt, iIOIndex < IO_Output);
+}
+
+LogicValue LogicChannel::getKoValue(GroupObject *iKo, uint8_t iDpt, bool iIsInput)
+{
+    LogicValue lValue = false;
     // based on dpt, we read the correct c type.
-    switch (*eDpt)
+    switch (iDpt)
     {
-        case VAL_DPT_2: {
-            LogicValue lValue = lKo->valueRef()[0];
-            return lValue;
+        case VAL_DPT_2:
+        {
+            lValue = iKo->valueRef()[0];
+            break;
         }
-        case VAL_DPT_6: {
-            LogicValue lValue = (int8_t)lKo->value(getDPT(VAL_DPT_6));
-            return lValue;
+        case VAL_DPT_6:
+        {
+            lValue = (int8_t)iKo->value(getDPT(VAL_DPT_6));
+            break;
         }
-        case VAL_DPT_8: {
-            LogicValue lValue = (int16_t)lKo->value(getDPT(VAL_DPT_8));
-            return lValue;
+        case VAL_DPT_8:
+        {
+            lValue = (int16_t)iKo->value(getDPT(VAL_DPT_8));
+            break;
         }
-        case VAL_DPT_12: {
-            LogicValue lValue = (uint32_t)lKo->value(getDPT(VAL_DPT_12));
-            return lValue;
+        case VAL_DPT_12:
+        {
+            lValue = (uint32_t)iKo->value(getDPT(VAL_DPT_12));
+            break;
         }
         // case VAL_DPT_7:
         //     LogicValue lValue = lKo->valueRef()[0] + 256 * lKo->valueRef()[1];
@@ -537,21 +565,23 @@ LogicValue LogicChannel::getKoValue(uint8_t iIOIndex, uint8_t *eDpt)
         //     lValue =
         //         lKo->valueRef()[0] + 256 * lKo->valueRef()[1] + 65536 * lKo->valueRef()[2];
         //     break;
-        case VAL_DPT_9: 
-        case VAL_DPT_14: {
-            LogicValue lValue = NO_NUM;
-            bool lInitialized = lKo->commFlag() != ComFlag::Uninitialized;
-            if (lInitialized && iIOIndex < IO_Output)
-                lInitialized == lKo->commFlag() != ComFlag::Transmitting;
-            if (lInitialized)
-                lValue = (float)lKo->value(getDPT(*eDpt));
-            return lValue;
+        case VAL_DPT_9:
+        case VAL_DPT_14:
+        {
+            lValue = (float)iKo->value(getDPT(iDpt));
+            break;
         } // case VAL_DPT_17:
-        default: {
-            LogicValue lValue = (int32_t)lKo->value(getDPT(*eDpt));
-            return lValue;
+        default:
+        {
+            lValue = (int32_t)iKo->value(getDPT(iDpt));
+            break;
         }
     }
+    bool lInitial = iKo->commFlag() == ComFlag::Uninitialized;
+    if (!lInitial && iIsInput)
+        lInitial = iKo->commFlag() == ComFlag::Transmitting;
+    lValue.isInitial(lInitial);
+    return lValue;
 }
 
 void LogicChannel::writeConstantValue(uint16_t iParamIndex)
@@ -631,6 +661,14 @@ void LogicChannel::writeParameterValue(uint8_t iIOIndex)
     writeValue(lValue, lInputDpt);
 }
 
+void LogicChannel::writeOtherKoValue(uint16_t iKoParamIndex, uint16_t iDptIndex)
+{
+    uint16_t lKoNumber = getWordParam(iKoParamIndex);
+    LogicValue lValue = getOtherKoValue(lKoNumber, iDptIndex);
+    uint8_t lDptOut = getByteParam(LOG_fODpt);
+    writeValue(lValue, lDptOut);
+}
+
 void LogicChannel::writeFunctionValue(uint16_t iParamIndex)
 {
     uint8_t lFunction = getByteParam(iParamIndex);
@@ -639,7 +677,7 @@ void LogicChannel::writeFunctionValue(uint16_t iParamIndex)
     LogicValue lE1 = getInputValue(BIT_EXT_INPUT_1, &lDptE1);
     LogicValue lE2 = getInputValue(BIT_EXT_INPUT_2, &lDptE2);
     uint8_t lDptOut = getByteParam(LOG_fODpt);
-    LogicValue lKoValue = getKoValue(IO_Output, &lDptOut);
+    LogicValue lKoValue = getKoValue(IO_Output, lDptOut);
     LogicValue lValue = LogicFunction::callFunction(lFunction, lDptE1, lE1, lDptE2, lE2, &lDptOut, lKoValue);
     writeValue(lValue, lDptOut);
 }
@@ -815,7 +853,7 @@ void LogicChannel::stopRepeatInput(uint8_t iIOIndex)
         case IO_Input1:
             lRepeatInputBit = PIP_REPEAT_INPUT1;
             lRepeatTime = ParamLOG_fE1RepeatTimeMS;
-            lJustOneTelegram = ParamLOG_fE1DefaultRepeat; 
+            lJustOneTelegram = ParamLOG_fE1DefaultRepeat;
             break;
         case IO_Input2:
             lRepeatInputBit = PIP_REPEAT_INPUT2;
@@ -991,10 +1029,10 @@ void LogicChannel::processConvertInput(uint8_t iIOIndex)
                     lValueOut = false;
                 if (lValue1In >= getParamByDpt(lDpt, lParamLow + 4))
                     lValueOut = true;
-                // if (uValueLessThanOrEquals(lValue1In, getParamByDpt(lDpt, lParamLow + 0), lDpt, lDpt))
-                //     lValueOut = false;
-                // if (uValueGreaterThanOrEquals(lValue1In, getParamByDpt(lDpt, lParamLow + 4), lDpt, lDpt))
-                //     lValueOut = true;
+                    // if (uValueLessThanOrEquals(lValue1In, getParamByDpt(lDpt, lParamLow + 0), lDpt, lDpt))
+                    //     lValueOut = false;
+                    // if (uValueGreaterThanOrEquals(lValue1In, getParamByDpt(lDpt, lParamLow + 4), lDpt, lDpt))
+                    //     lValueOut = true;
 #if LOGIC_TRACE
                 if (debugFilter())
                 {
@@ -1013,10 +1051,10 @@ void LogicChannel::processConvertInput(uint8_t iIOIndex)
                     lValueOut = false;
                 if (lValue1In >= getParamByDpt(lDpt, lParamLow + 4))
                     lValueOut = true;
-                // if (uValueLessThanOrEquals(lDiff, getParamByDpt(lDpt, lParamLow + 0), lDptResult, lDpt))
-                //     lValueOut = false;
-                // if (uValueGreaterThanOrEquals(lDiff, getParamByDpt(lDpt, lParamLow + 4), lDptResult, lDpt))
-                //     lValueOut = true;
+                    // if (uValueLessThanOrEquals(lDiff, getParamByDpt(lDpt, lParamLow + 0), lDptResult, lDpt))
+                    //     lValueOut = false;
+                    // if (uValueGreaterThanOrEquals(lDiff, getParamByDpt(lDpt, lParamLow + 4), lDptResult, lDpt))
+                    //     lValueOut = true;
 #if LOGIC_TRACE
                 if (debugFilter())
                 {
@@ -1063,9 +1101,9 @@ void LogicChannel::startLogic(uint8_t iIOIndex, bool iValue)
 {
     // invert input
     bool lValue = iValue;
-    uint16_t lParamBase = (iIOIndex == BIT_EXT_INPUT_1) ? LOG_fE1 : 
-                          (iIOIndex == BIT_EXT_INPUT_2) ? LOG_fE2 : 
-                          (iIOIndex == BIT_INT_INPUT_1) ? LOG_fI1 : LOG_fI2;
+    uint16_t lParamBase = (iIOIndex == BIT_EXT_INPUT_1) ? LOG_fE1 : (iIOIndex == BIT_EXT_INPUT_2) ? LOG_fE2
+                                                                : (iIOIndex == BIT_INT_INPUT_1)   ? LOG_fI1
+                                                                                                  : LOG_fI2;
     uint8_t lInput = getByteParam(lParamBase);
     if (iIOIndex == BIT_INT_INPUT_1)
         lInput >>= 4;
@@ -1189,14 +1227,14 @@ void LogicChannel::processLogic()
                         if (lIsTriggeredGate)
                             pCurrentIn &= ~(BIT_EXT_INPUT_2 | BIT_INT_INPUT_2);
                     }
-                    uint8_t lGateState = 4 * ((pCurrentIn & BIT_INITIAL_GATE) > 0) + 2 * lPreviousGate + lGate;                    
+                    uint8_t lGateState = 4 * ((pCurrentIn & BIT_INITIAL_GATE) > 0) + 2 * lPreviousGate + lGate;
                     uint8_t lOnGateTrigger = 0xFF;
                     // delete the INITIAL_GATE marker
                     pCurrentIn &= ~BIT_INITIAL_GATE;
                     switch (lGateState)
                     {
                         case VAL_Gate_Closed_Open: // was closed and opens now
-                        case VAL_Gate_Init_Open: // was undefined and opens now
+                        case VAL_Gate_Init_Open:   // was undefined and opens now
                             lOnGateTrigger = ParamLOG_fTriggerGateOpen;
                         case VAL_Gate_Open_Close: // was open and closes now
                         case VAL_Gate_Init_Close: // was undefined and closes now
@@ -1821,6 +1859,9 @@ void LogicChannel::processOutput(bool iValue)
             case VAL_Out_ValE2:
                 writeParameterValue(IO_Input2);
                 break;
+            case VAL_Out_OtherKO:
+                writeOtherKoValue(LOG_fOOnKONumber, LOG_fOOnKODpt);
+                break;
             case VAL_Out_Function:
                 writeFunctionValue(LOG_fOOnFunction);
                 break;
@@ -1854,6 +1895,9 @@ void LogicChannel::processOutput(bool iValue)
                 break;
             case VAL_Out_ValE2:
                 writeParameterValue(IO_Input2);
+                break;
+            case VAL_Out_OtherKO:
+                writeOtherKoValue(LOG_fOOffKONumber, LOG_fOOffKODpt);
                 break;
             case VAL_Out_Function:
                 writeFunctionValue(LOG_fOOffFunction);
@@ -2458,7 +2502,7 @@ bool LogicChannel::checkSunLimit(Timer &iTimer, uint8_t iSunInfo, uint8_t iTimer
 
 bool LogicChannel::checkSunDegree(Timer &iTimer, uint8_t iSunInfo, uint8_t iTimerIndex, uint16_t iBitfield, bool iSkipWeekday, bool iHandleAsSunday, bool iDown)
 {
-    uint8_t lDegree = ((iBitfield & 0x7E00) >> 9); 
+    uint8_t lDegree = ((iBitfield & 0x7E00) >> 9);
     uint8_t lMinute = ((iBitfield & 0x01F8) >> 3);
     sTime lTime;
     iTimer.getSunDegree(iSunInfo, (lDegree + lMinute / 60.0) * (iDown ? -1.0 : 1.0), &lTime);
@@ -2710,7 +2754,7 @@ int16_t LogicChannel::getSunLimit(Timer &iTimer, uint8_t iSunInfo, uint8_t iTime
 
 int16_t LogicChannel::getSunDegree(Timer &iTimer, uint8_t iSunInfo, uint8_t iTimerIndex, uint16_t iBitfield, bool iSkipWeekday, bool iHandleAsSunday, bool iDown)
 {
-    uint8_t lDegree = ((iBitfield & 0x7E00) >> 9); 
+    uint8_t lDegree = ((iBitfield & 0x7E00) >> 9);
     uint8_t lMinute = ((iBitfield & 0x01F8) >> 3);
     sTime lTime;
     iTimer.getSunDegree(iSunInfo, (lDegree + lMinute / 60.0) * (iDown ? -1.0 : 1.0), &lTime);
