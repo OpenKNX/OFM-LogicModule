@@ -1226,7 +1226,7 @@
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingang zyklisch lesen alle n Sekunden/Minuten/Stunden" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingang zyklisch lesen alle n Sekunden/Minuten/Stunden bis eine Antwort eingeht" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingang invertieren" />
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="Logik selbst (UND, ODER, EXKLUSIV-ODER, TOR), wobei bei TOR Ex- und Interner Eingang 1 über ein ODER zum Dateneingang zusammengefasst werden, Ex- und Interner Eingang 2 zum Toreingang." />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Logik selbst (UND, ODER, EXKLUSIV-ODER, TOR), wobei bei TOR externer Eingang 1 und interner Eingang 3 über ein ODER zum Dateneingang zusammengefasst werden, externer Eingang 2 und interner Eingang 4 zum Toreingang." />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Logikauswertung: Normal kann die Logik erst ausgewertet werden, wenn alle Eingänge einen gültigen Wert haben. Man kann auch bereits auswerten, sobald das erstbeste Signal ankommt. Die ungültigen Eingänge werden dann wie inaktive Eingänge behandelt." />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Logik-Ausgangswert: Der Ausgang kann seinen Wert weiterleiten, sobald sich der Ausgangswert ändert, sobald sich irgendein Eingangswert ändert oder sobald irgendein Eingang einen Wert bekommen hat. Man kann auch bestimmte Eingänge auswählen." />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Statt einer Logik kann auch eine Zeitschaltuhr mit Jahres- oder Tagesschaltzeiten genutzt werden." />

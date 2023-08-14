@@ -94,6 +94,8 @@ Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer d
 
 * NEU: Mathematische Funktion "Glättung" von Werten eingeführt
 * NEU: Output Converter "Wert eines KO senden" eingeführt
+* FIX: Textanpassung von "Kanalausgang X/Y zu Interner Eingang 3/4"
+
 18.02.2023: Firmware 1.4.2, Applikation 1.4
 
 * Überflüssige Libraries entfernt, keine funktionalen Änderungen.
@@ -1707,6 +1709,11 @@ Bei einem EIN-Signal wird der Wert gesendet, der am Eingang 1 anliegt. Sollte de
 
 Bei einem EIN-Signal wird der Wert gesendet, der am Eingang 2 anliegt. Sollte der Wert nicht den passenden DPT haben, wird er generisch gewandelt.
 
+#### **Ja - Wert eines KO**
+Bei einem EIN-Signal wird der Wert gesendet, der am angegebenen KO anliegt. Sollte der Wert nicht den passenden DPT haben, wird er generisch gewandelt.
+
+Man kann somit einen Wert senden, der an irgendeinem KO des Gerätes anliegt. Es sind explizit alle KO-Nummern erlaubt, nicht nur die KO-Nummern des Logikmoduls. Einzige Einschränkung: Es sind nur DPT erlaubt, die von einem Eingang des Logikmoduls unterstützt werden.
+
 #### **Ja - Wert einer Funktion**
 
 Bei einem EIN-Signal wird ein berechneter Wert gesendet. In einem weiteren Feld kann die Funktion ausgewählt werden, die angewendet werden soll. Sollte der Wert nicht den passenden DPT haben, wird er generisch gewandelt.
@@ -1757,6 +1764,18 @@ Hier wird ein konstanter Wert erwartet, der zu dem Ausgewählten DPT für den Au
 
 Man kann dies z.B. auch zur Invertierung nutzen, indem bei einem DPT 1 für ein EIN-Signal der Wert AUS gesendet wird und umgekehrt.
 
+### **Nummer des Kommunikationsobjekts**
+
+Das Feld erscheint nur, wenn für "Wert für EIN senden" ein "Ja - Wert eines KO senden" ausgewählt wurde.
+
+Hier wird die Nummer des KO erwartet, dessen Wert übernommen und über den Ausgang des Logikkanals gesendet werden soll.
+
+### **DPT des Kommunikationsobjekts**
+
+Das Feld erscheint nur, wenn für "Wert für EIN senden" ein "Ja - Wert eines KO senden" ausgewählt wurde.
+
+Hier wird der DPT des KO erwartet, dessen Wert übernommen und über den Ausgang des Logikkanals gesendet werden soll. Falls dieser DPT anders ist als der DPT des Ausgangs, wird generisch konvertiert. 
+
 ### **Physikalische Adresse**
 
 <kbd>![Gerät zurücksetzen](pics/ResetDevice.PNG)</kbd>
@@ -1796,6 +1815,11 @@ Bei einem AUS-Signal wird der Wert gesendet, der am Eingang 1 anliegt. Sollte de
 #### **Ja - Wert von Eingang 2**
 
 Bei einem AUS-Signal wird der Wert gesendet, der am Eingang 2 anliegt. Sollte der Wert nicht den passenden DPT haben, wird er generisch gewandelt.
+
+#### **Ja - Wert eines KO**
+Bei einem AUS-Signal wird der Wert gesendet, der am angegebenen KO anliegt. Sollte der Wert nicht den passenden DPT haben, wird er generisch gewandelt.
+
+Man kann somit einen Wert senden, der an irgendeinem KO des Gerätes anliegt. Es sind explizit alle KO-Nummern erlaubt, nicht nur die KO-Nummern des Logikmoduls. Einzige Einschränkung: Es sind nur DPT erlaubt, die von einem Eingang des Logikmoduls unterstützt werden.
 
 #### **Ja - Wert einer Funktion**
 
@@ -1840,6 +1864,18 @@ Das Feld erscheint nur, wenn für "Wert für AUS senden" ein "Ja - Wert vorgeben
 Hier wird ein konstanter Wert erwartet, der zu dem Ausgewählten DPT für den Ausgang passt. Dieser eingegebene Wert wird auf den KNX-Bus bei einem AUS-Signal gesendet.
 
 Man kann dies z.B. auch zur Invertierung nutzen, indem bei einem DPT 1 für ein AUS-Signal der Wert EIN gesendet wird und umgekehrt.
+
+### **Nummer des Kommunikationsobjekts**
+
+Das Feld erscheint nur, wenn für "Wert für AUS senden" ein "Ja - Wert eines KO senden" ausgewählt wurde.
+
+Hier wird die Nummer des KO erwartet, dessen Wert übernommen und über den Ausgang des Logikkanals gesendet werden soll.
+
+### **DPT des Kommunikationsobjekts**
+
+Das Feld erscheint nur, wenn für "Wert für AUS senden" ein "Ja - Wert eines KO senden" ausgewählt wurde.
+
+Hier wird der DPT des KO erwartet, dessen Wert übernommen und über den Ausgang des Logikkanals gesendet werden soll. Falls dieser DPT anders ist als der DPT des Ausgangs, wird generisch konvertiert. 
 
 ### **Physikalische Adresse**
 
