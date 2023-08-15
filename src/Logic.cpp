@@ -158,10 +158,13 @@ void Logic::processReadRequests()
         {
             logInfoP("Time Valid? %i", lValid);
             sDelay = millis();
-            if (ParamLOG_CombinedTimeDate) {
+            if (ParamLOG_CombinedTimeDate)
+            {
                 // combined date and time
                 KoLOG_Time.requestObjectRead();
-            } else {
+            }
+            else
+            {
                 // date and time from separate KOs
                 if (lValid != tmMinutesValid)
                     KoLOG_Time.requestObjectRead();
