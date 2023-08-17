@@ -3,6 +3,9 @@
 #include "PCA9632.h"
 #include "Timer.h"
 #include "TimerRestore.h"
+#include "sstream"
+
+#include "LogikmodulVersion.h"
 
 uint8_t Logic::sMagicWord[] = {0xAE, 0x49, 0xD2, 0x9F};
 Timer &Logic::sTimer = Timer::instance();                      // singleton
@@ -21,7 +24,9 @@ const std::string Logic::name()
 
 const std::string Logic::version()
 {
-    return "1.7";
+    std::ostringstream lVersion;
+    lVersion << ModuleVersion / 16 << "." << ModuleVersion % 16;
+    return lVersion.str();
 }
 
 Logic::Logic()
@@ -320,10 +325,10 @@ void Logic::processInputKo(GroupObject &iKo)
 
 void Logic::showHelp()
 {
-    openknx.console.printHelpLine("logic chNN", "list logic channel NN, i.e. logic ch05");
-    openknx.console.printHelpLine("logic time", "print current time");
-    openknx.console.printHelpLine("logic sun", "print  sunrise and sunset times");
-    openknx.console.printHelpLine("logic sun+DDMM", "print sunrise/sunset at elevation +/- degree/minute");
+    openknx.console.printHelpLine("logic chNN", "List logic channel NN, i.e. logic ch05");
+    openknx.console.printHelpLine("logic time", "Print current time");
+    openknx.console.printHelpLine("logic sun", "Print  sunrise and sunset times");
+    openknx.console.printHelpLine("logic sun+DDMM", "Print sunrise/sunset at elevation +/- degree/minute");
 }
 
 bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
