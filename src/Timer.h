@@ -41,9 +41,11 @@ enum eTimeValid
 
 class Timer
 {
+#ifdef ARDUINO_ARCH_RP2040
   private:
     // Experimental Inclusion of UTC-Timer in RP2040
     void setHardwareDateTime(tm *iDateTime);
+#endif
 
   protected:
     static const uint8_t cHolidaysCount = 32;
