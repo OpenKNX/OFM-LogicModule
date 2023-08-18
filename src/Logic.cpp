@@ -3,7 +3,6 @@
 #include "PCA9632.h"
 #include "Timer.h"
 #include "TimerRestore.h"
-#include "sstream"
 
 #include "LogikmodulVersion.h"
 
@@ -24,9 +23,13 @@ const std::string Logic::name()
 
 const std::string Logic::version()
 {
-    std::ostringstream lVersion;
-    lVersion << ModuleVersion / 16 << "." << ModuleVersion % 16;
-    return lVersion.str();
+    // do not use any string functions, especially strigstream, it uses 120k Flash
+    char lVersion[4];
+    lVersion[0] = '0' + ModuleVersion / 16;
+    lVersion[1] = '.';
+    lVersion[2] = '0' + ModuleVersion % 16;
+    lVersion[4] = 0;
+    return lVersion;
 }
 
 Logic::Logic()
