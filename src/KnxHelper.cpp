@@ -64,3 +64,28 @@ uint32_t getDelayPattern(uint16_t iParamIndex, bool iAsSeconds /* = false */)
             break;
     }
 }
+
+// static
+uint8_t byteToChar2(char *iOut, uint8_t iValue)
+{
+    uint8_t lPos = 0;
+    iOut[lPos] = '0' + iValue / 10;
+    lPos += (iOut[lPos] > '0');
+    iOut[lPos++] = '0' + iValue % 10;
+    iOut[lPos++] = '.';
+    return lPos;
+}
+
+char sVersion[9] = {0};
+
+// static
+char *versionString(uint8_t iVersion, uint8_t iRevision)
+{
+    // do not use any string functions, especially strigstream, it uses 120k Flash
+    uint8_t lPos = 0;
+    lPos += byteToChar2(sVersion + lPos, iVersion / 16);
+    lPos += byteToChar2(sVersion + lPos, iVersion % 16);
+    lPos += byteToChar2(sVersion + lPos, iRevision % 32);
+    sVersion[lPos - 1] = 0;
+    return sVersion;
+}

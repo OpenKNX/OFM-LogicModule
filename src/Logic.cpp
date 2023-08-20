@@ -23,13 +23,7 @@ const std::string Logic::name()
 
 const std::string Logic::version()
 {
-    // do not use any string functions, especially strigstream, it uses 120k Flash
-    char lVersion[4];
-    lVersion[0] = '0' + ModuleVersion / 16;
-    lVersion[1] = '.';
-    lVersion[2] = '0' + ModuleVersion % 16;
-    lVersion[4] = 0;
-    return lVersion;
+    return versionString(ModuleVersion, ModuleRevision);
 }
 
 Logic::Logic()
@@ -268,7 +262,7 @@ void Logic::processInputKo(GroupObject &iKo)
                     const bool lSummertime = raw[6] & DPT19_SUMMERTIME;
                     // TODO check using ParamLOG_SummertimeAll
                     if (((knx.paramByte(LOG_SummertimeAll) & LOG_SummertimeAllMask) >> LOG_SummertimeAllShift) == VAL_STIM_FROM_DPT19)
-                        sTimer.setIsSummertime(lSummertime);
+                        sTimer.IsSummertime(lSummertime);
                 }
             }
         }
@@ -295,7 +289,7 @@ void Logic::processInputKo(GroupObject &iKo)
     }
     else if (iKo.asap() == LOG_KoIsSummertime)
     {
-        sTimer.setIsSummertime(iKo.value(getDPT(VAL_DPT_1)));
+        sTimer.IsSummertime(iKo.value(getDPT(VAL_DPT_1)));
     }
 #ifdef BUZZER_PIN
     else if (iKo.asap() == LOG_KoBuzzerLock)
@@ -330,7 +324,7 @@ void Logic::showHelp()
 {
     openknx.console.printHelpLine("logic chNN", "List logic channel NN, i.e. logic ch05");
     openknx.console.printHelpLine("logic time", "Print current time");
-    openknx.console.printHelpLine("logic sun", "Print  sunrise and sunset times");
+    openknx.console.printHelpLine("logic sun", "Print sunrise and sunset times");
     openknx.console.printHelpLine("logic sun+DDMM", "Print sunrise/sunset at elevation +/- degree/minute");
 }
 

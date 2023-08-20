@@ -14,12 +14,12 @@
 #define VAL_DPT_16 8
 #define VAL_DPT_17 9
 #define VAL_DPT_232 10
-#define VAL_DPT_10 11   // Time
-#define VAL_DPT_11 12   // Date
+#define VAL_DPT_10 11 // Time
+#define VAL_DPT_11 12 // Date
 #define VAL_DPT_12 13
-#define VAL_DPT_13 14   
+#define VAL_DPT_13 14
 #define VAL_DPT_14 15
-#define VAL_DPT_19 16   // Date-Time
+#define VAL_DPT_19 16 // Date-Time
 
 Dpt &getDPT(uint8_t iDptIndex);
 
@@ -32,3 +32,6 @@ Dpt &getDPT(uint8_t iDptIndex);
 #define VAL_TIMEBASE_MASK 0xC000
 
 uint32_t getDelayPattern(uint16_t iParamIndex, bool iAsSeconds = false);
+
+uint8_t byteToChar2(char *iOut, uint8_t iValue);
+char *versionString(uint8_t iVersion, uint8_t iRevision);

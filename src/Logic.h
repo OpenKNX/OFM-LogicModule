@@ -1,6 +1,6 @@
 #pragma once
-#include "OpenKNX.h"
 #include "LogicChannel.h"
+#include "OpenKNX.h"
 #include "Timer.h"
 #include "TimerRestore.h"
 
@@ -9,10 +9,10 @@
 #define USERDATA_KO_OFFSET 204  // start of KO values in flash (2 KO per channel, 4 Byte per KO)
 
 // Watchdog reset causes
-#define WDT_RCAUSE_SYSTEM 6   // reset by system itself
-#define WDT_RCAUSE_WDT 5      // reset by watchdog
-#define WDT_RCAUSE_EXT 4      // reset by reset signal
-#define WDT_RCAUSE_POR 0      // power on reset
+#define WDT_RCAUSE_SYSTEM 6 // reset by system itself
+#define WDT_RCAUSE_WDT 5    // reset by watchdog
+#define WDT_RCAUSE_EXT 4    // reset by reset signal
+#define WDT_RCAUSE_POR 0    // power on reset
 
 // DPT19 special flags
 #define DPT19_FAULT 0x80
@@ -28,7 +28,6 @@
 #define VAL_STIM_FROM_KO 0
 #define VAL_STIM_FROM_DPT19 1
 #define VAL_STIM_FROM_INTERN 2
-
 
 // typedef void (*loopCallback)(void *iThis);
 // struct sLoopCallbackParams {
@@ -62,7 +61,7 @@ class Logic : public OpenKNX::Module
     void debug();
     void setup();
     void loop();
-    void readFlash(const uint8_t* iBuffer, const uint16_t iSize) override;
+    void readFlash(const uint8_t *iBuffer, const uint16_t iSize) override;
     void writeFlash() override;
     uint16_t flashSize() override;
     const std::string name() override;
