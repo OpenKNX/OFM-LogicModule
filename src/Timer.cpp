@@ -1,7 +1,7 @@
 #include "Timer.h"
 #include "Arduino.h"
-#include <ctime>
 #include "OpenKNX.h"
+#include <ctime>
 
 sDay Timer::cHolidays[cHolidaysCount] = {
     {1, 1},
@@ -35,8 +35,7 @@ sDay Timer::cHolidays[cHolidaysCount] = {
     {26, 12},
     {31, 12},
     {26, 10},
-    {8, 12}
-};
+    {8, 12}};
 
 Timer::Timer()
 {
@@ -73,6 +72,11 @@ void Timer::setup(double iLongitude, double iLatitude, int8_t iTimezone, bool iU
             cHolidays[i].month = REMOVED;
         iHolidayBitmask <<= 1;
     }
+}
+
+bool Timer::UseSummertime()
+{
+    return mUseSummertime;
 }
 
 void Timer::loop()
@@ -174,7 +178,7 @@ void Timer::setDateFromBus(tm *iDate)
     mNow.tm_year = iDate->tm_year - 1900;
     mktime(&mNow);
     mTimeDelay = millis();
-    if (mNow.tm_year >= MINYEAR-1900)
+    if (mNow.tm_year >= MINYEAR - 1900)
         mTimeValid = static_cast<eTimeValid>(mTimeValid | tmDateValid);
 }
 
@@ -287,7 +291,12 @@ eTimeValid Timer::isTimerValid()
     return mTimeValid;
 }
 
-void Timer::setIsSummertime(bool iValue)
+bool Timer::IsSummertime()
+{
+    return mIsSummertime;
+}
+
+void Timer::IsSummertime(bool iValue)
 {
     if (iValue != mIsSummertime)
     {
@@ -306,12 +315,13 @@ uint8_t Timer::calculateLastSundayInMonth(uint8_t iMonth)
 }
 
 // should be called only at 03:01 o'clock
-void Timer::calculateSummertime()
+bool Timer::calculateSummertime()
 {
     // first we do easy win
-    bool lIsSummertime = false;
+    bool lResult = false;
     if (mUseSummertime)
     {
+        bool lIsSummertime = false;
         if (getMonth() == 3)
         {
             // find last Sunday in March
@@ -351,8 +361,13 @@ void Timer::calculateSummertime()
         {
             lIsSummertime = (getMonth() > 3 && getMonth() < 10);
         }
-        setIsSummertime(lIsSummertime);
+        if (lIsSummertime != mIsSummertime)
+        {
+            IsSummertime(lIsSummertime);
+            lResult = true;
+        }
     }
+    return lResult;
 }
 
 void Timer::calculateAdvent()
@@ -642,7 +657,6 @@ void Timer::sunRadDec(double d, double *RA, double *dec, double *r)
     /* Convert to spherical coordinates */
     *RA = atan2d(y, x);
     *dec = atan2d(z, sqrt(x * x + y * y));
-
 }
 
 /******************************************************************/
