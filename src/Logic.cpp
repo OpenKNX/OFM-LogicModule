@@ -4,7 +4,7 @@
 #include "Timer.h"
 #include "TimerRestore.h"
 
-#include "LogikmodulVersion.h"
+#include "ModuleVersion.h"
 
 uint8_t Logic::sMagicWord[] = {0xAE, 0x49, 0xD2, 0x9F};
 Timer &Logic::sTimer = Timer::instance();                      // singleton
