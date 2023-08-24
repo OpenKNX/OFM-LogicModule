@@ -92,10 +92,10 @@ Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer d
 
 xx.xx.2023: Firmware 2.0, Applikation 2.0
 
+* NEU: Die Firmware kann jetzt über den KNX-Bus aktualisiert werden (nur bei RP2040-Prozessor aka Raspberry Pi Pico)
 * NEU: Mathematische Funktion "Glättung" von Werten eingeführt
 * NEU: Output Converter "Wert eines KO senden" eingeführt
 * NEU: Zusätzliche Infoboxen in der erklären, wie "nur bei geändertem Ergebnis" zu verstehen ist.
-* NEU: Logikmodul-Firmware kann jetzt über den KNX-Bus aktualisiert werden (nur bei RP2040-Prozessor aka Raspberry Pi Pico)
 * FIX: Textanpassung von "Kanalausgang X/Y zu Interner Eingang 3/4"
 
 22.08.2023: Firmware 1.5, Applikation 1.5

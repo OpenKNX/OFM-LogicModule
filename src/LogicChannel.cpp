@@ -2445,7 +2445,7 @@ bool LogicChannel::checkWeekday(Timer &iTimer, uint8_t iWeekday, bool iHandleAsS
     return iWeekday == iTimer.getWeekday();
 }
 
-bool LogicChannel::checkTimerTime(Timer &iTimer, uint8_t iTimerIndex, uint16_t iBitfield, int8_t iHour, int8_t iMinute, bool iSkipWeekday, bool iHandleAsSunday)
+bool LogicChannel::checkTimerTime(Timer &iTimer, uint8_t iTimerIndex, uint16_t iBitfield, int8_t iHour, int8_t iMinute, bool iSkipWeekday, bool iHandleAsSunday, bool iWithGenericTime)
 {
     bool lResult = false;
 
@@ -2459,16 +2459,16 @@ bool LogicChannel::checkTimerTime(Timer &iTimer, uint8_t iTimerIndex, uint16_t i
                 iHour--;
                 iMinute += 60;
             }
-            if (iMinute > 59)
+            if (iMinute > 59 && !iWithGenericTime)
             {
                 iHour++;
                 iMinute -= 60;
             }
             // check hour
-            if (iHour == 31 || iHour == iTimer.getHour())
+            if ((iHour == 31 && iWithGenericTime) || iHour == iTimer.getHour())
             {
                 // check minute
-                if (iMinute == 63 || iMinute == iTimer.getMinute())
+                if ((iMinute == 63 && iWithGenericTime) || iMinute == iTimer.getMinute())
                 {
                     lResult = true;
                 }
@@ -2482,7 +2482,7 @@ bool LogicChannel::checkPointInTime(Timer &iTimer, uint8_t iTimerIndex, uint16_t
 {
     int8_t lHour = (iBitfield & 0x3E00) >> 9;
     int8_t lMinute = (iBitfield & 0x01F8) >> 3;
-    bool lResult = checkTimerTime(iTimer, iTimerIndex, iBitfield, lHour, lMinute, iSkipWeekday, iHandleAsSunday);
+    bool lResult = checkTimerTime(iTimer, iTimerIndex, iBitfield, lHour, lMinute, iSkipWeekday, iHandleAsSunday, true);
     return lResult;
 }
 
@@ -2491,7 +2491,7 @@ bool LogicChannel::checkSunAbs(Timer &iTimer, uint8_t iSunInfo, uint8_t iTimerIn
     int8_t lFactor = (iMinus) ? -1 : 1;
     int8_t lHour = (iTimer.getSunInfo(iSunInfo)->hour + ((iBitfield & 0x3E00) >> 9) * lFactor) % 24;
     int8_t lMinute = (iTimer.getSunInfo(iSunInfo)->minute + ((iBitfield & 0x01F8) >> 3) * lFactor) % 60;
-    bool lResult = checkTimerTime(iTimer, iTimerIndex, iBitfield, lHour, lMinute, iSkipWeekday, iHandleAsSunday);
+    bool lResult = checkTimerTime(iTimer, iTimerIndex, iBitfield, lHour, lMinute, iSkipWeekday, iHandleAsSunday, false);
     return lResult;
 }
 
@@ -2509,7 +2509,7 @@ bool LogicChannel::checkSunLimit(Timer &iTimer, uint8_t iSunInfo, uint8_t iTimer
     {
         lMinute = iTimer.getSunInfo(iSunInfo)->minute;
     }
-    bool lResult = checkTimerTime(iTimer, iTimerIndex, iBitfield, lHour, lMinute, iSkipWeekday, iHandleAsSunday);
+    bool lResult = checkTimerTime(iTimer, iTimerIndex, iBitfield, lHour, lMinute, iSkipWeekday, iHandleAsSunday, false);
     return lResult;
 }
 
@@ -2519,7 +2519,7 @@ bool LogicChannel::checkSunDegree(Timer &iTimer, uint8_t iSunInfo, uint8_t iTime
     int8_t lMinute = ((iBitfield & 0x01F8) >> 3);
     sTime lTime;
     iTimer.getSunDegree(iSunInfo, (lDegree + lMinute / 60.0) * (iDown ? -1.0 : 1.0), &lTime);
-    bool lResult = checkTimerTime(iTimer, iTimerIndex, iBitfield, lTime.hour, lTime.minute, iSkipWeekday, iHandleAsSunday);
+    bool lResult = checkTimerTime(iTimer, iTimerIndex, iBitfield, lTime.hour, lTime.minute, iSkipWeekday, iHandleAsSunday, false);
     return lResult;
 }
 
