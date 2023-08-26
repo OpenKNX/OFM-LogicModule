@@ -41,7 +41,7 @@ enum eTimeValid
 
 class Timer
 {
-#ifdef ARDUINO_ARCH_RP2040
+#ifdef OPENKNX_EXPERIMENTAL_RP2040RTC_LOCALTIME
   private:
     // Experimental Inclusion of UTC-Timer in RP2040
     void setHardwareDateTime(tm *iDateTime);

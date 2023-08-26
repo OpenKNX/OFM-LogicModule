@@ -3,7 +3,10 @@
 #include <ctime>
 #include "OpenKNX.h"
 
-#ifdef ARDUINO_ARCH_RP2040
+#ifdef OPENKNX_EXPERIMENTAL_RP2040RTC_LOCALTIME
+    #ifndef ARDUINO_ARCH_RP2040
+        #error Experimental Feature OPENKNX_EXPERIMENTAL_RP2040RTC_LOCALTIME is supported on RP2040 only!
+    #endif
     // Experimental Inclusion of RTC-Timer in RP2040
     // @see https://www.raspberrypi.com/documentation/pico-sdk/hardware.html#rtc_example
     #include "hardware/rtc.h"
@@ -149,7 +152,7 @@ void Timer::calculateSunriseSunset()
     convertToLocalTime(set, &mSunset);
 }
 
-#ifdef ARDUINO_ARCH_RP2040
+#ifdef OPENKNX_EXPERIMENTAL_RP2040RTC_LOCALTIME
     // Experimental Inclusion of RTC-Timer in RP2040
     void Timer::setHardwareDateTime(tm *iDateTime)
     {
@@ -186,7 +189,7 @@ void Timer::setTimeFromBus(tm *iTime)
     mTimeDelay = millis();
     mTimeValid = static_cast<eTimeValid>(mTimeValid | tmMinutesValid);
 
-    #ifdef ARDUINO_ARCH_RP2040
+    #ifdef OPENKNX_EXPERIMENTAL_RP2040RTC_LOCALTIME
         // Experimental Inclusion of RTC-Timer in RP2040
         if (mTimeValid == tmValid)
         {
@@ -218,7 +221,7 @@ void Timer::setDateFromBus(tm *iDate)
     if (mNow.tm_year >= MINYEAR-1900)
         mTimeValid = static_cast<eTimeValid>(mTimeValid | tmDateValid);
 
-    #ifdef ARDUINO_ARCH_RP2040
+    #ifdef OPENKNX_EXPERIMENTAL_RP2040RTC_LOCALTIME
         // Experimental Inclusion of RTC-Timer in RP2040
         if (mTimeValid == tmValid)
         {
@@ -234,7 +237,7 @@ void Timer::setDateTimeFromBus(tm *iDateTime)
     setDateFromBus(iDateTime);
 
 
-    #ifdef ARDUINO_ARCH_RP2040
+    #ifdef OPENKNX_EXPERIMENTAL_RP2040RTC_LOCALTIME
         // Experimental Inclusion of RTC-Timer in RP2040
         setHardwareDateTime(iDateTime);
     #endif
