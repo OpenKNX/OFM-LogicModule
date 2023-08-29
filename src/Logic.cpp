@@ -354,7 +354,6 @@ bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
             logInfoP("Module ISO-Time: %04d-%02d-%02d %02d:%02d:%02d", lYear, lMonth, lDay, lHour, lMinute, lSecond);
             if (iDebugKo)
             {
-                logInfoP("  DiagnoseKo will show time: %02d:%02d:%02d, Date: %02d.%02d", lHour, lMinute, lSecond, lDay, lMonth);
                 openknx.console.writeDiagenoseKo("%02d:%02d:%02d %02d.%02d", lHour, lMinute, lSecond, lDay, lMonth);
             }
         }
