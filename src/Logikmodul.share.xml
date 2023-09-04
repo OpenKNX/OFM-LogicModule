@@ -894,7 +894,7 @@
                   <Enumeration Text="04" Value="4" Id="%AID%_PT-HourRel_EN-4" />
                   <Enumeration Text="05" Value="5" Id="%AID%_PT-HourRel_EN-5" />
                   <Enumeration Text="06" Value="6" Id="%AID%_PT-HourRel_EN-6" />
-                  <Enumeration Text="07" Value="7" Id="%AID%_PT-HourRel_EN-7" />
+                  <!-- <Enumeration Text="07" Value="7" Id="%AID%_PT-HourRel_EN-7" />
                   <Enumeration Text="08" Value="8" Id="%AID%_PT-HourRel_EN-8" />
                   <Enumeration Text="09" Value="9" Id="%AID%_PT-HourRel_EN-9" />
                   <Enumeration Text="10" Value="10" Id="%AID%_PT-HourRel_EN-10" />
@@ -910,7 +910,7 @@
                   <Enumeration Text="20" Value="20" Id="%AID%_PT-HourRel_EN-20" />
                   <Enumeration Text="21" Value="21" Id="%AID%_PT-HourRel_EN-21" />
                   <Enumeration Text="22" Value="22" Id="%AID%_PT-HourRel_EN-22" />
-                  <Enumeration Text="23" Value="23" Id="%AID%_PT-HourRel_EN-23" />
+                  <Enumeration Text="23" Value="23" Id="%AID%_PT-HourRel_EN-23" /> -->
                 </TypeRestriction>
               </ParameterType>
               <ParameterType Id="%AID%_PT-Weekday" Name="Weekday">
@@ -1218,6 +1218,8 @@
           <Dynamic>
             <Channel Name="Logik" Text="Logikfunktionen" Number="3" Id="%AID%_CH-3">
               <ParameterBlock Name="Docu" Text="Logikdokumentation" Id="%AID%_PB-nnn">
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Version des Logikmoduls: %ModuleVersion%" UIHint="Headline" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Jeder Logikkanal dieses Moduls repräsentiert eine Logik. Die Logikverarbeitung ist intern immer Binär (DPT1). Jede Logik hat bis zu 4 Eingänge, Detais siehe bei der Doku der Eingänge." />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Da das Logikmodul unterschiedliche DPT für Ein- und Ausgänge erlaubt, gibt es Funktionsblöcke (im folgendem FB), die einen DPTx zu DPT1 konvertieren (für Eingänge) und umgekehrt (für Ausgänge)." />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="In das Ein- und Ausgangssignal einer Logik können weitere FB eingefügt werden und so das Ein- bzw. das Ausgangssignal beeinflussen. Folgende Funktionsblöcke gibt es:" />

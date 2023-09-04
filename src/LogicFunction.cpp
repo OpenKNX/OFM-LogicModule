@@ -1,81 +1,83 @@
 #include "LogicFunction.h"
 #include "KnxHelper.h"
+#include "knx.h"
+#include "knxprod.h"
 // #include "LogicValue.h"
 
 // native functions, implemented as a simple example how to use user functions
-LogicValue LogicFunction::nativeAdd(uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
+LogicValue LogicFunction::nativeAdd(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
 {
     return E1 + E2;
 }
 
-LogicValue LogicFunction::nativeSubtract(uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
+LogicValue LogicFunction::nativeSubtract(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
 {
     return E1 - E2;
 }
 
-LogicValue LogicFunction::nativeMultiply(uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
+LogicValue LogicFunction::nativeMultiply(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
 {
     return E1 * E2;
 }
 
-LogicValue LogicFunction::nativeDivide(uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
+LogicValue LogicFunction::nativeDivide(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
 {
     return E1 / E2;
 }
 
-LogicValue LogicFunction::nativeAverage(uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
+LogicValue LogicFunction::nativeAverage(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
 {
     return (float)(E1 + E2) / 2;
 }
 
-LogicValue LogicFunction::nativeMinimum(uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
+LogicValue LogicFunction::nativeMinimum(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
 {
     return (E1 < E2) ? E1 : E2;
 }
 
-LogicValue LogicFunction::nativeMaximum(uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
+LogicValue LogicFunction::nativeMaximum(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
 {
     return (E1 > E2) ? E1 : E2;
 }
 
-LogicValue LogicFunction::nativeModulo(uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
+LogicValue LogicFunction::nativeModulo(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
 {
     return (int32_t)E1 % (int32_t)E2;
 }
 
-LogicValue LogicFunction::nativeAnd(uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
+LogicValue LogicFunction::nativeAnd(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
 {
     return (int32_t)E1 & (int32_t)E2;
 }
 
-LogicValue LogicFunction::nativeOr(uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
+LogicValue LogicFunction::nativeOr(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
 {
     return (int32_t)E1 | (int32_t)E2;
 }
 
-LogicValue LogicFunction::nativeXor(uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
+LogicValue LogicFunction::nativeXor(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
 {
     return (int32_t)E1 ^ (int32_t)E2;
 }
 
-LogicValue LogicFunction::nativeLShift(uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
+LogicValue LogicFunction::nativeLShift(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
 {
     return (int32_t)E1 << (int32_t)E2;
 }
 
-LogicValue LogicFunction::nativeRShift(uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
+LogicValue LogicFunction::nativeRShift(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
 {
     return (int32_t)E1 >> (int32_t)E2;
 }
 
-LogicValue LogicFunction::nativeBool2Int(uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
+LogicValue LogicFunction::nativeBool2Int(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
 {
     // we assume E1, E2 are boolean
     // if not, standard conversion applies
     return (uint8_t)((bool)E2 * 2 + (bool)E1);
 }
 
-LogicValue LogicFunction::nativeSmooth(uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
+LogicValue LogicFunction::nativeSmooth(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
 {
     if (E1.isInitial() || E2.isInitial())
         return 0.0f;
@@ -93,7 +95,7 @@ LogicFunction::LogicFunction(){};
 
 LogicFunction::~LogicFunction(){};
 
-LogicValue (*LogicFunction::nativeFunction[NUM_NATIVE_FUNCTIONS])(uint8_t, LogicValue, uint8_t, LogicValue, uint8_t *, LogicValue){
+LogicValue (*LogicFunction::nativeFunction[NUM_NATIVE_FUNCTIONS])(uint8_t, uint8_t, LogicValue, uint8_t, LogicValue, uint8_t *, LogicValue){
     nativeAdd,
     nativeSubtract,
     nativeMultiply,
@@ -110,7 +112,7 @@ LogicValue (*LogicFunction::nativeFunction[NUM_NATIVE_FUNCTIONS])(uint8_t, Logic
     nativeBool2Int,
     nativeSmooth};
 
-LogicValue (*LogicFunction::userFunction[30])(uint8_t, LogicValue, uint8_t, LogicValue, uint8_t *, LogicValue){
+LogicValue (*LogicFunction::userFunction[30])(uint8_t, uint8_t, LogicValue, uint8_t, LogicValue, uint8_t *, LogicValue){
     userFunction01,
     userFunction02,
     userFunction03,
@@ -143,16 +145,16 @@ LogicValue (*LogicFunction::userFunction[30])(uint8_t, LogicValue, uint8_t, Logi
     userFunction30};
 
 // dispatcher
-LogicValue LogicFunction::callFunction(uint8_t iId, uint8_t iDptE1, LogicValue iE1, uint8_t iDptE2, LogicValue iE2, uint8_t *cDptOut, LogicValue iOld)
+LogicValue LogicFunction::callFunction(uint8_t _channelIndex, uint8_t iId, uint8_t iDptE1, LogicValue iE1, uint8_t iDptE2, LogicValue iE2, uint8_t *cDptOut, LogicValue iOld)
 {
     if (iId > 0 && iId <= NUM_NATIVE_FUNCTIONS)
     {
-        LogicValue lResult = nativeFunction[iId - 1](iDptE1, iE1, iDptE2, iE2, cDptOut, iOld);
+        LogicValue lResult = nativeFunction[iId - 1](_channelIndex, iDptE1, iE1, iDptE2, iE2, cDptOut, iOld);
         return lResult;
     }
     else if (iId > 200 && iId <= 230)
     {
-        LogicValue lResult = userFunction[iId - 201](iDptE1, iE1, iDptE2, iE2, cDptOut, iOld);
+        LogicValue lResult = userFunction[iId - 201](_channelIndex, iDptE1, iE1, iDptE2, iE2, cDptOut, iOld);
         return lResult;
     }
     return (uint8_t)0;

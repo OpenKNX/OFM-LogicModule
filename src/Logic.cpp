@@ -495,8 +495,8 @@ void Logic::loop()
         }
     }
     if (lChannelsProcessed < mNumChannels)
-        logInfoP("did not process all channels during loop, just %i channels", lChannelsProcessed);
-    if (millis() - lLoopTime > 1)
+        logInfoP("loop time reduced after %i channels", lChannelsProcessed);
+    if (millis() - lLoopTime > 4)
         logInfoP("LoopTime: %i", millis() - lLoopTime);
 }
 

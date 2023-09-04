@@ -3589,7 +3589,7 @@
                           <when test="1">
                             <!-- Create ComObjects for On-Value -->
                             <choose ParamRefId="%AID%_UP-%T%%CCC%136_R-%T%%CCC%13601">
-                              <when test="1 2 3 4 8">
+                              <when test="1 2 3 4 8 9">
                                 <choose ParamRefId="%AID%_P-%T%%CCC%064_R-%T%%CCC%06401">
                                   <when test="0">
                                     <ComObjectRefRef RefId="%AID%_O-%T%%CCC%002_R-%T%%CCC%00201" />
@@ -3638,7 +3638,7 @@
                             </choose>
                             <!-- Create ComObjects for Off-Value -->
                             <choose ParamRefId="%AID%_UP-%T%%CCC%139_R-%T%%CCC%13901">
-                              <when test="1 2 3 4 8">
+                              <when test="1 2 3 4 8 9">
                                 <choose ParamRefId="%AID%_P-%T%%CCC%064_R-%T%%CCC%06401">
                                   <when test="0">
                                     <ComObjectRefRef RefId="%AID%_O-%T%%CCC%002_R-%T%%CCC%00201" />

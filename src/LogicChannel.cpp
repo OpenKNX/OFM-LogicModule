@@ -666,7 +666,7 @@ void LogicChannel::writeParameterValue(uint8_t iIOIndex)
 
 void LogicChannel::writeOtherKoValue(uint16_t iKoParamIndex, uint16_t iDptIndex)
 {
-    uint16_t lKoNumber = getWordParam(iKoParamIndex);
+    uint16_t lKoNumber = getWordParam(iKoParamIndex) >> 1;
     LogicValue lValue = getOtherKoValue(lKoNumber, iDptIndex);
     uint8_t lDptOut = getByteParam(LOG_fODpt);
     writeValue(lValue, lDptOut);
@@ -681,7 +681,7 @@ void LogicChannel::writeFunctionValue(uint16_t iParamIndex)
     LogicValue lE2 = getInputValue(BIT_EXT_INPUT_2, &lDptE2);
     uint8_t lDptOut = getByteParam(LOG_fODpt);
     LogicValue lKoValue = getKoValue(IO_Output, lDptOut);
-    LogicValue lValue = LogicFunction::callFunction(lFunction, lDptE1, lE1, lDptE2, lE2, &lDptOut, lKoValue);
+    LogicValue lValue = LogicFunction::callFunction(_channelIndex, lFunction, lDptE1, lE1, lDptE2, lE2, &lDptOut, lKoValue);
     writeValue(lValue, lDptOut);
 }
 
@@ -2489,8 +2489,8 @@ bool LogicChannel::checkPointInTime(Timer &iTimer, uint8_t iTimerIndex, uint16_t
 bool LogicChannel::checkSunAbs(Timer &iTimer, uint8_t iSunInfo, uint8_t iTimerIndex, uint16_t iBitfield, bool iSkipWeekday, bool iHandleAsSunday, bool iMinus)
 {
     int8_t lFactor = (iMinus) ? -1 : 1;
-    int8_t lHour = (iTimer.getSunInfo(iSunInfo)->hour + ((iBitfield & 0x3E00) >> 9) * lFactor) % 24;
-    int8_t lMinute = (iTimer.getSunInfo(iSunInfo)->minute + ((iBitfield & 0x01F8) >> 3) * lFactor) % 60;
+    int8_t lHour = (iTimer.getSunInfo(iSunInfo)->hour + ((iBitfield & 0x3E00) >> 9) * lFactor);
+    int8_t lMinute = (iTimer.getSunInfo(iSunInfo)->minute + ((iBitfield & 0x01F8) >> 3) * lFactor);
     bool lResult = checkTimerTime(iTimer, iTimerIndex, iBitfield, lHour, lMinute, iSkipWeekday, iHandleAsSunday, false);
     return lResult;
 }
@@ -2731,7 +2731,7 @@ int16_t LogicChannel::getTimerTime(Timer &iTimer, uint8_t iTimerIndex, uint16_t 
                 iMinute -= 60;
             }
             lResult = iHour * 100 + iMinute;
-            if (iHour < 0 || iHour > 23)
+            if (lResult < 0 || lResult > 2359)
                 lResult = -1;
         }
     }
@@ -2753,8 +2753,8 @@ int16_t LogicChannel::getPointInTime(Timer &iTimer, uint8_t iTimerIndex, uint16_
 int16_t LogicChannel::getSunAbs(Timer &iTimer, uint8_t iSunInfo, uint8_t iTimerIndex, uint16_t iBitfield, bool iSkipWeekday, bool iHandleAsSunday, bool iMinus)
 {
     int8_t lFactor = (iMinus) ? -1 : 1;
-    int8_t lHour = (iTimer.getSunInfo(iSunInfo)->hour + ((iBitfield & 0x3E00) >> 9) * lFactor) % 24;
-    int8_t lMinute = (iTimer.getSunInfo(iSunInfo)->minute + ((iBitfield & 0x01F8) >> 3) * lFactor) % 60;
+    int8_t lHour = (iTimer.getSunInfo(iSunInfo)->hour + ((iBitfield & 0x3E00) >> 9) * lFactor);
+    int8_t lMinute = (iTimer.getSunInfo(iSunInfo)->minute + ((iBitfield & 0x01F8) >> 3) * lFactor);
     int16_t lResult = getTimerTime(iTimer, iTimerIndex, iBitfield, lHour, lMinute, iSkipWeekday, iHandleAsSunday);
     return lResult;
 }

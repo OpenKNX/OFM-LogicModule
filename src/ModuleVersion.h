@@ -1,5 +1,5 @@
-#define ModuleVersion 21
-#define ModuleRevision 1
+#define ModuleVersion 32
+#define ModuleRevision 0
 
 // ATTENTION: This file is evaluated during build, by OpenKNXproducer and some build scripts.
 // Do not add any other information than the module version of this OFM.

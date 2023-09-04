@@ -93,15 +93,16 @@ Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer d
 xx.xx.2023: Firmware 2.0, Applikation 2.0
 
 * NEU: Die Firmware kann jetzt über den KNX-Bus aktualisiert werden (nur bei RP2040-Prozessor aka Raspberry Pi Pico)
-* NEU: Mathematische Funktion "Glättung" von Werten eingeführt
 * NEU: Output Converter "Wert eines KO senden" eingeführt
 * NEU: Zusätzliche Infoboxen in der erklären, wie "nur bei geändertem Ergebnis" zu verstehen ist.
 * FIX: Textanpassung von "Kanalausgang X/Y zu Interner Eingang 3/4"
+* FIX: Zeitschaltuhren Sonnenauf-/-untergang mit Zeitversatz erlauben jetzt nur einen Zeitversatz von &pm;6 Stunden und 59 Minuten. Der früher mögliche Zeitbereich konnte nicht funktionieren. 
 
 22.08.2023: Firmware 1.5, Applikation 1.5
 
 * NEW: TOR hat jetzt einen Tri-State-Eingang zum öffnen vom Tor: Das Tor ist beim Neustart weder offen noch geschlossen und agiert somit beim ersten Telegramm erwartungskonform
 * NEW: TOR ist bei Neustart am Ausgang undefiniert und wird mit dem ersten öffnen/schließen erst initialisiert.
+* NEU: Mathematische Funktion "Glättung" von Werten eingeführt
 * FIX: Zeitschaltuhren Sonnenauf-/untergang mit Zeitversatz konnten intern zu ungültigen Zeiten führen und schalteten dann unerwartet oder gar nicht.
 * FIX: Beim nachholen von Schaltzeiten wurde die Sommerzeit nicht beachtet.
 * FIX: Der KNX-Stack ist jetzt wesentlich robuster bei hoch ausgelastetem KNX-Bus. Das hat direkte Auswirkungen auf die Logik, die früher bei Hochlast Telegramme ausgelassen wurden, die dann als Trigger für Logiken fehlten.
@@ -1350,11 +1351,12 @@ Es wird ein Zeitpunkt bestimmt, zu dem geschaltet werden soll. Die Angabe des Ze
 
 #### **Sonnenaufgang: plus Zeitversatz**
 
-Der Schaltzeitpunkt ist der Sonnenaufgang, zu dem die Zeitangabe, die in den Spalten Stunde und Minute steht, hinzuaddiert wird. Es wird somit um die angegebenen Stunden und Minuten nach Sonnenaufgang geschaltet.
+Der Schaltzeitpunkt ist der Sonnenaufgang, zu dem die Zeitangabe, die in den Spalten Stunde und Minute steht, hinzuaddiert wird. Es wird somit um die angegebenen Stunden und Minuten nach Sonnenaufgang geschaltet. 
 
 #### **Sonnenaufgang: minus Zeitversatz**
 
-Der Schaltzeitpunkt ist der Sonnenaufgang, von dem die Zeitangabe, die in den Spalten Stunde und Minute steht, abgezogen wird. Es wird somit um die angegebenen Stunden und Minuten vor Sonnenaufgang geschaltet.
+Der Schaltzeitpunkt ist der Sonnenaufgang, von dem die Zeitangabe, die in den Spalten Stunde und Minute steht, abgezogen wird. Es wird somit um die angegebenen Stunden und Minuten vor Sonnenaufgang geschaltet. Falls der Zeitversatz zu einer Zeit vor Mitternacht führt, wird nicht geschaltet. Man muss sich somit beim Zeitversatz innerhalb des selben Tages bewegen.
+
 
 #### **Sonnenaufgang: Frühestens um**
 
@@ -1374,7 +1376,8 @@ Der Schaltzeitpunkt ist morgens, sobald die Sonne den Winkel unter dem Horizont 
 
 #### **Sonnenuntergang: plus Zeitversatz**
 
-Der Schaltzeitpunkt ist der Sonnenuntergang, zu dem die Zeitangabe, die in den Spalten Stunde und Minute steht, hinzuaddiert wird. Es wird somit um die angegebenen Stunden und Minuten nach Sonnenuntergang geschaltet.
+Der Schaltzeitpunkt ist der Sonnenuntergang, zu dem die Zeitangabe, die in den Spalten Stunde und Minute steht, hinzuaddiert wird. Es wird somit um die angegebenen Stunden und Minuten nach Sonnenuntergang geschaltet. Falls der Zeitversatz zu einer Zeit nach Mitternacht führt, wird nicht geschaltet. Man muss sich somit beim Zeitversatz innerhalb des selben Tages bewegen.
+
 
 #### **Sonnenuntergang: minus Zeitversatz**
 
