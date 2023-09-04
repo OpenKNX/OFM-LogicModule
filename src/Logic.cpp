@@ -352,10 +352,11 @@ bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
         uint8_t lSecond = sTimer.getSecond();
         uint8_t lDay = sTimer.getDay();
         uint8_t lMonth = sTimer.getMonth();
+        uint16_t lYear = sTimer.getYear();
         // this if prevents stupid warnings
         if (lHour < 24 && lMinute < 60 && lSecond < 60 && lDay < 32 && lMonth < 13)
         {
-            logInfoP("Module time: %02d:%02d:%02d, Date: %02d.%02d", lHour, lMinute, lSecond, lDay, lMonth);
+            logInfoP("Module ISO-Time: %04d-%02d-%02d %02d:%02d:%02d", lYear, lMonth, lDay, lHour, lMinute, lSecond);
             if (iDebugKo)
             {
                 openknx.console.writeDiagenoseKo("%02d:%02d:%02d %02d.%02d", lHour, lMinute, lSecond, lDay, lMonth);

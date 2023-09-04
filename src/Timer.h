@@ -41,6 +41,12 @@ enum eTimeValid
 
 class Timer
 {
+#ifdef OPENKNX_EXPERIMENTAL_RP2040RTC_LOCALTIME
+  private:
+    // Experimental Inclusion of UTC-Timer in RP2040
+    void setHardwareDateTime(tm *iDateTime);
+#endif
+
   protected:
     static const uint8_t cHolidaysCount = 32;
     static sDay cHolidays[cHolidaysCount];
