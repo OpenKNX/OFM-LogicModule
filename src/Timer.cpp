@@ -177,7 +177,10 @@ void Timer::calculateSunriseSunset()
         };
 
         // Start the RTC
-        rtc_init();
+        if (!rtc_running())
+        {
+            rtc_init();
+        }
         rtc_set_datetime(&t);
 
         // "clk_sys is >2000x faster than clk_rtc, 
