@@ -253,11 +253,7 @@ void Timer::setDateTimeFromBus(tm *iDateTime)
     setTimeFromBus(iDateTime);
     setDateFromBus(iDateTime);
 
-
-    #ifdef OPENKNX_EXPERIMENTAL_RP2040RTC_LOCALTIME
-        // Experimental Inclusion of RTC-Timer in RP2040
-        setHardwareDateTime(iDateTime);
-    #endif
+    // RTC is set from inside previous functions
 }
 
 bool Timer::minuteChanged()
