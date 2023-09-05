@@ -210,7 +210,7 @@ void Timer::setTimeFromBus(tm *iTime)
         // Experimental Inclusion of RTC-Timer in RP2040
         if (mTimeValid == tmValid)
         {
-            // TODO check setting hardware-clock
+            setHardwareDateTime(&mNow);
         }
     #endif
 }
@@ -242,7 +242,7 @@ void Timer::setDateFromBus(tm *iDate)
         // Experimental Inclusion of RTC-Timer in RP2040
         if (mTimeValid == tmValid)
         {
-            // TODO check setting hardware-clock
+            setHardwareDateTime(&mNow);
         }
     #endif
 }
