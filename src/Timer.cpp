@@ -175,7 +175,11 @@ void Timer::calculateSunriseSunset()
                 .min   = (int8_t)iDateTime->tm_min,
                 .sec   = (int8_t)iDateTime->tm_sec,
         };
+        setHardwareDateTime(t);
+    }
 
+    void Timer::setHardwareDateTime(datetime_t t)
+    {
         // Start the RTC
         if (!rtc_running())
         {

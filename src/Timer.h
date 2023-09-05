@@ -10,6 +10,10 @@
 #include <math.h>
 #include <stdint.h>
 
+#ifdef OPENKNX_EXPERIMENTAL_RP2040RTC_LOCALTIME
+    #include "pico/util/datetime.h"
+#endif
+
 #define MINYEAR 2022
 
 #define SUN_SUNRISE 0x00
@@ -45,6 +49,7 @@ class Timer
   private:
     // Experimental Inclusion of UTC-Timer in RP2040
     void setHardwareDateTime(tm *iDateTime);
+    void setHardwareDateTime(datetime_t t);
 #endif
 
   protected:
