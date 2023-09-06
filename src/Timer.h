@@ -50,6 +50,7 @@ class Timer
     // Experimental Inclusion of UTC-Timer in RP2040
     void setHardwareDateTime(tm *iDateTime);
     void setHardwareDateTime(datetime_t t);
+    void setHardwareValidDateTime();
 #endif
 
   protected:

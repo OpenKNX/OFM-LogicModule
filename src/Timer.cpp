@@ -193,6 +193,15 @@ void Timer::calculateSunriseSunset()
         // [https://www.raspberrypi.com/documentation/pico-sdk/hardware.html#rtc_example]
         sleep_us(64);
     }
+
+void Timer::setHardwareValidDateTime()
+{
+    // Experimental Inclusion of RTC-Timer in RP2040
+    if (mTimeValid == tmValid)
+    {
+        setHardwareDateTime(&mNow);
+    }
+}
 #endif
 
 void Timer::setTimeFromBus(tm *iTime)
@@ -206,13 +215,10 @@ void Timer::setTimeFromBus(tm *iTime)
     mTimeDelay = 0; // force time/year calculations
     mTimeValid = static_cast<eTimeValid>(mTimeValid | tmMinutesValid);
 
-    #ifdef OPENKNX_EXPERIMENTAL_RP2040RTC_LOCALTIME
-        // Experimental Inclusion of RTC-Timer in RP2040
-        if (mTimeValid == tmValid)
-        {
-            setHardwareDateTime(&mNow);
-        }
-    #endif
+#ifdef OPENKNX_EXPERIMENTAL_RP2040RTC_LOCALTIME
+    // Experimental Inclusion of RTC-Timer in RP2040
+    setHardwareValidDateTime();
+#endif
 }
 
 void Timer::setDateFromBus(tm *iDate)
@@ -238,13 +244,10 @@ void Timer::setDateFromBus(tm *iDate)
     if (mNow.tm_year >= MINYEAR - 1900)
         mTimeValid = static_cast<eTimeValid>(mTimeValid | tmDateValid);
 
-    #ifdef OPENKNX_EXPERIMENTAL_RP2040RTC_LOCALTIME
-        // Experimental Inclusion of RTC-Timer in RP2040
-        if (mTimeValid == tmValid)
-        {
-            setHardwareDateTime(&mNow);
-        }
-    #endif
+#ifdef OPENKNX_EXPERIMENTAL_RP2040RTC_LOCALTIME
+    // Experimental Inclusion of RTC-Timer in RP2040
+    setHardwareValidDateTime();
+#endif
 }
 
 void Timer::setDateTimeFromBus(tm *iDateTime)
