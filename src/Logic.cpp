@@ -96,7 +96,7 @@ bool Logic::getKoLookup(uint16_t iKoNumber, sKoLookup **iKoLookup)
 void Logic::prepareChannels()
 {
     // bool lResult = false;
-    logInfoP("prepareChannels");
+    logDebugP("prepareChannels");
     for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
     {
         // Important: lResult has to be the last argument in this OR,
@@ -120,7 +120,8 @@ void Logic::processAllInternalInputs(LogicChannel *iChannel, bool iValue)
 
 void Logic::processAfterStartupDelay()
 {
-    logInfoP("afterStartupDelay");
+    logDebugP("afterStartupDelay");
+    logIndentUp();
 
     if (ParamLOG_VacationRead)
         KoLOG_Vacation.requestObjectRead();
@@ -129,6 +130,7 @@ void Logic::processAfterStartupDelay()
 
     // TODO FIXME: Repeated Reading
     // TODO FIXME: Implementation for DPT19
+    logIndentDown();
 }
 
 // REVIEW: Check if handling is equivalent to Commons v1 implementation
@@ -152,13 +154,13 @@ void Logic::processReadRequests()
     }
     */
 
-    // date and time are red from bus every 30 seconds until a response is received
+    // date and time are read from bus every 30 seconds until a response is received
     if (ParamLOG_ReadTimeDate)
     {
         eTimeValid lValid = sTimer.isTimerValid();
         if (delayCheck(sDelay, 30000) && lValid != tmValid)
         {
-            logInfoP("Time Valid? %i", lValid);
+            logDebugP("Time Valid? %i", lValid);
             sDelay = millis();
             if (ParamLOG_CombinedTimeDate)
             {
@@ -496,9 +498,9 @@ void Logic::loop()
         }
     }
     if (lChannelsProcessed < mNumChannels)
-        logInfoP("loop time reduced after %i channels", lChannelsProcessed);
+        logTraceP("Loop time reduced after %i channels", lChannelsProcessed);
     if (millis() - lLoopTime > 4)
-        logInfoP("LoopTime: %i", millis() - lLoopTime);
+        logTraceP("LoopTime: %i", millis() - lLoopTime);
 }
 
 // start timer implementation
