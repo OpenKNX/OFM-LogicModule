@@ -1984,7 +1984,7 @@ void LogicChannel::restore(uint8_t iIOIndex)
     if (!checkDpt(iIOIndex, lDpt))
         return;
 
-    logInfoP("      Input%i:  DPT %i  DATA: %02X %02X %02X %02X", iIOIndex, lDpt, lValue[0], lValue[1], lValue[2], lValue[3]);
+    logInfoP("Input%i:  DPT %i  DATA: %02X %02X %02X %02X", iIOIndex, lDpt, lValue[0], lValue[1], lValue[2], lValue[3]);
 
     GroupObject *lKo = getKo(iIOIndex);
 

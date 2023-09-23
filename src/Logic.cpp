@@ -198,11 +198,10 @@ void Logic::readFlash(const uint8_t *iBuffer, const uint16_t iSize)
     }
 
     uint8_t lMaxChannels = (iSize - 1) / (2 * 5);
-    logDebugP("Reading channel data from flash (%i/%i)", lMaxChannels, mNumChannels);
+
+    logDebugP("Restore channels (%i/%i)", lMaxChannels, mNumChannels);
     for (uint8_t lIndex = 0; lIndex < MIN(mNumChannels, lMaxChannels); lIndex++)
-    {
         mChannel[lIndex]->restore();
-    }
 }
 
 void Logic::writeFlash()
