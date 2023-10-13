@@ -4,7 +4,7 @@
 #include "Timer.h"
 #include "TimerRestore.h"
 
-#include "ModuleVersion.h"
+#include "ModuleVersionCheck.h"
 
 uint8_t Logic::sMagicWord[] = {0xAE, 0x49, 0xD2, 0x9F};
 Timer &Logic::sTimer = Timer::instance();                      // singleton
@@ -19,11 +19,6 @@ uint16_t Logic::flashSize()
 const std::string Logic::name()
 {
     return "Logic";
-}
-
-const std::string Logic::version()
-{
-    return versionString(ModuleVersion, ModuleRevision);
 }
 
 Logic::Logic()

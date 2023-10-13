@@ -65,7 +65,6 @@ class Logic : public OpenKNX::Module
     void writeFlash() override;
     uint16_t flashSize() override;
     const std::string name() override;
-    const std::string version() override;
 
   private:
     static uint8_t sMagicWord[];
