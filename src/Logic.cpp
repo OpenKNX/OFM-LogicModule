@@ -21,6 +21,11 @@ const std::string Logic::name()
     return "Logic";
 }
 
+const std::string Logic::version()
+{
+    return MODULE_LogicModule_Version;
+}
+
 Logic::Logic()
 {
     LogicChannel::sLogic = this;
