@@ -1295,9 +1295,9 @@
               <ParameterBlock Id="%AID%_PB-nnn" Name="Holidays" Text="Urlaub/Feiertage">
                 <ParameterSeparator Id="%AID%_PS-49" Text="Zeit" UIHint="Headline" />
                 <ParameterSeparator Id="%AID%_PS-47" Text="Damit der Sonnenauf- und Untergang korrekt berechnet werden kann, muss man genaue Geokoordinaten des Standorts angeben. Standardwert ist Frankfurt/Main. Ferner wird die Zeitzone des Ortes benötigt und die Information, ob gerade die Sommerzeit aktiv ist." />
-                <ParameterRefRef RefId="%AID%_UP-%T%000142_R-%T%00014201" />
-                <ParameterRefRef RefId="%AID%_UP-%T%000143_R-%T%00014301" />
-                <ParameterRefRef RefId="%AID%_UP-%T%000144_R-%T%00014401" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000142_R-%T%00014201" HelpContext="%DOC%" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000143_R-%T%00014301" HelpContext="%DOC%" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000144_R-%T%00014401" HelpContext="%DOC%" />
                 <ParameterSeparator Id="%AID%_PS-46" Text="Die Information 'Sommerzeit aktiv' kann je nach Zeitzone und geographischer Lage auf verschiedene Arten ermittelt werden." />
                 <choose ParamRefId="%AID%_UP-%T%000144_R-%T%00014401">
                   <when test="!=1">
@@ -1305,7 +1305,7 @@
                     <choose ParamRefId="%AID%_UP-%T%000156_R-%T%00015601">
                       <when test="0">
                         <!-- DPT19 not active -->
-                        <ParameterRefRef RefId="%AID%_UP-%T%000162_R-%T%00016201" />
+                        <ParameterRefRef RefId="%AID%_UP-%T%000162_R-%T%00016201" HelpContext="%DOC%" />
                         <choose ParamRefId="%AID%_UP-%T%000162_R-%T%00016201">
                           <when test="0">
                             <!-- Summertime active? -->
@@ -1315,7 +1315,7 @@
                       </when>
                       <when test="1">
                         <!-- DPT19 active -->
-                        <ParameterRefRef RefId="%AID%_UP-%T%000161_R-%T%00016101" />
+                        <ParameterRefRef RefId="%AID%_UP-%T%000161_R-%T%00016101" HelpContext="%DOC%" />
                         <choose ParamRefId="%AID%_UP-%T%000161_R-%T%00016101">
                           <when test="0">
                             <!-- Summertime active? -->
@@ -1330,7 +1330,7 @@
                     <choose ParamRefId="%AID%_UP-%T%000156_R-%T%00015601">
                       <when test="0">
                         <!-- DPT19 not active -->
-                        <ParameterRefRef RefId="%AID%_UP-%T%000160_R-%T%00016001" />
+                        <ParameterRefRef RefId="%AID%_UP-%T%000160_R-%T%00016001" HelpContext="%DOC%" />
                         <choose ParamRefId="%AID%_UP-%T%000160_R-%T%00016001">
                           <when test="0">
                             <!-- Summertime active? -->
@@ -1342,7 +1342,7 @@
                         </choose>
                       </when>
                       <when test="1">
-                        <ParameterRefRef RefId="%AID%_UP-%T%000159_R-%T%00015901" />
+                        <ParameterRefRef RefId="%AID%_UP-%T%000159_R-%T%00015901" HelpContext="%DOC%" />
                         <choose ParamRefId="%AID%_UP-%T%000159_R-%T%00015901">
                           <when test="0">
                             <!-- Summertime active? -->
@@ -1359,62 +1359,70 @@
                 <ParameterSeparator Id="%AID%_PS-48" Text="" UIHint="HorizontalRuler" />
                 <ParameterSeparator Id="%AID%_PS-50" Text="Urlaub" UIHint="Headline" />
                 <ParameterSeparator Id="%AID%_PS-51" Text="Zeitschaltuhren können auch Urlaubszeiten berücksichtigen. Damit das funktioniert, muss eine Urlaubszeit über das KO 4 dem Gerät mitgeteilt werden." />
-                <ParameterRefRef RefId="%AID%_UP-%T%000138_R-%T%00013801" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000138_R-%T%00013801" HelpContext="%DOC%" />
                 <choose ParamRefId="%AID%_UP-%T%000138_R-%T%00013801">
                   <when test="1">
-                    <ParameterRefRef RefId="%AID%_UP-%T%000140_R-%T%00014001" />
+                    <ParameterRefRef RefId="%AID%_UP-%T%000140_R-%T%00014001" HelpContext="%DOC%" />
                     <ComObjectRefRef RefId="%AID%_O-%T%000004_R-%T%00000401" />
                   </when>
                 </choose>
                 <ParameterSeparator Id="%AID%_PS-52" Text="" UIHint="HorizontalRuler" />
                 <ParameterSeparator Id="%AID%_PS-53" Text="Feiertage" UIHint="Headline" />
                 <ParameterSeparator Id="%AID%_PS-54" Text="Das Gerät kann die berechneten Feiertage auch auf den Bus senden. Über das KO 5 wird mitgeteilt, welcher Feiertag 'Heute' ist, über KO 6 welcher Feiertag 'Morgen' ist. 0 bedeutet 'kein Feiertag'." />
-                <ParameterRefRef RefId="%AID%_UP-%T%000139_R-%T%00013901" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000139_R-%T%00013901" HelpContext="%DOC%" />
                 <choose ParamRefId="%AID%_UP-%T%000139_R-%T%00013901">
                   <when test="1">
-                    <ParameterRefRef RefId="%AID%_UP-%T%000141_R-%T%00014101" />
+                    <ParameterRefRef RefId="%AID%_UP-%T%000141_R-%T%00014101" HelpContext="%DOC%" />
                     <ComObjectRefRef RefId="%AID%_O-%T%000005_R-%T%00000501" />
                     <ComObjectRefRef RefId="%AID%_O-%T%000006_R-%T%00000601" />
                   </when>
                 </choose>
                 <ParameterSeparator Id="%AID%_PS-55" Text="Im folgenden kann bestimmt werden, welche Feiertage berechnet werden sollen. Diese Feiertage werden auch von den Zeitschaltuhren berücksichtigt." />
-                <ParameterRefRef RefId="%AID%_UP-%T%000152_R-%T%00015201" />
-                <ParameterRefRef RefId="%AID%_UP-%T%000110_R-%T%00011001" />
-                <ParameterRefRef RefId="%AID%_UP-%T%000111_R-%T%00011101" />
-                <ParameterRefRef RefId="%AID%_UP-%T%000112_R-%T%00011201" />
-                <ParameterRefRef RefId="%AID%_UP-%T%000113_R-%T%00011301" />
-                <ParameterRefRef RefId="%AID%_UP-%T%000114_R-%T%00011401" />
-                <ParameterRefRef RefId="%AID%_UP-%T%000153_R-%T%00015301" />
-                <ParameterRefRef RefId="%AID%_UP-%T%000115_R-%T%00011501" />
-                <ParameterRefRef RefId="%AID%_UP-%T%000116_R-%T%00011601" />
-                <ParameterRefRef RefId="%AID%_UP-%T%000117_R-%T%00011701" />
-                <ParameterRefRef RefId="%AID%_UP-%T%000118_R-%T%00011801" />
-                <ParameterRefRef RefId="%AID%_UP-%T%000119_R-%T%00011901" />
-                <ParameterRefRef RefId="%AID%_UP-%T%000120_R-%T%00012001" />
-                <ParameterRefRef RefId="%AID%_UP-%T%000121_R-%T%00012101" />
-                <ParameterRefRef RefId="%AID%_UP-%T%000122_R-%T%00012201" />
-                <ParameterRefRef RefId="%AID%_UP-%T%000123_R-%T%00012301" />
-                <ParameterRefRef RefId="%AID%_UP-%T%000124_R-%T%00012401" />
-                <ParameterRefRef RefId="%AID%_UP-%T%000125_R-%T%00012501" />
-                <ParameterRefRef RefId="%AID%_UP-%T%000126_R-%T%00012601" />
-                <ParameterRefRef RefId="%AID%_UP-%T%000154_R-%T%00015401" />
-                <ParameterRefRef RefId="%AID%_UP-%T%000127_R-%T%00012701" />
-                <ParameterRefRef RefId="%AID%_UP-%T%000128_R-%T%00012801" />
-                <ParameterRefRef RefId="%AID%_UP-%T%000129_R-%T%00012901" />
-                <ParameterRefRef RefId="%AID%_UP-%T%000155_R-%T%00015501" />
-                <ParameterRefRef RefId="%AID%_UP-%T%000130_R-%T%00013001" />
-                <ParameterRefRef RefId="%AID%_UP-%T%000131_R-%T%00013101" />
-                <ParameterRefRef RefId="%AID%_UP-%T%000132_R-%T%00013201" />
-                <ParameterRefRef RefId="%AID%_UP-%T%000133_R-%T%00013301" />
-                <ParameterRefRef RefId="%AID%_UP-%T%000134_R-%T%00013401" />
-                <ParameterRefRef RefId="%AID%_UP-%T%000135_R-%T%00013501" />
-                <ParameterRefRef RefId="%AID%_UP-%T%000136_R-%T%00013601" />
-                <ParameterRefRef RefId="%AID%_UP-%T%000137_R-%T%00013701" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000152_R-%T%00015201" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000110_R-%T%00011001" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000111_R-%T%00011101" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000112_R-%T%00011201" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000113_R-%T%00011301" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000114_R-%T%00011401" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000153_R-%T%00015301" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000115_R-%T%00011501" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000116_R-%T%00011601" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000117_R-%T%00011701" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000118_R-%T%00011801" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000119_R-%T%00011901" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000120_R-%T%00012001" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000121_R-%T%00012101" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000122_R-%T%00012201" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000123_R-%T%00012301" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000124_R-%T%00012401" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000125_R-%T%00012501" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000126_R-%T%00012601" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000154_R-%T%00015401" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000127_R-%T%00012701" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000128_R-%T%00012801" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000129_R-%T%00012901" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000155_R-%T%00015501" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000130_R-%T%00013001" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000131_R-%T%00013101" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000132_R-%T%00013201" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000133_R-%T%00013301" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000134_R-%T%00013401" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000135_R-%T%00013501" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000136_R-%T%00013601" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
+                <ParameterRefRef RefId="%AID%_UP-%T%000137_R-%T%00013701" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
               </ParameterBlock>
             </Channel>
           </Dynamic>
         </ApplicationProgram>
       </ApplicationPrograms>
+      <Baggages>
+        <Baggage TargetPath="" Name="Help_de.zip" Id="%FILE-HELP-de%">
+          <FileInfo TimeInfo="%DATETIME%" />
+        </Baggage>
+        <Baggage TargetPath="" Name="Icons.zip" Id="%FILE-ICONS%">
+          <FileInfo TimeInfo="%DATETIME%" />
+        </Baggage>
+      </Baggages>
     </Manufacturer>
   </ManufacturerData>
 </KNX>

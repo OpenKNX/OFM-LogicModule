@@ -319,7 +319,7 @@ Senden von gespeicherten Werten nach einem Neustart
 
 <kbd>![Allgemeine Parameter](pics/AllgemeineParameter.PNG)</kbd>
 
-Hier werden Einstellungen getroffen, die die generelle Arbeitsweise des Logikmoduls bestimmen.
+Hier werden Einstellungen getroffen, die die generelle Arbeitsweise des Gerätes bestimmen.
 
 Die Seite "Allgemeine Parameter" sieht bei jeder ETS-Applikation, die das Logikmodul verwendet, unterschiedlich aus, immer passend zu der verwendeten Hardwarekomponente, für die die ETS-Applikation geschrieben wurde. Somit müssen nicht alle im Folgenden aufgeführten Punkte vorhanden sein.
 
@@ -461,18 +461,22 @@ Zu dieser UTC-Zeit wird dann entsprechend die Zeitzone und die Sommerzeit hinzua
 
 > Information: Für Deutschland kann die Sommerzeit auch lokal vom Logikmodul berechnet werden.
 
+<!-- DOC -->
 #### **Breitengrad**
 
 In dem Feld wird der Breitengrad des Standortes eingegeben.
 
+<!-- DOC -->
 #### **Längengrad**
 
 In dem Feld wird der Längengrad des Standortes eingegeben.
 
+<!-- DOC -->
 #### **Zeitzone**
 
 Für die korrekte Berechnung der Zeit wird die Zeitzone des Standortes benötigt.
 
+<!-- DOC -->
 #### **Sommerzeit ermitteln durch**
 
 Hier kann man eine der verfügbaren Möglichkeiten auswählen, mit der das Logikmodul ermitteln kann, ob gerade die Sommerzeit aktiv ist.
@@ -499,10 +503,12 @@ Diese Option kann nur für Deutschland genutzt werden. Sie ist nicht zu verwende
 
 Zeitschaltuhren können Urlaubstage berücksichtigen, sofern diese Information vorliegt. Diese Information kann über ein Kommunikationsobjekt dem Modul mitgeteilt werden.
 
+<!-- DOC -->
 #### **Urlaubsbehandlung aktivieren?**
 
 Mit einem "Ja" wird ein Kommunikationsobjekt freigeschaltet, über das ein Urlaubstag dem Modul mitgeteilt werden kann. Ein "EIN" besagt, dass der aktuelle Tag ein Urlaubstag ist.
 
+<!-- DOC -->
 #### **Nach Neustart Urlaubsinfo lesen?**
 
 Erscheint nur, wenn "Urlaubsbehandlung aktivieren?" auf "Ja" steht.
@@ -515,6 +521,7 @@ Für die Zeitschaltuhren wird vom Modul eine Berechnung der Feiertage vorgenomme
 
 <kbd>![Feiertagsangaben](pics/Feiertage.PNG)</kbd>
 
+<!-- DOC -->
 #### **Feiertage auf dem Bus verfügbar machen?**
 
 Ein "Ja" bei dieser Einstellung schaltet 2 Kommunikationsobjekte frei. Über diese Kommunikationsobjekte wird die Nummer eines Feiertags gesendet. Jede gesendete Nummer entspricht genau einem Feiertag, die Nummern entsprechen denen in der Liste von Feiertagseinstellungen (siehe vorheriges Bild).
@@ -524,15 +531,20 @@ Ein "Ja" bei dieser Einstellung schaltet 2 Kommunikationsobjekte frei. Über die
 
 Beide Kommunikationsobjekte (5 und 6) werden immer kurz nach Mitternacht (aber nicht exakt um Mitternacht) neu berechnet. Sie senden eine 0, wenn kein Feiertag ist und sich der Wert geändert hat.
 
+<!-- DOC -->
 #### **Nach Neuberechnung Feiertagsinfo senden?**
 
 Erscheint nur, wenn "Feiertage auf dem Bus verfügbar machen?" auf "Ja" steht.
 
 Hier kann angegeben werden, ob ein neuer Feiertag aktiv auf den Bus gesendet wird. Falls "Nein" eingestellt ist, wird der Feiertag trotzdem berechnet, muss aber mit einem Lese-Request aktiv vom KO gelesen werden.
 
+<!-- DOC -->
 #### **Auswahlfelder für Feiertage**
 
-Es folgt eine Liste der dem Modul bekannten Feiertage. Durch Auswahlfelder kann bestimmt werden, ob dieser Feiertag bei der Feiertagsinfo und bei den Zeitschaltuhren berücksichtigt werden soll.
+<!-- DOC Skip="1" -->
+Es folgt eine Liste der dem Modul bekannten Feiertage. 
+Durch Auswahlfelder kann bestimmt werden, ob dieser Feiertag bei der Feiertagsinfo und bei den Zeitschaltuhren berücksichtigt werden soll.
+<!-- DOCEND -->
 
 Es ist nicht möglich, eigene Feiertage in diese Liste aufzunehmen. Deswegen enthält die Liste auch eher unübliche Feiertage wie Rosenmontag oder 1 Advent, da diese Tage beweglich sind und somit berechnet werden müssen.
 
@@ -665,6 +677,7 @@ Folgende Parameter kann man für einen Logikkanal angeben:
 
 Hier werden die Einstellungen vorgenommen, die für die Funktion des gesamten Kanals notwendig sind.
 
+<!-- DOC -->
 ### **Beschreibung des Kanals**
 
 Der hier vergebene Name hat keinen funktionalen Einfluss, erlaubt es aber, dem Kanal einen eigenen Namen zu geben, und ihn so leichter wiederzufinden. Der Name wird im Kanalbaum dargestellt und statt des Standardtextes "..." genommen.
@@ -677,6 +690,7 @@ Die Verzögerungszeit wird hier angegeben.
 
 **Anmerkung:** Auch wenn man hier technisch bis zu 16.000 Stunden Verzögerung angeben kann, sind nur Einstellungen im Sekundenbereich sinnvoll.
 
+<!-- DOC -->
 ### **Kanal deaktivieren (zu Testzwecken)**
 
 Dieser Logikkanal ist außer Funktion. Er kann vollständig definiert sein und keine Einstellung geht verloren, aber der Ausgang wird kein Telegramm senden. Dies bietet die Möglichkeit, zu Testzwecken einen bereits parametrierten Logikkanal inaktiv zu setzen, um zu schauen, ob er die Ursache für eventuelles Fehlverhalten im Haus ist. Kann zur Fehlersuche hilfreich sein.
@@ -687,6 +701,7 @@ Hier werden die Einstellungen vorgenommen, die für die Logikausführung selbst 
 
 <kbd>![Logikdefinition](pics/Logikdefinition.png)</kbd>
 
+<!-- DOC -->
 ### **Logik-Operation**
 
 Mittels der Auswahlliste kann eine Operation und damit die Art der Verknüpfung der Eingänge dieses Logikkanals ausgewählt werden. Es stehen folgende Operationen zur Verfügung:
@@ -732,7 +747,8 @@ Mit dem Schalter lassen sich viele Funktionen, die vorher nur mit 2 Kanälen zu 
 
 Der Schalter ermöglicht die Realisierung eines einfachen Szenen-Controllers (siehe Beispiele). Ferner können damit Hysterese-Logiken aufgebaut werden, bei denen die Ein- und Ausschaltbedingung aus 2 verschiedenen Quellen kommt (z.B. verschiedene DPT).
 
-### **Eingang 1, Eingang 2**
+<!-- DOC HelpContext="Eingang n" -->
+### **Eingang 1/2**
 
 Erscheint nur, wenn die Logik-Operation nicht auf "ZEITSCHALTUHR" gestellt wurde.
 
@@ -750,11 +766,12 @@ Für diesen Eingang erscheint ein Kommunikationsobjekt. Detailangaben zu diesem 
 
 Für diesen Eingang erscheint ein Kommunikationsobjekt. Detailangaben zu diesem Eingang erfolgen auf einer eigenen Seite. Der aus den Einstellungen für den Eingang ermittelte binäre Wert wird invertiert (negiert), bevor er der oben ausgewählten logischen Operation zur Verfügung gestellt wird. Invertieren (negieren) heißt, dass ein EIN-Signal zu einem AUS-Signal wird und umgekehrt.
 
-### **Kanalausgang X, Kanalausgang Y**
+<!-- DOC HelpContext="Interner Eingang n" -->
+### **Interner Eingang 3/4**
 
 Erscheint nur, wenn die Logik-Operation nicht auf ZEITSCHALTUHR gestellt wurde.
 
-Auch wenn der Name es anders vermuten lässt, handelt es sich um interne Eingänge, die mit einem Ausgang eines anderen Kanals verbunden sind. Jeder interne Eingang kann durch die Auswahlfelder deaktiviert bzw. normal oder invertiert (negiert) aktiviert werden.
+Es handelt sich um interne Eingänge, die mit einem Ausgang eines anderen Kanals verbunden sind. Jeder interne Eingang kann durch die Auswahlfelder deaktiviert bzw. normal oder invertiert (negiert) aktiviert werden.
 
 #### **inaktiv**
 
@@ -774,6 +791,7 @@ Hier werden die Einstellungen vorgenommen, die für die Auswertung der Logik rel
 
 <kbd>![Logikauswertung](pics/Logikauswertung.png)</kbd>
 
+<!-- DOC -->
 ### **Logik auswerten**
 
 Erscheint nur, wenn die Logik-Operation nicht auf ZEITSCHALTUHR gestellt wurde.
@@ -796,6 +814,7 @@ Hier wird das Verhalten vom Tor vorgegeben.
 
 <kbd>![Tordefinition](pics/Tordefinition.png)</kbd>
 
+<!-- DOC -->
 ### **Tor geht sofort wieder zu**
 
 Ein Tor bleibt normalerweise offen, nachdem ein EIN-Telegramm am Toreingang empfangen wurde. Erst bei einem AUS-Telegramm am Toreingang geht das Tor wieder zu.
@@ -810,6 +829,7 @@ Wenn man den Toreingang invertiert, kann man ein Tor realisieren, dass beim Empf
 
 > Abstrakt betrachtet entspricht ein Tor mit einem Impulseingang einem Tor mit einem normalen Eingang, vor den ein Treppenlicht geschaltet wurde, das sofort (z.B. nach 0.1 Sekunden) abläuft. Das Tor sendet dann nur beim öffnen, nichts beim schließen.
 
+<!-- DOC -->
 ### **Beim öffnen vom Tor wird**
 
 Das Auswahlfeld erscheint nur, wenn als logische Operation TOR gewählt wurde.
@@ -836,6 +856,7 @@ Beim öffnen vom Tor wird immer ein EIN-Signal gesendet.
 
 Beim öffnen vom Tor wird der Eingangswert gesendet. Damit kann man erreichen, dass das letzte Signal, das vom Tor blockiert worden ist, nach dem öffnen doch noch durchkommt.
 
+<!-- DOC -->
 ### **Beim schließen vom Tor wird**
 
 Das Auswahlfeld erscheint nur, wenn als Logik-Operation TOR gewählt wurde und das Tor nicht sofort nach dem Öffnen geschlossen wird.
@@ -870,6 +891,7 @@ Bisher wurde detailliert beschrieben, wie das Logik-Funktionsmodul die Eingänge
 
 <kbd>![Logik-Trigger](pics/Logiktrigger.png)</kbd>
 
+<!-- DOC -->
 ### **Logik sendet ihren Wert weiter**
 
 Diese Auswahlbox erlaubt eine Detaillierte Einstellung des Verhaltens.
@@ -923,6 +945,7 @@ Dieses Feld hat keine funktionale Auswirkung. Es erlaubt den Eingang zu benennen
 
 Der hier angegebene Text erscheint in der Seitenbeschreibung "Eingang n: unbenannt" statt dem Wort "unbenannt" und als Name des Kommunikationsobjektes, das zu diesem Eingang gehört.
 
+<!-- DOC -->
 ### **Kommunikationsobjekt für Eingang 1**
 
 Ein Eingang des Logikobjekts wird durch ein Kommunikationsobjekt repräsentiert. Dabei kann jedes Kommunikationsobjekt des Gerätes verwendet werden, auch KO, die nicht vom Logikmodul verwaltet werden. Dies ermöglicht, KO intern zu verbinden und so die Kommunikation auf dem Bus zu reduzieren. Eine solche interne Verbindung verhält sich genau so, als wäre der Eingang mit einer GA verbunden und Telegramme erhalten würde.
@@ -935,6 +958,7 @@ Für den Eingang wird ein neues Kommunikationsobjekt erzeugt. Dieses KO ist somi
 
 Der Eingang wird durch ein existierendes Kommunikationsobjekt erzeugt. Das Kommunikationsobjekt wird somit anderweitig verwaltet, z.B. durch einen anderen Kanal oder eine andere Teilapplikation. Der Eingang "lauscht" somit nur auf die ankommenden Signale und kann keinerlei Aktionen an dem KO vornehmen, wie z.B. den DPT bestimmen oder Lese-Anforderungen verschicken.
 
+<!-- DOC -->
 ### **Nummer des Kommunikationsobjekts**
 
 Hier steht immer die Nummer des Kommunikationsobjekts, das als Eingang für diesen Kanal fungiert.
@@ -947,6 +971,7 @@ Falls ein bestehendes Kommunikationsobjekt genutzt werden soll, wird in dem Feld
 
 Sobald für einen Eingang im Feld "DPT für Eingang n" etwas anderes als DPT 1 ausgewählt wird, erscheint ein DPT-Spezifischer Konverter, der eine Konvertierung in DPT 1 erlaubt. Dies ist zwingend notwendig, das die gesamte Logikverarbeitung nur mit binären Werten (DPT 1) erfolgt.
 
+<!-- DOC HelpContext="DPT für Eingang" -->
 ### **DPT für Eingang n**
 
 Dieses Auswahlfeld legt den DPT für den Eingang fest. Unterstützt werden:
@@ -967,7 +992,9 @@ Dieses Auswahlfeld legt den DPT für den Eingang fest. Unterstützt werden:
 
 Ist der DPT anders als DPT 1, erscheint je nach DPT ein Konverter, mit dem man den gewünschten Eingangs-DPT nach DPT 1 wandeln kann. Die gesamte weitere Verarbeitung des Eingangssignals erfolgt binär, also auf Basis von DPT 1.
 
-> **Wichtig:** Wenn ein bestehendes Kommunikationsobjekt genutzt wird, muss der hier eingestellte DPT dem DPT des bestehenden KO entsprechen! Das kann nicht automatisch von der Applikation ermittelt werden. Wenn hier etwas falsch eingestellt wird und der falsche Eingangskonverter benutzt wird, kann der Logikkanal nicht korrekt funktionieren. Darauf wird in der Applikation durch die folgende Information hingewiesen:
+> **Wichtig:** Wenn ein bestehendes Kommunikationsobjekt genutzt wird, muss der hier eingestellte DPT dem DPT des bestehenden KO entsprechen! Das kann nicht automatisch von der Applikation ermittelt werden. Wenn hier etwas falsch eingestellt wird und der falsche Eingangskonverter benutzt wird, kann der Logikkanal nicht korrekt funktionieren. 
+<!-- DOCEND -->
+Darauf wird in der Applikation durch die folgende Information hingewiesen:
 <kbd>![Warnung bestehendes KO](pics/BestehendesKoWarnung.png)</kbd>
 
 ### **DPT 1.xxx (Schalten)**
@@ -1099,6 +1126,18 @@ Der Differenzeingang muss nicht vom gleichen DPT sein, er wird generisch in eine
 
 Wird ein Differenzeingang genutzt, sollte dieser nicht auch noch als "normal aktiv" oder "invertiert aktiv" bei einer logischen Operation genutzt werden, obwohl das grundsätzlich möglich ist. Dann würde der Differenzeingang auch einen Konverter anbieten und entsprechend ein EIN- oder AUS-Signal für die logische Operation erzeugen. Dies ist ausdrücklich nicht empfohlen und auch bisher nicht getestet. Ob man die Komplexität eines solchen Aufbaus noch durchblicken kann, ist auch zu bezweifeln.
 
+<!-- DOC HelpContext="Von-Wert" -->
+<!-- DOCCONTENT
+Hier wird der Von-Wert (also die untere Grenze) eines Wertebereichs angegeben.
+-->
+
+<!-- DOC HelpContext="Bis-Wert" -->
+<!-- DOCCONTENT
+Hier wird der Bis-Wert (also die obere Grenze) eines Wertebereichs angegeben.
+-->
+
+
+
 ### **Ganzzahlbasierte DPT**
 
 Einige DPT, die ganze Zahlen repräsentieren (das sind DPT 5.xxx, 5.001, 6.xxx, 7.xxx, 8.xxx), können mittels eines weiteren Einzelwert-Konverters in ein binäres Signal umgewandelt werden. Er ist gleich für alle DPT, die einzugebenden Zahlen müssen nur innerhalb der Wertebereiche des jeweiligen DPT liegen.
@@ -1123,6 +1162,22 @@ In dem angezeigten Bildschirmausschnitt wird bei den Werten 17, 25 und 40 ein EI
 
 > Anmerkung: Aufgrund der intern verwendeten Speicherstruktur können für die DPT 12.xxx und DPT 13.xxx keine Einzelwert-Konverter verwendet werden.
 
+<!-- DOC HelpContext="oder bei Wert" -->
+<!-- DOCCONTENT
+Hier wird ein weiterer Wert der Werteliste angegeben.
+-->
+
+<!-- DOC HelpContext="oder bei Szene" -->
+<!-- DOCCONTENT
+Hier wird ein weitere Szene angegeben, die ausgewertet werden soll.
+-->
+
+<!-- DOC HelpContext="Nächste Zeile auswerten" -->
+<!-- DOCCONTENT
+Wird die Checkbox angeklickt, wird die Zeile mit dem Wert ausgewertet, sonst nicht.
+-->
+
+
 #### **Konstanten**
 
 Alle Eingänge können auch mit einem Konstanten Wert vorbelegt werden. Dies geschieht DPT gerecht, also passend zum Eingangs-DPT. Konstanten können in Formeln verwendet werden oder direkt von Ausgängen genutzt werden. Wobei man sowieso jeden Ausgang einen konstanten Wert senden lassen kann, insofern macht es keinen Sinn, konstante Eingänge für Ausgänge zu definieren.
@@ -1141,6 +1196,7 @@ Eingangswerte kann man nur vorbelegen, wenn sie nicht konstant sind.
 
 <kbd>![Eingangswert vorbelegen](pics/EingangVorbelegen.png)</kbd>
 
+<!-- DOC -->
 ### **Eingangswert speichern und beim nächsten Neustart als Vorbelegung nutzen**
 
 Mit "Ja" legt man fest, dass der zuletzt an diesem Eingang empfangene Wert im nichtflüchtigen Speicher abgelegt wird und nach einem Neustart wieder gelesen wird. Der dann gelesene Wert wird als Vorbelegung für den Eingang genommen, falls nötig über den Eingangskonverter in einen DPT 1 konvertiert und dann die logische Operation getriggert. Ist der Eingang als interner Eingang über sein KO mit weiteren Eingängen verbunden (egal ob das KO im Logikmodul oder einem anderen Modul liegt, das das Logikmodul verwendet), empfangen auch alle verknüpften Eingänge den aus dem nichtflüchtigen Speicher geladenen Wert.
@@ -1156,6 +1212,7 @@ Da nichtflüchtige Speicher nur eine relativ geringe Anzahl an Schreibzyklen zul
 
 > **Wichtig:** Das speichern der Werte in den nichtflüchtigen Speicher bei Stromausfall ist hardwareabhängig und wird nicht von jeder Hardware unterstützt. Auch in einem solchen Fall kann die Funktion sinnvoll sein, z.B. bie einem Neustart nach einer ETS-Programmierung, deswegen wird die Funktion immer angeboten. Ob ein Speichern beim Stromausfall unterstützt wird, steht (hoffentlich) in der Anleitung zum Hardware-Gerät, dass das Logikmodul verwendet.
 
+<!-- DOC -->
 ### **Falls Vorbelegung aus dem Speicher nicht möglich oder nicht gewünscht, dann vorbelegen mit**
 
 Dieses Auswahlfeld erlaubt eine Vorbelegung mit einem festgelegten Wert. Die Einstellung kommt aber nur zur Auswirkung, falls die vorhergehende Einstellung "Eingangswert speichern und beim nächsten Neustart als Vorbelegung nutzen" auf "Nein" steht oder der gespeicherte Wert nicht genutzt werden kann.
@@ -1191,6 +1248,7 @@ Der Eingang wird konstant mit einer 1 vorbelegt und hat somit sofort einen defin
 
 Manche Geräte können nicht von sich aus zyklisch senden. Hier kann man einstellen, dass ein Eingang aktiv den Wert zyklisch liest. In den Feld kann man angeben, wie viele Sekunden zwischen 2 Leseintervallen vergehen sollen.
 
+<!-- DOC -->
 ### **Nur so lange zyklisch lesen, bis erstes Telegramm eingeht**
 
 Erscheint nur, wenn bei "Eingang wird alle n Sekunden gelesen" ein Wert größer 0 eingegeben wurde.
@@ -1216,7 +1274,7 @@ Solange der Ausgang eines anderen Kanals nicht zugeordnet worden ist, wird der i
 
 Hier werden die Verbindungseinstellungen für den Internen Eingang 1 gewählt.
 
-Erscheint nur, wenn bei der logischen Operation "Kanalausgang X" als "normal aktiv" oder "invertiert aktiv" ausgewählt wurde.
+Erscheint nur, wenn bei der logischen Operation "Interner Eingang 1" als "normal aktiv" oder "invertiert aktiv" ausgewählt wurde.
 
 ### **Beschreibung interner Eingang 1**
 
@@ -1694,6 +1752,7 @@ Mit den beiden Auswahlfeldern kann man bestimmen, ob nur das EIN-Signal, nur das
 Das letzte Funktionsmodul auf dem Ausgangsbild ist ein Konverter, der das bis hierher ermittelte EIN- oder AUS-Signal in einen bestimmten DPT konvertiert und den resultierenden Wert in ein KO schreibt, damit es auf den KNX-Bus gesendet werden kann.
 
 
+<!-- DOC -->
 ### **DPT für Ausgang**
 
 Dieses Auswahlfeld legt den DPT für den Ausgang fest. Unterstützt werden:
@@ -1715,6 +1774,7 @@ Dieses Auswahlfeld legt den DPT für den Ausgang fest. Unterstützt werden:
 
 Je nach gewähltem DPT unterscheiden sich die folgenden Felder leicht. Es werden erst mal die parameter für alle DPT beschrieben und anschließend die DPT-spezifischen.
 
+<!-- DOC -->
 ### **Wert für EIN senden?**
 
 <kbd>![WertEinDropdown](pics/WertEinSenden.PNG)</kbd>
@@ -1782,6 +1842,7 @@ Falls die LED gerade über das Kommunikationsobjekt 8 gesperrt ist, wird die LED
 
 Falls dieser Kanal als Alarmkanal gekennzeichnet ist, wird die LED unabhängig von der Sperre eingeschaltet.
 
+<!-- DOC -->
 ### **Wert für EIN senden als**
 
 <kbd>![Wert senden in Prozent](pics/WertSendenProzent.PNG)</kbd>
@@ -1824,6 +1885,7 @@ Hier wird die Farbe der LED bestimmt, in der sie leuchten soll. Wird die Farbe S
 
 Diese Option kann nur funktionieren, wenn das Gerät, auf dem die Applikation Logik läuft, auch eine RGB-LED verbaut hat.
 
+<!-- DOC -->
 ### **Wert für AUS senden?**
 
 In dieser Auswahlbox wird festgelegt, ob und was für ein Wert bei einem AUS-Signal gesendet werden soll.
@@ -1885,6 +1947,7 @@ Falls die LED gerade über das Kommunikationsobjekt 8 gesperrt ist, wird die LED
 
 Falls dieser Kanal als Alarmkanal gekennzeichnet ist, wird die LED unabhängig von der Sperre eingeschaltet.
 
+<!-- DOC -->
 ### **Wert für AUS senden als**
 
 Das Feld erscheint nur, wenn für "Wert für AUS senden" ein "Ja - Wert vorgeben" ausgewählt wurde.
