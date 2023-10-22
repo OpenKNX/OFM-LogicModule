@@ -13,8 +13,8 @@
               </Parameter> -->
               <Union SizeInBit="16">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="0" BitOffset="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%381" Name="f%C%ChannelDelayBase" ParameterType="%AID%_PT-DelayBase" Offset="0" BitOffset="0" Text="Zeitbasis" Value="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%382" Name="f%C%ChannelDelayTime" ParameterType="%AID%_PT-DelayTime" Offset="0" BitOffset="2" Text="Zeit" Value="1" />
+                <Parameter Id="%AID%_UP-%T%%CCC%381" Name="f%C%ChannelDelayBase" ParameterType="%AID%_PT-DelayBase" Offset="0" BitOffset="0" Text="Zeit bis der Kanal nach einem Neustart aktiv wird" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%382" Name="f%C%ChannelDelayTime" ParameterType="%AID%_PT-DelayTime" Offset="0" BitOffset="2" Text="Zeit bis der Kanal nach einem Neustart aktiv wird" Value="1" />
               </Union>
               <Parameter Id="%AID%_P-%T%%CCC%003" Name="f%C%Logic" ParameterType="%AID%_PT-Logic" Text="Logik-Operation" Value="0">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="2" BitOffset="0" />
@@ -47,11 +47,11 @@
               <Union SizeInBit="8">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="6" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%008" Name="f%C%E1"               ParameterType="%AID%_PT-InputEnable"      Offset="0" BitOffset="4" Text="Eingang 1" Value="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%093" Name="f%C%E1Convert"        ParameterType="%AID%_PT-InputConv"        Offset="0" BitOffset="0" Text="Wert für Eingang 1 wird ermittelt durch" Value="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%369" Name="f%C%E1ConvertFloat"   ParameterType="%AID%_PT-InputConvFloat"   Offset="0" BitOffset="0" Text="Wert für Eingang 1 wird ermittelt durch" Value="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%370" Name="f%C%E1ConvertSpecial" ParameterType="%AID%_PT-InputConvSpecial" Offset="0" BitOffset="0" Text="Wert für Eingang 1 wird ermittelt durch" Value="4" />
+                <Parameter Id="%AID%_UP-%T%%CCC%093" Name="f%C%E1Convert"        ParameterType="%AID%_PT-InputConv"        Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%369" Name="f%C%E1ConvertFloat"   ParameterType="%AID%_PT-InputConvFloat"   Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%370" Name="f%C%E1ConvertSpecial" ParameterType="%AID%_PT-InputConvSpecial" Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="4" />
               </Union>
-              <Parameter Id="%AID%_P-%T%%CCC%009" Name="f%C%E1Dpt" ParameterType="%AID%_PT-InputDpt" Text="DPT für Eingang 1" Value="0">
+              <Parameter Id="%AID%_P-%T%%CCC%009" Name="f%C%E1Dpt" ParameterType="%AID%_PT-InputDpt" Text="DPT für Eingang" Value="0">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="7" BitOffset="0" />
               </Parameter>
               <Union SizeInBit="8">
@@ -61,22 +61,22 @@
                 <Parameter Id="%AID%_UP-%T%%CCC%130" Name="f%C%E1DefaultEEPROM" ParameterType="%AID%_PT-OnOffYesNo"      Offset="0" BitOffset="5" Text="Eingangswert speichern und beim nächsten Neustart als Vorbelegung nutzen?" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%164" Name="f%C%E1DefaultRepeat" ParameterType="%AID%_PT-OnOffYesNo"      Offset="0" BitOffset="4" Text="Nur so lange zyklisch lesen, bis erstes Telegramm eingeht" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%272" Name="f%C%TYearDay"        ParameterType="%AID%_PT-YearDay"         Offset="0" BitOffset="3" Text="Typ der Zeitschaltuhr" Value="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%274" Name="f%C%TRestoreState"   ParameterType="%AID%_PT-RestoreState"    Offset="0" BitOffset="1" Text="Beim Neustart letzte Schaltzeit nachholen" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%274" Name="f%C%TRestoreState"   ParameterType="%AID%_PT-RestoreState"    Offset="0" BitOffset="1" Text="Bei Neustart letzte Schaltzeit nachholen" Value="0" />
               </Union>
               <!-- Delay pattern-->
               <Union SizeInBit="16">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="9" BitOffset="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%383" Name="f%C%E1RepeatBase" ParameterType="%AID%_PT-DelayBase" Offset="0" BitOffset="0" Text="Zeitbasis" Value="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%384" Name="f%C%E1RepeatTime" ParameterType="%AID%_PT-DelayTime" Offset="0" BitOffset="2" Text="Zeit" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%383" Name="f%C%E1RepeatBase" ParameterType="%AID%_PT-DelayBase" Offset="0" BitOffset="0" Text="Eingang wird gelesen alle" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%384" Name="f%C%E1RepeatTime" ParameterType="%AID%_PT-DelayTime" Offset="0" BitOffset="2" Text="Eingang wird gelesen alle" Value="0" />
               </Union>
               <Union SizeInBit="8">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="11" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%028" Name="f%C%E2"               ParameterType="%AID%_PT-InputEnable"      Offset="0" BitOffset="4" Text="Eingang 2" Value="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%094" Name="f%C%E2Convert"        ParameterType="%AID%_PT-InputConv"        Offset="0" BitOffset="0" Text="Wert für Eingang 2 wird ermittelt durch" Value="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%371" Name="f%C%E2ConvertFloat"   ParameterType="%AID%_PT-InputConvFloat"   Offset="0" BitOffset="0" Text="Wert für Eingang 2 wird ermittelt durch" Value="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%372" Name="f%C%E2ConvertSpecial" ParameterType="%AID%_PT-InputConvSpecial" Offset="0" BitOffset="0" Text="Wert für Eingang 2 wird ermittelt durch" Value="4" />
+                <Parameter Id="%AID%_UP-%T%%CCC%094" Name="f%C%E2Convert"        ParameterType="%AID%_PT-InputConv"        Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%371" Name="f%C%E2ConvertFloat"   ParameterType="%AID%_PT-InputConvFloat"   Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%372" Name="f%C%E2ConvertSpecial" ParameterType="%AID%_PT-InputConvSpecial" Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="4" />
               </Union>
-              <Parameter Id="%AID%_P-%T%%CCC%029" Name="f%C%E2Dpt" ParameterType="%AID%_PT-InputDpt" Text="DPT für Eingang 2" Value="0">
+              <Parameter Id="%AID%_P-%T%%CCC%029" Name="f%C%E2Dpt" ParameterType="%AID%_PT-InputDpt" Text="DPT für Eingang" Value="0">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="12" BitOffset="0" />
               </Parameter>
               <Union SizeInBit="8">
@@ -92,8 +92,8 @@
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="14" BitOffset="0" />
                 <!-- <Parameter Id="%AID%_UP-%T%%CCC%047" Name="f%C%E2Repeat" ParameterType="%AID%_PT-DelaySeconds" Offset="0" BitOffset="0" Text="Eingang 2 wird alle n Sekunden gelesen (0 = nicht zyklisch lesen)" SuffixText="Sekunden" Value="0" /> -->
                 <!-- Delay pattern-->
-                <Parameter Id="%AID%_UP-%T%%CCC%385" Name="f%C%E2RepeatBase" ParameterType="%AID%_PT-DelayBase" Offset="0" BitOffset="0" Text="Zeitbasis" Value="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%386" Name="f%C%E2RepeatTime" ParameterType="%AID%_PT-DelayTime" Offset="0" BitOffset="2" Text="Zeit" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%385" Name="f%C%E2RepeatBase" ParameterType="%AID%_PT-DelayBase" Offset="0" BitOffset="0" Text="Eingang wird gelesen alle" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%386" Name="f%C%E2RepeatTime" ParameterType="%AID%_PT-DelayTime" Offset="0" BitOffset="2" Text="Eingang wird gelesen alle" Value="0" />
                 <!-- Timer setup -->
                 <Parameter Id="%AID%_UP-%T%%CCC%171" Name="f%C%Td1DuskDawn" ParameterType="%AID%_PT-DuskDawn" Offset="0" BitOffset="0" Text="Zeitbezug" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%179" Name="f%C%Td2DuskDawn" ParameterType="%AID%_PT-DuskDawn" Offset="0" BitOffset="4" Text="Zeitbezug" Value="0" />
@@ -121,66 +121,66 @@
                 <Parameter Id="%AID%_UP-%T%%CCC%286" Name="f%C%E1Low5Valid"    ParameterType="%AID%_PT-CheckBox"          Offset="7"  BitOffset="5" Text="Nächste Zeile auswerten?" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%287" Name="f%C%E1Low6Valid"    ParameterType="%AID%_PT-CheckBox"          Offset="7"  BitOffset="6" Text="Nächste Zeile auswerten?" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%288" Name="f%C%E1Low7Valid"    ParameterType="%AID%_PT-CheckBox"          Offset="7"  BitOffset="7" Text="Nächste Zeile auswerten?" Value="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%010" Name="f%C%E1LowDpt2"      ParameterType="%AID%_PT-ValueDpt2"         Offset="0"  BitOffset="0" Text="Eingang 1 ist EIN, wenn Wert gleich" Value="1" />
+                <Parameter Id="%AID%_UP-%T%%CCC%010" Name="f%C%E1LowDpt2"      ParameterType="%AID%_PT-ValueDpt2"         Offset="0"  BitOffset="0" Text="Eingang ist EIN, wenn Wert gleich" Value="1" />
                 <Parameter Id="%AID%_UP-%T%%CCC%098" Name="f%C%E1Low1Dpt2"     ParameterType="%AID%_PT-ValueDpt2"         Offset="1"  BitOffset="0" Text="... oder wenn Wert gleich " Value="4" />
                 <Parameter Id="%AID%_UP-%T%%CCC%099" Name="f%C%E1Low2Dpt2"     ParameterType="%AID%_PT-ValueDpt2"         Offset="2"  BitOffset="0" Text="... oder wenn Wert gleich " Value="4" />
                 <Parameter Id="%AID%_UP-%T%%CCC%100" Name="f%C%E1Low3Dpt2"     ParameterType="%AID%_PT-ValueDpt2"         Offset="3"  BitOffset="0" Text="... oder wenn Wert gleich " Value="4" />
-                <Parameter Id="%AID%_UP-%T%%CCC%289" Name="f%C%E1LowDpt2Fix"   ParameterType="%AID%_PT-ValueDpt2Out"      Offset="0"  BitOffset="0" Text="Eingang 1 ist konstant" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%289" Name="f%C%E1LowDpt2Fix"   ParameterType="%AID%_PT-ValueDpt2Out"      Offset="0"  BitOffset="0" Text="Eingang ist konstant" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%011" Name="f%C%E1LowDpt5"      ParameterType="%AID%_PT-ValueDpt5"         Offset="0"  BitOffset="0" Text="Von-Wert" Value="128" />
                 <Parameter Id="%AID%_UP-%T%%CCC%012" Name="f%C%E1HighDpt5"     ParameterType="%AID%_PT-ValueDpt5"         Offset="4"  BitOffset="0" Text="Bis-Wert" Value="255" />
-                <Parameter Id="%AID%_UP-%T%%CCC%290" Name="f%C%E1Low0Dpt5In"   ParameterType="%AID%_PT-ValueDpt5"         Offset="0"  BitOffset="0" Text="Eingang 1 ist EIN bei Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%290" Name="f%C%E1Low0Dpt5In"   ParameterType="%AID%_PT-ValueDpt5"         Offset="0"  BitOffset="0" Text="Eingang ist EIN bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%291" Name="f%C%E1Low1Dpt5In"   ParameterType="%AID%_PT-ValueDpt5"         Offset="1"  BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%292" Name="f%C%E1Low2Dpt5In"   ParameterType="%AID%_PT-ValueDpt5"         Offset="2"  BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%293" Name="f%C%E1Low3Dpt5In"   ParameterType="%AID%_PT-ValueDpt5"         Offset="3"  BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%294" Name="f%C%E1Low4Dpt5In"   ParameterType="%AID%_PT-ValueDpt5"         Offset="4"  BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%295" Name="f%C%E1Low5Dpt5In"   ParameterType="%AID%_PT-ValueDpt5"         Offset="5"  BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%296" Name="f%C%E1Low6Dpt5In"   ParameterType="%AID%_PT-ValueDpt5"         Offset="6"  BitOffset="0" Text="... oder bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%297" Name="f%C%E1LowDpt5Fix"   ParameterType="%AID%_PT-ValueDpt5"         Offset="0"  BitOffset="0" Text="Eingang 1 ist konstant" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%297" Name="f%C%E1LowDpt5Fix"   ParameterType="%AID%_PT-ValueDpt5"         Offset="0"  BitOffset="0" Text="Eingang ist konstant" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%013" Name="f%C%E1LowDpt5001"   ParameterType="%AID%_PT-ValueDpt5001"      Offset="0"  BitOffset="0" Text="Von-Wert" Value="50" />
-                <Parameter Id="%AID%_UP-%T%%CCC%014" Name="f%C%E1HighDpt5001"  ParameterType="%AID%_PT-ValueDpt5001"      Offset="4"  BitOffset="0" Text="Bisrt" Value="100" />
-                <Parameter Id="%AID%_UP-%T%%CCC%298" Name="f%C%E1Low0Dpt5xIn"  ParameterType="%AID%_PT-ValueDpt5001"      Offset="0"  BitOffset="0" Text="Eingang 1 ist EIN bei Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%014" Name="f%C%E1HighDpt5001"  ParameterType="%AID%_PT-ValueDpt5001"      Offset="4"  BitOffset="0" Text="Bis-Wert" Value="100" />
+                <Parameter Id="%AID%_UP-%T%%CCC%298" Name="f%C%E1Low0Dpt5xIn"  ParameterType="%AID%_PT-ValueDpt5001"      Offset="0"  BitOffset="0" Text="Eingang ist EIN bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%299" Name="f%C%E1Low1Dpt5xIn"  ParameterType="%AID%_PT-ValueDpt5001"      Offset="1"  BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%300" Name="f%C%E1Low2Dpt5xIn"  ParameterType="%AID%_PT-ValueDpt5001"      Offset="2"  BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%301" Name="f%C%E1Low3Dpt5xIn"  ParameterType="%AID%_PT-ValueDpt5001"      Offset="3"  BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%302" Name="f%C%E1Low4Dpt5xIn"  ParameterType="%AID%_PT-ValueDpt5001"      Offset="4"  BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%303" Name="f%C%E1Low5Dpt5xIn"  ParameterType="%AID%_PT-ValueDpt5001"      Offset="5"  BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%304" Name="f%C%E1Low6Dpt5xIn"  ParameterType="%AID%_PT-ValueDpt5001"      Offset="6"  BitOffset="0" Text="... oder bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%305" Name="f%C%E1LowDpt5xFix"  ParameterType="%AID%_PT-ValueDpt5001"      Offset="0"  BitOffset="0" Text="Eingang 1 ist konstant" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%305" Name="f%C%E1LowDpt5xFix"  ParameterType="%AID%_PT-ValueDpt5001"      Offset="0"  BitOffset="0" Text="Eingang ist konstant" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%015" Name="f%C%E1LowDpt6"      ParameterType="%AID%_PT-ValueDpt6"         Offset="0"  BitOffset="0" Text="Von-Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%016" Name="f%C%E1HighDpt6"     ParameterType="%AID%_PT-ValueDpt6"         Offset="4"  BitOffset="0" Text="Bis-Wert" Value="127" />
-                <Parameter Id="%AID%_UP-%T%%CCC%306" Name="f%C%E1Low0Dpt6In"   ParameterType="%AID%_PT-ValueDpt6"         Offset="0"  BitOffset="0" Text="Eingang 1 ist EIN bei Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%306" Name="f%C%E1Low0Dpt6In"   ParameterType="%AID%_PT-ValueDpt6"         Offset="0"  BitOffset="0" Text="Eingang ist EIN bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%307" Name="f%C%E1Low1Dpt6In"   ParameterType="%AID%_PT-ValueDpt6"         Offset="1"  BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%308" Name="f%C%E1Low2Dpt6In"   ParameterType="%AID%_PT-ValueDpt6"         Offset="2"  BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%309" Name="f%C%E1Low3Dpt6In"   ParameterType="%AID%_PT-ValueDpt6"         Offset="3"  BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%310" Name="f%C%E1Low4Dpt6In"   ParameterType="%AID%_PT-ValueDpt6"         Offset="4"  BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%311" Name="f%C%E1Low5Dpt6In"   ParameterType="%AID%_PT-ValueDpt6"         Offset="5"  BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%312" Name="f%C%E1Low6Dpt6In"   ParameterType="%AID%_PT-ValueDpt6"         Offset="6"  BitOffset="0" Text="... oder bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%313" Name="f%C%E1LowDpt6Fix"   ParameterType="%AID%_PT-ValueDpt6"         Offset="0"  BitOffset="0" Text="Eingang 1 ist konstant" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%313" Name="f%C%E1LowDpt6Fix"   ParameterType="%AID%_PT-ValueDpt6"         Offset="0"  BitOffset="0" Text="Eingang ist konstant" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%017" Name="f%C%E1LowDpt7"      ParameterType="%AID%_PT-ValueDpt7"         Offset="0"  BitOffset="0" Text="Von-Wert" Value="32768" />
                 <Parameter Id="%AID%_UP-%T%%CCC%018" Name="f%C%E1HighDpt7"     ParameterType="%AID%_PT-ValueDpt7"         Offset="4"  BitOffset="0" Text="Bis-Wert" Value="65535" />
-                <Parameter Id="%AID%_UP-%T%%CCC%314" Name="f%C%E1Low0Dpt7In"   ParameterType="%AID%_PT-ValueDpt7"         Offset="0"  BitOffset="0" Text="Eingang 1 ist EIN bei Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%314" Name="f%C%E1Low0Dpt7In"   ParameterType="%AID%_PT-ValueDpt7"         Offset="0"  BitOffset="0" Text="Eingang ist EIN bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%315" Name="f%C%E1Low1Dpt7In"   ParameterType="%AID%_PT-ValueDpt7"         Offset="2"  BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%316" Name="f%C%E1Low2Dpt7In"   ParameterType="%AID%_PT-ValueDpt7"         Offset="4"  BitOffset="0" Text="... oder bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%317" Name="f%C%E1LowDpt7Fix"   ParameterType="%AID%_PT-ValueDpt7"         Offset="0"  BitOffset="0" Text="Eingang 1 ist konstant" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%317" Name="f%C%E1LowDpt7Fix"   ParameterType="%AID%_PT-ValueDpt7"         Offset="0"  BitOffset="0" Text="Eingang ist konstant" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%019" Name="f%C%E1LowDpt8"      ParameterType="%AID%_PT-ValueDpt8"         Offset="0"  BitOffset="0" Text="Von-Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%020" Name="f%C%E1HighDpt8"     ParameterType="%AID%_PT-ValueDpt8"         Offset="4"  BitOffset="0" Text="Bis-Wert" Value="32767" />
-                <Parameter Id="%AID%_UP-%T%%CCC%318" Name="f%C%E1Low0Dpt8In"   ParameterType="%AID%_PT-ValueDpt8"         Offset="0"  BitOffset="0" Text="Eingang 1 ist EIN bei Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%318" Name="f%C%E1Low0Dpt8In"   ParameterType="%AID%_PT-ValueDpt8"         Offset="0"  BitOffset="0" Text="Eingang ist EIN bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%319" Name="f%C%E1Low1Dpt8In"   ParameterType="%AID%_PT-ValueDpt8"         Offset="2"  BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%320" Name="f%C%E1Low2Dpt8In"   ParameterType="%AID%_PT-ValueDpt8"         Offset="4"  BitOffset="0" Text="... oder bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%321" Name="f%C%E1LowDpt8Fix"   ParameterType="%AID%_PT-ValueDpt8"         Offset="0"  BitOffset="0" Text="Eingang 1 ist konstant" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%321" Name="f%C%E1LowDpt8Fix"   ParameterType="%AID%_PT-ValueDpt8"         Offset="0"  BitOffset="0" Text="Eingang ist konstant" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%021" Name="f%C%E1LowDpt9"      ParameterType="%AID%_PT-ValueDpt9"         Offset="0"  BitOffset="0" Text="Von-Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%022" Name="f%C%E1HighDpt9"     ParameterType="%AID%_PT-ValueDpt9"         Offset="4"  BitOffset="0" Text="Bis-Wert" Value="670760" />
-                <Parameter Id="%AID%_UP-%T%%CCC%322" Name="f%C%E1LowDpt9Fix"   ParameterType="%AID%_PT-ValueDpt9"         Offset="0"  BitOffset="0" Text="Eingang 1 ist konstant" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%322" Name="f%C%E1LowDpt9Fix"   ParameterType="%AID%_PT-ValueDpt9"         Offset="0"  BitOffset="0" Text="Eingang ist konstant" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%405" Name="f%C%E1LowDpt12"     ParameterType="%AID%_PT-ValueDpt12"        Offset="0"  BitOffset="0" Text="Von-Wert" Value="2147483648" />
                 <Parameter Id="%AID%_UP-%T%%CCC%406" Name="f%C%E1HighDpt12"    ParameterType="%AID%_PT-ValueDpt12"        Offset="4"  BitOffset="0" Text="Bis-Wert" Value="4294967296" />
-                <Parameter Id="%AID%_UP-%T%%CCC%407" Name="f%C%E1LowDpt12Fix"  ParameterType="%AID%_PT-ValueDpt12"        Offset="0"  BitOffset="0" Text="Eingang 1 ist konstant" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%407" Name="f%C%E1LowDpt12Fix"  ParameterType="%AID%_PT-ValueDpt12"        Offset="0"  BitOffset="0" Text="Eingang ist konstant" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%408" Name="f%C%E1LowDpt13"     ParameterType="%AID%_PT-ValueDpt13"        Offset="0"  BitOffset="0" Text="Von-Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%409" Name="f%C%E1HighDpt13"    ParameterType="%AID%_PT-ValueDpt13"        Offset="4"  BitOffset="0" Text="Bis-Wert" Value="2147483647" />
-                <Parameter Id="%AID%_UP-%T%%CCC%410" Name="f%C%E1LowDpt13Fix"  ParameterType="%AID%_PT-ValueDpt13"        Offset="0"  BitOffset="0" Text="Eingang 1 ist konstant" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%410" Name="f%C%E1LowDpt13Fix"  ParameterType="%AID%_PT-ValueDpt13"        Offset="0"  BitOffset="0" Text="Eingang ist konstant" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%411" Name="f%C%E1LowDpt14"     ParameterType="%AID%_PT-ValueDpt14"        Offset="0"  BitOffset="0" Text="Von-Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%412" Name="f%C%E1HighDpt14"    ParameterType="%AID%_PT-ValueDpt14"        Offset="4"  BitOffset="0" Text="Bis-Wert" Value="1000000000" />
-                <Parameter Id="%AID%_UP-%T%%CCC%413" Name="f%C%E1LowDpt14Fix"  ParameterType="%AID%_PT-ValueDpt14"        Offset="0"  BitOffset="0" Text="Eingang 1 ist konstant" Value="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%023" Name="f%C%E1Low0Dpt17"    ParameterType="%AID%_PT-ValueSceneIn"      Offset="0"  BitOffset="0" Text="Eingang 1 ist EIN bei Szene" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%413" Name="f%C%E1LowDpt14Fix"  ParameterType="%AID%_PT-ValueDpt14"        Offset="0"  BitOffset="0" Text="Eingang ist konstant" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%023" Name="f%C%E1Low0Dpt17"    ParameterType="%AID%_PT-ValueSceneIn"      Offset="0"  BitOffset="0" Text="Eingang ist EIN bei Szene" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%101" Name="f%C%E1Low1Dpt17"    ParameterType="%AID%_PT-ValueSceneIn"      Offset="1"  BitOffset="0" Text="... oder bei Szene" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%102" Name="f%C%E1Low2Dpt17"    ParameterType="%AID%_PT-ValueSceneIn"      Offset="2"  BitOffset="0" Text="... oder bei Szene" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%103" Name="f%C%E1Low3Dpt17"    ParameterType="%AID%_PT-ValueSceneIn"      Offset="3"  BitOffset="0" Text="... oder bei Szene" Value="0" />
@@ -188,10 +188,10 @@
                 <Parameter Id="%AID%_UP-%T%%CCC%105" Name="f%C%E1Low5Dpt17"    ParameterType="%AID%_PT-ValueSceneIn"      Offset="5"  BitOffset="0" Text="... oder bei Szene" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%106" Name="f%C%E1Low6Dpt17"    ParameterType="%AID%_PT-ValueSceneIn"      Offset="6"  BitOffset="0" Text="... oder bei Szene" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%107" Name="f%C%E1Low7Dpt17"    ParameterType="%AID%_PT-ValueSceneIn"      Offset="7"  BitOffset="0" Text="... oder bei Szene" Value="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%323" Name="f%C%E1LowDpt17Fix"  ParameterType="%AID%_PT-ValueSceneOut"     Offset="0"  BitOffset="0" Text="Eingang 1 ist konstant" Value="1" />
+                <Parameter Id="%AID%_UP-%T%%CCC%323" Name="f%C%E1LowDpt17Fix"  ParameterType="%AID%_PT-ValueSceneOut"     Offset="0"  BitOffset="0" Text="Eingang ist konstant" Value="1" />
                 <Parameter Id="%AID%_UP-%T%%CCC%024" Name="f%C%E1LowDptRGB"    ParameterType="%AID%_PT-ValueRGB"          Offset="0"  BitOffset="0" Text="Von-Wert" Value="8388608" />
                 <Parameter Id="%AID%_UP-%T%%CCC%025" Name="f%C%E1HighDptRGB"   ParameterType="%AID%_PT-ValueRGB"          Offset="4"  BitOffset="0" Text="Bis-Wert" Value="16777216" />
-                <Parameter Id="%AID%_UP-%T%%CCC%324" Name="f%C%E1LowDptRGBFix" ParameterType="%AID%_PT-ValueRGB"          Offset="0"  BitOffset="0" Text="Eingang 1 ist konstant" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%324" Name="f%C%E1LowDptRGBFix" ParameterType="%AID%_PT-ValueRGB"          Offset="0"  BitOffset="0" Text="Eingang ist konstant" Value="0" />
 
                 <Parameter Id="%AID%_UP-%T%%CCC%142" Name="f%C%E2LowDelta"     ParameterType="%AID%_PT-Delta"             Offset="8"  BitOffset="0" Text="Von-Wert" Value="-10" />
                 <Parameter Id="%AID%_UP-%T%%CCC%143" Name="f%C%E2HighDelta"    ParameterType="%AID%_PT-Delta"             Offset="12" BitOffset="0" Text="Bis-Wert" Value="10" />
@@ -207,66 +207,66 @@
                 <Parameter Id="%AID%_UP-%T%%CCC%330" Name="f%C%E2Low5Valid"    ParameterType="%AID%_PT-CheckBox"          Offset="15" BitOffset="5" Text="Nächste Zeile auswerten?" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%331" Name="f%C%E2Low6Valid"    ParameterType="%AID%_PT-CheckBox"          Offset="15" BitOffset="6" Text="Nächste Zeile auswerten?" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%332" Name="f%C%E2Low7Valid"    ParameterType="%AID%_PT-CheckBox"          Offset="15" BitOffset="7" Text="Nächste Zeile auswerten?" Value="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%030" Name="f%C%E2Low0Dpt2"     ParameterType="%AID%_PT-ValueDpt2"         Offset="8"  BitOffset="0" Text="Eingang 2 ist EIN, wenn Wert gleich " Value="1" />
+                <Parameter Id="%AID%_UP-%T%%CCC%030" Name="f%C%E2Low0Dpt2"     ParameterType="%AID%_PT-ValueDpt2"         Offset="8"  BitOffset="0" Text="Eingang ist EIN, wenn Wert gleich " Value="1" />
                 <Parameter Id="%AID%_UP-%T%%CCC%095" Name="f%C%E2Low1Dpt2"     ParameterType="%AID%_PT-ValueDpt2"         Offset="9"  BitOffset="0" Text="... oder wenn Wert gleich " Value="4" />
                 <Parameter Id="%AID%_UP-%T%%CCC%096" Name="f%C%E2Low2Dpt2"     ParameterType="%AID%_PT-ValueDpt2"         Offset="10" BitOffset="0" Text="... oder wenn Wert gleich " Value="4" />
                 <Parameter Id="%AID%_UP-%T%%CCC%097" Name="f%C%E2Low3Dpt2"     ParameterType="%AID%_PT-ValueDpt2"         Offset="11" BitOffset="0" Text="... oder wenn Wert gleich " Value="4" />
-                <Parameter Id="%AID%_UP-%T%%CCC%333" Name="f%C%E2LowDpt2Fix"   ParameterType="%AID%_PT-ValueDpt2Out"      Offset="8"  BitOffset="0" Text="Eingang 2 ist konstant" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%333" Name="f%C%E2LowDpt2Fix"   ParameterType="%AID%_PT-ValueDpt2Out"      Offset="8"  BitOffset="0" Text="Eingang ist konstant" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%031" Name="f%C%E2LowDpt5"      ParameterType="%AID%_PT-ValueDpt5"         Offset="8"  BitOffset="0" Text="Von-Wert" Value="128" />
                 <Parameter Id="%AID%_UP-%T%%CCC%032" Name="f%C%E2HighDpt5"     ParameterType="%AID%_PT-ValueDpt5"         Offset="12" BitOffset="0" Text="Bis-Wert" Value="255" />
-                <Parameter Id="%AID%_UP-%T%%CCC%334" Name="f%C%E2Low0Dpt5In"   ParameterType="%AID%_PT-ValueDpt5"         Offset="8"  BitOffset="0" Text="Eingang 2 ist EIN bei Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%334" Name="f%C%E2Low0Dpt5In"   ParameterType="%AID%_PT-ValueDpt5"         Offset="8"  BitOffset="0" Text="Eingang ist EIN bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%335" Name="f%C%E2Low1Dpt5In"   ParameterType="%AID%_PT-ValueDpt5"         Offset="9"  BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%336" Name="f%C%E2Low2Dpt5In"   ParameterType="%AID%_PT-ValueDpt5"         Offset="10" BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%337" Name="f%C%E2Low3Dpt5In"   ParameterType="%AID%_PT-ValueDpt5"         Offset="11" BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%338" Name="f%C%E2Low4Dpt5In"   ParameterType="%AID%_PT-ValueDpt5"         Offset="12" BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%339" Name="f%C%E2Low5Dpt5In"   ParameterType="%AID%_PT-ValueDpt5"         Offset="13" BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%340" Name="f%C%E2Low6Dpt5In"   ParameterType="%AID%_PT-ValueDpt5"         Offset="14" BitOffset="0" Text="... oder bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%341" Name="f%C%E2LowDpt5Fix"   ParameterType="%AID%_PT-ValueDpt5"         Offset="8"  BitOffset="0" Text="Eingang 2 ist konstant" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%341" Name="f%C%E2LowDpt5Fix"   ParameterType="%AID%_PT-ValueDpt5"         Offset="8"  BitOffset="0" Text="Eingang ist konstant" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%033" Name="f%C%E2LowDpt5001"   ParameterType="%AID%_PT-ValueDpt5001"      Offset="8"  BitOffset="0" Text="Von-Wert" Value="50" />
                 <Parameter Id="%AID%_UP-%T%%CCC%034" Name="f%C%E2HighDpt5001"  ParameterType="%AID%_PT-ValueDpt5001"      Offset="12" BitOffset="0" Text="Bis-Wert" Value="100" />
-                <Parameter Id="%AID%_UP-%T%%CCC%342" Name="f%C%E2Low0Dpt5xIn"  ParameterType="%AID%_PT-ValueDpt5001"      Offset="8"  BitOffset="0" Text="Eingang 2 ist EIN bei Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%342" Name="f%C%E2Low0Dpt5xIn"  ParameterType="%AID%_PT-ValueDpt5001"      Offset="8"  BitOffset="0" Text="Eingang ist EIN bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%343" Name="f%C%E2Low1Dpt5xIn"  ParameterType="%AID%_PT-ValueDpt5001"      Offset="9"  BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%344" Name="f%C%E2Low2Dpt5xIn"  ParameterType="%AID%_PT-ValueDpt5001"      Offset="10" BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%345" Name="f%C%E2Low3Dpt5xIn"  ParameterType="%AID%_PT-ValueDpt5001"      Offset="11" BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%346" Name="f%C%E2Low4Dpt5xIn"  ParameterType="%AID%_PT-ValueDpt5001"      Offset="12" BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%347" Name="f%C%E2Low5Dpt5xIn"  ParameterType="%AID%_PT-ValueDpt5001"      Offset="13" BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%348" Name="f%C%E2Low6Dpt5xIn"  ParameterType="%AID%_PT-ValueDpt5001"      Offset="14" BitOffset="0" Text="... oder bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%349" Name="f%C%E2LowDpt5xFix"  ParameterType="%AID%_PT-ValueDpt5001"      Offset="8"  BitOffset="0" Text="Eingang 2 ist konstant" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%349" Name="f%C%E2LowDpt5xFix"  ParameterType="%AID%_PT-ValueDpt5001"      Offset="8"  BitOffset="0" Text="Eingang ist konstant" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%035" Name="f%C%E2LowDpt6"      ParameterType="%AID%_PT-ValueDpt6"         Offset="8"  BitOffset="0" Text="Von-Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%036" Name="f%C%E2HighDpt6"     ParameterType="%AID%_PT-ValueDpt6"         Offset="12" BitOffset="0" Text="Bis-Wert" Value="127" />
-                <Parameter Id="%AID%_UP-%T%%CCC%350" Name="f%C%E2Low0Dpt6In"   ParameterType="%AID%_PT-ValueDpt6"         Offset="8"  BitOffset="0" Text="Eingang 2 ist EIN bei Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%350" Name="f%C%E2Low0Dpt6In"   ParameterType="%AID%_PT-ValueDpt6"         Offset="8"  BitOffset="0" Text="Eingang ist EIN bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%351" Name="f%C%E2Low1Dpt6In"   ParameterType="%AID%_PT-ValueDpt6"         Offset="9"  BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%352" Name="f%C%E2Low2Dpt6In"   ParameterType="%AID%_PT-ValueDpt6"         Offset="10" BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%353" Name="f%C%E2Low3Dpt6In"   ParameterType="%AID%_PT-ValueDpt6"         Offset="11" BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%354" Name="f%C%E2Low4Dpt6In"   ParameterType="%AID%_PT-ValueDpt6"         Offset="12" BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%355" Name="f%C%E2Low5Dpt6In"   ParameterType="%AID%_PT-ValueDpt6"         Offset="13" BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%356" Name="f%C%E2Low6Dpt6In"   ParameterType="%AID%_PT-ValueDpt6"         Offset="14" BitOffset="0" Text="... oder bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%357" Name="f%C%E2LowDpt6Fix"   ParameterType="%AID%_PT-ValueDpt6"         Offset="8"  BitOffset="0" Text="Eingang 2 ist konstant" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%357" Name="f%C%E2LowDpt6Fix"   ParameterType="%AID%_PT-ValueDpt6"         Offset="8"  BitOffset="0" Text="Eingang ist konstant" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%037" Name="f%C%E2LowDpt7"      ParameterType="%AID%_PT-ValueDpt7"         Offset="8"  BitOffset="0" Text="Von-Wert" Value="32768" />
                 <Parameter Id="%AID%_UP-%T%%CCC%038" Name="f%C%E2HighDpt7"     ParameterType="%AID%_PT-ValueDpt7"         Offset="12" BitOffset="0" Text="Bis-Wert" Value="65535" />
-                <Parameter Id="%AID%_UP-%T%%CCC%358" Name="f%C%E2Low0Dpt7In"   ParameterType="%AID%_PT-ValueDpt7"         Offset="8"  BitOffset="0" Text="Eingang 2 ist EIN bei Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%358" Name="f%C%E2Low0Dpt7In"   ParameterType="%AID%_PT-ValueDpt7"         Offset="8"  BitOffset="0" Text="Eingang ist EIN bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%359" Name="f%C%E2Low1Dpt7In"   ParameterType="%AID%_PT-ValueDpt7"         Offset="10" BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%360" Name="f%C%E2Low2Dpt7In"   ParameterType="%AID%_PT-ValueDpt7"         Offset="12" BitOffset="0" Text="... oder bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%361" Name="f%C%E2LowDpt7Fix"   ParameterType="%AID%_PT-ValueDpt7"         Offset="8"  BitOffset="0" Text="Eingang 2 ist konstant" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%361" Name="f%C%E2LowDpt7Fix"   ParameterType="%AID%_PT-ValueDpt7"         Offset="8"  BitOffset="0" Text="Eingang ist konstant" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%039" Name="f%C%E2LowDpt8"      ParameterType="%AID%_PT-ValueDpt8"         Offset="8"  BitOffset="0" Text="Von-Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%040" Name="f%C%E2HighDpt8"     ParameterType="%AID%_PT-ValueDpt8"         Offset="12" BitOffset="0" Text="Bis-Wert" Value="32767" />
-                <Parameter Id="%AID%_UP-%T%%CCC%362" Name="f%C%E2Low0Dpt8In"   ParameterType="%AID%_PT-ValueDpt8"         Offset="8"  BitOffset="0" Text="Eingang 2 ist EIN bei Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%362" Name="f%C%E2Low0Dpt8In"   ParameterType="%AID%_PT-ValueDpt8"         Offset="8"  BitOffset="0" Text="Eingang ist EIN bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%363" Name="f%C%E2Low1Dpt8In"   ParameterType="%AID%_PT-ValueDpt8"         Offset="10" BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%364" Name="f%C%E2Low2Dpt8In"   ParameterType="%AID%_PT-ValueDpt8"         Offset="12" BitOffset="0" Text="... oder bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%365" Name="f%C%E2LowDpt8Fix"   ParameterType="%AID%_PT-ValueDpt8"         Offset="8"  BitOffset="0" Text="Eingang 2 ist konstant" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%365" Name="f%C%E2LowDpt8Fix"   ParameterType="%AID%_PT-ValueDpt8"         Offset="8"  BitOffset="0" Text="Eingang ist konstant" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%041" Name="f%C%E2LowDpt9"      ParameterType="%AID%_PT-ValueDpt9"         Offset="8"  BitOffset="0" Text="Von-Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%042" Name="f%C%E2HighDpt9"     ParameterType="%AID%_PT-ValueDpt9"         Offset="12" BitOffset="0" Text="Bis-Wert" Value="670760" />
-                <Parameter Id="%AID%_UP-%T%%CCC%366" Name="f%C%E2LowDpt9Fix"   ParameterType="%AID%_PT-ValueDpt9"         Offset="8"  BitOffset="0" Text="Eingang 2 ist konstant" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%366" Name="f%C%E2LowDpt9Fix"   ParameterType="%AID%_PT-ValueDpt9"         Offset="8"  BitOffset="0" Text="Eingang ist konstant" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%414" Name="f%C%E2LowDpt12"     ParameterType="%AID%_PT-ValueDpt12"        Offset="8"  BitOffset="0" Text="Von-Wert" Value="2147483648" />
                 <Parameter Id="%AID%_UP-%T%%CCC%415" Name="f%C%E2HighDpt12"    ParameterType="%AID%_PT-ValueDpt12"        Offset="12" BitOffset="0" Text="Bis-Wert" Value="4294967296" />
-                <Parameter Id="%AID%_UP-%T%%CCC%416" Name="f%C%E2LowDpt12Fix"  ParameterType="%AID%_PT-ValueDpt12"        Offset="8"  BitOffset="0" Text="Eingang 2 ist konstant" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%416" Name="f%C%E2LowDpt12Fix"  ParameterType="%AID%_PT-ValueDpt12"        Offset="8"  BitOffset="0" Text="Eingang ist konstant" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%417" Name="f%C%E2LowDpt13"     ParameterType="%AID%_PT-ValueDpt13"        Offset="8"  BitOffset="0" Text="Von-Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%418" Name="f%C%E2HighDpt13"    ParameterType="%AID%_PT-ValueDpt13"        Offset="12" BitOffset="0" Text="Bis-Wert" Value="2147483647" />
-                <Parameter Id="%AID%_UP-%T%%CCC%419" Name="f%C%E2LowDpt13Fix"  ParameterType="%AID%_PT-ValueDpt13"        Offset="8"  BitOffset="0" Text="Eingang 2 ist konstant" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%419" Name="f%C%E2LowDpt13Fix"  ParameterType="%AID%_PT-ValueDpt13"        Offset="8"  BitOffset="0" Text="Eingang ist konstant" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%420" Name="f%C%E2LowDpt14"     ParameterType="%AID%_PT-ValueDpt14"        Offset="8"  BitOffset="0" Text="Von-Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%421" Name="f%C%E2HighDpt14"    ParameterType="%AID%_PT-ValueDpt14"        Offset="12" BitOffset="0" Text="Bis-Wert" Value="1000000000" />
-                <Parameter Id="%AID%_UP-%T%%CCC%422" Name="f%C%E2LowDpt14Fix"  ParameterType="%AID%_PT-ValueDpt14"        Offset="8"  BitOffset="0" Text="Eingang 2 ist konstant" Value="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%043" Name="f%C%E2Low0Dpt17"    ParameterType="%AID%_PT-ValueSceneIn"      Offset="8"  BitOffset="0" Text="Eingang 2 ist EIN bei Szene" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%422" Name="f%C%E2LowDpt14Fix"  ParameterType="%AID%_PT-ValueDpt14"        Offset="8"  BitOffset="0" Text="Eingang ist konstant" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%043" Name="f%C%E2Low0Dpt17"    ParameterType="%AID%_PT-ValueSceneIn"      Offset="8"  BitOffset="0" Text="Eingang ist EIN bei Szene" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%108" Name="f%C%E2Low1Dpt17"    ParameterType="%AID%_PT-ValueSceneIn"      Offset="9"  BitOffset="0" Text="... oder bei Szene" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%109" Name="f%C%E2Low2Dpt17"    ParameterType="%AID%_PT-ValueSceneIn"      Offset="10" BitOffset="0" Text="... oder bei Szene" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%110" Name="f%C%E2Low3Dpt17"    ParameterType="%AID%_PT-ValueSceneIn"      Offset="11" BitOffset="0" Text="... oder bei Szene" Value="0" />
@@ -274,10 +274,10 @@
                 <Parameter Id="%AID%_UP-%T%%CCC%112" Name="f%C%E2Low5Dpt17"    ParameterType="%AID%_PT-ValueSceneIn"      Offset="13" BitOffset="0" Text="... oder bei Szene" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%113" Name="f%C%E2Low6Dpt17"    ParameterType="%AID%_PT-ValueSceneIn"      Offset="14" BitOffset="0" Text="... oder bei Szene" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%114" Name="f%C%E2Low7Dpt17"    ParameterType="%AID%_PT-ValueSceneIn"      Offset="15" BitOffset="0" Text="... oder bei Szene" Value="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%367" Name="f%C%E2LowDpt17Fix"  ParameterType="%AID%_PT-ValueSceneOut"     Offset="8"  BitOffset="0" Text="Eingang 2 ist konstant" Value="1" />
+                <Parameter Id="%AID%_UP-%T%%CCC%367" Name="f%C%E2LowDpt17Fix"  ParameterType="%AID%_PT-ValueSceneOut"     Offset="8"  BitOffset="0" Text="Eingang ist konstant" Value="1" />
                 <Parameter Id="%AID%_UP-%T%%CCC%044" Name="f%C%E2LowDptRGB"    ParameterType="%AID%_PT-ValueRGB"          Offset="8"  BitOffset="0" Text="Von-Wert" Value="8388608" />
                 <Parameter Id="%AID%_UP-%T%%CCC%045" Name="f%C%E2HighDptRGB"   ParameterType="%AID%_PT-ValueRGB"          Offset="12" BitOffset="0" Text="Bis-Wert" Value="16777216" />
-                <Parameter Id="%AID%_UP-%T%%CCC%368" Name="f%C%E2LowDptRGBFix" ParameterType="%AID%_PT-ValueRGB"          Offset="8"  BitOffset="0" Text="Eingang 2 ist konstant" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%368" Name="f%C%E2LowDptRGBFix" ParameterType="%AID%_PT-ValueRGB"          Offset="8"  BitOffset="0" Text="Eingang ist konstant" Value="0" />
               </Union>
               <!-- Timer name -->
               <Parameter Id="%AID%_P-%T%%CCC%275" Name="f%C%TimerName" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung der Zeitschaltuhr" Value="" />
@@ -390,19 +390,19 @@
                 <Parameter Id="%AID%_UP-%T%%CCC%048" Name="f%C%I1" ParameterType="%AID%_PT-InputEnable" Offset="0" BitOffset="0" Text="Interner Eingang 3" Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%050" Name="f%C%I2" ParameterType="%AID%_PT-InputEnable" Offset="0" BitOffset="4" Text="Interner Eingang 4" Value="0" />
               </Union>
-              <Parameter Id="%AID%_P-%T%%CCC%049" Name="f%C%I1Function" ParameterType="%AID%_PT-InputFunction" Text="Internen Eingang 3 verbinden mit Kanalausgang Nr.:" Value="0">
+              <Parameter Id="%AID%_P-%T%%CCC%049" Name="f%C%I1Function" ParameterType="%AID%_PT-InputFunction" Text="Internen Eingang verbinden mit Kanalausgang Nr.:" Value="0">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="35" BitOffset="0" />
               </Parameter>
-              <Parameter Id="%AID%_P-%T%%CCC%051" Name="f%C%I2Function" ParameterType="%AID%_PT-InputFunction" Text="Internen Eingang 4 verbinden mit Kanalausgang Nr.:" Value="0">
+              <Parameter Id="%AID%_P-%T%%CCC%051" Name="f%C%I2Function" ParameterType="%AID%_PT-InputFunction" Text="Internen Eingang verbinden mit Kanalausgang Nr.:" Value="0">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="36" BitOffset="0" />
               </Parameter>
               <!-- Stair delay pattern-->
               <Union SizeInBit="32">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="37" BitOffset="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%053" Name="f%C%OStairtimeBase" ParameterType="%AID%_PT-DelayBase10" Offset="0" BitOffset="0" Text="Zeitbasis" Value="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%054" Name="f%C%OStairtimeTime" ParameterType="%AID%_PT-DelayTime" Offset="0" BitOffset="2" Text="Zeit" Value="30" />
-                <Parameter Id="%AID%_UP-%T%%CCC%387" Name="f%C%OBlinkBase" ParameterType="%AID%_PT-DelayBase10" Offset="2" BitOffset="0" Text="Zeitbasis" Value="3" />
-                <Parameter Id="%AID%_UP-%T%%CCC%388" Name="f%C%OBlinkTime" ParameterType="%AID%_PT-DelayTime" Offset="2" BitOffset="2" Text="Zeit" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%053" Name="f%C%OStairtimeBase" ParameterType="%AID%_PT-DelayBase10" Offset="0" BitOffset="0" Text="Zeit für Treppenlicht" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%054" Name="f%C%OStairtimeTime" ParameterType="%AID%_PT-DelayTime" Offset="0" BitOffset="2" Text="Zeit für Treppenlicht" Value="30" />
+                <Parameter Id="%AID%_UP-%T%%CCC%387" Name="f%C%OBlinkBase" ParameterType="%AID%_PT-DelayBase10" Offset="2" BitOffset="0" Text="Treppenlicht blinkt im Rhythmus" Value="3" />
+                <Parameter Id="%AID%_UP-%T%%CCC%388" Name="f%C%OBlinkTime" ParameterType="%AID%_PT-DelayTime" Offset="2" BitOffset="2" Text="Treppenlicht blinkt im Rhythmus" Value="0" />
               </Union>
               <Union SizeInBit="8">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="41" BitOffset="0" />
@@ -415,10 +415,10 @@
               <!-- OnOff delay pattern-->
               <Union SizeInBit="32">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="42" BitOffset="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%059" Name="f%C%ODelayOnBase" ParameterType="%AID%_PT-DelayBase10" Offset="0" BitOffset="0" Text="Zeitbasis" Value="3" />
-                <Parameter Id="%AID%_UP-%T%%CCC%060" Name="f%C%ODelayOnTime" ParameterType="%AID%_PT-DelayTime" Offset="0" BitOffset="2" Text="Zeit" Value="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%062" Name="f%C%ODelayOffBase" ParameterType="%AID%_PT-DelayBase10" Offset="2" BitOffset="0" Text="Zeitbasis" Value="3" />
-                <Parameter Id="%AID%_UP-%T%%CCC%063" Name="f%C%ODelayOffTime" ParameterType="%AID%_PT-DelayTime" Offset="2" BitOffset="2" Text="Zeit" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%059" Name="f%C%ODelayOnBase" ParameterType="%AID%_PT-DelayBase10" Offset="0" BitOffset="0" Text="EINschalten wird verzögert um" Value="3" />
+                <Parameter Id="%AID%_UP-%T%%CCC%060" Name="f%C%ODelayOnTime" ParameterType="%AID%_PT-DelayTime" Offset="0" BitOffset="2" Text="EINschalten wird verzögert um" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%062" Name="f%C%ODelayOffBase" ParameterType="%AID%_PT-DelayBase10" Offset="2" BitOffset="0" Text="AUSschalten wird verzögert um" Value="3" />
+                <Parameter Id="%AID%_UP-%T%%CCC%063" Name="f%C%ODelayOffTime" ParameterType="%AID%_PT-DelayTime" Offset="2" BitOffset="2" Text="AUSschalten wird verzögert um" Value="0" />
               </Union>
               <Union SizeInBit="8">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="46" BitOffset="0" />
@@ -430,10 +430,10 @@
               </Union>
               <Union SizeInBit="32">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="47" BitOffset="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%389" Name="f%C%ORepeatOnBase" ParameterType="%AID%_PT-DelayBase10" Offset="0" BitOffset="0" Text="Zeitbasis" Value="3" />
-                <Parameter Id="%AID%_UP-%T%%CCC%390" Name="f%C%ORepeatOnTime" ParameterType="%AID%_PT-DelayTime" Offset="0" BitOffset="2" Text="Zeit" Value="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%391" Name="f%C%ORepeatOffBase" ParameterType="%AID%_PT-DelayBase10" Offset="2" BitOffset="0" Text="Zeitbasis" Value="3" />
-                <Parameter Id="%AID%_UP-%T%%CCC%392" Name="f%C%ORepeatOffTime" ParameterType="%AID%_PT-DelayTime" Offset="2" BitOffset="2" Text="Zeit" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%389" Name="f%C%ORepeatOnBase" ParameterType="%AID%_PT-DelayBase10" Offset="0" BitOffset="0" Text="EIN-Telegramm wird wiederholt alle" Value="3" />
+                <Parameter Id="%AID%_UP-%T%%CCC%390" Name="f%C%ORepeatOnTime" ParameterType="%AID%_PT-DelayTime" Offset="0" BitOffset="2" Text="EIN-Telegramm wird wiederholt alle" Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%391" Name="f%C%ORepeatOffBase" ParameterType="%AID%_PT-DelayBase10" Offset="2" BitOffset="0" Text="AUS-Telegramm wird wiederholt alle" Value="3" />
+                <Parameter Id="%AID%_UP-%T%%CCC%392" Name="f%C%ORepeatOffTime" ParameterType="%AID%_PT-DelayTime" Offset="2" BitOffset="2" Text="AUS-Telegramm wird wiederholt alle" Value="0" />
               </Union>
               <Parameter Id="%AID%_P-%T%%CCC%064" Name="f%C%ODpt" ParameterType="%AID%_PT-OutputDpt" Text="DPT für Ausgang" Value="0">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="51" BitOffset="0" />
@@ -502,17 +502,17 @@
               </Union>
               <Union SizeInBit="32">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="82" BitOffset="0" />
-                <Parameter Id="%AID%_UP-%T%%CCC%377" Name="f%C%E1UseOtherKO" ParameterType="%AID%_PT-KOInput"  Offset="0" BitOffset="0" Text="Kommunikationsobjekt für Eingang 1"   Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%377" Name="f%C%E1UseOtherKO" ParameterType="%AID%_PT-KOInput"  Offset="0" BitOffset="0" Text="Kommunikationsobjekt für Eingang"   Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%378" Name="f%C%E1OtherKO"    ParameterType="%AID%_PT-KONumber" Offset="0" BitOffset="1" Text="    Nummer des Kommunikationsobjekts" Value="%K0%" />
-                <Parameter Id="%AID%_UP-%T%%CCC%379" Name="f%C%E2UseOtherKO" ParameterType="%AID%_PT-KOInput"  Offset="2" BitOffset="0" Text="Kommunikationsobjekt für Eingang 2"   Value="0" />
+                <Parameter Id="%AID%_UP-%T%%CCC%379" Name="f%C%E2UseOtherKO" ParameterType="%AID%_PT-KOInput"  Offset="2" BitOffset="0" Text="Kommunikationsobjekt für Eingang"   Value="0" />
                 <Parameter Id="%AID%_UP-%T%%CCC%380" Name="f%C%E2OtherKO"    ParameterType="%AID%_PT-KONumber" Offset="2" BitOffset="1" Text="    Nummer des Kommunikationsobjekts" Value="%K1%" />
               </Union>
-              <Parameter Id="%AID%_P-%T%%CCC%128" Name="f%C%NameInput1" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung Eingang 1" Value="" />
-              <Parameter Id="%AID%_P-%T%%CCC%129" Name="f%C%NameInput2" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung Eingang 2" Value="" />
+              <Parameter Id="%AID%_P-%T%%CCC%128" Name="f%C%NameInput1" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung Eingang" Value="" />
+              <Parameter Id="%AID%_P-%T%%CCC%129" Name="f%C%NameInput2" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung Eingang" Value="" />
               <Parameter Id="%AID%_P-%T%%CCC%132" Name="f%C%NameOutput" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung Ausgang" Value="" />
               <Parameter Id="%AID%_P-%T%%CCC%133" Name="f%C%AnyInputActive" ParameterType="%AID%_PT-OnOffYesNo" Text="Irgendein Eingang aktiv (interner Wert)"                    Access="None" Value="0" />
-              <Parameter Id="%AID%_P-%T%%CCC%144" Name="f%C%E1AnySceneChosen" ParameterType="%AID%_PT-ValueDpt5" Text="Eingang1: Welches Szenenfeld wird benutzt (interner Wert)" Access="None" Value="0" />
-              <Parameter Id="%AID%_P-%T%%CCC%145" Name="f%C%E2AnySceneChosen" ParameterType="%AID%_PT-ValueDpt5" Text="Eingang2: Welches Szenenfeld wird benutzt (interner Wert)" Access="None" Value="0" />
+              <!-- <Parameter Id="%AID%_P-%T%%CCC%144" Name="f%C%E1AnySceneChosen" ParameterType="%AID%_PT-ValueDpt5" Text="Eingang1: Welches Szenenfeld wird benutzt (interner Wert)" Access="None" Value="0" /> -->
+              <!-- <Parameter Id="%AID%_P-%T%%CCC%145" Name="f%C%E2AnySceneChosen" ParameterType="%AID%_PT-ValueDpt5" Text="Eingang2: Welches Szenenfeld wird benutzt (interner Wert)" Access="None" Value="0" /> -->
               <Parameter Id="%AID%_P-%T%%CCC%146" Name="f%C%E1Low0Dpt17Input" ParameterType="%AID%_PT-ValueSceneIn" Text="Eingang 1 ist EIN bei Szene" Value="0" />
               <Parameter Id="%AID%_P-%T%%CCC%147" Name="f%C%E1Low1Dpt17Input" ParameterType="%AID%_PT-ValueSceneIn" Text="... oder bei Szene" Value="0" />
               <Parameter Id="%AID%_P-%T%%CCC%148" Name="f%C%E1Low2Dpt17Input" ParameterType="%AID%_PT-ValueSceneIn" Text="... oder bei Szene" Value="0" />
@@ -529,8 +529,8 @@
               <Parameter Id="%AID%_P-%T%%CCC%159" Name="f%C%E2Low5Dpt17Input" ParameterType="%AID%_PT-ValueSceneIn" Text="... oder bei Szene" Value="0" />
               <Parameter Id="%AID%_P-%T%%CCC%160" Name="f%C%E2Low6Dpt17Input" ParameterType="%AID%_PT-ValueSceneIn" Text="... oder bei Szene" Value="0" />
               <Parameter Id="%AID%_P-%T%%CCC%161" Name="f%C%E2Low7Dpt17Input" ParameterType="%AID%_PT-ValueSceneIn" Text="... oder bei Szene" Value="0" />
-              <Parameter Id="%AID%_P-%T%%CCC%162" Name="f%C%I1Name" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung interner Eingang 3" Value="" />
-              <Parameter Id="%AID%_P-%T%%CCC%163" Name="f%C%I2Name" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung interner Eingang 4" Value="" />
+              <Parameter Id="%AID%_P-%T%%CCC%162" Name="f%C%I1Name" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung interner Eingang" Value="" />
+              <Parameter Id="%AID%_P-%T%%CCC%163" Name="f%C%I2Name" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung interner Eingang" Value="" />
               <Parameter Id="%AID%_P-%T%%CCC%278" Name="f%C%AskForAlarm" ParameterType="%AID%_PT-OnOffYesNo" Text="LED oder Buzzer aktiv (interner Wert)" Access="None" Value="0" />
               <!-- <Parameter Id="%AID%_P-%T%%CCC%395" Name="f%C%OKONumber" ParameterType="%AID%_PT-KONumber" Text="Kommunikationsobjekt für Ausgang" Access="Read" Value="%K2%" /> -->
             </Parameters>
@@ -712,8 +712,8 @@
               <ParameterRef Id="%AID%_UP-%T%%CCC%142_R-%T%%CCC%14202" RefId="%AID%_UP-%T%%CCC%142" Text="Ausschalt-Wert" />
               <ParameterRef Id="%AID%_UP-%T%%CCC%143_R-%T%%CCC%14301" RefId="%AID%_UP-%T%%CCC%143" Text="Bis-Wert" />
               <ParameterRef Id="%AID%_UP-%T%%CCC%143_R-%T%%CCC%14302" RefId="%AID%_UP-%T%%CCC%143" Text="Einschalt-Wert" />
-              <ParameterRef Id="%AID%_P-%T%%CCC%144_R-%T%%CCC%14401" RefId="%AID%_P-%T%%CCC%144" />
-              <ParameterRef Id="%AID%_P-%T%%CCC%145_R-%T%%CCC%14501" RefId="%AID%_P-%T%%CCC%145" />
+              <!-- <ParameterRef Id="%AID%_P-%T%%CCC%144_R-%T%%CCC%14401" RefId="%AID%_P-%T%%CCC%144" /> -->
+              <!-- <ParameterRef Id="%AID%_P-%T%%CCC%145_R-%T%%CCC%14501" RefId="%AID%_P-%T%%CCC%145" /> -->
               <ParameterRef Id="%AID%_P-%T%%CCC%146_R-%T%%CCC%14601" RefId="%AID%_P-%T%%CCC%146" />
               <ParameterRef Id="%AID%_P-%T%%CCC%147_R-%T%%CCC%14701" RefId="%AID%_P-%T%%CCC%147" />
               <ParameterRef Id="%AID%_P-%T%%CCC%148_R-%T%%CCC%14801" RefId="%AID%_P-%T%%CCC%148" />
@@ -1081,7 +1081,7 @@
                 <ParameterRefRef RefId="%AID%_P-%T%%CCC%001_R-%T%%CCC%00101" HelpContext="%DOC%" />
                 <!-- <ParameterRefRef RefId="%AID%_P-%T%%CCC%002_R-%T%%CCC%00201" HelpContext="%DOC%" /> -->
                 <!-- ChannelDelay Delay pattern -->
-                <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%ChannelDelayCycle" Inline="true" Layout="Grid">
+                <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%ChannelDelayCycle" Inline="true" Layout="Grid" HelpContext="LOG-Zeit-bis-der-Kanal-nach-einem-Neustart-aktiv-wird">
                   <Rows>
                     <Row Id="%AID%_PB-nnn_R-1" Name="Row1" />
                   </Rows>
@@ -1100,10 +1100,10 @@
                 <ParameterRefRef RefId="%AID%_P-%T%%CCC%003_R-%T%%CCC%00301" HelpContext="%DOC%" />
                 <choose ParamRefId="%AID%_P-%T%%CCC%003_R-%T%%CCC%00301">
                   <when test="1 2 3 4 6">
-                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%008_R-%T%%CCC%00801" HelpContext="%DOC%" />
-                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%028_R-%T%%CCC%02801" HelpContext="%DOC%" />
-                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%048_R-%T%%CCC%04801" HelpContext="%DOC%" />
-                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%050_R-%T%%CCC%05001" HelpContext="%DOC%" />
+                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%008_R-%T%%CCC%00801" HelpContext="LOG-Eingang-n" />
+                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%028_R-%T%%CCC%02801" HelpContext="LOG-Eingang-n" />
+                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%048_R-%T%%CCC%04801" HelpContext="LOG-Interner-Eingang-n" />
+                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%050_R-%T%%CCC%05001" HelpContext="LOG-Interner-Eingang-n" />
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Logikauswertung" UIHint="Headline" />
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Hier kann man angeben, wie sich die Logikauswertung verhalten soll, wenn noch nicht alle Eingänge gültige Werte haben. Ungültige Eingänge werden so betrachtet, als ob sie nicht da wären." />
@@ -1139,22 +1139,22 @@
                       <when test="1 17">
                         <choose ParamRefId="%AID%_UP-%T%%CCC%008_R-%T%%CCC%00801">
                           <when test="!=0">
-                            <ParameterRefRef RefId="%AID%_UP-%T%%CCC%089_R-%T%%CCC%08901" HelpContext="%DOC%" />
+                            <ParameterRefRef RefId="%AID%_UP-%T%%CCC%089_R-%T%%CCC%08901" HelpContext="LOG-Eingang-Trigger" />
                           </when>
                         </choose>
                         <choose ParamRefId="%AID%_UP-%T%%CCC%028_R-%T%%CCC%02801">
                           <when test="!=0">
-                            <ParameterRefRef RefId="%AID%_UP-%T%%CCC%090_R-%T%%CCC%09001" HelpContext="%DOC%" />
+                            <ParameterRefRef RefId="%AID%_UP-%T%%CCC%090_R-%T%%CCC%09001" HelpContext="LOG-Eingang-Trigger" />
                           </when>
                         </choose>
                         <choose ParamRefId="%AID%_UP-%T%%CCC%048_R-%T%%CCC%04801">
                           <when test="!=0">
-                            <ParameterRefRef RefId="%AID%_UP-%T%%CCC%091_R-%T%%CCC%09101" HelpContext="%DOC%" />
+                            <ParameterRefRef RefId="%AID%_UP-%T%%CCC%091_R-%T%%CCC%09101" HelpContext="LOG-Eingang-Trigger" />
                           </when>
                         </choose>
                         <choose ParamRefId="%AID%_UP-%T%%CCC%050_R-%T%%CCC%05001">
                           <when test="!=0">
-                            <ParameterRefRef RefId="%AID%_UP-%T%%CCC%092_R-%T%%CCC%09201" HelpContext="%DOC%" />
+                            <ParameterRefRef RefId="%AID%_UP-%T%%CCC%092_R-%T%%CCC%09201" HelpContext="LOG-Eingang-Trigger" />
                           </when>
                         </choose>
                       </when>
@@ -1270,7 +1270,7 @@
                                 </choose>
                                 <!-- <ParameterRefRef RefId="%AID%_UP-%T%%CCC%027_R-%T%%CCC%02701" HelpContext="%DOC%" /> -->
                                 <!-- E1Repeat Delay pattern -->
-                                <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%E1RepeatCycle" Inline="true" Layout="Grid">
+                                <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%E1RepeatCycle" Inline="true" Layout="Grid" HelpContext="LOG-Eingang-wird-gelesen-alle">
                                   <Rows>
                                     <Row Id="%AID%_PB-nnn_R-1" Name="Row1" />
                                   </Rows>
@@ -1279,7 +1279,7 @@
                                     <Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="15%" />
                                     <Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="20%" />
                                   </Columns>
-                                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingang 1 wird gelesen alle&#10;(0 = nicht zyklisch lesen)" Cell="1,1" />
+                                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingang wird gelesen alle&#10;(0 = nicht zyklisch lesen)" Cell="1,1" />
                                   <ParameterRefRef RefId="%AID%_UP-%T%%CCC%384_R-%T%%CCC%38401" Cell="1,2" HelpContext="%DOC%" />
                                   <ParameterRefRef RefId="%AID%_UP-%T%%CCC%383_R-%T%%CCC%38301" Cell="1,3" HelpContext="%DOC%" />
                                 </ParameterBlock>
@@ -1934,7 +1934,7 @@
                                     </choose>
                                     <!-- <ParameterRefRef RefId="%AID%_UP-%T%%CCC%027_R-%T%%CCC%02701" HelpContext="%DOC%" /> -->
                                     <!-- E1Repeat Delay pattern -->
-                                    <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%E1RepeatCycle" Inline="true" Layout="Grid">
+                                    <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%E1RepeatCycle" Inline="true" Layout="Grid" HelpContext="LOG-Eingang-wird-gelesen-alle">
                                       <Rows>
                                         <Row Id="%AID%_PB-nnn_R-1" Name="Row1" />
                                       </Rows>
@@ -1943,7 +1943,7 @@
                                         <Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="15%" />
                                         <Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="20%" />
                                       </Columns>
-                                      <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingang 1 wird gelesen alle&#10;(0 = nicht zyklisch lesen)" Cell="1,1" />
+                                      <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingang wird gelesen alle&#10;(0 = nicht zyklisch lesen)" Cell="1,1" />
                                       <ParameterRefRef RefId="%AID%_UP-%T%%CCC%384_R-%T%%CCC%38401" Cell="1,2" HelpContext="%DOC%" />
                                       <ParameterRefRef RefId="%AID%_UP-%T%%CCC%383_R-%T%%CCC%38301" Cell="1,3" HelpContext="%DOC%" />
                                     </ParameterBlock>
@@ -2054,7 +2054,7 @@
                                 </choose>
                                 <!-- <ParameterRefRef RefId="%AID%_UP-%T%%CCC%047_R-%T%%CCC%04701" HelpContext="%DOC%" /> -->
                                 <!-- E2Repeat Delay pattern -->
-                                <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%E2RepeatCycle" Inline="true" Layout="Grid">
+                                <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%E2RepeatCycle" Inline="true" Layout="Grid"  HelpContext="LOG-Eingang-wird-gelesen-alle">
                                   <Rows>
                                     <Row Id="%AID%_PB-nnn_R-1" Name="Row1" />
                                   </Rows>
@@ -2063,7 +2063,7 @@
                                     <Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="15%" />
                                     <Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="20%" />
                                   </Columns>
-                                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingang 2 wird gelesen alle&#10;(0 = nicht zyklisch lesen)" Cell="1,1" />
+                                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingang wird gelesen alle&#10;(0 = nicht zyklisch lesen)" Cell="1,1" />
                                   <ParameterRefRef RefId="%AID%_UP-%T%%CCC%386_R-%T%%CCC%38601" Cell="1,2" HelpContext="%DOC%" />
                                   <ParameterRefRef RefId="%AID%_UP-%T%%CCC%385_R-%T%%CCC%38501" Cell="1,3" HelpContext="%DOC%" />
                                 </ParameterBlock>
@@ -2082,7 +2082,7 @@
                         <when test="!=0">
                           <ParameterBlock Id="%AID%_PB-%C%14" Name="f%C%ExtInput2" Text="Eingang 2: {{0:Wert}}" TextParameterRefId="%AID%_P-%T%%CCC%129_R-%T%%CCC%12901">
                             <ParameterSeparator Id="%AID%_PS-nnn" Text="Definition Eingang 2" UIHint="Headline" />
-                            <ParameterRefRef RefId="%AID%_P-%T%%CCC%145_R-%T%%CCC%14501" HelpContext="%DOC%" />
+                            <!-- <ParameterRefRef RefId="%AID%_P-%T%%CCC%145_R-%T%%CCC%14501" HelpContext="%DOC%" /> -->
                             <ParameterRefRef RefId="%AID%_P-%T%%CCC%129_R-%T%%CCC%12901" HelpContext="%DOC%" />
                             <choose ParamRefId="%AID%_P-%T%%CCC%003_R-%T%%CCC%00301">
                               <when test="4">
@@ -2723,7 +2723,7 @@
                                     </choose>
                                     <!-- <ParameterRefRef RefId="%AID%_UP-%T%%CCC%047_R-%T%%CCC%04701" HelpContext="%DOC%" /> -->
                                     <!-- E2Repeat Delay pattern -->
-                                    <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%E2RepeatCycle" Inline="true" Layout="Grid">
+                                    <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%E2RepeatCycle" Inline="true" Layout="Grid" HelpContext="LOG-Eingang-wird-gelesen-alle">
                                       <Rows>
                                         <Row Id="%AID%_PB-nnn_R-1" Name="Row1" />
                                       </Rows>
@@ -2732,7 +2732,7 @@
                                         <Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="15%" />
                                         <Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="20%" />
                                       </Columns>
-                                      <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingang 2 wird gelesen alle&#10;(0 = nicht zyklisch lesen)" Cell="1,1" />
+                                      <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingang wird gelesen alle&#10;(0 = nicht zyklisch lesen)" Cell="1,1" />
                                       <ParameterRefRef RefId="%AID%_UP-%T%%CCC%386_R-%T%%CCC%38601" Cell="1,2" HelpContext="%DOC%" />
                                       <ParameterRefRef RefId="%AID%_UP-%T%%CCC%385_R-%T%%CCC%38501" Cell="1,3" HelpContext="%DOC%" />
                                     </ParameterBlock>
@@ -2876,13 +2876,13 @@
                                       <ParameterRefRef RefId="%AID%_UP-%T%%CCC%239_R-%T%%CCC%23901" Cell="1,9" HelpContext="%DOC%" />
                                     </when>
                                     <when test="1">
-                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%232_R-%T%%CCC%23201" Cell="1,1" HelpContext="%DOC%" />
-                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%233_R-%T%%CCC%23301" Cell="1,2" HelpContext="%DOC%" />
-                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%234_R-%T%%CCC%23401" Cell="1,3" HelpContext="%DOC%" />
-                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%235_R-%T%%CCC%23501" Cell="1,4" HelpContext="%DOC%" />
-                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%236_R-%T%%CCC%23601" Cell="1,5" HelpContext="%DOC%" />
-                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%237_R-%T%%CCC%23701" Cell="1,6" HelpContext="%DOC%" />
-                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%238_R-%T%%CCC%23801" Cell="1,7" HelpContext="%DOC%" />
+                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%232_R-%T%%CCC%23201" Cell="1,1" HelpContext="LOG-Wochentage" />
+                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%233_R-%T%%CCC%23301" Cell="1,2" HelpContext="LOG-Wochentage" />
+                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%234_R-%T%%CCC%23401" Cell="1,3" HelpContext="LOG-Wochentage" />
+                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%235_R-%T%%CCC%23501" Cell="1,4" HelpContext="LOG-Wochentage" />
+                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%236_R-%T%%CCC%23601" Cell="1,5" HelpContext="LOG-Wochentage" />
+                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%237_R-%T%%CCC%23701" Cell="1,6" HelpContext="LOG-Wochentage" />
+                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%238_R-%T%%CCC%23801" Cell="1,7" HelpContext="LOG-Wochentage" />
                                     </when>
                                   </choose>
                                 </when>
@@ -2910,13 +2910,13 @@
                                       <ParameterRefRef RefId="%AID%_UP-%T%%CCC%249_R-%T%%CCC%24901" Cell="2,9" HelpContext="%DOC%" />
                                     </when>
                                     <when test="1">
-                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%242_R-%T%%CCC%24201" Cell="2,1" HelpContext="%DOC%" />
-                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%243_R-%T%%CCC%24301" Cell="2,2" HelpContext="%DOC%" />
-                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%244_R-%T%%CCC%24401" Cell="2,3" HelpContext="%DOC%" />
-                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%245_R-%T%%CCC%24501" Cell="2,4" HelpContext="%DOC%" />
-                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%246_R-%T%%CCC%24601" Cell="2,5" HelpContext="%DOC%" />
-                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%247_R-%T%%CCC%24701" Cell="2,6" HelpContext="%DOC%" />
-                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%248_R-%T%%CCC%24801" Cell="2,7" HelpContext="%DOC%" />
+                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%242_R-%T%%CCC%24201" Cell="2,1" HelpContext="LOG-Wochentage" />
+                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%243_R-%T%%CCC%24301" Cell="2,2" HelpContext="LOG-Wochentage" />
+                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%244_R-%T%%CCC%24401" Cell="2,3" HelpContext="LOG-Wochentage" />
+                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%245_R-%T%%CCC%24501" Cell="2,4" HelpContext="LOG-Wochentage" />
+                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%246_R-%T%%CCC%24601" Cell="2,5" HelpContext="LOG-Wochentage" />
+                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%247_R-%T%%CCC%24701" Cell="2,6" HelpContext="LOG-Wochentage" />
+                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%248_R-%T%%CCC%24801" Cell="2,7" HelpContext="LOG-Wochentage" />
                                     </when>
                                   </choose>
                                 </when>
@@ -2944,13 +2944,13 @@
                                       <ParameterRefRef RefId="%AID%_UP-%T%%CCC%259_R-%T%%CCC%25901" Cell="3,9" HelpContext="%DOC%" />
                                     </when>
                                     <when test="1">
-                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%252_R-%T%%CCC%25201" Cell="3,1" HelpContext="%DOC%" />
-                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%253_R-%T%%CCC%25301" Cell="3,2" HelpContext="%DOC%" />
-                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%254_R-%T%%CCC%25401" Cell="3,3" HelpContext="%DOC%" />
-                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%255_R-%T%%CCC%25501" Cell="3,4" HelpContext="%DOC%" />
-                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%256_R-%T%%CCC%25601" Cell="3,5" HelpContext="%DOC%" />
-                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%257_R-%T%%CCC%25701" Cell="3,6" HelpContext="%DOC%" />
-                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%258_R-%T%%CCC%25801" Cell="3,7" HelpContext="%DOC%" />
+                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%252_R-%T%%CCC%25201" Cell="3,1" HelpContext="LOG-Wochentage" />
+                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%253_R-%T%%CCC%25301" Cell="3,2" HelpContext="LOG-Wochentage" />
+                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%254_R-%T%%CCC%25401" Cell="3,3" HelpContext="LOG-Wochentage" />
+                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%255_R-%T%%CCC%25501" Cell="3,4" HelpContext="LOG-Wochentage" />
+                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%256_R-%T%%CCC%25601" Cell="3,5" HelpContext="LOG-Wochentage" />
+                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%257_R-%T%%CCC%25701" Cell="3,6" HelpContext="LOG-Wochentage" />
+                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%258_R-%T%%CCC%25801" Cell="3,7" HelpContext="LOG-Wochentage" />
                                     </when>
                                   </choose>
                                 </when>
@@ -2978,13 +2978,13 @@
                                       <ParameterRefRef RefId="%AID%_UP-%T%%CCC%269_R-%T%%CCC%26901" Cell="4,9" HelpContext="%DOC%" />
                                     </when>
                                     <when test="1">
-                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%262_R-%T%%CCC%26201" Cell="4,1" HelpContext="%DOC%" />
-                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%263_R-%T%%CCC%26301" Cell="4,2" HelpContext="%DOC%" />
-                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%264_R-%T%%CCC%26401" Cell="4,3" HelpContext="%DOC%" />
-                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%265_R-%T%%CCC%26501" Cell="4,4" HelpContext="%DOC%" />
-                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%266_R-%T%%CCC%26601" Cell="4,5" HelpContext="%DOC%" />
-                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%267_R-%T%%CCC%26701" Cell="4,6" HelpContext="%DOC%" />
-                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%268_R-%T%%CCC%26801" Cell="4,7" HelpContext="%DOC%" />
+                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%262_R-%T%%CCC%26201" Cell="4,1" HelpContext="LOG-Wochentage" />
+                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%263_R-%T%%CCC%26301" Cell="4,2" HelpContext="LOG-Wochentage" />
+                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%264_R-%T%%CCC%26401" Cell="4,3" HelpContext="LOG-Wochentage" />
+                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%265_R-%T%%CCC%26501" Cell="4,4" HelpContext="LOG-Wochentage" />
+                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%266_R-%T%%CCC%26601" Cell="4,5" HelpContext="LOG-Wochentage" />
+                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%267_R-%T%%CCC%26701" Cell="4,6" HelpContext="LOG-Wochentage" />
+                                      <ParameterRefRef RefId="%AID%_UP-%T%%CCC%268_R-%T%%CCC%26801" Cell="4,7" HelpContext="LOG-Wochentage" />
                                     </when>
                                   </choose>
                                 </when>
@@ -3206,7 +3206,7 @@
                           <when test="!=0">
                             <!-- <ParameterRefRef RefId="%AID%_P-%T%%CCC%053_R-%T%%CCC%05301" HelpContext="%DOC%" /> -->
                             <!-- Stairtime Delay pattern -->
-                            <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%OStairtimeCycle" Inline="true" Layout="Grid">
+                            <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%OStairtimeCycle" Inline="true" Layout="Grid" HelpContext="LOG-Zeit-fuer-Treppenlicht">
                               <Rows>
                                 <Row Id="%AID%_PB-nnn_R-1" Name="Row1" />
                               </Rows>
@@ -3223,7 +3223,7 @@
                             <ParameterRefRef RefId="%AID%_UP-%T%%CCC%056_R-%T%%CCC%05601" HelpContext="%DOC%" />
                             <!-- <ParameterRefRef RefId="%AID%_P-%T%%CCC%057_R-%T%%CCC%05701" HelpContext="%DOC%" /> -->
                             <!-- Blink Delay pattern -->
-                            <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%OBlinkCycle" Inline="true" Layout="Grid">
+                            <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%OBlinkCycle" Inline="true" Layout="Grid" HelpContext="LOG-Treppenlicht-blinkt-im-Rhythmus">
                               <Rows>
                                 <Row Id="%AID%_PB-nnn_R-1" Name="Row1" />
                               </Rows>
@@ -3232,7 +3232,7 @@
                                 <Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="15%" />
                                 <Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="25%" />
                               </Columns>
-                              <ParameterSeparator Id="%AID%_PS-nnn" Text="Treppenlicht blinkt im Rythmus&#10;(0 = nicht blinken)" Cell="1,1" />
+                              <ParameterSeparator Id="%AID%_PS-nnn" Text="Treppenlicht blinkt im Rhythmus&#10;(0 = nicht blinken)" Cell="1,1" />
                               <ParameterRefRef RefId="%AID%_UP-%T%%CCC%388_R-%T%%CCC%38801" Cell="1,2" HelpContext="%DOC%" />
                               <ParameterRefRef RefId="%AID%_UP-%T%%CCC%387_R-%T%%CCC%38701" Cell="1,3" HelpContext="%DOC%" />
                             </ParameterBlock>
@@ -3245,7 +3245,7 @@
                           <when test="!=0">
                             <!-- <ParameterRefRef RefId="%AID%_P-%T%%CCC%059_R-%T%%CCC%05901" HelpContext="%DOC%" /> -->
                             <!-- DelayOn Delay pattern -->
-                            <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%ODelayOnCycle" Inline="true" Layout="Grid">
+                            <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%ODelayOnCycle" Inline="true" Layout="Grid" HelpContext="LOG-EINschalten-wird-verzoegert-um">
                               <Rows>
                                 <Row Id="%AID%_PB-nnn_R-1" Name="Row1" />
                               </Rows>
@@ -3266,7 +3266,7 @@
                             </choose>
                             <!-- <ParameterRefRef RefId="%AID%_P-%T%%CCC%060_R-%T%%CCC%06001" HelpContext="%DOC%" /> -->
                             <!-- DelayOff Delay pattern -->
-                            <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%ODelayOffCycle" Inline="true" Layout="Grid">
+                            <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%ODelayOffCycle" Inline="true" Layout="Grid" HelpContext="LOG-AUSschalten-wird-verzoegert-um">
                               <Rows>
                                 <Row Id="%AID%_PB-nnn_R-1" Name="Row1" />
                               </Rows>
@@ -3298,7 +3298,7 @@
                           <when test="!=0">
                             <!-- <ParameterRefRef RefId="%AID%_P-%T%%CCC%062_R-%T%%CCC%06201" HelpContext="%DOC%" /> -->
                             <!-- RepeatOn Delay pattern -->
-                            <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%ORepeatOnCycle" Inline="true" Layout="Grid">
+                            <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%ORepeatOnCycle" Inline="true" Layout="Grid" HelpContext="LOG-EIN-Telegramm-wird-wiederholt-alle">
                               <Rows>
                                 <Row Id="%AID%_PB-nnn_R-1" Name="Row1" />
                               </Rows>
@@ -3313,7 +3313,7 @@
                             </ParameterBlock>
                             <!-- <ParameterRefRef RefId="%AID%_P-%T%%CCC%063_R-%T%%CCC%06301" HelpContext="%DOC%" /> -->
                             <!-- RepeatOff Delay pattern -->
-                            <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%ORepeatOffCycle" Inline="true" Layout="Grid">
+                            <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%ORepeatOffCycle" Inline="true" Layout="Grid" HelpContext="LOG-AUS-Telegramm-wird-wiederholt-alle">
                               <Rows>
                                 <Row Id="%AID%_PB-nnn_R-1" Name="Row1" />
                               </Rows>
@@ -3415,7 +3415,7 @@
                             </choose>
                           </when>
                           <when test="5">
-                            <ParameterBlock Id="%AID%_PB-%C%001" Name="PA%C%001" Inline="true" Layout="Grid">
+                            <ParameterBlock Id="%AID%_PB-%C%001" Name="PA%C%001" Inline="true" Layout="Grid" HelpContext="LOG-Physikalische-Adresse">
                               <Rows>
                                 <Row Id="%AID%_PB-%C%001_R-1" Name="Row%C%001" />
                               </Rows>
@@ -3428,11 +3428,11 @@
                                 <Column Id="%AID%_PB-%C%001_C-6" Name="Col6" Width="12%" />
                               </Columns>
                               <ParameterSeparator Id="%AID%_PS-nnn" Text="    Physikalische Adresse" Cell="1,1" />
-                              <ParameterRefRef RefId="%AID%_UP-%T%%CCC%121_R-%T%%CCC%12101" Cell="1,2" HelpContext="%DOC%" />
+                              <ParameterRefRef RefId="%AID%_UP-%T%%CCC%121_R-%T%%CCC%12101" Cell="1,2" />
                               <ParameterSeparator Id="%AID%_PS-nnn" Text="." UIHint="Headline" Cell="1,3" />
-                              <ParameterRefRef RefId="%AID%_UP-%T%%CCC%122_R-%T%%CCC%12201" Cell="1,4" HelpContext="%DOC%" />
+                              <ParameterRefRef RefId="%AID%_UP-%T%%CCC%122_R-%T%%CCC%12201" Cell="1,4" />
                               <ParameterSeparator Id="%AID%_PS-nnn" Text="." UIHint="Headline" Cell="1,5" />
-                              <ParameterRefRef RefId="%AID%_UP-%T%%CCC%123_R-%T%%CCC%12301" Cell="1,6" HelpContext="%DOC%" />
+                              <ParameterRefRef RefId="%AID%_UP-%T%%CCC%123_R-%T%%CCC%12301" Cell="1,6" />
                             </ParameterBlock>
                           </when>
                           <when test="6">
@@ -3529,7 +3529,7 @@
                             </choose>
                           </when>
                           <when test="5">
-                            <ParameterBlock Id="%AID%_PB-%C%002" Name="PA%C%002" Inline="true" Layout="Grid">
+                            <ParameterBlock Id="%AID%_PB-%C%002" Name="PA%C%002" Inline="true" Layout="Grid" HelpContext="LOG-Physikalische-Adresse">
                               <Rows>
                                 <Row Id="%AID%_PB-%C%002_R-1" Name="Row%C%002" />
                               </Rows>
@@ -3542,11 +3542,11 @@
                                 <Column Id="%AID%_PB-%C%002_C-6" Name="Col6" Width="12%" />
                               </Columns>
                               <ParameterSeparator Id="%AID%_PS-nnn" Text="    Physikalische Adresse" Cell="1,1" />
-                              <ParameterRefRef RefId="%AID%_UP-%T%%CCC%124_R-%T%%CCC%12401" Cell="1,2" HelpContext="%DOC%" />
+                              <ParameterRefRef RefId="%AID%_UP-%T%%CCC%124_R-%T%%CCC%12401" Cell="1,2" />
                               <ParameterSeparator Id="%AID%_PS-nnn" Text="." UIHint="Headline" Cell="1,3" />
-                              <ParameterRefRef RefId="%AID%_UP-%T%%CCC%125_R-%T%%CCC%12501" Cell="1,4" HelpContext="%DOC%" />
+                              <ParameterRefRef RefId="%AID%_UP-%T%%CCC%125_R-%T%%CCC%12501" Cell="1,4" />
                               <ParameterSeparator Id="%AID%_PS-nnn" Text="." UIHint="Headline" Cell="1,5" />
-                              <ParameterRefRef RefId="%AID%_UP-%T%%CCC%126_R-%T%%CCC%12601" Cell="1,6" HelpContext="%DOC%" />
+                              <ParameterRefRef RefId="%AID%_UP-%T%%CCC%126_R-%T%%CCC%12601" Cell="1,6" />
                             </ParameterBlock>
                           </when>
                           <when test="6">

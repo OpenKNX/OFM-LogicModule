@@ -1039,10 +1039,10 @@
               <!-- StartDelay and Heartbeat (delay pattern) -->
               <Union SizeInBit="32">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="1" BitOffset="0" />
-                <Parameter Id="%AID%_UP-%T%000002" Name="StartupDelayBase" ParameterType="%AID%_PT-DelayBase" Offset="0" BitOffset="0" Text="Zeitbasis" Value="0" />
-                <Parameter Id="%AID%_UP-%T%000003" Name="StartupDelayTime" ParameterType="%AID%_PT-DelayTimeMin1" Offset="0" BitOffset="2" Text="Zeit" Value="1" />
-                <Parameter Id="%AID%_UP-%T%000004" Name="HeartbeatDelayBase" ParameterType="%AID%_PT-DelayBase" Offset="2" BitOffset="0" Text="Zeitbasis" Value="0" />
-                <Parameter Id="%AID%_UP-%T%000005" Name="HeartbeatDelayTime" ParameterType="%AID%_PT-DelayTime" Offset="2" BitOffset="2" Text="Zeit" Value="300" />
+                <Parameter Id="%AID%_UP-%T%000002" Name="StartupDelayBase" ParameterType="%AID%_PT-DelayBase" Offset="0" BitOffset="0" Text="Zeit bis das Gerät nach einem Neustart aktiv wird" Value="0" />
+                <Parameter Id="%AID%_UP-%T%000003" Name="StartupDelayTime" ParameterType="%AID%_PT-DelayTimeMin1" Offset="0" BitOffset="2" Text="Zeit bis das Gerät nach einem Neustart aktiv wird" Value="1" />
+                <Parameter Id="%AID%_UP-%T%000004" Name="HeartbeatDelayBase" ParameterType="%AID%_PT-DelayBase" Offset="2" BitOffset="0" Text="In Betrieb senden alle" Value="0" />
+                <Parameter Id="%AID%_UP-%T%000005" Name="HeartbeatDelayTime" ParameterType="%AID%_PT-DelayTime" Offset="2" BitOffset="2" Text="In Betrieb senden alle" Value="300" />
               </Union>
               <Union SizeInBit="16">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="5" BitOffset="0" />
@@ -1115,7 +1115,7 @@
               </Union>
               <Union SizeInBit="8">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="25" BitOffset="0" />
-                <Parameter Id="%AID%_UP-%T%000151" Name="LedMapping" ParameterType="%AID%_PT-RGBMapping" Offset="0" BitOffset="0" Text="Lötpad A / B / C entspicht" Value="1" />
+                <Parameter Id="%AID%_UP-%T%000151" Name="LedMapping" ParameterType="%AID%_PT-RGBMapping" Offset="0" BitOffset="0" Text="Lötpad A / B / C entspricht" Value="1" />
                 <Parameter Id="%AID%_UP-%T%000144" Name="Timezone" ParameterType="%AID%_PT-Timezone" Offset="0" BitOffset="3" Text="Zeitzone" Value="1" />
                 <Parameter Id="%AID%_UP-%T%000157" Name="TimezoneSign" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="3" Text="Zeitzone-Vorzeichen" Value="0" />
                 <Parameter Id="%AID%_UP-%T%000158" Name="TimezoneValue" ParameterType="%AID%_PT-TimezoneValue" Offset="0" BitOffset="4" Text="Zeitzone-Wert" Value="0" />

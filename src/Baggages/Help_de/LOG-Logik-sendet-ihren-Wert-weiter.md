@@ -26,10 +26,4 @@ Sobald ein neues Eingangstelegramm eintrifft, wird das Ergebnis der logischen Ve
 
 <kbd>![Logik sendet](pics/LogikSendet.PNG)</kbd>
 
-Es erscheint eine Liste mit allen aktiven Eingängen. Man kann die Eingänge ankreuzen, auf die die Logikauswertung reagieren soll. Nur wenn ein Telegramm von einem dieser Eingänge kommt, wird die Logikauswertung angestoßen und das Ergebnis ermittelt und an den nächsten Funktionsblock weitergeleitet.
-
-#### **bei folgenden Eingangstelegrammen, aber erstes Telegramm nicht senden**
-
-Es erscheint eine Liste mit allen aktiven Eingängen. Man kann die Eingänge ankreuzen, auf die die Logikauswertung reagieren soll. Nur wenn ein Telegramm von einem dieser Eingänge kommt, wird die Logikauswertung angestoßen und das Ergebnis ermittelt und an den nächsten Funktionsblock weitergeleitet.
-Allerdings wird das erste Telegramm nach einem Neustart unterdrückt. Damit kann man vermeiden, dass mögliche Statusmeldungen bei einem Neustart ungewollt Logiken bzw. Folgelogiken auslösen.
-
+Es erscheint eine Liste mit allen aktiven Eingängen. 

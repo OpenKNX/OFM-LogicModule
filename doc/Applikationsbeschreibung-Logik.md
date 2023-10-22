@@ -325,6 +325,7 @@ Die Seite "Allgemeine Parameter" sieht bei jeder ETS-Applikation, die das Logikm
 
 ## Gerätestart
 
+<!-- DOC -->
 ### **Zeit bis das Gerät nach einem Neustart aktiv wird**
 
 Hier kann man festlegen, wie viel Zeit vergehen soll, bis das Gerät nach einem Neustart seine Funktion aufnimmt. Dabei ist es egal, ob der Neustart durch einen Busspannungsausfall, einen Reset über den Bus, durch ein Drücken der Reset-Taste oder durch den Watchdog ausgelöst wurde.
@@ -333,12 +334,14 @@ Da das Gerät prinzipiell (sofern parametriert) auch Lesetelegramme auf den Bus 
 
 **Anmerkung:** Auch wenn man hier technisch bis zu 16.000 Stunden Verzögerung angeben kann, sind nur Einstellungen im Sekundenbereich sinnvoll.
 
+<!-- DOC -->
 ### **In Betrieb senden alle**
 
 Das Gerät kann einen Status "Ich bin noch in Betrieb" über das KO 1 senden. Hier wird das Sendeintervall eingestellt.
 
 Sollte hier eine 0 angegeben werden, wird kein "In Betrieb"-Signal gesendet und das KO 1 steht nicht zur Verfügung.
 
+<!-- DOC -->
 ### **Uhrzeit und Datum empfangen über**
 
 Dieses Gerät kann Uhrzeit und Datum vom Bus empfangen. Dabei kann man wählen, ob man Uhrzeit über ein Kommunikationsobjekt und das Datum über ein anders empfangen will oder beides, Uhrzeit und Datum, über ein kombiniertes Kommunikationsobjekt.
@@ -351,6 +354,7 @@ Wählt man diesen Punkt, wird je ein Kommunikationsobjekt für Uhrzeit (DPT 10) 
 
 Wählt man diesen Punkt, wir ein kombiniertes Kommunikationsobjekt für Uhrzeit/Datum (DPT 19) bereitgestellt. Der KNX-Zeitgeber im System muss die kombinierte Uhrzeit/Datum entsprechend liefern können.
 
+<!-- DOC -->
 ### **Uhrzeit und Datum nach einem Neustart vom Bus lesen**
 
 Nach einem Neustart können Uhrzeit und Datum auch aktiv über Lesetelegramme abgefragt werden. Mit diesem Parameter wird bestimmt, ob Uhrzeit und Datum nach einem Neustart aktiv gelesen werden.
@@ -365,12 +369,14 @@ Die Angaben in diesem Teil müssen der vorhandenen Hardware entsprechen, da sie 
 
 Falsche Angaben können zu falschen Konfigurationen der Applikation und somit zum Fehlverhalten des Logikmoduls führen.
 
+<!-- DOC -->
 #### **Akustischer Signalgeber vorhanden (Buzzer)?**
 
 Das Logikmodul unterstützt auch die Ausgabe von Pieptönen mittels eines Buzzers. Mit einem Haken in diesem Feld wird angegeben, ob ein Buzzer installiert ist.
 
 Gleichzeitig wird ein Kommunikationsobjekt freigeschaltet, mit dem man die Soundausgabe sperren kann. Damit kann man verhindern, dass z.B. nachts Töne ausgegeben werden.
 
+<!-- DOC -->
 #### **Optischer Signalgeber vorhanden (RGB-LED)?**
 
 Das Logikmodul unterstützt auch die Ausgabe eines Lichtsignals mittels einer RGB-LED. Mit einem Haken in diesem Feld wird angegeben, ob eine RGB-LED installiert ist.
@@ -399,6 +405,7 @@ Damit der Watchdog funktioniert, muss bereits die Firmware mit der Einstellung
 
 in der platformio.ini gebaut worden sein (siehe Installationsanleitung).
 
+<!-- DOC -->
 #### **Watchdog aktivieren**
 
 Mit einem 'Ja' wird der Watchdog eingeschaltet.
@@ -409,16 +416,19 @@ Man kann mit dem Logikmodul ein Diagnoseobjekt (KO 7) einschalten. Dieses Diagno
 
 Die Grundidee vom Diagnoseobjekt: Man sendet mit der ETS Kommandos an das KO 7 und bekommt eine entsprechende Antwort. Derzeit sind nur wenige Kommandos für die Nutzung durch den Enduser geeignet, allerdings werden im Laufe der Zeit immer weitere Kommandos hinzukommen und werden im Kapitel Diagnoseobjekt beschrieben.
 
+<!-- DOC -->
 #### **Diagnoseobjekt anzeigen**
 
 Mit einem 'Ja' wird das KO 7 'Diagnoseobjekt' freigeschaltet.
 
+<!-- DOC HelpContext="Loetpad-A--B--C-entspricht" -->
 ### **RGB-LED**
 
 Da RGB-LED unterschiedliche Pin-Belegungen für die Farben Rot, Grün und Blau haben, kann es passieren, dass man nach dem anlöten der LED feststellt, dass man falsche Farben präsentiert bekommt.
 
 An dieser Stelle kann man die Pinbelegung für Rot/Grün/Blau in verschiedenen Permutationen einstellen und so softwareseitig mögliche Belegungsprobleme beseitigen.
 
+<!-- DOC -->
 ### **Buzzer**
 
 Das Logikmodul unterstützt 3 verschiedene Töne bzw. Lautstärken für den Buzzer.
@@ -682,6 +692,7 @@ Hier werden die Einstellungen vorgenommen, die für die Funktion des gesamten Ka
 
 Der hier vergebene Name hat keinen funktionalen Einfluss, erlaubt es aber, dem Kanal einen eigenen Namen zu geben, und ihn so leichter wiederzufinden. Der Name wird im Kanalbaum dargestellt und statt des Standardtextes "..." genommen.
 
+<!-- DOC -->
 ### **Zeit bis der Kanal nach einem Neustart aktiv wird**
 
 Neben "Allgemeine Parameter -> Zeit bis das Gerät nach einem Neustart aktiv wird" kann auch noch pro Kanal eine Startverzögerung sinnvoll sein. Der Grund ist in "Logikkanäle -> [Startverhalten](#startverhalten)" beschrieben.
@@ -920,12 +931,16 @@ Sobald ein neues Eingangstelegramm eintrifft, wird das Ergebnis der logischen Ve
 
 <kbd>![Logik sendet](pics/LogikSendet.PNG)</kbd>
 
-Es erscheint eine Liste mit allen aktiven Eingängen. Man kann die Eingänge ankreuzen, auf die die Logikauswertung reagieren soll. Nur wenn ein Telegramm von einem dieser Eingänge kommt, wird die Logikauswertung angestoßen und das Ergebnis ermittelt und an den nächsten Funktionsblock weitergeleitet.
+Es erscheint eine Liste mit allen aktiven Eingängen. 
+<!-- DOC HelpContext="Eingang-Trigger" -->
+Man kann die Eingänge ankreuzen, auf die die Logikauswertung reagieren soll. Nur wenn ein Telegramm von einem dieser Eingänge kommt, wird die Logikauswertung angestoßen und das Ergebnis ermittelt und an den nächsten Funktionsblock weitergeleitet.
 
 #### **bei folgenden Eingangstelegrammen, aber erstes Telegramm nicht senden**
 
 Es erscheint eine Liste mit allen aktiven Eingängen. Man kann die Eingänge ankreuzen, auf die die Logikauswertung reagieren soll. Nur wenn ein Telegramm von einem dieser Eingänge kommt, wird die Logikauswertung angestoßen und das Ergebnis ermittelt und an den nächsten Funktionsblock weitergeleitet.
 Allerdings wird das erste Telegramm nach einem Neustart unterdrückt. Damit kann man vermeiden, dass mögliche Statusmeldungen bei einem Neustart ungewollt Logiken bzw. Folgelogiken auslösen.
+
+
 
 ## **Eingang 1: unbenannt / Eingang 2: unbenannt**
 
@@ -939,14 +954,15 @@ Jeder Eingang kann mit Hilfe der folgenden Einstellungen konfiguriert werden. Im
 
 > **Wichtig:** Wird ein Eingang als "invertiert aktiv" eingeschaltet, so passiert die Invertierung erst direkt bei der Wertübergabe an die logische Operation des Logik-Funktionsmoduls, also erst nach der Vorbelegung und nach dem Eingangskonverter.
 
-### **Beschreibung Eingang n**
+<!-- DOC -->
+### **Beschreibung Eingang**
 
 Dieses Feld hat keine funktionale Auswirkung. Es erlaubt den Eingang zu benennen und diesen so leichter wiederzufinden, erhöht somit die Übersichtlichkeit.
 
 Der hier angegebene Text erscheint in der Seitenbeschreibung "Eingang n: unbenannt" statt dem Wort "unbenannt" und als Name des Kommunikationsobjektes, das zu diesem Eingang gehört.
 
 <!-- DOC -->
-### **Kommunikationsobjekt für Eingang 1**
+### **Kommunikationsobjekt für Eingang**
 
 Ein Eingang des Logikobjekts wird durch ein Kommunikationsobjekt repräsentiert. Dabei kann jedes Kommunikationsobjekt des Gerätes verwendet werden, auch KO, die nicht vom Logikmodul verwaltet werden. Dies ermöglicht, KO intern zu verbinden und so die Kommunikation auf dem Bus zu reduzieren. Eine solche interne Verbindung verhält sich genau so, als wäre der Eingang mit einer GA verbunden und Telegramme erhalten würde.
 
@@ -971,8 +987,8 @@ Falls ein bestehendes Kommunikationsobjekt genutzt werden soll, wird in dem Feld
 
 Sobald für einen Eingang im Feld "DPT für Eingang n" etwas anderes als DPT 1 ausgewählt wird, erscheint ein DPT-Spezifischer Konverter, der eine Konvertierung in DPT 1 erlaubt. Dies ist zwingend notwendig, das die gesamte Logikverarbeitung nur mit binären Werten (DPT 1) erfolgt.
 
-<!-- DOC HelpContext="DPT für Eingang" -->
-### **DPT für Eingang n**
+<!-- DOC -->
+### **DPT für Eingang**
 
 Dieses Auswahlfeld legt den DPT für den Eingang fest. Unterstützt werden:
 
@@ -1045,7 +1061,8 @@ In dem Bildschirmausschnitt ist der Konverter so konfiguriert, dass aus Szene 6,
 
 Alle DPT, die Zahlen repräsentieren (das sind DPT 5.xxx, 5.001, 6.xxx, 7.xxx, 8.xxx, 9.xxx, 12.xxx, 13.xxx, 14.xxx und 232.xxx), können mittels 4 verschiedenen Zahlenkonvertern  in ein binäres Signal umgewandelt werden. Die Zahlenkonverter sind alle gleich in ihren Einstellungen, die einzugebenden Zahlen müssen nur innerhalb der Wertebereiche des jeweiligen DPT liegen.
 
-#### **Wert für Eingang n bestimmen durch**
+<!-- DOC -->
+#### **Wert für Eingang wird ermittelt durch**
 
 Mit dem Auswahlfeld wird der passende Zahlenkonverter ausgewählt.
 
@@ -1162,19 +1179,44 @@ In dem angezeigten Bildschirmausschnitt wird bei den Werten 17, 25 und 40 ein EI
 
 > Anmerkung: Aufgrund der intern verwendeten Speicherstruktur können für die DPT 12.xxx und DPT 13.xxx keine Einzelwert-Konverter verwendet werden.
 
+<!-- DOC HelpContext="Eingang ist EIN bei Wert" -->
+<!-- DOCCONTENT
+Hier wird ein Wert der Werteliste angegeben.
+-->
+
 <!-- DOC HelpContext="oder bei Wert" -->
 <!-- DOCCONTENT
 Hier wird ein weiterer Wert der Werteliste angegeben.
 -->
 
+<!-- DOC HelpContext="Eingang ist EIN wenn Wert gleich" -->
+<!-- DOCCONTENT
+Hier wird ein zu vergleichender Wert angegeben.
+-->
+
+<!-- DOC HelpContext="oder wenn Wert gleich" -->
+<!-- DOCCONTENT
+Hier wird ein weiterer Wert zum Vergleich angegeben.
+-->
+
+<!-- DOC HelpContext="Eingang ist EIN bei Szene" -->
+<!-- DOCCONTENT
+Hier wird eine Szene angegeben, die ausgewertet werden soll.
+-->
+
 <!-- DOC HelpContext="oder bei Szene" -->
 <!-- DOCCONTENT
-Hier wird ein weitere Szene angegeben, die ausgewertet werden soll.
+Hier wird eine weitere Szene angegeben, die ausgewertet werden soll.
 -->
 
 <!-- DOC HelpContext="Nächste Zeile auswerten" -->
 <!-- DOCCONTENT
 Wird die Checkbox angeklickt, wird die Zeile mit dem Wert ausgewertet, sonst nicht.
+-->
+
+<!-- DOC HelpContext="Eingang ist konstant" -->
+<!-- DOCCONTENT
+Der Eingang wird mit diesem konstanten Wert vorbelegt (z.B. um in Formeln weiter verrechnet zu werden).
 -->
 
 
@@ -1244,6 +1286,27 @@ Der Eingang wird konstant mit einer 0 vorbelegt und hat somit sofort einen defin
 
 Der Eingang wird konstant mit einer 1 vorbelegt und hat somit sofort einen definierten Zustand.
 
+<!-- DOC -->
+### **Eingang vorbelegen mit**
+
+<!-- DOC Skip="1" -->
+Erscheint nur, wenn bei "Kommunikationsobjekt für Eingang" der Wert "Bestehendes KO nutzen" ausgewählt wurde.
+
+Dieses Auswahlfeld erlaubt eine Vorbelegung mit einem festgelegten Wert beim Neustart des Logikmoduls.  
+
+#### **nichts (undefiniert)**
+
+Der Eingang wird nicht vorbelegt und bleibt undefiniert, bis ein erstes Telegramm vom KNX-Bus empfangen wird.
+
+#### **AUS (0)**
+
+Der Eingang wird konstant mit einer 0 vorbelegt und hat somit sofort einen definierten Zustand.
+
+#### **EIN (1)**
+
+Der Eingang wird konstant mit einer 1 vorbelegt und hat somit sofort einen definierten Zustand.
+
+<!-- DOC HelpContext="Eingang wird gelesen alle" -->
 ### **Eingang wird alle n Sekunden gelesen (0=nicht zyklisch lesen)**
 
 Manche Geräte können nicht von sich aus zyklisch senden. Hier kann man einstellen, dass ein Eingang aktiv den Wert zyklisch liest. In den Feld kann man angeben, wie viele Sekunden zwischen 2 Leseintervallen vergehen sollen.
@@ -1270,34 +1333,19 @@ Ausgänge von anderen Kanälen können dazu genutzt werden, große Logikblöcke 
 <kbd>![Interne Eingänge](pics/InternerEingang.PNG)</kbd>
 Solange der Ausgang eines anderen Kanals nicht zugeordnet worden ist, wird der interne Eingang von der logischen Operation als undefiniert betrachtet.
 
-## Definition Interner Eingang 1
+## Definition Interner Eingang 3/4
 
-Hier werden die Verbindungseinstellungen für den Internen Eingang 1 gewählt.
+Hier werden die Verbindungseinstellungen für den Internen Eingang 3 oder 4 gewählt.
 
-Erscheint nur, wenn bei der logischen Operation "Interner Eingang 1" als "normal aktiv" oder "invertiert aktiv" ausgewählt wurde.
+Erscheint nur, wenn bei der logischen Operation "Interner Eingang 3" oder "Interner Eingang 4" als "normal aktiv" oder "invertiert aktiv" ausgewählt wurde.
 
-### **Beschreibung interner Eingang 1**
-
-Diese Feld erlaubt eine kurze Beschreibung, wozu dieser Eingang verwendet wird. Es hat keinen Einfluss auf die Funktion des Eingangs und dient rein zu Dokumentationszwecken.
-
-### **Kanalausgang X als Eingang, X** =
-
-Als Eingabe wird hier die Nummer der Logik erwartet, deren Ausgang als interner Eingang genutzt werden soll. Solange der Eingang nicht verbunden ist (Wert im Eingabefeld ist 0) erscheint eine Warnmeldung, dass der Eingang inaktiv (undefiniert) ist.
-
-Es kann auch der Ausgang des aktuellen Kanals als interner Eingang verwendet werden. Da dies aber schwer abzusehende Seiteneffekte haben kann, die im Falle einer Schleife auch den Bus mit vielen Telegrammen fluten können, erscheint in einem solchen Fall eine Warnung:
-<kbd>![Warnung Rückkopplung](pics/Rueckkopplung.PNG)</kbd>
-
-## Definition Interner Eingang 2
-
-Hier werden die Verbindungseinstellungen für den Internen Eingang 2 gewählt.
-
-Erscheint nur, wenn bei der logischen Operation "Kanalausgang Y" als "normal aktiv" oder "invertiert aktiv" ausgewählt wurde.
-
-### **Beschreibung interner Eingang 2**
+<!-- DOC -->
+### **Beschreibung interner Eingang**
 
 Diese Feld erlaubt eine kurze Beschreibung, wozu dieser Eingang verwendet wird. Es hat keinen Einfluss auf die Funktion des Eingangs und dient rein zu Dokumentationszwecken.
 
-### **Kanalausgang Y als Eingang, Y =**
+<!-- DOC -->
+### **Internen Eingang verbinden mit Kanalausgang Nr.** =
 
 Als Eingabe wird hier die Nummer der Logik erwartet, deren Ausgang als interner Eingang genutzt werden soll. Solange der Eingang nicht verbunden ist (Wert im Eingabefeld ist 0) erscheint eine Warnmeldung, dass der Eingang inaktiv (undefiniert) ist.
 
@@ -1316,10 +1364,12 @@ Auf dieser Seite können die Schaltpunkte für eine Zeitschaltuhr eingegeben wer
 
 In diesem Bereich wird das generelle Verhalten der Zeitschaltuhr definiert.
 
+<!-- DOC -->
 ### **Beschreibung der Zeitschaltuhr**
 
 Diese Feld erlaubt eine kurze Beschreibung, wozu diese Zeitschaltuhr verwendet wird. Es hat keinen Einfluss auf die Funktion und dient rein zu Dokumentationszwecken. Der Text wird in der Seitenbeschreibung statt dem Wort "unbenannt" genommen und erlaubt so ein einfacheres wiederfinden der Zeitschaltuhr.
 
+<!-- DOC -->
 ### **Typ der Zeitschaltuhr**
 
 Es werden genau 2 Typen von Zeitschaltuhren unterstützt:
@@ -1329,6 +1379,7 @@ Es werden genau 2 Typen von Zeitschaltuhren unterstützt:
 
 Sollten die Schaltzeiten einer Zeitschaltuhr nicht ausreichen, kann man mehrere Kanäle als Zeitschaltuhr definieren und diese dann per ODER verknüpfen.
 
+<!-- DOC -->
 ### **Feiertagsbehandlung**
 
 Über dieses Auswahlfeld kann man definieren, wie sich die Zeitschaltuhr (also alle Schaltpunkte) bei einem Feiertag verhalten.
@@ -1349,6 +1400,7 @@ Diese Zeitschaltuhr wird nur an einem Feiertag ausgeführt und nicht an anderen 
 
 Bei dieser Zeitschaltuhr werden die Schaltzeiten normal behandelt, an einem Feiertag werden aber die Schaltzeiten für einen Sonntag ausgeführt, unabhängig von dem Wochentag des Feiertages.
 
+<!-- DOC -->
 ### **Urlaubsbehandlung**
 
 Erscheint nur, wenn unter "Urlaub/Feiertage" die Einstellung "Urlaubsbehandlung aktivieren?" mit "Ja" eingestellt wurde.
@@ -1371,6 +1423,7 @@ Diese Zeitschaltuhr wird nur an einem Urlaubstag ausgeführt und nicht an andere
 
 Bei dieser Zeitschaltuhr werden die Schaltzeiten normal behandelt, an einem Urlaubstag werden aber die Schaltzeiten für einen Sonntag ausgeführt, unabhängig vom Wochentag des Urlaubstages.
 
+<!-- DOC -->
 ### **Bei Neustart letzte Schaltzeit nachholen**
 
 Nach einem Neustart des Moduls kann die letzte Schaltzeit erneut ausgeführt werden. Sobald das Datum und die Uhrzeit erstmals über den Bus gesetzt worden sind, wird nach der spätesten Schaltzeit gesucht, die noch vor dem aktuellen Datum/Uhrzeit liegt. Dieser Schaltzeitpunkt wird dann ausgeführt.
@@ -1397,6 +1450,7 @@ Im folgenden werden die Spalten der Tagesschaltuhr beschrieben.
 
 <kbd>![Tagesschaltuhr](pics/Tagesschaltuhr.PNG)</kbd>
 
+<!-- DOC HelpContext="Zeitbezug" -->
 ### **Spalte: Zeitbezug**
 
 Ist sowohl bei Tagesschaltuhr und Jahresschaltuhr vorhanden.
@@ -1461,6 +1515,7 @@ Der Schaltzeitpunkt ist abends, sobald die Sonne den Winkel über dem Horizont e
 
 Der Schaltzeitpunkt ist abends, sobald die Sonne den Winkel unter dem Horizont erreicht hat, der angegeben worden ist. Der Winkel kann in Grad und Minuten angegeben werden. Der Wertebereich geht von 0° bis 63°59'.
 
+<!-- DOC HelpContext="Stunde" -->
 ### **Spalte: Stunde/Grad**
 
 Ist sowohl bei Tagesschaltuhr und Jahresschaltuhr vorhanden.
@@ -1471,6 +1526,17 @@ Wird hier der Wert "jede" ausgewählt, wird der Schaltpunkt jede Stunde ausgefü
 
 Bei Sonnenstandsangaben (Winkel über/unter dem Horizont) wird in dieser Spalte der Winkel angegeben.
 
+<!-- DOC HelpContext="Sonnen auf-/untergang" -->
+<!-- DOCCONTENT 
+In dieser Spalte werden Stunden eingestellt als Versatz zum Sonnenauf- oder -untergang.
+-->
+
+<!-- DOC HelpContext="Grad" -->
+<!-- DOCCONTENT 
+In dieser Spalte wird der Sonnenwinkel über oder unter dem Horizont eingestellt als Winkel in Grad.
+-->
+
+<!-- DOC HelpContext="Minute" -->
 ### **Spalte: Minute**
 
 Ist sowohl bei Tagesschaltuhr und Jahresschaltuhr vorhanden.
@@ -1481,12 +1547,14 @@ Wird hier der Wert "jede" ausgewählt, wird der Schaltpunkt jede Minute ausgefü
 
 Bei Sonnenstandsangaben (Winkel über/unter dem Horizont) wird in dieser Spalte der Winkelbruchteil in (Winkel-)Minuten angegeben.
 
+<!-- DOC HelpContext="Schaltwert" -->
 ### **Spalte: Wert**
 
 Ist sowohl bei Tagesschaltuhr und Jahresschaltuhr vorhanden.
 
 In dieser Spalte wird der Wert eingestellt, den der Schaltpunkt senden soll. Dieser (rein boolesche) Wert durchläuft dann das normale Ausgangs-Processing des Logikkanals und steht am Ausgangs-KO zur Verfügung.
 
+<!-- DOC HelpContext="Wochentag" -->
 ### **Spalte: Wochentag**
 
 Ist nur bei der Tagesschaltuhr vorhanden.
@@ -1509,6 +1577,7 @@ Ist nur bei der Jahresschaltuhr vorhanden.
 
 Bestimmt, ob der Schaltpunkt an einem bestimmten Tag erfolgt, oder ob mehrere Wochentage angegeben werden können. Wird "Tag" ausgewählt, kann man in der Spalte Tag einen bestimmten Tag angeben. Wird "Wochentag" ausgewählt, kann man in den Spalten "Mo" (Montag) bis "So" (Sonntag) die Wochentage auswählen, an den geschaltet wird.
 
+<!-- DOC HelpContext="Wochentage" -->
 ### **Spalten: Mo, Di, Mi, Do, Fr, Sa, So**
 
 Sind nur bei der Jahresschaltuhr vorhanden.
@@ -1517,6 +1586,7 @@ Die Spalten sind nur eingabebereit, wenn in der Spalte Typ der Wert "Wochentag" 
 
 Man kann die Wochentage auswählen, an den für diesen Schaltpunkt geschaltet werden soll, natürlich unter Berücksichtigung der restlichen Angaben. So kann man Aktionen an bestimmten Wochentagen definieren.
 
+<!-- DOC HelpContext="Tag" -->
 ### **Spalte: Tag**
 
 Ist nur bei der Jahresschaltuhr vorhanden.
@@ -1527,6 +1597,7 @@ In dieser Spalte wird der Tag eingestellt, an dem geschaltet werden soll.
 
 Wird hier der Wert "jeder" ausgewählt, wird der Schaltpunkt jeden Tag ausgeführt, natürlich unter Berücksichtigung des angegebenen Monats. So kann man täglich wiederkehrende Aktionen definieren.
 
+<!-- DOC HelpContext="Monat" -->
 ### **Spalte: Monat**
 
 Ist nur bei der Jahresschaltuhr vorhanden.
@@ -1547,6 +1618,7 @@ Im folgenden Werden alle Funktionsblöcke, deren Einstellungen und deren Beeinfl
 
 <kbd>![Ausgang](pics/Ausgang.PNG)</kbd>
 
+<!-- DOC -->
 ### **Beschreibung Ausgang**
 
 Diese Einstellung hat keine funktionale Auswirkung, erlaubt es aber, dem Ausgang einen Text zu geben, um ihn einfacher zu finden.
@@ -1565,24 +1637,29 @@ Mit den Einstellungen kann ein Treppenlicht mit Blinkfunktion konfiguriert werde
 
 Solange das Treppenlicht aktiv ist, kann ein Blinkmodul den Ausgang des Funktionsmoduls in einem festgelegten Intervall EIN- und AUSschalten.
 
+<!-- DOC -->
 ### **Ausgang hat eine Treppenlichtfunktion**
 
 Wird hier ein "Ja" ausgewählt, erscheinen die Parameter für die Treppenlichtfunktion.
 
+<!-- DOC -->
 #### **Zeit für Treppenlicht**
 
 Hier gibt man die Zeit an, die das Treppenlicht eingeschaltet bleiben soll.
 
+<!-- DOC -->
 #### **Treppenlicht kann verlängert werden**
 
 Wählt man hier "Ja", führt ein erneutes EIN-Signal am Eingang des Funktionsblocks zum erneuten Anlaufen der Zeitzählung bei 0. Somit wird die Treppenlichtzeit zurückgesetzt und beginnt von neuem, die Treppenlichtzeit wurde somit verlängert.
 
+<!-- DOC -->
 #### **Treppenlicht kann ausgeschaltet werden**
 
 Wählt man hier ein "Ja", führt ein AUS-Signal am Eingang des Funktionsmoduls zum sofortigen Beenden des Treppenlichts und einem AUS-Signal am Ausgang des Funktionsmoduls.
 
 Ist ein "Nein" ausgewählt, wird ein AUS-Signal am Eingang des Funktionsmoduls ignoriert und hat keine Auswirkungen, solange das Treppenlicht eingeschaltet ist.
 
+<!-- DOC -->
 #### **Treppenlicht blinkt im Rhythmus**
 
 Bei einer Eingabe einer Zahl größer 0 wird, solange das Treppenlicht eingeschaltet ist, in dem angegebenen Takt der Ausgang des Funktionsmoduls abwechselnd ein EIN- und ein AUS-Signal erzeugt. Ist der Takt z.B. 2 Sekunden, wird nach 2 Sekunden von EIN auf AUS gewechselt, nach wieder 2 Sekunden dann von AUS auf EIN und so fort. Sobald das Treppenlicht beendet ist, sei es durch den Ablauf der Treppenlichtzeit oder durch ein AUS-Signal von Außen, wird das Blinken beendet und ein finales AUS-Signal gesendet.
@@ -1597,16 +1674,19 @@ Der Bildschirmausschnitt oben zeigt ein Beispiel für ein 3-maliges Blinken in e
 
 Jedes EIN- oder AUS-Signal, dass bei diesem Funktionsblock ankommt, kann verzögert werden, mit unterschiedlichen Zeiten für die EINschalt- und AUSschaltverzögerung. Die kleinste Auflösung sind 1/10 Sekunden, um auch kurze Verzögerungen erreichen zu können.
 
+<!-- DOC -->
 ### **Ausgang schaltet zeitverzögert**
 
 Wird hier ein "Ja" ausgewählt, kann man im Folgenden angeben, was mit folgenden EIN- bzw. AUS-Signalen passieren soll.
 
-#### **EINschalten wird verzögert um (0 = nicht verzögern)**
+##<!-- DOC -->
+## **EINschalten wird verzögert um**
 
 Wird hier eine Zahl größer 0 eingegeben, wird das EIN-Signal entsprechend der eingestellten Zeit verzögert am Ausgang des Funktionsmoduls ausgegeben.
 
 Wird eine 0 eingegeben, findet keine Verzögerung statt.
 
+<!-- DOC -->
 #### **Erneutes EIN führt zu**
 
 Dieses Auswahlfeld erscheint nur, wenn eine EINschaltverzögerung stattfinden soll.
@@ -1625,6 +1705,7 @@ Während eine Verzögerung von einem EIN-Signal aktiv ist, führt ein darauffolg
 
 Kommt während eine Verzögerung eines EIN-Signals aktiv ist ein weiteres EIN-Signal, wird die Verzögerung sofort beendet und das zweite EIN-Signal sofort weitergeleitet. So kann man eine Aktion, die automatisiert verzögert laufen soll, durch ein manuelles Signal sofort beginnen lassen.
 
+<!-- DOC -->
 #### **Darauffolgendes AUS führt zu**
 
 Dieses Auswahlfeld erscheint nur, wenn eine EINschaltverzögerung stattfinden soll.
@@ -1639,12 +1720,14 @@ Während eine Verzögerung von einem EIN-Signal aktiv ist, führt ein darauffolg
 
 Kommt während eine Verzögerung eines EIN-Signals aktiv ist ein AUS-Signal, wird die Verzögerung beendet und das EIN-Signal ignoriert. Auch das AUS-Signal wird nicht gesendet, da der Ausgang des Funktionsmoduls ja bereits aus war.
 
-#### **AUSschalten wird verzögert (0 = nicht verzögern)**
+<!-- DOC -->
+#### **AUSschalten wird verzögert um**
 
 Wird hier eine Zahl größer 0 eingegeben, wird das AUS-Signal entsprechend der eingestellten Zeit verzögert am Ausgang des Funktionsmoduls ausgegeben.
 
 Wird eine 0 eingegeben, findet keine Verzögerung statt.
 
+<!-- DOC -->
 #### **Erneutes AUS führt zu**
 
 Dieses Auswahlfeld erscheint nur, wenn eine AUSschaltverzögerung stattfinden soll.
@@ -1663,6 +1746,7 @@ Während eine Verzögerung von einem AUS-Signal aktiv ist, führt ein darauffolg
 
 Kommt während eine Verzögerung eines AUS-Signals aktiv ist ein weiteres AUS-Signal, wird die Verzögerung sofort beendet und das zweite AUS-Signal sofort weitergeleitet. So kann man eine Aktion, die automatisiert verzögert ausgeschaltet werden soll, durch ein manuelles Signal sofort beenden.
 
+<!-- DOC -->
 #### **Darauffolgendes EIN führt zu**
 
 Dieses Auswahlfeld erscheint nur, wenn eine AUSschaltverzögerung stattfinden soll.
@@ -1683,6 +1767,7 @@ Kommt während eine Verzögerung eines AUS-Signals aktiv ist ein EIN-Signal, wir
 
 Durch verschiedene Kombinationen von logischer Operation, Treppenlicht, Blinken, EIN- und AUSschaltverzögerung kann es passieren, dass mehrere EIN- oder AUS-Signale hintereinander gesendet werden und zu ungewollten Effekten auf dem KNX-Bus oder bei weiteren Logikkanälen führen.
 
+<!-- DOC -->
 ### **Wiederholungsfilter**
 
 Das Auswahlfeld erlaubt das Ausfiltern von unerwünschten Wiederholungen.
@@ -1709,6 +1794,7 @@ Alle Wiederholungen von EIN- oder AUS-Signalen werden ignoriert, es wird immer n
 
 Nachdem durch den Wiederholungsfilter unbeabsichtigte Wiederholungen ausgefiltert wurden, werden in diesem Funktionsblock beabsichtigte Wiederholungen definiert.
 
+<!-- DOC -->
 ### **Ausgang wiederholt zyklisch**
 
 Wird hier ein "Ja" ausgewählt, kann man im Folgenden angeben, in welchen Zeitintervallen die EIN- bzw. AUS-Signale wiederholt werden sollen.
@@ -1721,7 +1807,8 @@ Man kann natürlich auch nur das EIN- oder das AUS-Signal wiederholen lassen.
 
 In dem oben dargestellten Bildschirmausschnitt würde das EIN-Signal alle 15 Minuten wiederholt werden, das AUS-Signal jede Stunde.
 
-#### **EIN-Telegramm wird wiederholt alle (0 = nicht wiederholen)**
+<!-- DOC -->
+#### **EIN-Telegramm wird wiederholt alle**
 
 Das Feld erscheint nur, wenn bei "Ausgang wiederholt zyklisch" ein "Ja" ausgewählt wurde.
 
@@ -1729,7 +1816,8 @@ Die hier eingegebene Zahl bestimmt das Zeitintervall, in dem dem das EIN-Signal 
 
 Die Eingabe einer 0 deaktiviert eine Wiederholung.
 
-#### **AUS-Telegramm wird wiederholt alle (0 = nicht wiederholen)**
+<!-- DOC -->
+#### **AUS-Telegramm wird wiederholt alle**
 
 Das Feld erscheint nur, wenn bei "Ausgang wiederholt zyklisch" ein "Ja" ausgewählt wurde.
 
@@ -1744,6 +1832,17 @@ Die Eingabe einer 0 deaktiviert eine Wiederholung.
 An dieser Stelle endet die binäre Verarbeitung. Alle hier ankommenden EIN- oder AUS-Signale werden, sofern verbunden, an die entsprechenden internen Eingänge weitergeleitet und triggern dort die entsprechenden logischen Operationen.
 
 Mit den beiden Auswahlfeldern kann man bestimmen, ob nur das EIN-Signal, nur das AUS-Signal oder das EIN- und das AUS-Signal an die verbundenen internen Eingänge weitergeleitet werden.
+
+<!-- DOC -->
+#### **Wert EIN intern weiterleiten**
+
+Wird dieses Auswahlfeld gewählt, wird ein für diesen Ausgang ermitteltes EIN-Signal an alle internen Eingänge weitergeleitet, die mit diesem Ausgang verbunden sind.
+
+<!-- DOC -->
+#### **Wert AUS intern weiterleiten**
+
+Wird dieses Auswahlfeld gewählt, wird ein für diesen Ausgang ermitteltes AUS-Signal an alle internen Eingänge weitergeleitet, die mit diesem Ausgang verbunden sind.
+
 
 ## Wert für Ausgang
 
@@ -1859,14 +1958,18 @@ Das Feld erscheint nur, wenn für "Wert für EIN senden" ein "Ja - Wert eines KO
 
 Hier wird die Nummer des KO erwartet, dessen Wert übernommen und über den Ausgang des Logikkanals gesendet werden soll.
 
+<!-- DOC -->
 ### **DPT des Kommunikationsobjekts**
 
+<!-- DOC Skip="1" -->
 Das Feld erscheint nur, wenn für "Wert für EIN senden" ein "Ja - Wert eines KO senden" ausgewählt wurde.
 
 Hier wird der DPT des KO erwartet, dessen Wert übernommen und über den Ausgang des Logikkanals gesendet werden soll. Falls dieser DPT anders ist als der DPT des Ausgangs, wird generisch konvertiert. 
 
+<!-- DOC -->
 ### **Physikalische Adresse**
 
+<!-- DOC Skip="3" -->
 <kbd>![Gerät zurücksetzen](pics/ResetDevice.PNG)</kbd>
 
 Das Feld erscheint nur, wenn für "Wert für EIN senden" ein "Ja - 'Gerät zurücksetzen' senden" ausgewählt wurde.
@@ -1884,6 +1987,14 @@ Das Feld erscheint nur, wenn für "Wert für EIN senden" ein "Ja - RGB-LED schal
 Hier wird die Farbe der LED bestimmt, in der sie leuchten soll. Wird die Farbe Schwarz gewählt (#000000), geht die LED aus. Für die Auswahl der Farbe kann auch ein Farbauswahldialog verwendet werden.
 
 Diese Option kann nur funktionieren, wenn das Gerät, auf dem die Applikation Logik läuft, auch eine RGB-LED verbaut hat.
+
+<!-- DOC -->
+### **Wert für EIN senden (als 3 Byte RGB)**
+
+<!-- DOC Skip="1" -->
+Das Feld erscheint nur, wenn für "DPT für Ausgang" ein "DPT 323.xxx (3-Byte-Wert)" ausgewählt wurde.
+
+Hier wird die Farbe bestimmt, deren Wert gesendet werden soll. Wird die Farbe Schwarz gewählt (#000000), entspricht das einem Ausschalt-Signal. Für die Auswahl der Farbe kann auch ein Farbauswahldialog verwendet werden.
 
 <!-- DOC -->
 ### **Wert für AUS senden?**
@@ -1984,7 +2095,15 @@ Hier wird die Farbe der LED bestimmt, in der sie leuchten soll. Wird die Farbe S
 
 Diese Option kann nur funktionieren, wenn das Gerät, auf dem die Applikation Logik läuft, auch eine RGB-LED verbaut hat.
 
-### **Alarmausgabe (Buzzer oder Sperre trotz Sperre schalten)?**
+<!-- DOC -->
+### **Wert für AUS senden (als 3 Byte RGB)**
+
+Das Feld erscheint nur, wenn für "DPT für Ausgang" ein "DPT 323.xxx (3-Byte-Wert)" ausgewählt wurde.
+
+Hier wird die Farbe bestimmt, deren Wert gesendet werden soll. Wird die Farbe Schwarz gewählt (#000000), entspricht das einem Ausschalt-Signal. Für die Auswahl der Farbe kann auch ein Farbauswahldialog verwendet werden.
+
+<!-- DOC -->
+### **Alarmausgabe (Buzzer oder LED trotz Sperre schalten)?**
 
 Diese Einstellung erscheint nur, wenn die LED- oder Buzzer-Ausgabe aktiviert ist.
 
@@ -1995,6 +2114,16 @@ So können bestimmte Töne oder RGB-Anzeigen als Alarm definiert werden. Alarme 
 ## **Formeln**
 
 Das Logikmodul enthält eine Implementierung zur Verwendung von einfachen (bzw. elementaren) Formeln. Formeln können immer die Werte von einem oder zwei Eingängen eines Logikkanals verrechnen. Wird ein Ausgang so definiert, dass er den Wert einer Formel senden soll, wird die dort ausgewählte Formelfunktion aufgerufen, die Berechnung anhand der beiden Eingangswerte durchgeführt und das Ergebnis an den Ausgang gesendet.
+
+<!-- DOC HelpContext="Wert für EIN ermitteln als" -->
+<!-- DOCCONTENT 
+Der Wert des Ausgangs wird ermittelt durch die Berechnung der eingestellten Funktion.
+-->
+
+<!-- DOC HelpContext="Wert für AUS ermitteln als" -->
+<!-- DOCCONTENT 
+Der Wert des Ausgangs wird ermittelt durch die Berechnung der eingestellten Funktion.
+-->
 
 ### **Berechnungszeitpunkt**
 
