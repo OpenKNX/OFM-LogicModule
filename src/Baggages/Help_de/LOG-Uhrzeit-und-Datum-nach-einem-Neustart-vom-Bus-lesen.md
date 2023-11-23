@@ -1,4 +1,4 @@
-﻿### **Uhrzeit und Datum nach einem Neustart vom Bus lesen**
+﻿### Uhrzeit und Datum nach einem Neustart vom Bus lesen
 
 Nach einem Neustart können Uhrzeit und Datum auch aktiv über Lesetelegramme abgefragt werden. Mit diesem Parameter wird bestimmt, ob Uhrzeit und Datum nach einem Neustart aktiv gelesen werden.
 

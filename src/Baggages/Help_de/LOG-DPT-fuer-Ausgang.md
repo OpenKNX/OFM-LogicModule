@@ -1,4 +1,4 @@
-﻿### **DPT für Ausgang**
+﻿### DPT für Ausgang
 
 Dieses Auswahlfeld legt den DPT für den Ausgang fest. Unterstützt werden:
 

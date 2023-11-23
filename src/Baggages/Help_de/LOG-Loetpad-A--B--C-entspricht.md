@@ -1,4 +1,4 @@
-﻿### **RGB-LED**
+﻿### RGB-LED
 
 Da RGB-LED unterschiedliche Pin-Belegungen für die Farben Rot, Grün und Blau haben, kann es passieren, dass man nach dem anlöten der LED feststellt, dass man falsche Farben präsentiert bekommt.
 

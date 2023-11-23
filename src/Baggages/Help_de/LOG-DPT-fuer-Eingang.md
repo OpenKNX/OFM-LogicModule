@@ -1,4 +1,4 @@
-﻿### **DPT für Eingang**
+﻿### DPT für Eingang
 
 Dieses Auswahlfeld legt den DPT für den Eingang fest. Unterstützt werden:
 

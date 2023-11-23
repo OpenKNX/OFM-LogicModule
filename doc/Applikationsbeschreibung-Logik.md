@@ -706,6 +706,11 @@ Die Verzögerungszeit wird hier angegeben.
 
 Dieser Logikkanal ist außer Funktion. Er kann vollständig definiert sein und keine Einstellung geht verloren, aber der Ausgang wird kein Telegramm senden. Dies bietet die Möglichkeit, zu Testzwecken einen bereits parametrierten Logikkanal inaktiv zu setzen, um zu schauen, ob er die Ursache für eventuelles Fehlverhalten im Haus ist. Kann zur Fehlersuche hilfreich sein.
 
+<!-- DOC -->
+### **Kommentar**
+
+Hier kann man einen Freitext eingeben, der die Logik beschreibt. Dieser Text kann mehrzeilig sein. Leider unterstütz die ETS von sich aus keine mehrzeiligen Texte. Mit dem Button unter der Textbox kann man alle Eingaben der Zeichenfolge '\n' in neue Zeilen umwandeln lassen. 
+
 ## Logikdefinition
 
 Hier werden die Einstellungen vorgenommen, die für die Logikausführung selbst wesentlich sind.

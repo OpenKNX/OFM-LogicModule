@@ -1,4 +1,4 @@
-﻿### **Feiertage auf dem Bus verfügbar machen?**
+﻿### Feiertage auf dem Bus verfügbar machen?
 
 Ein "Ja" bei dieser Einstellung schaltet 2 Kommunikationsobjekte frei. Über diese Kommunikationsobjekte wird die Nummer eines Feiertags gesendet. Jede gesendete Nummer entspricht genau einem Feiertag, die Nummern entsprechen denen in der Liste von Feiertagseinstellungen (siehe vorheriges Bild).
 

@@ -1,4 +1,4 @@
-﻿### **Nur so lange zyklisch lesen, bis erstes Telegramm eingeht**
+﻿### Nur so lange zyklisch lesen, bis erstes Telegramm eingeht
 
 Erscheint nur, wenn bei "Eingang wird alle n Sekunden gelesen" ein Wert größer 0 eingegeben wurde.
 

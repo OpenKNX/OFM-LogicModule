@@ -1,4 +1,4 @@
-﻿### **AUS-Telegramm wird wiederholt alle**
+﻿### AUS-Telegramm wird wiederholt alle
 
 Das Feld erscheint nur, wenn bei "Ausgang wiederholt zyklisch" ein "Ja" ausgewählt wurde.
 

@@ -1,4 +1,4 @@
-﻿### **Spalte: Monat**
+﻿### Spalte: Monat
 
 Ist nur bei der Jahresschaltuhr vorhanden.
 

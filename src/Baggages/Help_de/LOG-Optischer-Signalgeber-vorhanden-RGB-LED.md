@@ -1,4 +1,4 @@
-﻿### **Optischer Signalgeber vorhanden (RGB-LED)?**
+﻿### Optischer Signalgeber vorhanden (RGB-LED)?
 
 Das Logikmodul unterstützt auch die Ausgabe eines Lichtsignals mittels einer RGB-LED. Mit einem Haken in diesem Feld wird angegeben, ob eine RGB-LED installiert ist.
 

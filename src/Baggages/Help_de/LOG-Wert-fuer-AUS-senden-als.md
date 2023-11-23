@@ -1,4 +1,4 @@
-﻿### **Wert für AUS senden als**
+﻿### Wert für AUS senden als
 
 Das Feld erscheint nur, wenn für "Wert für AUS senden" ein "Ja - Wert vorgeben" ausgewählt wurde.
 

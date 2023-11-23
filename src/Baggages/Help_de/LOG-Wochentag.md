@@ -1,4 +1,4 @@
-﻿### **Spalte: Wochentag**
+﻿### Spalte: Wochentag
 
 Ist nur bei der Tagesschaltuhr vorhanden.
 

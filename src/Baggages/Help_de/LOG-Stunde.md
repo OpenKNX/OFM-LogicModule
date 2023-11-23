@@ -1,4 +1,4 @@
-﻿### **Spalte: Stunde/Grad**
+﻿### Spalte: Stunde/Grad
 
 Ist sowohl bei Tagesschaltuhr und Jahresschaltuhr vorhanden.
 

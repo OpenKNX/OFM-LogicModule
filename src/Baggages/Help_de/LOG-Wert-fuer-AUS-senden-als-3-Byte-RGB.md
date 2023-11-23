@@ -1,4 +1,4 @@
-﻿### **Wert für AUS senden (als 3 Byte RGB)**
+﻿### Wert für AUS senden (als 3 Byte RGB)
 
 Das Feld erscheint nur, wenn für "DPT für Ausgang" ein "DPT 323.xxx (3-Byte-Wert)" ausgewählt wurde.
 

@@ -1,4 +1,4 @@
-﻿### **Ausgang wiederholt zyklisch**
+﻿### Ausgang wiederholt zyklisch
 
 Wird hier ein "Ja" ausgewählt, kann man im Folgenden angeben, in welchen Zeitintervallen die EIN- bzw. AUS-Signale wiederholt werden sollen.
 

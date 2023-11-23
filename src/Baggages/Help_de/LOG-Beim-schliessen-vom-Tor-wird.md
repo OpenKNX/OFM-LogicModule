@@ -1,4 +1,4 @@
-﻿### **Beim schließen vom Tor wird**
+﻿### Beim schließen vom Tor wird
 
 Das Auswahlfeld erscheint nur, wenn als Logik-Operation TOR gewählt wurde und das Tor nicht sofort nach dem Öffnen geschlossen wird.
 
@@ -8,19 +8,19 @@ Normalerweise ist das Tor entweder geöffnet oder geschlossen. Ein geschlossenes
 
 Nach einem Neustart ist das Tor weder geöffnet noch geschlossen, das erste AUS-Telegramm am Toreingang führt somit auf jeden Fall zum schließen und zur Berücksichtigung der folgenden Einstellungen.
 
-#### **nichts gesendet**
+#### nichts gesendet
 
 Beim schließen vom Tor wird nichts gesendet.
 
-#### **AUS gesendet**
+#### AUS gesendet
 
 Beim schließen vom Tor wird immer ein AUS-Signal gesendet.
 
-#### **EIN gesendet**
+#### EIN gesendet
 
 Beim schließen vom Tor wird immer ein EIN-Signal gesendet.
 
-#### **Eingangswert gesendet**
+#### Eingangswert gesendet
 
 Beim schließen vom Tor wird der Eingangswert gesendet. Da dieser Wert ja faktisch schon mal gesendet worden ist (als das Tor noch offen war), ist das effektiv eine einmalige Wiederholung des letzten Wertes.
 

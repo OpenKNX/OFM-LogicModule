@@ -1,4 +1,4 @@
-﻿### **Eingangswert speichern und beim nächsten Neustart als Vorbelegung nutzen**
+﻿### Eingangswert speichern und beim nächsten Neustart als Vorbelegung nutzen
 
 Mit "Ja" legt man fest, dass der zuletzt an diesem Eingang empfangene Wert im nichtflüchtigen Speicher abgelegt wird und nach einem Neustart wieder gelesen wird. Der dann gelesene Wert wird als Vorbelegung für den Eingang genommen, falls nötig über den Eingangskonverter in einen DPT 1 konvertiert und dann die logische Operation getriggert. Ist der Eingang als interner Eingang über sein KO mit weiteren Eingängen verbunden (egal ob das KO im Logikmodul oder einem anderen Modul liegt, das das Logikmodul verwendet), empfangen auch alle verknüpften Eingänge den aus dem nichtflüchtigen Speicher geladenen Wert.
 

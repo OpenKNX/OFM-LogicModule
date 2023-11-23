@@ -1,4 +1,4 @@
-﻿### **Spalte: Wert**
+﻿### Spalte: Wert
 
 Ist sowohl bei Tagesschaltuhr und Jahresschaltuhr vorhanden.
 

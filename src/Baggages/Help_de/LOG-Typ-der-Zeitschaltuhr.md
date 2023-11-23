@@ -1,4 +1,4 @@
-﻿### **Typ der Zeitschaltuhr**
+﻿### Typ der Zeitschaltuhr
 
 Es werden genau 2 Typen von Zeitschaltuhren unterstützt:
 

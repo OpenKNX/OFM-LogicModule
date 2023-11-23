@@ -1,4 +1,4 @@
-﻿### **Spalten: Mo, Di, Mi, Do, Fr, Sa, So**
+﻿### Spalten: Mo, Di, Mi, Do, Fr, Sa, So
 
 Sind nur bei der Jahresschaltuhr vorhanden.
 

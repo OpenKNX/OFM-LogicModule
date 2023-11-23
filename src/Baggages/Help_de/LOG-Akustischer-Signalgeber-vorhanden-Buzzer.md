@@ -1,4 +1,4 @@
-﻿### **Akustischer Signalgeber vorhanden (Buzzer)?**
+﻿### Akustischer Signalgeber vorhanden (Buzzer)?
 
 Das Logikmodul unterstützt auch die Ausgabe von Pieptönen mittels eines Buzzers. Mit einem Haken in diesem Feld wird angegeben, ob ein Buzzer installiert ist.
 

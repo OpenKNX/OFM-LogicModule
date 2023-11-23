@@ -1,4 +1,4 @@
-﻿### **Nach Neuberechnung Feiertagsinfo senden?**
+﻿### Nach Neuberechnung Feiertagsinfo senden?
 
 Erscheint nur, wenn "Feiertage auf dem Bus verfügbar machen?" auf "Ja" steht.
 

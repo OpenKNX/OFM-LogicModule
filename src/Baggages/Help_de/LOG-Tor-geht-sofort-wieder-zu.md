@@ -1,4 +1,4 @@
-﻿### **Tor geht sofort wieder zu**
+﻿### Tor geht sofort wieder zu
 
 Ein Tor bleibt normalerweise offen, nachdem ein EIN-Telegramm am Toreingang empfangen wurde. Erst bei einem AUS-Telegramm am Toreingang geht das Tor wieder zu.
 

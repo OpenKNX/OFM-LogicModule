@@ -1,4 +1,4 @@
-﻿### **Beschreibung Ausgang**
+﻿### Beschreibung Ausgang
 
 Diese Einstellung hat keine funktionale Auswirkung, erlaubt es aber, dem Ausgang einen Text zu geben, um ihn einfacher zu finden.
 

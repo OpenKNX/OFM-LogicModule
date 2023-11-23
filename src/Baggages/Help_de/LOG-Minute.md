@@ -1,4 +1,4 @@
-﻿### **Spalte: Minute**
+﻿### Spalte: Minute
 
 Ist sowohl bei Tagesschaltuhr und Jahresschaltuhr vorhanden.
 

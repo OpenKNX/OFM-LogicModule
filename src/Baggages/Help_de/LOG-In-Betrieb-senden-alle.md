@@ -1,4 +1,4 @@
-﻿### **In Betrieb senden alle**
+﻿### In Betrieb senden alle
 
 Das Gerät kann einen Status "Ich bin noch in Betrieb" über das KO 1 senden. Hier wird das Sendeintervall eingestellt.
 

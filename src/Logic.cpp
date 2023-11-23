@@ -153,32 +153,32 @@ void Logic::processReadRequests()
     */
 
     // date and time are red from bus every 30 seconds until a response is received
-    if (ParamLOG_ReadTimeDate)
+    if (ParamBASE_ReadTimeDate)
     {
         eTimeValid lValid = sTimer.isTimerValid();
         if (delayCheck(sDelay, 30000) && lValid != tmValid)
         {
             logInfoP("Time Valid? %i", lValid);
             sDelay = millis();
-            if (ParamLOG_CombinedTimeDate)
+            if (ParamBASE_CombinedTimeDate)
             {
                 // combined date and time
-                KoLOG_Time.requestObjectRead();
+                KoBASE_Time.requestObjectRead();
             }
             else
             {
                 // date and time from separate KOs
                 if (lValid != tmMinutesValid)
-                    KoLOG_Time.requestObjectRead();
+                    KoBASE_Time.requestObjectRead();
                 if (lValid != tmDateValid)
-                    KoLOG_Date.requestObjectRead();
+                    KoBASE_Date.requestObjectRead();
             }
         }
         // if date and/or time is known, we read also summertime information
         if (sDelay > 0 && lValid == tmValid)
         {
             sDelay = 0;
-            KoLOG_IsSummertime.requestObjectRead();
+            KoBASE_IsSummertime.requestObjectRead();
         }
     }
 }
@@ -222,9 +222,9 @@ void Logic::processInputKo(GroupObject &iKo)
         LogicChannel *lChannel = mChannel[lKoLookup->channelIndex];
         lChannel->processInput(lKoLookup->ioIndex);
     }
-    if (iKo.asap() == LOG_KoTime)
+    if (iKo.asap() == BASE_KoTime)
     {
-        if (ParamLOG_CombinedTimeDate)
+        if (ParamBASE_CombinedTimeDate)
         {
             KNXValue value = "";
 
@@ -261,7 +261,7 @@ void Logic::processInputKo(GroupObject &iKo)
                     sTimer.setDateTimeFromBus(&lTmp);
                     const bool lSummertime = raw[6] & DPT19_SUMMERTIME;
                     // TODO check using ParamLOG_SummertimeAll
-                    if (((knx.paramByte(LOG_SummertimeAll) & LOG_SummertimeAllMask) >> LOG_SummertimeAllShift) == VAL_STIM_FROM_DPT19)
+                    if (((knx.paramByte(BASE_SummertimeAll) & BASE_SummertimeAllMask) >> BASE_SummertimeAllShift) == VAL_STIM_FROM_DPT19)
                         sTimer.IsSummertime(lSummertime);
                 }
             }
@@ -277,7 +277,7 @@ void Logic::processInputKo(GroupObject &iKo)
             }
         }
     }
-    else if (iKo.asap() == LOG_KoDate)
+    else if (iKo.asap() == BASE_KoDate)
     {
         KNXValue value = "";
         // ensure we have a valid date content
@@ -287,7 +287,7 @@ void Logic::processInputKo(GroupObject &iKo)
             sTimer.setDateFromBus(&lTmp);
         }
     }
-    else if (iKo.asap() == LOG_KoIsSummertime)
+    else if (iKo.asap() == BASE_KoIsSummertime)
     {
         sTimer.IsSummertime(iKo.value(getDPT(VAL_DPT_1)));
     }
@@ -421,7 +421,6 @@ bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
 void Logic::debug()
 {
     logInfoP("Logik-LOG_ChannelsFirmware (in Firmware): %d", LOG_ChannelsFirmware);
-    logInfoP("Logik-gNumChannels (in knxprod):  %d", mNumChannels);
 
     // logInfoP("Aktuelle Zeit: %s", sTimer.getTimeAsc());
     sTimer.debug();
@@ -437,13 +436,7 @@ void Logic::setup()
     logInfoP("Setting: RGBLed available: %d", ParamLOG_LedInstalled);
     // setup channels, not possible in constructor, because knx is not configured there
     // get number of channels from knxprod
-    mNumChannels = ParamLOG_NumChannels;
-    if (LOG_ChannelsFirmware < mNumChannels)
-    {
-        char lErrorText[80];
-        sprintf(lErrorText, "FATAL: Firmware compiled for %d channels, but knxprod needs %d channels!", LOG_ChannelsFirmware, mNumChannels);
-        openknx.hardware.fatalError(FATAL_LOG_WRONG_CHANNEL_COUNT, lErrorText);
-    }
+    mNumChannels = LOG_ChannelCount;
     for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
     {
         mChannel[lIndex] = new LogicChannel(lIndex);
@@ -452,11 +445,11 @@ void Logic::setup()
 #ifdef BUZZER_PIN
     pinMode(BUZZER_PIN, OUTPUT);
 #endif
-    bool lTimezoneSign = ParamLOG_TimezoneSign;
-    int8_t lTimezone = ParamLOG_TimezoneValue;
+    bool lTimezoneSign = ParamBASE_TimezoneSign;
+    int8_t lTimezone = ParamBASE_TimezoneValue;
     lTimezone = lTimezone * (lTimezoneSign ? -1 : 1);
-    bool lUseSummertime = (ParamLOG_SummertimeAll == VAL_STIM_FROM_INTERN);
-    sTimer.setup(ParamLOG_Longitude, ParamLOG_Latitude, ParamLOG_Timezone, lUseSummertime, knx.paramInt(LOG_Neujahr)); // do not fetch just ParamLOG_Neujahr here, we need the whole bitfield
+    bool lUseSummertime = (ParamBASE_SummertimeAll == VAL_STIM_FROM_INTERN);
+    sTimer.setup(ParamBASE_Longitude, ParamBASE_Latitude, ParamBASE_Timezone, lUseSummertime, knx.paramInt(LOG_Neujahr)); // do not fetch just ParamLOG_Neujahr here, we need the whole bitfield
     // for TimerRestore we prepare all Timer channels
     for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
     {

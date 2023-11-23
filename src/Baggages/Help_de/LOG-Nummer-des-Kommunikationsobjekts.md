@@ -1,4 +1,4 @@
-﻿### **Nummer des Kommunikationsobjekts**
+﻿### Nummer des Kommunikationsobjekts
 
 Hier steht immer die Nummer des Kommunikationsobjekts, das als Eingang für diesen Kanal fungiert.
 

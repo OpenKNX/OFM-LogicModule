@@ -1,4 +1,4 @@
-﻿### **Alarmausgabe (Buzzer oder LED trotz Sperre schalten)?**
+﻿### Alarmausgabe (Buzzer oder LED trotz Sperre schalten)?
 
 Diese Einstellung erscheint nur, wenn die LED- oder Buzzer-Ausgabe aktiviert ist.
 

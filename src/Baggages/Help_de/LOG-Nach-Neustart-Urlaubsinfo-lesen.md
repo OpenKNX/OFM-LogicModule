@@ -1,4 +1,4 @@
-﻿### **Nach Neustart Urlaubsinfo lesen?**
+﻿### Nach Neustart Urlaubsinfo lesen?
 
 Erscheint nur, wenn "Urlaubsbehandlung aktivieren?" auf "Ja" steht.
 

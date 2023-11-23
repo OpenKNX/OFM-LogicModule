@@ -1,4 +1,4 @@
-﻿### **Beim öffnen vom Tor wird**
+﻿### Beim öffnen vom Tor wird
 
 Das Auswahlfeld erscheint nur, wenn als logische Operation TOR gewählt wurde.
 
@@ -8,19 +8,19 @@ Normalerweise ist das Tor entweder geöffnet oder geschlossen. Ein geöffnetes T
 
 Nach einem Neustart ist das Tor weder geöffnet noch geschlossen, das erste EIN-Telegramm am Toreingang führt somit auf jeden Fall zum öffnen und zur Berücksichtigung der folgenden Einstellungen.
 
-#### **nichts gesendet**
+#### nichts gesendet
 
 Beim öffnen vom Tor wird nichts gesendet, erst das nächste Telegramm am Dateneingang wird gesendet.
 
-#### **AUS gesendet**
+#### AUS gesendet
 
 Beim öffnen vom Tor wird immer ein AUS-Signal gesendet.
 
-#### **EIN gesendet**
+#### EIN gesendet
 
 Beim öffnen vom Tor wird immer ein EIN-Signal gesendet.
 
-#### **Eingangswert gesendet**
+#### Eingangswert gesendet
 
 Beim öffnen vom Tor wird der Eingangswert gesendet. Damit kann man erreichen, dass das letzte Signal, das vom Tor blockiert worden ist, nach dem öffnen doch noch durchkommt.
 

@@ -1,4 +1,4 @@
-﻿### **Wert für EIN senden als**
+﻿### Wert für EIN senden als
 
 <kbd>![Wert senden in Prozent](pics/WertSendenProzent.PNG)</kbd>
 

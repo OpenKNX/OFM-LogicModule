@@ -1,4 +1,4 @@
-﻿### **Spalte: Tag**
+﻿### Spalte: Tag
 
 Ist nur bei der Jahresschaltuhr vorhanden.
 

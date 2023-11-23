@@ -1,4 +1,4 @@
-﻿### **Zeit bis das Gerät nach einem Neustart aktiv wird**
+﻿### Zeit bis das Gerät nach einem Neustart aktiv wird
 
 Hier kann man festlegen, wie viel Zeit vergehen soll, bis das Gerät nach einem Neustart seine Funktion aufnimmt. Dabei ist es egal, ob der Neustart durch einen Busspannungsausfall, einen Reset über den Bus, durch ein Drücken der Reset-Taste oder durch den Watchdog ausgelöst wurde.
 

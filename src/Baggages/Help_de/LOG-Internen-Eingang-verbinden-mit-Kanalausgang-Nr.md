@@ -1,4 +1,4 @@
-﻿### **Internen Eingang verbinden mit Kanalausgang Nr. =**
+﻿### Internen Eingang verbinden mit Kanalausgang Nr. =
 
 Als Eingabe wird hier die Nummer der Logik erwartet, deren Ausgang als interner Eingang genutzt werden soll. Solange der Eingang nicht verbunden ist (Wert im Eingabefeld ist 0) erscheint eine Warnmeldung, dass der Eingang inaktiv (undefiniert) ist.
 

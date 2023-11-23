@@ -1,4 +1,4 @@
-﻿### **Bei Neustart letzte Schaltzeit nachholen**
+﻿### Bei Neustart letzte Schaltzeit nachholen
 
 Nach einem Neustart des Moduls kann die letzte Schaltzeit erneut ausgeführt werden. Sobald das Datum und die Uhrzeit erstmals über den Bus gesetzt worden sind, wird nach der spätesten Schaltzeit gesucht, die noch vor dem aktuellen Datum/Uhrzeit liegt. Dieser Schaltzeitpunkt wird dann ausgeführt.
 
