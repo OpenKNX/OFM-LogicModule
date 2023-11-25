@@ -1024,9 +1024,6 @@
               <ComObjectRef Id="%AID%_O-%TT%00009_R-%TT%0000901" RefId="%AID%_O-%TT%00009" />
               <ComObjectRef Id="%AID%_O-%TT%00010_R-%TT%0001001" RefId="%AID%_O-%TT%00010" />
             </ComObjectRefs>
-            <Script>
-              <op:include href="Logikmodul.script.js" prefix="LOG" type="script" />
-            </Script>
           </Static>
           <Dynamic>
             <Channel Name="MainChannel" Text="Logikkanäle" Number="%TT%" Id="%AID%_CH-%TT%" Icon="router">
