@@ -67,6 +67,8 @@ class Logic : public OpenKNX::Module
     const std::string name() override;
     const std::string version() override;
 
+    tm &Now();
+
   private:
     static uint8_t sMagicWord[];
     static Timer &sTimer;
@@ -90,3 +92,5 @@ class Logic : public OpenKNX::Module
     void sendHoliday();
     void processTimerRestore();
 };
+
+extern Logic openknxLogic;

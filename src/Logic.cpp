@@ -553,3 +553,10 @@ void Logic::sendHoliday()
         }
     }
 }
+
+tm &Logic::Now()
+{
+    return sTimer.mNow;
+}
+
+Logic openknxLogic;
