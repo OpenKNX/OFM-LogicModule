@@ -1098,9 +1098,8 @@
                 </ParameterBlock>
                 <ParameterRefRef RefId="%AID%_UP-%TT%%CC%166_R-%TT%%CC%16601" HelpContext="%DOC%" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
-                <Module Id="%AID%_MD-%TT%00001_M-%CC%" RefId="%AID%_MD-%TT%00001">
-                  <!-- <TextArg Id="%AID%_TA-1%CC%" Value="Kommentar" RefId="%AID%_MD-%TT%00001_A-1" /> -->
-                </Module>
+                <Module Id="%AID%_MD-%TT%00001_M-%C%" RefId="%AID%_MD-%TT%00001" />
+
                 <!-- <ParameterRefRef RefId="%AID%_P-%TT%%CC%439_R-%TT%%CC%43901"  HelpContext="%DOC%" />
                 <Button Id="%AID%_B-%TT%%CC%001" Text="Alle '\n' im Text durch neue Zeile(n) ersetzen" EventHandler="newline" EventHandlerParameters="{ &quot;textbox&quot;:&quot;%AID%_P-%TT%%CC%439&quot; }" /> -->
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
@@ -1271,29 +1270,29 @@
                                   <when test="0">
                                     <ParameterRefRef RefId="%AID%_UP-%TT%%CC%130_R-%TT%%CC%13001" HelpContext="%DOC%" />
                                     <ParameterRefRef RefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601" HelpContext="%DOC%" />
+                                    <!-- <ParameterRefRef RefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701" HelpContext="%DOC%" /> -->
+                                    <!-- E1Repeat Delay pattern -->
+                                    <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%E1RepeatCycle" Inline="true" Layout="Grid" HelpContext="LOG-Eingang-wird-gelesen-alle">
+                                      <Rows>
+                                        <Row Id="%AID%_PB-nnn_R-1" Name="Row1" />
+                                      </Rows>
+                                      <Columns>
+                                        <Column Id="%AID%_PB-nnn_C-1" Name="Col1" Width="45%" />
+                                        <Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="15%" />
+                                        <Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="20%" />
+                                      </Columns>
+                                      <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingang wird gelesen alle&#10;(0 = nicht zyklisch lesen)" Cell="1,1" />
+                                      <ParameterRefRef RefId="%AID%_UP-%TT%%CC%384_R-%TT%%CC%38401" Cell="1,2" HelpContext="%DOC%" />
+                                      <ParameterRefRef RefId="%AID%_UP-%TT%%CC%383_R-%TT%%CC%38301" Cell="1,3" HelpContext="%DOC%" />
+                                    </ParameterBlock>
+                                    <choose ParamRefId="%AID%_UP-%TT%%CC%384_R-%TT%%CC%38401">
+                                      <when test=">0">
+                                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%164_R-%TT%%CC%16401" HelpContext="%DOC%" />
+                                      </when>
+                                    </choose>
                                   </when>
                                   <when test="1">
                                     <ParameterRefRef RefId="%AID%_UP-%TT%%CC%393_R-%TT%%CC%39301" HelpContext="%DOC%" />
-                                  </when>
-                                </choose>
-                                <!-- <ParameterRefRef RefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701" HelpContext="%DOC%" /> -->
-                                <!-- E1Repeat Delay pattern -->
-                                <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%E1RepeatCycle" Inline="true" Layout="Grid" HelpContext="LOG-Eingang-wird-gelesen-alle">
-                                  <Rows>
-                                    <Row Id="%AID%_PB-nnn_R-1" Name="Row1" />
-                                  </Rows>
-                                  <Columns>
-                                    <Column Id="%AID%_PB-nnn_C-1" Name="Col1" Width="45%" />
-                                    <Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="15%" />
-                                    <Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="20%" />
-                                  </Columns>
-                                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingang wird gelesen alle&#10;(0 = nicht zyklisch lesen)" Cell="1,1" />
-                                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%384_R-%TT%%CC%38401" Cell="1,2" HelpContext="%DOC%" />
-                                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%383_R-%TT%%CC%38301" Cell="1,3" HelpContext="%DOC%" />
-                                </ParameterBlock>
-                                <choose ParamRefId="%AID%_UP-%TT%%CC%384_R-%TT%%CC%38401">
-                                  <when test=">0">
-                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%164_R-%TT%%CC%16401" HelpContext="%DOC%" />
                                   </when>
                                 </choose>
                               </ParameterBlock>
@@ -1935,29 +1934,29 @@
                                       <when test="0">
                                         <ParameterRefRef RefId="%AID%_UP-%TT%%CC%130_R-%TT%%CC%13001" HelpContext="%DOC%" />
                                         <ParameterRefRef RefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601" HelpContext="%DOC%" />
+                                        <!-- <ParameterRefRef RefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701" HelpContext="%DOC%" /> -->
+                                        <!-- E1Repeat Delay pattern -->
+                                        <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%E1RepeatCycle" Inline="true" Layout="Grid" HelpContext="LOG-Eingang-wird-gelesen-alle">
+                                          <Rows>
+                                            <Row Id="%AID%_PB-nnn_R-1" Name="Row1" />
+                                          </Rows>
+                                          <Columns>
+                                            <Column Id="%AID%_PB-nnn_C-1" Name="Col1" Width="45%" />
+                                            <Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="15%" />
+                                            <Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="20%" />
+                                          </Columns>
+                                          <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingang wird gelesen alle&#10;(0 = nicht zyklisch lesen)" Cell="1,1" />
+                                          <ParameterRefRef RefId="%AID%_UP-%TT%%CC%384_R-%TT%%CC%38401" Cell="1,2" HelpContext="%DOC%" />
+                                          <ParameterRefRef RefId="%AID%_UP-%TT%%CC%383_R-%TT%%CC%38301" Cell="1,3" HelpContext="%DOC%" />
+                                        </ParameterBlock>
+                                        <choose ParamRefId="%AID%_UP-%TT%%CC%384_R-%TT%%CC%38401">
+                                          <when test=">0">
+                                            <ParameterRefRef RefId="%AID%_UP-%TT%%CC%164_R-%TT%%CC%16401" HelpContext="%DOC%" />
+                                          </when>
+                                        </choose>
                                       </when>
                                       <when test="1">
                                         <ParameterRefRef RefId="%AID%_UP-%TT%%CC%393_R-%TT%%CC%39301" HelpContext="%DOC%" />
-                                      </when>
-                                    </choose>
-                                    <!-- <ParameterRefRef RefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701" HelpContext="%DOC%" /> -->
-                                    <!-- E1Repeat Delay pattern -->
-                                    <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%E1RepeatCycle" Inline="true" Layout="Grid" HelpContext="LOG-Eingang-wird-gelesen-alle">
-                                      <Rows>
-                                        <Row Id="%AID%_PB-nnn_R-1" Name="Row1" />
-                                      </Rows>
-                                      <Columns>
-                                        <Column Id="%AID%_PB-nnn_C-1" Name="Col1" Width="45%" />
-                                        <Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="15%" />
-                                        <Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="20%" />
-                                      </Columns>
-                                      <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingang wird gelesen alle&#10;(0 = nicht zyklisch lesen)" Cell="1,1" />
-                                      <ParameterRefRef RefId="%AID%_UP-%TT%%CC%384_R-%TT%%CC%38401" Cell="1,2" HelpContext="%DOC%" />
-                                      <ParameterRefRef RefId="%AID%_UP-%TT%%CC%383_R-%TT%%CC%38301" Cell="1,3" HelpContext="%DOC%" />
-                                    </ParameterBlock>
-                                    <choose ParamRefId="%AID%_UP-%TT%%CC%384_R-%TT%%CC%38401">
-                                      <when test=">0">
-                                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%164_R-%TT%%CC%16401" HelpContext="%DOC%" />
                                       </when>
                                     </choose>
                                   </when>
@@ -2055,29 +2054,29 @@
                                   <when test="0">
                                     <ParameterRefRef RefId="%AID%_UP-%TT%%CC%131_R-%TT%%CC%13101" HelpContext="%DOC%" />
                                     <ParameterRefRef RefId="%AID%_UP-%TT%%CC%046_R-%TT%%CC%04601" HelpContext="%DOC%" />
+                                    <!-- <ParameterRefRef RefId="%AID%_UP-%TT%%CC%047_R-%TT%%CC%04701" HelpContext="%DOC%" /> -->
+                                    <!-- E2Repeat Delay pattern -->
+                                    <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%E2RepeatCycle" Inline="true" Layout="Grid"  HelpContext="LOG-Eingang-wird-gelesen-alle">
+                                      <Rows>
+                                        <Row Id="%AID%_PB-nnn_R-1" Name="Row1" />
+                                      </Rows>
+                                      <Columns>
+                                        <Column Id="%AID%_PB-nnn_C-1" Name="Col1" Width="45%" />
+                                        <Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="15%" />
+                                        <Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="20%" />
+                                      </Columns>
+                                      <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingang wird gelesen alle&#10;(0 = nicht zyklisch lesen)" Cell="1,1" />
+                                      <ParameterRefRef RefId="%AID%_UP-%TT%%CC%386_R-%TT%%CC%38601" Cell="1,2" HelpContext="%DOC%" />
+                                      <ParameterRefRef RefId="%AID%_UP-%TT%%CC%385_R-%TT%%CC%38501" Cell="1,3" HelpContext="%DOC%" />
+                                    </ParameterBlock>
+                                    <choose ParamRefId="%AID%_UP-%TT%%CC%386_R-%TT%%CC%38601">
+                                      <when test=">0">
+                                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%165_R-%TT%%CC%16501" HelpContext="%DOC%" />
+                                      </when>
+                                    </choose>
                                   </when>
                                   <when test="1">
                                     <ParameterRefRef RefId="%AID%_UP-%TT%%CC%394_R-%TT%%CC%39401" HelpContext="%DOC%" />
-                                  </when>
-                                </choose>
-                                <!-- <ParameterRefRef RefId="%AID%_UP-%TT%%CC%047_R-%TT%%CC%04701" HelpContext="%DOC%" /> -->
-                                <!-- E2Repeat Delay pattern -->
-                                <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%E2RepeatCycle" Inline="true" Layout="Grid"  HelpContext="LOG-Eingang-wird-gelesen-alle">
-                                  <Rows>
-                                    <Row Id="%AID%_PB-nnn_R-1" Name="Row1" />
-                                  </Rows>
-                                  <Columns>
-                                    <Column Id="%AID%_PB-nnn_C-1" Name="Col1" Width="45%" />
-                                    <Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="15%" />
-                                    <Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="20%" />
-                                  </Columns>
-                                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingang wird gelesen alle&#10;(0 = nicht zyklisch lesen)" Cell="1,1" />
-                                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%386_R-%TT%%CC%38601" Cell="1,2" HelpContext="%DOC%" />
-                                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%385_R-%TT%%CC%38501" Cell="1,3" HelpContext="%DOC%" />
-                                </ParameterBlock>
-                                <choose ParamRefId="%AID%_UP-%TT%%CC%386_R-%TT%%CC%38601">
-                                  <when test=">0">
-                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%165_R-%TT%%CC%16501" HelpContext="%DOC%" />
                                   </when>
                                 </choose>
                               </ParameterBlock>
@@ -2724,29 +2723,29 @@
                                       <when test="0">
                                         <ParameterRefRef RefId="%AID%_UP-%TT%%CC%131_R-%TT%%CC%13101" HelpContext="%DOC%" />
                                         <ParameterRefRef RefId="%AID%_UP-%TT%%CC%046_R-%TT%%CC%04601" HelpContext="%DOC%" />
+                                        <!-- <ParameterRefRef RefId="%AID%_UP-%TT%%CC%047_R-%TT%%CC%04701" HelpContext="%DOC%" /> -->
+                                        <!-- E2Repeat Delay pattern -->
+                                        <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%E2RepeatCycle" Inline="true" Layout="Grid" HelpContext="LOG-Eingang-wird-gelesen-alle">
+                                          <Rows>
+                                            <Row Id="%AID%_PB-nnn_R-1" Name="Row1" />
+                                          </Rows>
+                                          <Columns>
+                                            <Column Id="%AID%_PB-nnn_C-1" Name="Col1" Width="45%" />
+                                            <Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="15%" />
+                                            <Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="20%" />
+                                          </Columns>
+                                          <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingang wird gelesen alle&#10;(0 = nicht zyklisch lesen)" Cell="1,1" />
+                                          <ParameterRefRef RefId="%AID%_UP-%TT%%CC%386_R-%TT%%CC%38601" Cell="1,2" HelpContext="%DOC%" />
+                                          <ParameterRefRef RefId="%AID%_UP-%TT%%CC%385_R-%TT%%CC%38501" Cell="1,3" HelpContext="%DOC%" />
+                                        </ParameterBlock>
+                                        <choose ParamRefId="%AID%_UP-%TT%%CC%386_R-%TT%%CC%38601">
+                                          <when test=">0">
+                                            <ParameterRefRef RefId="%AID%_UP-%TT%%CC%165_R-%TT%%CC%16501" HelpContext="%DOC%" />
+                                          </when>
+                                        </choose>
                                       </when>
                                       <when test="1">
                                         <ParameterRefRef RefId="%AID%_UP-%TT%%CC%394_R-%TT%%CC%39401" HelpContext="%DOC%" />
-                                      </when>
-                                    </choose>
-                                    <!-- <ParameterRefRef RefId="%AID%_UP-%TT%%CC%047_R-%TT%%CC%04701" HelpContext="%DOC%" /> -->
-                                    <!-- E2Repeat Delay pattern -->
-                                    <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%E2RepeatCycle" Inline="true" Layout="Grid" HelpContext="LOG-Eingang-wird-gelesen-alle">
-                                      <Rows>
-                                        <Row Id="%AID%_PB-nnn_R-1" Name="Row1" />
-                                      </Rows>
-                                      <Columns>
-                                        <Column Id="%AID%_PB-nnn_C-1" Name="Col1" Width="45%" />
-                                        <Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="15%" />
-                                        <Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="20%" />
-                                      </Columns>
-                                      <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingang wird gelesen alle&#10;(0 = nicht zyklisch lesen)" Cell="1,1" />
-                                      <ParameterRefRef RefId="%AID%_UP-%TT%%CC%386_R-%TT%%CC%38601" Cell="1,2" HelpContext="%DOC%" />
-                                      <ParameterRefRef RefId="%AID%_UP-%TT%%CC%385_R-%TT%%CC%38501" Cell="1,3" HelpContext="%DOC%" />
-                                    </ParameterBlock>
-                                    <choose ParamRefId="%AID%_UP-%TT%%CC%386_R-%TT%%CC%38601">
-                                      <when test=">0">
-                                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%165_R-%TT%%CC%16501" HelpContext="%DOC%" />
                                       </when>
                                     </choose>
                                   </when>

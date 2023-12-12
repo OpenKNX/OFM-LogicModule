@@ -1206,7 +1206,7 @@
                 <ParameterRefRef RefId="%AID%_UP-%TT%00137_R-%TT%0013701" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
               </ParameterBlock>
               <!-- followed by all logic channels -->
-              <op:include href="Logikmodul.templ.xml" xpath="//Dynamic/ChannelIndependentBlock/*" type="template" prefix="LOG" IsInner="true" />
+              <op:include href="Logikmodul.templ.xml" xpath="//ApplicationProgram/Dynamic/ChannelIndependentBlock/*" type="template" prefix="LOG" IsInner="true" />
             </Channel>
           </Dynamic>
         </ApplicationProgram>
