@@ -13,8 +13,8 @@
           <Static>
             <ParameterTypes>
               <!-- Number of channels (module specific) -->
-              <ParameterType Id="%AID%_PT-LOG_NumChannels" Name="LOG_NumChannels">
-                <TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="%N%" maxInclusive="%N%" />
+              <ParameterType Id="%AID%_PT-LOGNumChannels" Name="LOGNumChannels">
+                <TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="1" maxInclusive="%N%" />
               </ParameterType>
               <ParameterType Id="%AID%_PT-OffsetTemp" Name="OffsetTemp">
                 <TypeNumber SizeInBit="8" Type="signedInt" minInclusive="-100" maxInclusive="100" />
@@ -868,7 +868,7 @@
             <Parameters>
               <Parameter Id="%AID%_P-%TT%00163" Name="EnableHardware" ParameterType="%AID%_PT-OnOffYesNo" Text="Enable Hardware" Value="1" Access="None" />
               <Union SizeInBit="8">
-                <Memory CodeSegment="%AID%_RS-04-00000" Offset="0" BitOffset="0" />
+                <Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
                 <!-- <Parameter Id="%AID%_UP-%TT%00034" Name="ReadTimeDate" ParameterType="%AID%_PT-OnOffYesNo" Offset="0" BitOffset="0" Text="Uhrzeit und Datum nach einem Neustart vom Bus lesen" Value="1" /> -->
                 <Parameter Id="%AID%_UP-%TT%00035" Name="BuzzerInstalled" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="0" Text="Akustischer Signalgeber vorhanden (Buzzer)?" Value="%LOG_BuzzerDefault%" />
                 <Parameter Id="%AID%_UP-%TT%00036" Name="LedInstalled" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="1" Text="Optischer Signalgeber vorhanden (RGB-LED)?" Value="%LOG_LedDefault%" />
@@ -881,7 +881,7 @@
                 <!-- 2 Bit free -->
               </Union>
               <Union SizeInBit="32">
-                <Memory CodeSegment="%AID%_RS-04-00000" Offset="1" BitOffset="0" />
+                <Memory CodeSegment="%MID%" Offset="1" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%00152" Name="Neujahr"            ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="0" Text="1. Neujahr"                   SuffixText="1. Januar"           Value="1" />
                 <Parameter Id="%AID%_UP-%TT%00110" Name="DreiKoenige"        ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="1" Text="2. Heilige Drei Könige"       SuffixText="6. Januar"           Value="1" />
                 <Parameter Id="%AID%_UP-%TT%00111" Name="Weiberfastnacht"    ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="2" Text="3. Weiberfastnacht"           SuffixText="52 Tage vor Ostern"  Value="0" />
@@ -918,14 +918,15 @@
                 <!-- Siehe Maria Empfängnis mit Offset 3, Bit 7 -->
               </Union>
               <Union SizeInBit="48">
-                <Memory CodeSegment="%AID%_RS-04-00000" Offset="5" BitOffset="0" />
+                <Memory CodeSegment="%MID%" Offset="5" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%00148" Name="BuzzerSilent" ParameterType="%AID%_PT-BuzzerFrequency" Offset="0" BitOffset="0" Text="Frequenz für Buzzer (leise)"  SuffixText="Hz" Value="1800" />
                 <Parameter Id="%AID%_UP-%TT%00149" Name="BuzzerNormal" ParameterType="%AID%_PT-BuzzerFrequency" Offset="2" BitOffset="0" Text="Frequenz für Buzzer (normal)" SuffixText="Hz" Value="3200" />
                 <Parameter Id="%AID%_UP-%TT%00150" Name="BuzzerLoud"   ParameterType="%AID%_PT-BuzzerFrequency" Offset="4" BitOffset="0" Text="Frequenz für Buzzer (laut)"   SuffixText="Hz" Value="2400" />
               </Union>
-              <Union SizeInBit="8">
-                <Memory CodeSegment="%AID%_RS-04-00000" Offset="11" BitOffset="0" />
-                <Parameter Id="%AID%_UP-%TT%00151" Name="LedMapping" ParameterType="%AID%_PT-RGBMapping" Offset="0" BitOffset="0" Text="Lötpad A / B / C entspricht" Value="1" />
+              <Union SizeInBit="16">
+                <Memory CodeSegment="%MID%" Offset="11" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%00164" Name="VisibleChannels" ParameterType="%AID%_PT-LOGNumChannels" Offset="0" BitOffset="0" Text="Verfügbare Kanäle" Value="%N%" SuffixText=" von %N%" />
+                <Parameter Id="%AID%_UP-%TT%00151" Name="LedMapping" ParameterType="%AID%_PT-RGBMapping" Offset="1" BitOffset="0" Text="Lötpad A / B / C entspricht" Value="1" />
                 <!-- <Parameter Id="%AID%_UP-%TT%00144" Name="Timezone" ParameterType="%AID%_PT-Timezone" Offset="0" BitOffset="3" Text="Zeitzone" Value="1" /> -->
                 <!-- <Parameter Id="%AID%_UP-%TT%00157" Name="TimezoneSign" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="3" Text="Zeitzone-Vorzeichen" Value="0" /> -->
                 <!-- <Parameter Id="%AID%_UP-%TT%00158" Name="TimezoneValue" ParameterType="%AID%_PT-TimezoneValue" Offset="0" BitOffset="4" Text="Zeitzone-Wert" Value="0" /> -->
@@ -976,7 +977,7 @@
               <ParameterRef Id="%AID%_UP-%TT%00141_R-%TT%0014101" RefId="%AID%_UP-%TT%00141" />
               <!-- <ParameterRef Id="%AID%_UP-%TT%00142_R-%TT%0014201" RefId="%AID%_UP-%TT%00142" /> -->
               <!-- <ParameterRef Id="%AID%_UP-%TT%00143_R-%TT%0014301" RefId="%AID%_UP-%TT%00143" /> -->
-              <ParameterRef Id="%AID%_UP-%TT%00144_R-%TT%0014401" RefId="%AID%_UP-%TT%00144" />
+              <!-- <ParameterRef Id="%AID%_UP-%TT%00144_R-%TT%0014401" RefId="%AID%_UP-%TT%00144" /> -->
               <!-- <ParameterRef Id="%AID%_UP-%TT%00145_R-%TT%0014501" RefId="%AID%_UP-%TT%00145" /> -->
               <!-- <ParameterRef Id="%AID%_UP-%TT%00146_R-%TT%0014601" RefId="%AID%_UP-%TT%00146" /> -->
               <!-- <ParameterRef Id="%AID%_UP-%TT%00147_R-%TT%0014701" RefId="%AID%_UP-%TT%00147" /> -->
@@ -991,11 +992,12 @@
               <!-- <ParameterRef Id="%AID%_UP-%TT%00156_R-%TT%0015601" RefId="%AID%_UP-%TT%00156" /> -->
               <ParameterRef Id="%AID%_UP-%TT%00157_R-%TT%0015701" RefId="%AID%_UP-%TT%00157" />
               <ParameterRef Id="%AID%_UP-%TT%00158_R-%TT%0015801" RefId="%AID%_UP-%TT%00158" />
-              <ParameterRef Id="%AID%_UP-%TT%00159_R-%TT%0015901" RefId="%AID%_UP-%TT%00159" />
-              <ParameterRef Id="%AID%_UP-%TT%00160_R-%TT%0016001" RefId="%AID%_UP-%TT%00160" />
-              <ParameterRef Id="%AID%_UP-%TT%00161_R-%TT%0016101" RefId="%AID%_UP-%TT%00161" />
-              <ParameterRef Id="%AID%_UP-%TT%00162_R-%TT%0016201" RefId="%AID%_UP-%TT%00162" />
+              <!-- <ParameterRef Id="%AID%_UP-%TT%00159_R-%TT%0015901" RefId="%AID%_UP-%TT%00159" /> -->
+              <!-- <ParameterRef Id="%AID%_UP-%TT%00160_R-%TT%0016001" RefId="%AID%_UP-%TT%00160" /> -->
+              <!-- <ParameterRef Id="%AID%_UP-%TT%00161_R-%TT%0016101" RefId="%AID%_UP-%TT%00161" /> -->
+              <!-- <ParameterRef Id="%AID%_UP-%TT%00162_R-%TT%0016201" RefId="%AID%_UP-%TT%00162" /> -->
               <ParameterRef Id="%AID%_P-%TT%00163_R-%TT%0016301" RefId="%AID%_P-%TT%00163" />
+              <ParameterRef Id="%AID%_UP-%TT%00164_R-%TT%0016401" RefId="%AID%_UP-%TT%00164" />
             </ParameterRefs>
             <ComObjectTable>
               <!-- <ComObject Id="%AID%_O-%TT%00001" Name="Heartbeat" Text="In Betrieb" Number="1" FunctionText="Zyklisch" ObjectSize="1 Bit" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" DatapointType="DPST-1-2" />
@@ -1022,104 +1024,91 @@
               <!-- <ComObjectRef Id="%AID%_O-%TT%00007_R-%TT%0000701" RefId="%AID%_O-%TT%00007" /> -->
               <ComObjectRef Id="%AID%_O-%TT%00008_R-%TT%0000801" RefId="%AID%_O-%TT%00008" />
               <ComObjectRef Id="%AID%_O-%TT%00009_R-%TT%0000901" RefId="%AID%_O-%TT%00009" />
-              <ComObjectRef Id="%AID%_O-%TT%00010_R-%TT%0001001" RefId="%AID%_O-%TT%00010" />
+              <!-- <ComObjectRef Id="%AID%_O-%TT%00010_R-%TT%0001001" RefId="%AID%_O-%TT%00010" /> -->
             </ComObjectRefs>
           </Static>
           <Dynamic>
-            <Channel Name="MainChannel" Text="Logikkanäle" Number="%TT%" Id="%AID%_CH-%TT%" Icon="router">
-              <ParameterBlock Name="Init" Id="%AID%_PB-nnn" Inline="true">
-                <!-- Hope this is enough for activating the following parameter -->
-                <ParameterRefRef RefId="%AID%_P-%TT%00163_R-%TT%0016301" />
-                <!-- Buzzer installed? -->
-                <ParameterRefRef RefId="%AID%_UP-%TT%00035_R-%TT%0003501" />
-                <!-- RGB-LED installed? -->
-                <ParameterRefRef RefId="%AID%_UP-%TT%00036_R-%TT%0003601" />
-              </ParameterBlock>
-              <ParameterBlock Name="Docu" Text="Logikdokumentation" Id="%AID%_PB-nnn">
+            <Channel Name="MainChannel" Text="Logiken" Number="%TT%" Id="%AID%_CH-%TT%" Icon="blur" HelpContext="Empty">
+              <!-- <ParameterBlock Name="Init" Id="%AID%_PB-nnn" Inline="true">
+              </ParameterBlock> -->
+              <ParameterBlock Name="Docu" Text="Dokumentation" Id="%AID%_PB-nnn" Icon="information-outline" HelpContext="LOG-Dokumentation">
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Version des Logikmoduls: %ModuleVersion%" UIHint="Headline" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="Jeder Logikkanal dieses Moduls repräsentiert eine Logik. Die Logikverarbeitung ist intern immer Binär (DPT1). Jede Logik hat bis zu 4 Eingänge, Detais siehe bei der Doku der Eingänge." />
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="Da das Logikmodul unterschiedliche DPT für Ein- und Ausgänge erlaubt, gibt es Funktionsblöcke (im folgendem FB), die einen DPTx zu DPT1 konvertieren (für Eingänge) und umgekehrt (für Ausgänge)." />
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="In das Ein- und Ausgangssignal einer Logik können weitere FB eingefügt werden und so das Ein- bzw. das Ausgangssignal beeinflussen. Folgende Funktionsblöcke gibt es:" />
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingangs-Konverter (konvertiert Eingangs-DPT nach binär DPT1)" />
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingang vorbelegen mit einem bestimmten (DPT1) Wert" />
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingang zyklisch lesen alle n Sekunden/Minuten/Stunden" />
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingang zyklisch lesen alle n Sekunden/Minuten/Stunden bis eine Antwort eingeht" />
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingang invertieren" />
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="Logik selbst (UND, ODER, EXKLUSIV-ODER, TOR), wobei bei TOR externer Eingang 1 und interner Eingang 3 über ein ODER zum Dateneingang zusammengefasst werden, externer Eingang 2 und interner Eingang 4 zum Toreingang." />
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="Logikauswertung: Normal kann die Logik erst ausgewertet werden, wenn alle Eingänge einen gültigen Wert haben. Man kann auch bereits auswerten, sobald das erstbeste Signal ankommt. Die ungültigen Eingänge werden dann wie inaktive Eingänge behandelt." />
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="Logik-Ausgangswert: Der Ausgang kann seinen Wert weiterleiten, sobald sich der Ausgangswert ändert, sobald sich irgendein Eingangswert ändert oder sobald irgendein Eingang einen Wert bekommen hat. Man kann auch bestimmte Eingänge auswählen." />
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="Statt einer Logik kann auch eine Zeitschaltuhr mit Jahres- oder Tagesschaltzeiten genutzt werden." />
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="Treppenlicht/Blinken: Normales Treppenlicht mit wählbarem Verlängern bzw. vorzeitig ausschalten. Während der Treppenlichtzeit kann man den FB-Ausgang ein- und ausschalten (blinken) lassen." />
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="Ein/Ausschaltverzögerung: Für ein/aus einzeln einstellbar" />
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="Zyklisch senden: Für ein/aus einzeln einstellbar" />
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="Ausgangs-Konverter: Kann in DPT 1,2,5,6,7,8,9,16,17,232 konvertieren, für an und aus in unterschiedliche Werte oder auch nichts tun (Wert unterdrücken)." />
-                <ParameterBlock Id="%AID%_PB-3" Name="Info2" Text="Eingänge">
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Es gibt bis zu 4 Eingänge, wobei maximal 2 Eingänge von außen (über ein KO) versorgt werden können, und maximal 2 Eingänge mit dem Ausgang eines anderen Kanäls verbunden werden können." />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Ist ein Eingang mit dem Bus verbunden (hat ein KO), kann er zyklisch Leseanforderungen auf dieses KO senden." />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Ist ein Eingang ein Zahlenwert (DPT2 bis DPT9), muss ein Eingangs-Konverter gewählt werden, der den Wert in ein binären Wert (DPT1) konvertiert." />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Als Eingangs-Konverter kann man einen der folgenden Funktionsblöcke (FB) nutzen:" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="- Werteintervall: FB wird wahr, wenn der Eingangswert zwischen einem Von- und einem Bis-Wert liegt, sonst falsch" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="- Differenzintervall: FB wird wahr, wenn die Differenz von 2 Eingangswerten zwischen einem Von- und einem Bis-Wert liegt, sonst falsch" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="- Hysterese: FB wird wahr, wenn der Eingangswert einen oberen Grenzwert überschreitet. FB wird falsch, wenn der Eingangswert einen unteren Grenzwert unterschreitet" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="- Differenzhysterese: Es wird die Differenz zweier Eingänge gebildet. FB wird wahr, wenn die Differenz einen oberen Grenzwert überschreitet. FB eird falsch, wenn die Differenz einen unteren Grenzwert unterschreitet" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="- Zwangsführung: FB wird wahr, wenn einer von 4 möglichen Zwangsführungswerten am Eingang anliegt, sonst falsch" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="- Szenen: FB wird wahr, wenn eine von 8 möglichen Szenen am Eingang anliegt, sonst falsch" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Für die FB Differenzintervall und Differenzhysterese wird auch der Wert des anderen Eingang herangezogen." />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Ein Eingang kann auch seinen Wert im EEPROM speichern und sich nach einem Neustart daraus initialisieren. Falls das nicht gewünscht ist oder kein gültiber Wert im EEPROM steht, kann man noch folgende Initialisierungen wählen:" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="- Initialisierung durch Lesen des Wertes vom Bus" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="- Initialisierung mit EIN" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="- Initialisierung mit AUS" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Ferner kann ein Eingang auch so eingestellt werden, dass er seinen Wert zyklisch alle n Sekunden vom Bus lesen soll." />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Ein Eingang kann auch invertiert werden, allerdings passiert das als letzter FB, direkt am Logikeingang. Somit werden alle vorhergehenden FB (z.B. Initialisierung mit AUS) auch invertiert!" />
-                </ParameterBlock>
-                <ParameterBlock Id="%AID%_PB-4" Name="Info3" Text="Zeitschaltuhren">
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Statt der beiden Eingänge kann auch eine Zeitschaltuhr aktiviert werden. Die Zeitschaltuhr schaltet dann direkt die Ausgangs-FB." />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Um Zeitschaltuhren mit Logiken zu kombinieren, können entsprechende interne Eingänge genutzt werden." />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Folgende Zeitschaltuhr-Funktionen sind verfügbar:" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="- Tages- und Jahreszeitschaltuhr" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="- Stunden- und Minutengenaue schaltung" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="- zur bestimmten Stunde jede Minute schalten" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="- jede Stunde zur betimmten Minute schalten" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="- Jeden Wochentag / nur an bestimmten Wochentagen schalten" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="- Jeden Monat / nur in bestimmten Monaten schalten" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="- Beim Sonnenauf- und Untergang schalten" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="  - zusätzlich mit Versatz von +/- Stunden/Minuten" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="  - zusätzlich mit frühestem/spätestem Zeitschaltpunkt" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="- Schaltzeiten können abhängig von Feiertagen sein" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="  - Feiertagskalender ist verfügbar" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="  - Osterkalender ist implementiert" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="  - Adventskalender ist implementiert" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="- Schaltzeiten können abhängig vom Urlaub sein" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="- Nach Busspannungswiederkehr können Schaltzeiten nachgeholt werden" />
-                </ParameterBlock>
-                <ParameterBlock Id="%AID%_PB-5" Name="Info4" Text="Ausgänge">
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Alle FB am Ausgang können einzeln zu- oder abgeschaltet, aber nicht in ihrer Reihenfolge geändert werden. Somit geht das Ergebnis eines FB direkt in den folgenden FB-Eingang ein." />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Der Logik-Ausgangswert triggert weitere FB, sobald sich der Ausgangswert der Logik ändert, sobald sich irgendein Eingangswert ändert oder sobald irgendein Eingang einen Wert bekommen hat. Man kann auch bestimmte Eingänge auswählen." />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Treppenlicht/Blinken: Normales Treppenlicht mit wählbarem Verlängern bzw. vorzeitig ausschalten. Während der Treppenlichtzeit kann man den FB-Ausgang mit einstellbaren Puls-/Pausenverhältnis ein- und ausschalten (blinken) lassen." />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Ein/Ausschaltverzögerung: Für ein/aus einzeln einstellbar, und mit wählbaren Verhalten, wenn mehrere EIN- oder AUS-Signale nacheinander kommen." />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Wiederholungsfilter: Aufeinanderfolgende EIN- bzw. AUS-Signale können unterdürckt oder durchgelassen werden (muss natürich vor dem zyklischen Senden eingestellt werden)" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Zyklisch senden: Für ein/aus einzeln einstellbar" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Der Ausgangs-Konverter kann in DPT 1,2,5,6,7,8,9,16,17,232 konvertieren, man kann für EIN und AUS unterschiedliche Einstellungen vornehmen:" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="- Wert nicht senden (unterdrücken)" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="- Konstanten Wert senden" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="- Den Wert eines Eingangs senden, wobei in den passenden Ausgangs-DPT konvertiert wird" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="- Auf die Ausgangs-GA einen Read-Request senden" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="- Ein KNX-Gerät zurücksetzen (Reset-Funktion der ETS)" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="- Einen Ton Ein- bzw. Ausschalten (nur für Module mit Buzzer)" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="- Ein RGB-Signal ausgeben (nur für Module mit RGB-LED)" />
-                </ParameterBlock>
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Die Dokumentation ist als Kontextsensitive Hilfe verfügbar, siehe den Text im unteren Bereich des Bildschirms." />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Eine Applikationsbeschreibung ist unter folgendem Link verfügbar: https://github.com/OpenKNX/OFM-LogicModule/blob/v1/doc/Applikationsbeschreibung-Logik.md " />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Weitere Produktinformationen sind in unserem Wiki verfügbar: https://github.com/OpenKNX/OpenKNX/wiki/Produktinfo-Logikmodul" />
               </ParameterBlock>
-              <choose ParamRefId="%AID%_P-%TT%00163_R-%TT%0016301">
-                <when test="%LOG_EnableHardware%">
-                  <ParameterBlock Id="%AID%_PB-nnn" Name="Hardware" Text="Hardware">
+              <ParameterBlock Id="%AID%_PB-nnn" Name="Settings" Text="Basiseinstellung" Icon="cog-outline" HelpContext="Empty">
+                <!-- Hope this is enough for activating the following parameter -->
+                <ParameterRefRef RefId="%AID%_P-%TT%00163_R-%TT%0016301" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00164_R-%TT%0016401" HelpContext="%DOC%" IndentLevel="1" />
+                <ParameterSeparator Id="%AID%_PS-52" Text="" UIHint="HorizontalRuler" />
+                <ParameterSeparator Id="%AID%_PS-50" Text="Urlaub" UIHint="Headline" />
+                <ParameterSeparator Id="%AID%_PS-51" Text="Zeitschaltuhren können auch Urlaubszeiten berücksichtigen. Damit das funktioniert, muss eine Urlaubszeit über das KO 4 dem Gerät mitgeteilt werden." />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00138_R-%TT%0013801" HelpContext="%DOC%" IndentLevel="1" />
+                <choose ParamRefId="%AID%_UP-%TT%00138_R-%TT%0013801">
+                  <when test="1">
+                    <ParameterRefRef RefId="%AID%_UP-%TT%00140_R-%TT%0014001" HelpContext="%DOC%" IndentLevel="1" />
+                    <ComObjectRefRef RefId="%AID%_O-%TT%00004_R-%TT%0000401" />
+                  </when>
+                </choose>
+                <ParameterSeparator Id="%AID%_PS-52" Text="" UIHint="HorizontalRuler" />
+                <ParameterSeparator Id="%AID%_PS-53" Text="Feiertage" UIHint="Headline" />
+                <ParameterSeparator Id="%AID%_PS-54" Text="Das Gerät kann die berechneten Feiertage auch auf den Bus senden. Über das KO 5 wird mitgeteilt, welcher Feiertag 'Heute' ist, über KO 6 welcher Feiertag 'Morgen' ist. 0 bedeutet 'kein Feiertag'." />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00139_R-%TT%0013901" HelpContext="%DOC%" IndentLevel="1" />
+                <choose ParamRefId="%AID%_UP-%TT%00139_R-%TT%0013901">
+                  <when test="1">
+                    <ParameterRefRef RefId="%AID%_UP-%TT%00141_R-%TT%0014101" HelpContext="%DOC%" IndentLevel="1" />
+                    <ComObjectRefRef RefId="%AID%_O-%TT%00005_R-%TT%0000501" />
+                    <ComObjectRefRef RefId="%AID%_O-%TT%00006_R-%TT%0000601" />
+                  </when>
+                </choose>
+                <ParameterSeparator Id="%AID%_PS-55" Text="Im folgenden kann bestimmt werden, welche Feiertage berechnet werden sollen. Diese Feiertage werden auch von den Zeitschaltuhren berücksichtigt." />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00152_R-%TT%0015201" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00110_R-%TT%0011001" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00111_R-%TT%0011101" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00112_R-%TT%0011201" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00113_R-%TT%0011301" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00114_R-%TT%0011401" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00153_R-%TT%0015301" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00115_R-%TT%0011501" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00116_R-%TT%0011601" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00117_R-%TT%0011701" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00118_R-%TT%0011801" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00119_R-%TT%0011901" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00120_R-%TT%0012001" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00121_R-%TT%0012101" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00122_R-%TT%0012201" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00123_R-%TT%0012301" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00124_R-%TT%0012401" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00125_R-%TT%0012501" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00126_R-%TT%0012601" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00154_R-%TT%0015401" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00127_R-%TT%0012701" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00128_R-%TT%0012801" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00129_R-%TT%0012901" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00155_R-%TT%0015501" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00130_R-%TT%0013001" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00131_R-%TT%0013101" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00132_R-%TT%0013201" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00133_R-%TT%0013301" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00134_R-%TT%0013401" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00135_R-%TT%0013501" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00136_R-%TT%0013601" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00137_R-%TT%0013701" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <choose ParamRefId="%AID%_P-%TT%00163_R-%TT%0016301">
+                  <when test="%LOG_EnableHardware%">
+                    <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Installierte Hardware" UIHint="Headline" />
                     <ParameterSeparator Id="%AID%_PS-11" Text="Im folgenden wird die verwendete bzw. installierte Hardware angegeben." />
                     <ParameterSeparator Id="%AID%_PS-12" Text="Die hier getroffenen Angaben beeinflussen das Verhalten der Applikation und der Firmware und müssen zur vorhandenen Hardware passen!" />
                     <!-- RGB-LED installed? -->
-                    <ParameterRefRef RefId="%AID%_UP-%TT%00036_R-%TT%0003601" HelpContext="%DOC%" />
+                    <ParameterRefRef RefId="%AID%_UP-%TT%00036_R-%TT%0003601" HelpContext="%DOC%" IndentLevel="1" />
                     <!-- Buzzer installed? -->
-                    <ParameterRefRef RefId="%AID%_UP-%TT%00035_R-%TT%0003501" HelpContext="%DOC%" />
+                    <ParameterRefRef RefId="%AID%_UP-%TT%00035_R-%TT%0003501" HelpContext="%DOC%" IndentLevel="1" />
                     <!-- We implement here also led/buzzer lock KO -->
                     <choose ParamRefId="%AID%_UP-%TT%00036_R-%TT%0003601">
                       <when test="1">
@@ -1130,7 +1119,7 @@
                         <ParameterSeparator Id="%AID%_PS-nnn" Text="RGB-LED" UIHint="Headline" />
                         <ParameterSeparator Id="%AID%_PS-nnn" Text="Damit die LED in korrekten Farben leuchtet, muss hier angegeben werden, welcher Treiberausgang mit welchem LED-Beinchen verbunden ist." />
                         <ParameterSeparator Id="%AID%_PS-nnn" Text="Die Platine liegt so, dass von den 4 Lötpads für die LED das ganz linke +5V ist. Die folgenden 3 Lötpads sind A, B und C." />
-                        <ParameterRefRef RefId="%AID%_UP-%TT%00151_R-%TT%0015101" HelpContext="%DOC%" />
+                        <ParameterRefRef RefId="%AID%_UP-%TT%00151_R-%TT%0015101" HelpContext="%DOC%" IndentLevel="1" />
                       </when>
                     </choose>
                     <choose ParamRefId="%AID%_UP-%TT%00035_R-%TT%0003501">
@@ -1141,69 +1130,14 @@
                         <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                         <ParameterSeparator Id="%AID%_PS-nnn" Text="Buzzer" UIHint="Headline" />
                         <ParameterSeparator Id="%AID%_PS-nnn" Text="Die beim Buzzer verwendeten Frequenzen für leise, normal und laut können hier eingestellt werden" />
-                        <ParameterRefRef RefId="%AID%_UP-%TT%00148_R-%TT%0014801" HelpContext="LOG-Buzzer" />
-                        <ParameterRefRef RefId="%AID%_UP-%TT%00149_R-%TT%0014901" HelpContext="LOG-Buzzer" />
-                        <ParameterRefRef RefId="%AID%_UP-%TT%00150_R-%TT%0015001" HelpContext="LOG-Buzzer" />
+                        <ParameterRefRef RefId="%AID%_UP-%TT%00148_R-%TT%0014801" HelpContext="LOG-Buzzer" IndentLevel="1" />
+                        <ParameterRefRef RefId="%AID%_UP-%TT%00149_R-%TT%0014901" HelpContext="LOG-Buzzer" IndentLevel="1" />
+                        <ParameterRefRef RefId="%AID%_UP-%TT%00150_R-%TT%0015001" HelpContext="LOG-Buzzer" IndentLevel="1" />
                         <ParameterSeparator Id="%AID%_PS-nnn" Text="Der Buzzer kann nur 'AN' oder 'AUS'. Die Lautstärke wird durch Frequenz wählt, die niicht im optimalen Arbeitsbereich liegt. Die Standardwerte meinen also 'leise und tief', 'normal und hoch', 'laut und mittel'." />
                       </when>
                     </choose>
-                  </ParameterBlock>
-                </when>
-              </choose>
-              <ParameterBlock Id="%AID%_PB-nnn" Name="Holidays" Text="Urlaub/Feiertage">
-                <ParameterSeparator Id="%AID%_PS-50" Text="Urlaub" UIHint="Headline" />
-                <ParameterSeparator Id="%AID%_PS-51" Text="Zeitschaltuhren können auch Urlaubszeiten berücksichtigen. Damit das funktioniert, muss eine Urlaubszeit über das KO 4 dem Gerät mitgeteilt werden." />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00138_R-%TT%0013801" HelpContext="%DOC%" />
-                <choose ParamRefId="%AID%_UP-%TT%00138_R-%TT%0013801">
-                  <when test="1">
-                    <ParameterRefRef RefId="%AID%_UP-%TT%00140_R-%TT%0014001" HelpContext="%DOC%" />
-                    <ComObjectRefRef RefId="%AID%_O-%TT%00004_R-%TT%0000401" />
                   </when>
                 </choose>
-                <ParameterSeparator Id="%AID%_PS-52" Text="" UIHint="HorizontalRuler" />
-                <ParameterSeparator Id="%AID%_PS-53" Text="Feiertage" UIHint="Headline" />
-                <ParameterSeparator Id="%AID%_PS-54" Text="Das Gerät kann die berechneten Feiertage auch auf den Bus senden. Über das KO 5 wird mitgeteilt, welcher Feiertag 'Heute' ist, über KO 6 welcher Feiertag 'Morgen' ist. 0 bedeutet 'kein Feiertag'." />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00139_R-%TT%0013901" HelpContext="%DOC%" />
-                <choose ParamRefId="%AID%_UP-%TT%00139_R-%TT%0013901">
-                  <when test="1">
-                    <ParameterRefRef RefId="%AID%_UP-%TT%00141_R-%TT%0014101" HelpContext="%DOC%" />
-                    <ComObjectRefRef RefId="%AID%_O-%TT%00005_R-%TT%0000501" />
-                    <ComObjectRefRef RefId="%AID%_O-%TT%00006_R-%TT%0000601" />
-                  </when>
-                </choose>
-                <ParameterSeparator Id="%AID%_PS-55" Text="Im folgenden kann bestimmt werden, welche Feiertage berechnet werden sollen. Diese Feiertage werden auch von den Zeitschaltuhren berücksichtigt." />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00152_R-%TT%0015201" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00110_R-%TT%0011001" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00111_R-%TT%0011101" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00112_R-%TT%0011201" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00113_R-%TT%0011301" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00114_R-%TT%0011401" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00153_R-%TT%0015301" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00115_R-%TT%0011501" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00116_R-%TT%0011601" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00117_R-%TT%0011701" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00118_R-%TT%0011801" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00119_R-%TT%0011901" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00120_R-%TT%0012001" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00121_R-%TT%0012101" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00122_R-%TT%0012201" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00123_R-%TT%0012301" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00124_R-%TT%0012401" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00125_R-%TT%0012501" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00126_R-%TT%0012601" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00154_R-%TT%0015401" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00127_R-%TT%0012701" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00128_R-%TT%0012801" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00129_R-%TT%0012901" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00155_R-%TT%0015501" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00130_R-%TT%0013001" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00131_R-%TT%0013101" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00132_R-%TT%0013201" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00133_R-%TT%0013301" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00134_R-%TT%0013401" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00135_R-%TT%0013501" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00136_R-%TT%0013601" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00137_R-%TT%0013701" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" />
               </ParameterBlock>
               <!-- followed by all logic channels -->
               <op:include href="Logikmodul.templ.xml" xpath="//ApplicationProgram/Dynamic/ChannelIndependentBlock/*" type="template" prefix="LOG" IsInner="true" />

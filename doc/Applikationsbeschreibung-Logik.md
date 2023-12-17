@@ -46,8 +46,8 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
   * [Gerätestart](#gerätestart)
   * [Installierte Hardware](#installierte-hardware)
   * [**Experteneinstellungen**](#experteneinstellungen)
-* **+ Logikkanäle**
-  * [**+ Logikdokumentation**](#logikdokumentation)
+* **+ Logiken**
+  * [**+ Dokumentation**](#dokumentation)
     * [**Eingänge**](#eing%C3%A4nge)
     * [**Zeitschaltuhren**](#zeitschaltuhren)
     * [**Ausgänge**](#ausg%C3%A4nge)
@@ -90,13 +90,15 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 
 Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer das Gesamtdokument lesen muss, um Neuerungen zu erfahren.
 
-xx.xx.2023: Firmware 2.0.2, Applikation 2.0
+xx.xx.2023: Firmware 3.0.0, Applikation 3.0
 
 * NEU: Die Firmware kann jetzt über den KNX-Bus aktualisiert werden (nur bei RP2040-Prozessor aka Raspberry Pi Pico)
+* NEU: Die Firmware kann jetzt auch auf reinen IP-Geräten eingesetzt werden und als Logikmodul-IP genutzt werden
 * NEU: Output Converter "Wert eines KO senden" eingeführt
 * NEU: Zusätzliche Infoboxen in der erklären, wie "nur bei geändertem Ergebnis" zu verstehen ist.
 * FIX: Textanpassung von "Kanalausgang X/Y zu Interner Eingang 3/4"
 * FIX: Zeitschaltuhren Sonnenauf-/-untergang mit Zeitversatz erlauben jetzt nur einen Zeitversatz von &pm;6 Stunden und 59 Minuten. Der früher mögliche Zeitbereich konnte nicht funktionieren. 
+* FIX: Bei internen KO-Verknüpfungen konnte man immer noch "Vom Bus zyklisch lesen" einstellen. Diese Option ist an der stelle falsch und kann nicht mehr ausgewählt werden.
 
 05.09.2023: Firmware 1.5.3, Applikation 1.5
 
@@ -219,6 +221,7 @@ xx.xx.2023: Firmware 2.0.2, Applikation 2.0
 
 ## **Einleitung**
 
+<!-- DOC HelpContext="Dokumentation" -->
 Es gibt bis zu 99 Logikkanäle (abhängig von der Applikation, in die das Logikmodul integriert ist) mit folgenden Features:
 
 Logikfunktionen mit bis zu 2 externen und 2 internen Eingängen
@@ -229,6 +232,7 @@ Logikfunktionen mit bis zu 2 externen und 2 internen Eingängen
 * TOR/Sperre
 * Zeitschaltuhr
 * Schalter
+* RS-Flipflop
 
 Einstellbare Ausgangstrigger
 
@@ -299,21 +303,22 @@ Zeitschaltuhren
 * Jeder Schaltvorgang kann dann wie bei jedem Logikkanal auch alle Ausgangsfunktionen haben
 * Beim Neustart des Logikmoduls den zeitlich letzten Schaltzeitpunkt berechnen und erneut ausgeben
 
-Neu/geändert gibt es folgende Features:
+Weitere Features:
 
-Ein Eingang kann jetzt intern (ohne externe GA) mit jedem KO des Moduls verbunden werden.
+* Ein Eingang kann jetzt intern (ohne externe GA) mit jedem KO des Moduls verbunden werden.
 
-* Das erlaubt große Logiken ohne den Bus Zwischenergebnissen "vollzumüllen"
-* Da jedes KO geht, kann beim Sensormodul oder Enocean-Gateway z.B. direkt ein Sensorausgang verbunden werden und mit Logiken versehen werden.
+  * Das erlaubt große Logiken ohne den Bus Zwischenergebnissen "vollzumüllen"
+  * Da jedes KO geht, kann beim Sensormodul oder Enocean-Gateway z.B. direkt ein Sensorausgang verbunden werden und mit Logiken versehen werden.
 
-Ein Toreingang kann auch ein Impulseingang sein (reagiert nur auf 1, wobei Tor geöffnet und sofort geschlossen wird)
+* Ein Ausgang kann nicht nur über das ihm eigentlich zugeordnete KO, sondern über einen beliebiges anderes KO senden, auch ein KO eines anderen Moduls. Dadurch kann die Logik Funktionalitäten anderer Kanäle erweitern oder mehrere Logikkanäle einen Ausgang nutzen uns somit wie eine "große" Logik funktionieren.
 
-* Erlaubt diskrete getaktete Werte auf den Bus zu senden
-* Kann zur Synchronisation von Werten genutzt werden
+* Ein Toreingang kann auch ein Impulseingang sein (reagiert nur auf 1, wobei Tor geöffnet und sofort geschlossen wird)
 
-Speichern von Werten über einen Stromausfall hinweg wird auch ohne EEPROM unterstützt
+  * Erlaubt diskrete getaktete Werte auf den Bus zu senden
+  * Kann zur Synchronisation von Werten genutzt werden
 
-Senden von gespeicherten Werten nach einem Neustart
+* Speichern von Werten über einen Stromausfall hinweg 
+* Senden von gespeicherten Werten nach einem Neustart
 
 ## **Allgemeine Parameter**
 
@@ -434,11 +439,11 @@ An dieser Stelle kann man die Pinbelegung für Rot/Grün/Blau in verschiedenen P
 Das Logikmodul unterstützt 3 verschiedene Töne bzw. Lautstärken für den Buzzer.
 In den Eingabefeldern kann man die Tonfrequenzen für die einzelnen Töne für Laut/Mittel und Leise angeben. Über die Tonhöhe werden indirekt auch die Lautstärken gesteuert.
 
-## **Logikdokumentation**
+## **Dokumentation**
 
 Eine stichwortartige Abhandlung dieser Dokumentation ist auch in der Applikation enthalten und auf 3 Unterseiten aufgeteilt.
 
-Auf der Seite **Logikdokumentation** wird zunächst die generelle Funktionsweise des Logikmoduls beschrieben.
+Auf der Seite **Dokumentation** wird zunächst die generelle Funktionsweise des Logikmoduls beschrieben.
 
 ### **Eingänge**
 
@@ -451,6 +456,15 @@ Hier werden die Zeitschaltuhr-Funktionen beschrieben.
 ### **Ausgänge**
 
 Hier werden die Funktionsmodule für die Ausgänge beschrieben.
+
+## **Basiseinstellung**
+
+Hier werden Einstellungen vorgenommen, die für das gesamte Logikmodul und alle Kanäle gelten.
+
+<!-- DOC -->
+### **Verfügbare Kanäle**
+
+Um die Applikation übersichtlicher zu gestalten, kann hier ausgewählt werden, wie viele Logikkanäle in der Applikation verfügbar und editierbar sind. Die Maximalanzahl der Kanäle hängt von der Firmware des Gerätes ab, dass das Logikmodul verwendet.
 
 ## **Urlaub/Feiertage**
 
@@ -560,7 +574,7 @@ Es ist nicht möglich, eigene Feiertage in diese Liste aufzunehmen. Deswegen ent
 
 Man kann aber eine (oder mehrere) Jahresschaltuhren dafür verwenden, weitere Feiertage zu definieren und das Ergebnis dieser Zeitschaltuhr auf die Feiertags-GA zu senden.
 
-## **Logikkanäle**
+## **Logiken**
 
 Im Folgenden werden die generellen Konzepte und die grobe Funktion eines Logikkanals beschrieben. Die Parameter eines jeden Kanals werden später im Detail beschrieben.
 
@@ -1151,13 +1165,12 @@ Wird ein Differenzeingang genutzt, sollte dieser nicht auch noch als "normal akt
 <!-- DOC HelpContext="Von-Wert" -->
 <!-- DOCCONTENT
 Hier wird der Von-Wert (also die untere Grenze) eines Wertebereichs angegeben.
--->
+DOCCONTENT -->
 
 <!-- DOC HelpContext="Bis-Wert" -->
 <!-- DOCCONTENT
 Hier wird der Bis-Wert (also die obere Grenze) eines Wertebereichs angegeben.
--->
-
+DOCCONTENT -->
 
 
 ### **Ganzzahlbasierte DPT**
@@ -1187,42 +1200,42 @@ In dem angezeigten Bildschirmausschnitt wird bei den Werten 17, 25 und 40 ein EI
 <!-- DOC HelpContext="Eingang ist EIN bei Wert" -->
 <!-- DOCCONTENT
 Hier wird ein Wert der Werteliste angegeben.
--->
+DOCCONTENT -->
 
 <!-- DOC HelpContext="oder bei Wert" -->
 <!-- DOCCONTENT
 Hier wird ein weiterer Wert der Werteliste angegeben.
--->
+DOCCONTENT -->
 
 <!-- DOC HelpContext="Eingang ist EIN wenn Wert gleich" -->
 <!-- DOCCONTENT
 Hier wird ein zu vergleichender Wert angegeben.
--->
+DOCCONTENT -->
 
 <!-- DOC HelpContext="oder wenn Wert gleich" -->
 <!-- DOCCONTENT
 Hier wird ein weiterer Wert zum Vergleich angegeben.
--->
+DOCCONTENT -->
 
 <!-- DOC HelpContext="Eingang ist EIN bei Szene" -->
 <!-- DOCCONTENT
 Hier wird eine Szene angegeben, die ausgewertet werden soll.
--->
+DOCCONTENT -->
 
 <!-- DOC HelpContext="oder bei Szene" -->
 <!-- DOCCONTENT
 Hier wird eine weitere Szene angegeben, die ausgewertet werden soll.
--->
+DOCCONTENT -->
 
 <!-- DOC HelpContext="Nächste Zeile auswerten" -->
 <!-- DOCCONTENT
 Wird die Checkbox angeklickt, wird die Zeile mit dem Wert ausgewertet, sonst nicht.
--->
+DOCCONTENT -->
 
 <!-- DOC HelpContext="Eingang ist konstant" -->
 <!-- DOCCONTENT
 Der Eingang wird mit diesem konstanten Wert vorbelegt (z.B. um in Formeln weiter verrechnet zu werden).
--->
+DOCCONTENT -->
 
 
 #### **Konstanten**
@@ -1313,6 +1326,8 @@ Der Eingang wird konstant mit einer 1 vorbelegt und hat somit sofort einen defin
 
 <!-- DOC HelpContext="Eingang wird gelesen alle" -->
 ### **Eingang wird alle n Sekunden gelesen (0=nicht zyklisch lesen)**
+
+Erscheint nur, wenn bei "Kommunikationsobjekt für Eingang" der Wert "Neues KO erzeugen" ausgewählt ist.
 
 Manche Geräte können nicht von sich aus zyklisch senden. Hier kann man einstellen, dass ein Eingang aktiv den Wert zyklisch liest. In den Feld kann man angeben, wie viele Sekunden zwischen 2 Leseintervallen vergehen sollen.
 
@@ -1534,12 +1549,12 @@ Bei Sonnenstandsangaben (Winkel über/unter dem Horizont) wird in dieser Spalte 
 <!-- DOC HelpContext="Sonnen auf-/untergang" -->
 <!-- DOCCONTENT 
 In dieser Spalte werden Stunden eingestellt als Versatz zum Sonnenauf- oder -untergang.
--->
+DOCCONTENT -->
 
 <!-- DOC HelpContext="Grad" -->
 <!-- DOCCONTENT 
 In dieser Spalte wird der Sonnenwinkel über oder unter dem Horizont eingestellt als Winkel in Grad.
--->
+DOCCONTENT -->
 
 <!-- DOC HelpContext="Minute" -->
 ### **Spalte: Minute**
@@ -2123,12 +2138,12 @@ Das Logikmodul enthält eine Implementierung zur Verwendung von einfachen (bzw. 
 <!-- DOC HelpContext="Wert für EIN ermitteln als" -->
 <!-- DOCCONTENT 
 Der Wert des Ausgangs wird ermittelt durch die Berechnung der eingestellten Funktion.
--->
+DOCCONTENT -->
 
 <!-- DOC HelpContext="Wert für AUS ermitteln als" -->
 <!-- DOCCONTENT 
 Der Wert des Ausgangs wird ermittelt durch die Berechnung der eingestellten Funktion.
--->
+DOCCONTENT -->
 
 ### **Berechnungszeitpunkt**
 
