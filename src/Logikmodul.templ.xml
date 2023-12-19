@@ -1101,10 +1101,10 @@
                     </ParameterBlock>
                     <ParameterRefRef RefId="%AID%_UP-%TT%%CC%166_R-%TT%%CC%16601" HelpContext="%DOC%" IndentLevel="1" />
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
-                    <!-- <Module Id="%AID%_MD-%TT%00001_M-%C%" RefId="%AID%_MD-%TT%00001" /> -->
+                    <Module Id="%AID%_MD-%TT%00001_M-%C%" RefId="%AID%_MD-%TT%00001" />
 
-                    <ParameterRefRef RefId="%AID%_P-%TT%%CC%439_R-%TT%%CC%43901"  HelpContext="%DOC%" IndentLevel="1" />
-                    <Button Id="%AID%_B-%TT%%CC%001" Text="Alle '\n' im Text durch neue Zeile(n) ersetzen" EventHandler="newline" EventHandlerParameters="{ &quot;textbox&quot;:&quot;LOG_f%C%Kommentar&quot; }" />
+                    <!-- <ParameterRefRef RefId="%AID%_P-%TT%%CC%439_R-%TT%%CC%43901"  HelpContext="%DOC%" IndentLevel="1" />
+                    <Button Id="%AID%_B-%TT%%CC%001" Text="Alle '\n' im Text durch neue Zeile(n) ersetzen" EventHandler="newline" EventHandlerParameters="{ &quot;textbox&quot;:&quot;LOG_f%C%Kommentar&quot; }" /> -->
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Logikdefinition" UIHint="Headline" />
                     <ParameterRefRef RefId="%AID%_P-%TT%%CC%003_R-%TT%%CC%00301" HelpContext="%DOC%" IndentLevel="1" />
