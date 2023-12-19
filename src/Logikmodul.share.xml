@@ -1029,16 +1029,19 @@
           </Static>
           <Dynamic>
             <Channel Name="MainChannel" Text="Logiken" Number="%TT%" Id="%AID%_CH-%TT%" Icon="blur" HelpContext="Empty">
-              <!-- <ParameterBlock Name="Init" Id="%AID%_PB-nnn" Inline="true">
-              </ParameterBlock> -->
+              <ParameterBlock Name="Init" Id="%AID%_PB-nnn" Inline="true">
+                <!-- Hope this is enough for activating the following parameter -->
+                <ParameterRefRef RefId="%AID%_P-%TT%00163_R-%TT%0016301" />
+                <!-- Buzzer installed? -->
+                <ParameterRefRef RefId="%AID%_UP-%TT%00035_R-%TT%0003501" />
+                <!-- RGB-LED installed? -->
+                <ParameterRefRef RefId="%AID%_UP-%TT%00036_R-%TT%0003601" />
+              </ParameterBlock>
               <ParameterBlock Name="Docu" Text="Dokumentation" Id="%AID%_PB-nnn" Icon="information-outline" HelpContext="LOG-Dokumentation">
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="Version des Logikmoduls: %ModuleVersion%" UIHint="Headline" />
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Dokumentation" UIHint="Headline" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Die Dokumentation ist als Kontextsensitive Hilfe verfügbar, siehe den Text im unteren Bereich des Bildschirms." />
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="" />
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="Eine Applikationsbeschreibung ist unter folgendem Link verfügbar: https://github.com/OpenKNX/OFM-LogicModule/blob/v1/doc/Applikationsbeschreibung-Logik.md " />
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="" />
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="Weitere Produktinformationen sind in unserem Wiki verfügbar: https://github.com/OpenKNX/OpenKNX/wiki/Produktinfo-Logikmodul" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Version des Logikmoduls: %ModuleVersion%" UIHint="Headline" />
               </ParameterBlock>
               <ParameterBlock Id="%AID%_PB-nnn" Name="Settings" Text="Basiseinstellung" Icon="cog-outline" HelpContext="Empty">
                 <!-- Hope this is enough for activating the following parameter -->

@@ -1091,11 +1091,11 @@
                       </Rows>
                       <Columns>
                         <Column Id="%AID%_PB-nnn_C-1" Name="Col1" Width="1%" />
-                        <Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="45%" />
+                        <Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="44%" />
                         <Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="15%" />
                         <Column Id="%AID%_PB-nnn_C-4" Name="Col4" Width="20%" />
                       </Columns>
-                      <ParameterSeparator Id="%AID%_PS-nnn" Text=" Zeit bis der Kanal nach einem Neustart aktiv wird" Cell="1,2" />
+                      <ParameterSeparator Id="%AID%_PS-nnn" Text=" Zeit bis der Kanal nach einem&#10; Neustart aktiv wird" Cell="1,2" />
                       <ParameterRefRef RefId="%AID%_UP-%TT%%CC%382_R-%TT%%CC%38201" Cell="1,3" HelpContext="%DOC%" />
                       <ParameterRefRef RefId="%AID%_UP-%TT%%CC%381_R-%TT%%CC%38101" Cell="1,4" HelpContext="%DOC%" />
                     </ParameterBlock>
@@ -1286,7 +1286,7 @@
                                             <Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="15%" />
                                             <Column Id="%AID%_PB-nnn_C-4" Name="Col4" Width="20%" />
                                           </Columns>
-                                          <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingang wird gelesen alle&#10;(0 = nicht zyklisch lesen)" Cell="1,2" />
+                                          <ParameterSeparator Id="%AID%_PS-nnn" Text=" Eingang wird gelesen alle&#10; (0 = nicht zyklisch lesen)" Cell="1,2" />
                                           <ParameterRefRef RefId="%AID%_UP-%TT%%CC%384_R-%TT%%CC%38401" Cell="1,3" HelpContext="%DOC%" IndentLevel="1" />
                                           <ParameterRefRef RefId="%AID%_UP-%TT%%CC%383_R-%TT%%CC%38301" Cell="1,4" HelpContext="%DOC%" IndentLevel="1" />
                                         </ParameterBlock>
@@ -1952,7 +1952,7 @@
                                                 <Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="15%" />
                                                 <Column Id="%AID%_PB-nnn_C-4" Name="Col4" Width="20%" />
                                               </Columns>
-                                              <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingang wird gelesen alle&#10;(0 = nicht zyklisch lesen)" Cell="1,2" />
+                                              <ParameterSeparator Id="%AID%_PS-nnn" Text=" Eingang wird gelesen alle&#10; (0 = nicht zyklisch lesen)" Cell="1,2" />
                                               <ParameterRefRef RefId="%AID%_UP-%TT%%CC%384_R-%TT%%CC%38401" Cell="1,3" HelpContext="%DOC%" />
                                               <ParameterRefRef RefId="%AID%_UP-%TT%%CC%383_R-%TT%%CC%38301" Cell="1,4" HelpContext="%DOC%" />
                                             </ParameterBlock>
@@ -2074,7 +2074,7 @@
                                             <Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="15%" />
                                             <Column Id="%AID%_PB-nnn_C-4" Name="Col4" Width="20%" />
                                           </Columns>
-                                          <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingang wird gelesen alle&#10;(0 = nicht zyklisch lesen)" Cell="1,2" />
+                                          <ParameterSeparator Id="%AID%_PS-nnn" Text=" Eingang wird gelesen alle&#10; (0 = nicht zyklisch lesen)" Cell="1,2" />
                                           <ParameterRefRef RefId="%AID%_UP-%TT%%CC%386_R-%TT%%CC%38601" Cell="1,3" HelpContext="%DOC%" />
                                           <ParameterRefRef RefId="%AID%_UP-%TT%%CC%385_R-%TT%%CC%38501" Cell="1,4" HelpContext="%DOC%" />
                                         </ParameterBlock>
@@ -2745,7 +2745,7 @@
                                                 <Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="15%" />
                                                 <Column Id="%AID%_PB-nnn_C-4" Name="Col4" Width="20%" />
                                               </Columns>
-                                              <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingang wird gelesen alle&#10;(0 = nicht zyklisch lesen)" Cell="1,2" />
+                                              <ParameterSeparator Id="%AID%_PS-nnn" Text=" Eingang wird gelesen alle&#10; (0 = nicht zyklisch lesen)" Cell="1,2" />
                                               <ParameterRefRef RefId="%AID%_UP-%TT%%CC%386_R-%TT%%CC%38601" Cell="1,3" HelpContext="%DOC%" />
                                               <ParameterRefRef RefId="%AID%_UP-%TT%%CC%385_R-%TT%%CC%38501" Cell="1,4" HelpContext="%DOC%" />
                                             </ParameterBlock>
@@ -3213,8 +3213,8 @@
                                 <Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="44%" />
                                 <Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="54%" />
                               </Columns>
-                              <ParameterSeparator Id="%AID%_PS-nnn" Text="Kommunikationsobjekt für Ausgang" Cell="1,2" />
-                              <ParameterSeparator Id="%AID%_PS-nnn" Text="%K2%" Cell="1,3" />
+                              <ParameterSeparator Id="%AID%_PS-nnn" Text=" Kommunikationsobjekt für Ausgang" Cell="1,2" />
+                              <ParameterSeparator Id="%AID%_PS-nnn" Text=" %K2%" Cell="1,3" />
                             </ParameterBlock>
                             <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                             <ParameterSeparator Id="%AID%_PS-nnn" Text="Die folgenden Blöcke können den Ausgangswert beeinflussen. Sie werden - sofern aktiv - in der hier aufgeführten Reihnfolge ausgeführt" />
