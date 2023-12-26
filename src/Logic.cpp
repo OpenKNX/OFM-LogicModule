@@ -326,6 +326,7 @@ void Logic::showHelp()
 {
     openknx.console.printHelpLine("logic chNN", "List logic channel NN, i.e. logic ch05");
     openknx.console.printHelpLine("logic time", "Print current time");
+    openknx.console.printHelpLine("logic easter", "Print calculated easter sunday date");
     openknx.console.printHelpLine("logic sun", "Print sunrise and sunset times");
     openknx.console.printHelpLine("logic sun+DDMM", "Print sunrise/sunset at elevation +/- degree/minute");
 }

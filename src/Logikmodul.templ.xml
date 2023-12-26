@@ -8,7 +8,7 @@
           <Static>
             <Parameters>
               <Parameter Id="%AID%_P-%TT%%CC%001" Name="f%C%Name" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung des Kanals" Value="" />
-              <Parameter Id="%AID%_P-%TT%%CC%439" Name="f%C%Kommentar" ParameterType="%AID%_PT-Text512Byte" Text="Kommentar" Value="" />
+              <!-- <Parameter Id="%AID%_P-%TT%%CC%439" Name="f%C%Kommentar" ParameterType="%AID%_PT-Text512Byte" Text="Kommentar" Value="" /> -->
               <!-- <Parameter Id="%AID%_P-%TT%%CC%002" Name="f%C%ChannelDelay" ParameterType="%AID%_PT-DelaySeconds" Text="Zeit bis der Kanal nach einem Neustart aktiv wird" SuffixText="Sekunden" Value="1">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="0" BitOffset="0" />
               </Parameter> -->
@@ -1024,7 +1024,7 @@
               <ParameterRef Id="%AID%_UP-%TT%%CC%436_R-%TT%%CC%43601" RefId="%AID%_UP-%TT%%CC%436" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%437_R-%TT%%CC%43701" RefId="%AID%_UP-%TT%%CC%437" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%438_R-%TT%%CC%43801" RefId="%AID%_UP-%TT%%CC%438" />
-              <ParameterRef Id="%AID%_P-%TT%%CC%439_R-%TT%%CC%43901" RefId="%AID%_P-%TT%%CC%439" />
+              <!-- <ParameterRef Id="%AID%_P-%TT%%CC%439_R-%TT%%CC%43901" RefId="%AID%_P-%TT%%CC%439" /> -->
             </ParameterRefs>
             <ComObjectTable>
               <ComObject Id="%AID%_O-%TT%%CC%000" Name="KOf%C%E1" Text="Eingang 1" Number="%K0%" FunctionText="Logik %C%, Eingang 1" ObjectSize="4 Bytes" ReadFlag="Disabled" WriteFlag="Enabled"  CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled"  ReadOnInitFlag="Disabled" />

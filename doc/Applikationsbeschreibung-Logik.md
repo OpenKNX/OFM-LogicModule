@@ -12,12 +12,7 @@ cSpell:words mgeramb ambiente Ambientenbeleuchtung
 
 Die Applikation Logik erlaubt eine Parametrisierung von Logikkanälen mit der ETS.
 
-Sie ist in die Bereiche
-
-* Allgemeine Parameter
-* Logikkanäle
-
-gegliedert, wobei die Logikkanäle wiederum in bis zu 99 Kanäle untergliedert sind. Die real verfügbare Anzahl von Logikkanälen hängt von der konkreten ETS-Applikation ab, die die Logikapplikation nutzt.
+Es können bis zu 99 Logikkanäle angeboten sein. Die real verfügbare Anzahl von Logikkanälen hängt von der konkreten ETS-Applikation ab, die das OpenKNX Logikmodul nutzt.
 Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweiligen Dokumentation erfolgt in [ETS Konfiguration](#ets-konfiguration).
 
 ## Inhalte
@@ -25,7 +20,7 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 * [Änderungshistorie](#änderungshistorie)
 * [Einleitung](#einleitung)
 * Grundlegende Konzepte
-  * [Logikkanäle](#logikkanäle)
+  * [Logiken](#logiken)
     * [Zeitschaltuhren](#zeitschaltuhren)
     * [Startverhalten](#startverhalten)
     * [Übersicht typische abgebildete KNX-Funktionen](#zusammenfassung)
@@ -42,20 +37,13 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 
 ### ETS Konfiguration
 
-* **+ [ Allgemeine Parameter](#allgemeine-parameter)**
-  * [Gerätestart](#gerätestart)
-  * [Installierte Hardware](#installierte-hardware)
-  * [**Experteneinstellungen**](#experteneinstellungen)
+* **+ [ Allgemein](#allgemein)**
 * **+ Logiken**
   * [**+ Dokumentation**](#dokumentation)
-    * [**Eingänge**](#eing%C3%A4nge)
-    * [**Zeitschaltuhren**](#zeitschaltuhren)
-    * [**Ausgänge**](#ausg%C3%A4nge)
-  * [**Urlaub/Feiertage** (und andere zeitabhängige Einstellungen)](#urlaubfeiertage)
-    * [Zeit (inkl Sonnenstand und Sommer/Winterzeit)](#zeit)
+  * **Urlaub/Feiertage**
     * [Urlaub](#urlaub)
     * [Feiertage](#feiertage)
-  * [**+ Logik n: ...** (n=1 bis 99)](#logik-n-)
+  * [**+ Logik n: ...** (n=1 bis 99)](#logik-n)
     * [Kanaldefinition](#kanaldefinition)
     * [Logikdefinition](#logikdefinition)
     * [Logikauswertung](#logikauswertung)
@@ -64,7 +52,7 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
     * [**Eingang 1/2: Wert**](#eingang-1-unbenannt--eingang-2-unbenannt)
       * [Eingangskonverter](#eingangskonverter)
       * [Eingangswert vorbelegen](#eingangswert-vorbelegen)
-    * [**Kanalausgänge verbinden** (Interne Eingänge)](#kanalausgänge-verbinden)
+    * [**Interne Eingänge**](#interne-eingänge)
     * [**Schaltzeiten: ...** (Zeitschaltuhr)](#schaltzeiten-unbenannt)
       * [Tagesschaltuhr](#schaltzeitpunkte-tagesschaltuhr)
       * [Jahresschaltuhr](#schaltzeitpunkte-jahresschaltuhr)
@@ -73,13 +61,13 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
       * [Ein-/Ausschaltverzögerung](#ein-ausschaltverzögerung)
       * [Wiederholungsfilter](#wiederholungsfilter)
       * [Zyklisch senden](#zyklisch-senden)
-      * [Interne Eingänge](#interne-eingänge)
+      * [Interne Eingänge](#interne-eingc3a4nge-1)
       * [Wert für Ausgang](#wert-für-ausgang)
         * [ReadRequest senden](#ja---readrequest-senden)
         * [Gerät zurücksetzen senden](#ja---ger%C3%A4t-zur%C3%BCcksetzen-senden)
           * [Physikalische Adresse](#physikalische-adresse)
         * [Tonwiedergabe (Buzzer)](#ja---tonwiedergabe-buzzer)
-          * [Alarmausgabe (Buzzer oder Sperre trotz Sperre schalten)?](#alarmausgabe-buzzer-oder-sperre-trotz-sperre-schalten) 
+          * [Alarmausgabe (Buzzer oder Sperre trotz Sperre schalten)?](#alarmausgabe-buzzer-oder-led-trotz-sperre-schalten) 
         * [RGB-LED schalten](#ja---rgb-led-schalten)
           * [LED-Farbe festlegen (Schwarz=aus)](#led-farbe-festlegen-schwarzaus) 
         * [Formeln](#formeln)
@@ -90,12 +78,12 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 
 Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer das Gesamtdokument lesen muss, um Neuerungen zu erfahren.
 
-xx.xx.2023: Firmware 3.0.0, Applikation 3.0
+xx.xx.2023: Firmware 3.0.5, Applikation 3.0
 
 * NEU: Die Firmware kann jetzt über den KNX-Bus aktualisiert werden (nur bei RP2040-Prozessor aka Raspberry Pi Pico)
 * NEU: Die Firmware kann jetzt auch auf reinen IP-Geräten eingesetzt werden und als Logikmodul-IP genutzt werden
 * NEU: Output Converter "Wert eines KO senden" eingeführt
-* NEU: Zusätzliche Infoboxen in der erklären, wie "nur bei geändertem Ergebnis" zu verstehen ist.
+* NEU: Zusätzliche Infoboxen, die erklären, wie "nur bei geändertem Ergebnis" zu verstehen ist.
 * FIX: Textanpassung von "Kanalausgang X/Y zu Interner Eingang 3/4"
 * FIX: Zeitschaltuhren Sonnenauf-/-untergang mit Zeitversatz erlauben jetzt nur einen Zeitversatz von &pm;6 Stunden und 59 Minuten. Der früher mögliche Zeitbereich konnte nicht funktionieren. 
 * FIX: Bei internen KO-Verknüpfungen konnte man immer noch "Vom Bus zyklisch lesen" einstellen. Diese Option ist an der stelle falsch und kann nicht mehr ausgewählt werden.
@@ -326,142 +314,17 @@ Eine Applikationsbeschreibung ist unter folgendem Link verfügbar: https://githu
 Weitere Produktinformationen sind in unserem Wiki verfügbar: https://github.com/OpenKNX/OpenKNX/wiki/Produktinfo-Logikmodul
 DOCCONTENT -->
 
-## **Allgemeine Parameter**
+## **Allgemein**
 
-<kbd>![Allgemeine Parameter](pics/AllgemeineParameter.PNG)</kbd>
+Das Logikmodul hat auch eine eigene ETS-Applikation, die es erlaubt, das Logikmodul ohne Einbettung in eine andere Applikation zu verwenden. In diesem Fall hat es eine Seite mit allgemeinen Parametern, die unter [Applikationsbeschreibung-Common](https://github.com/OpenKNX/OGM-Common/blob/v1/doc/Applikationsbeschreibung-Common.md) beschrieben sind. 
 
 Hier werden Einstellungen getroffen, die die generelle Arbeitsweise des Gerätes bestimmen.
 
-Die Seite "Allgemeine Parameter" sieht bei jeder ETS-Applikation, die das Logikmodul verwendet, unterschiedlich aus, immer passend zu der verwendeten Hardwarekomponente, für die die ETS-Applikation geschrieben wurde. Somit müssen nicht alle im Folgenden aufgeführten Punkte vorhanden sein.
-
-## Gerätestart
-
-<!-- DOC -->
-### **Zeit bis das Gerät nach einem Neustart aktiv wird**
-
-Hier kann man festlegen, wie viel Zeit vergehen soll, bis das Gerät nach einem Neustart seine Funktion aufnimmt. Dabei ist es egal, ob der Neustart durch einen Busspannungsausfall, einen Reset über den Bus, durch ein Drücken der Reset-Taste oder durch den Watchdog ausgelöst wurde.
-
-Da das Gerät prinzipiell (sofern parametriert) auch Lesetelegramme auf den Bus senden kann, kann mit dieser Einstellung verhindert werden, dass bei einem Busneustart von vielen Geräten viele Lesetelegramme auf einmal gesendet werden und so der Bus überlastet wird.
-
-**Anmerkung:** Auch wenn man hier technisch bis zu 16.000 Stunden Verzögerung angeben kann, sind nur Einstellungen im Sekundenbereich sinnvoll.
-
-<!-- DOC -->
-### **In Betrieb senden alle**
-
-Das Gerät kann einen Status "Ich bin noch in Betrieb" über das KO 1 senden. Hier wird das Sendeintervall eingestellt.
-
-Sollte hier eine 0 angegeben werden, wird kein "In Betrieb"-Signal gesendet und das KO 1 steht nicht zur Verfügung.
-
-<!-- DOC -->
-### **Uhrzeit und Datum empfangen über**
-
-Dieses Gerät kann Uhrzeit und Datum vom Bus empfangen. Dabei kann man wählen, ob man Uhrzeit über ein Kommunikationsobjekt und das Datum über ein anders empfangen will oder beides, Uhrzeit und Datum, über ein kombiniertes Kommunikationsobjekt.
-
-#### **Zwei getrennte KO Uhrzeit und Datum**
-
-Wählt man diesen Punkt, wird je ein Kommunikationsobjekt für Uhrzeit (DPT 10) und Datum (DPT 11) bereitgestellt. Der KNX-Zeitgeber im System muss die Uhrzeit und das Datum für die beiden Kommunikationsobjekte liefern können.
-
-#### **Ein kombiniertes KO Uhrzeit/Datum**
-
-Wählt man diesen Punkt, wir ein kombiniertes Kommunikationsobjekt für Uhrzeit/Datum (DPT 19) bereitgestellt. Der KNX-Zeitgeber im System muss die kombinierte Uhrzeit/Datum entsprechend liefern können.
-
-<!-- DOC -->
-### **Uhrzeit und Datum nach einem Neustart vom Bus lesen**
-
-Nach einem Neustart können Uhrzeit und Datum auch aktiv über Lesetelegramme abgefragt werden. Mit diesem Parameter wird bestimmt, ob Uhrzeit und Datum nach einem Neustart aktiv gelesen werden.
-
-Wenn dieser Parameter gesetzt ist, wird die Uhrzeit und das Datum alle 20-30 Sekunden über ein Lesetelegramm vom Bus gelesen, bis eine entsprechende Antwort kommt. Falls keine Uhr im KNX-System vorhanden ist oder die Uhr nicht auf Leseanfragen antworten kann, sollte dieser Parameter auf "Nein" gesetzt werden.
-
-### **Installierte Hardware**
-
-Die Firmware im Logikmodul unterstützt eine Vielzahl an Hardwarevarianten. Um nicht für jede Hardwarekombination ein eigenes Applikationsprogramm zu benötigen, kann über die folgenden Felder die Hardwareausstattung des Logikmoduls bestimmt werden.
-
-Die Angaben in diesem Teil müssen der vorhandenen Hardware entsprechen, da sie das Verhalten der Applikation und auch der Firmware bestimmen. Das Applikationsprogramm hat keine Möglichkeit, die Korrektheit der Angaben zu überprüfen.
-
-Falsche Angaben können zu falschen Konfigurationen der Applikation und somit zum Fehlverhalten des Logikmoduls führen.
-
-<!-- DOC -->
-#### **Akustischer Signalgeber vorhanden (Buzzer)?**
-
-Das Logikmodul unterstützt auch die Ausgabe von Pieptönen mittels eines Buzzers. Mit einem Haken in diesem Feld wird angegeben, ob ein Buzzer installiert ist.
-
-Gleichzeitig wird ein Kommunikationsobjekt freigeschaltet, mit dem man die Soundausgabe sperren kann. Damit kann man verhindern, dass z.B. nachts Töne ausgegeben werden.
-
-<!-- DOC -->
-#### **Optischer Signalgeber vorhanden (RGB-LED)?**
-
-Das Logikmodul unterstützt auch die Ausgabe eines Lichtsignals mittels einer RGB-LED. Mit einem Haken in diesem Feld wird angegeben, ob eine RGB-LED installiert ist.
-
-Gleichzeitig wird ein Kommunikationsobjekt freigeschaltet, mit dem man die Lichtausgabe sperren kann. Damit kann man verhindern, dass z.B. nachts die LED leuchtet. Oder man schaltet die LED nur bei Präsenz ein und schont damit die Leuchtkraft der LED.
-
-## **Experteneinstellungen**
-
-<kbd>![Experteneinstellungen](pics/Experteneinstellungen.png)</kbd>
-
-Auf dieser Seite werden Einstellungen vorgenommen, die nicht so häufig gebraucht werden und die technisches Detailwissen erfordern
-
-### **Watchdog**
-
-Trotz hohen Qualitätsansprüchen, vielfältigen Tests und langem produktiven Einsatz kann man nie ausschließen, dass noch Fehler in der Firmware enthalten sind. Besonders ärgerlich sind Fehler, die ein Hardwaremodul zum hängen bringen und so die Funktion eingestellt wird.
-
-Das Logikmodul bringt einen Watchdog mit, welcher es erlaubt, in Situationen, die einem "Hänger" entsprechen, die Hardware automatisch neu zu starten.
-
-Der Vorteil eines Watchdog ist, dass er vor allem sporadische und selten vorkommende "Hänger" beseitigt, meist ohne dass man es merkt.
-
-Der Nachteil ist, dass damit Fehler/Probleme verschleiert und umgangen werden, die besser an die Entwickler gemeldet und von ihnen gelöst werden sollten.
-
-Damit der Watchdog funktioniert, muss bereits die Firmware mit der Einstellung
-
-    -D WATCHDOG
-
-in der platformio.ini gebaut worden sein (siehe Installationsanleitung).
-
-<!-- DOC -->
-#### **Watchdog aktivieren**
-
-Mit einem 'Ja' wird der Watchdog eingeschaltet.
-
-### **Diagnose**
-
-Man kann mit dem Logikmodul ein Diagnoseobjekt (KO 7) einschalten. Dieses Diagnoseobjekt ist primär zum Debuggen vorhanden, kann aber auch einem User bei einigen Fragen weiter helfen.
-
-Die Grundidee vom Diagnoseobjekt: Man sendet mit der ETS Kommandos an das KO 7 und bekommt eine entsprechende Antwort. Derzeit sind nur wenige Kommandos für die Nutzung durch den Enduser geeignet, allerdings werden im Laufe der Zeit immer weitere Kommandos hinzukommen und werden im Kapitel Diagnoseobjekt beschrieben.
-
-<!-- DOC -->
-#### **Diagnoseobjekt anzeigen**
-
-Mit einem 'Ja' wird das KO 7 'Diagnoseobjekt' freigeschaltet.
-
-<!-- DOC HelpContext="Loetpad-A--B--C-entspricht" -->
-### **RGB-LED**
-
-Da RGB-LED unterschiedliche Pin-Belegungen für die Farben Rot, Grün und Blau haben, kann es passieren, dass man nach dem anlöten der LED feststellt, dass man falsche Farben präsentiert bekommt.
-
-An dieser Stelle kann man die Pinbelegung für Rot/Grün/Blau in verschiedenen Permutationen einstellen und so softwareseitig mögliche Belegungsprobleme beseitigen.
-
-<!-- DOC -->
-### **Buzzer**
-
-Das Logikmodul unterstützt 3 verschiedene Töne bzw. Lautstärken für den Buzzer.
-In den Eingabefeldern kann man die Tonfrequenzen für die einzelnen Töne für Laut/Mittel und Leise angeben. Über die Tonhöhe werden indirekt auch die Lautstärken gesteuert.
-
 ## **Dokumentation**
 
-Eine stichwortartige Abhandlung dieser Dokumentation ist auch in der Applikation enthalten und auf 3 Unterseiten aufgeteilt.
+Eine stichwortartige Liste der vorhandenen Möglichkeiten ist auch in der Applikation verfügbar. Ferner ist zu jedem Eingabefeld eine Kontextsensitive Hilfe vorhanden.
 
-Auf der Seite **Dokumentation** wird zunächst die generelle Funktionsweise des Logikmoduls beschrieben.
-
-### **Eingänge**
-
-Hier werden die Funktionsmodule für die Eingänge beschrieben.
-
-### **Zeitschaltuhren**
-
-Hier werden die Zeitschaltuhr-Funktionen beschrieben.
-
-### **Ausgänge**
-
-Hier werden die Funktionsmodule für die Ausgänge beschrieben.
+Auf dieser Seite wird auch die Applikationsversion des Logikmoduls ausgegeben.
 
 ## **Basiseinstellung**
 
@@ -471,61 +334,6 @@ Hier werden Einstellungen vorgenommen, die für das gesamte Logikmodul und alle 
 ### **Verfügbare Kanäle**
 
 Um die Applikation übersichtlicher zu gestalten, kann hier ausgewählt werden, wie viele Logikkanäle in der Applikation verfügbar und editierbar sind. Die Maximalanzahl der Kanäle hängt von der Firmware des Gerätes ab, dass das Logikmodul verwendet.
-
-## **Urlaub/Feiertage**
-
-Das Logikmodul hat eine Zeitschaltuhr-Funktion, die einige globale Einstellungen erfordert.
-
-### **Zeit**
-
-<kbd>![Zeitangaben](pics/Zeit.PNG)</kbd>
-
-Für die korrekte Berechnung der Zeit für Sonnenauf- und -untergang werden die genauen Koordinaten des Standorts benötigt sowie auch die Zeitzone und die Information, ob gerade die Sommerzeit aktiv ist.
-
-Die Geo-Koordinaten können bei Google Maps nachgeschaut werden, indem man mit der rechten Maustaste auf das Objekt klickt und die unten erscheinenden Koordinaten benutzt.
-
-Die Standard-Koordinaten stehen für Frankfurt am Main, Innenstadt.
-
-Ob gerade die Sommerzeit aktiv ist, kann dem Logikmodul auf unterschiedliche Arten mitgeteilt werden. Diese Information wird benötigt, da für die Berechnung der Zeiten von Sonnenauf- und -untergang immer in UTC erfolgt. 
-Zu dieser UTC-Zeit wird dann entsprechend die Zeitzone und die Sommerzeit hinzuaddiert.
-
-> Information: Für Deutschland kann die Sommerzeit auch lokal vom Logikmodul berechnet werden.
-
-<!-- DOC -->
-#### **Breitengrad**
-
-In dem Feld wird der Breitengrad des Standortes eingegeben.
-
-<!-- DOC -->
-#### **Längengrad**
-
-In dem Feld wird der Längengrad des Standortes eingegeben.
-
-<!-- DOC -->
-#### **Zeitzone**
-
-Für die korrekte Berechnung der Zeit wird die Zeitzone des Standortes benötigt.
-
-<!-- DOC -->
-#### **Sommerzeit ermitteln durch**
-
-Hier kann man eine der verfügbaren Möglichkeiten auswählen, mit der das Logikmodul ermitteln kann, ob gerade die Sommerzeit aktiv ist.
-
-##### **Kommunikationsobjekt 'Sommerzeit aktiv'**
-
-Wird diese Option ausgewählt, muss über das Kommunikationsobjekt 'Sommerzeit aktiv' dem Logikmodul mitgeteilt werden, ob gerade die Sommerzeit aktiv ist.
-
-##### **Kombiniertem Datum/Zeit-KO (DPT 19)**
-
-Erscheint nur, wenn der Datum- bzw. Zeitempfang über ein kombiniertes Datum/Zeit-KO (DPT 19) gewählt worden ist.
-
-Wenn der Datum- bzw. Zeitempfang über ein kombiniertes Datum/Zeit-KO (DPT 19) gewählt worden ist, kann dieses Zeittelegramm auch die Information enthalten, ob gerade die Sommerzeit aktiv ist. Wenn der Zeitgeber im System diese Information mit dem DPT 19-Telegramm mitschicken kann, sollte diese Option gewählt werden.
-
-##### **Interne Berechnung (nur für Deutschland)**
-
-Erscheint nur, wenn die Zeitzone 'Berlin' gewählt worden ist.
-
-Diese Option kann nur für Deutschland genutzt werden. Sie ist nicht zu verwenden, falls man in der selben Zeitzone wie Deutschland ist, aber in einem anderen Land.
 
 ### **Urlaub**
 
@@ -579,6 +387,43 @@ Durch Auswahlfelder kann bestimmt werden, ob dieser Feiertag bei der Feiertagsin
 Es ist nicht möglich, eigene Feiertage in diese Liste aufzunehmen. Deswegen enthält die Liste auch eher unübliche Feiertage wie Rosenmontag oder 1 Advent, da diese Tage beweglich sind und somit berechnet werden müssen.
 
 Man kann aber eine (oder mehrere) Jahresschaltuhren dafür verwenden, weitere Feiertage zu definieren und das Ergebnis dieser Zeitschaltuhr auf die Feiertags-GA zu senden.
+
+### **Installierte Hardware**
+
+Erscheint nur für das Logikmodul als eigenständige Applikation.
+
+Die Firmware im Logikmodul unterstützt eine Vielzahl an Hardwarevarianten. Um nicht für jede Hardwarekombination ein eigenes Applikationsprogramm zu benötigen, kann über die folgenden Felder die Hardwareausstattung des Logikmoduls bestimmt werden.
+
+Die Angaben in diesem Teil müssen der vorhandenen Hardware entsprechen, da sie das Verhalten der Applikation und auch der Firmware bestimmen. Das Applikationsprogramm hat keine Möglichkeit, die Korrektheit der Angaben zu überprüfen.
+
+Falsche Angaben können zu falschen Konfigurationen der Applikation und somit zum Fehlverhalten des Logikmoduls führen.
+
+<!-- DOC -->
+#### **Akustischer Signalgeber vorhanden (Buzzer)?**
+
+Das Logikmodul unterstützt auch die Ausgabe von Pieptönen mittels eines Buzzers. Mit einem Haken in diesem Feld wird angegeben, ob ein Buzzer installiert ist.
+
+Gleichzeitig wird ein Kommunikationsobjekt freigeschaltet, mit dem man die Soundausgabe sperren kann. Damit kann man verhindern, dass z.B. nachts Töne ausgegeben werden.
+
+<!-- DOC -->
+#### **Optischer Signalgeber vorhanden (RGB-LED)?**
+
+Das Logikmodul unterstützt auch die Ausgabe eines Lichtsignals mittels einer RGB-LED. Mit einem Haken in diesem Feld wird angegeben, ob eine RGB-LED installiert ist.
+
+Gleichzeitig wird ein Kommunikationsobjekt freigeschaltet, mit dem man die Lichtausgabe sperren kann. Damit kann man verhindern, dass z.B. nachts die LED leuchtet. Oder man schaltet die LED nur bei Präsenz ein und schont damit die Leuchtkraft der LED.
+
+<!-- DOC HelpContext="Loetpad-A--B--C-entspricht" -->
+### **RGB-LED**
+
+Da RGB-LED unterschiedliche Pin-Belegungen für die Farben Rot, Grün und Blau haben, kann es passieren, dass man nach dem anlöten der LED feststellt, dass man falsche Farben präsentiert bekommt.
+
+An dieser Stelle kann man die Pinbelegung für Rot/Grün/Blau in verschiedenen Permutationen einstellen und so softwareseitig mögliche Belegungsprobleme beseitigen.
+
+<!-- DOC -->
+### **Buzzer**
+
+Das Logikmodul unterstützt 3 verschiedene Töne bzw. Lautstärken für den Buzzer.
+In den Eingabefeldern kann man die Tonfrequenzen für die einzelnen Töne für Laut/Mittel und Leise angeben. Über die Tonhöhe werden indirekt auch die Lautstärken gesteuert.
 
 ## **Logiken**
 
@@ -766,8 +611,8 @@ Wird das Signal am Toreingang invertiert (negiert), dann sprechen wir von einer 
 
 Da ein Logikkanal 4 Eingänge hat, ist bei einem Tor
 
-    Dateneingang = Eingang 1 ODER Kanalausgang X
-    Toreingang = Eingang 2 ODER Kanalausgang Y
+    Dateneingang = Eingang 1 ODER Interner Eingang 3
+    Toreingang = Eingang 2 ODER Interner Eingang 4
 
 (in Worten: Jeweils ein externer und ein interner Eingang werden über ein ODER verknüpft und bilden den entsprechenden Eingang der TOR-Verknüpfung).
 
@@ -1350,9 +1195,9 @@ Dies erlaubt es, eine KNX-Anlage nach einem Neustart relativ schnell in einen Zu
 
 > **Tipp:** Auch wenn die Logik selbst den gelesenen Wert nicht braucht, kann man mit der Funktion andere Geräte unterstützen, die selbst nicht nach einem Neustart lesen können. Denn auf das Antworttelegramm kann nicht nur das lesende Gerät reagieren, sondern alle Geräte am Bus.
 
-## **Kanalausgänge verbinden**
+## **Interne Eingänge**
 
-Wird für eine logische Operation "Kanalausgang X" oder "Kanalausgang Y" als "normal aktiv" oder "invertiert aktiv" freigeschaltet, erscheint diese Seite.
+Wird für eine logische Operation "Interner Eingang 3" oder "Interner Eingang 4" als "normal aktiv" oder "invertiert aktiv" freigeschaltet, erscheint diese Seite.
 
 Ausgänge von anderen Kanälen können dazu genutzt werden, große Logikblöcke zu bauen, ohne für jede Teillogik (jeden Logikkanal) eine eigene GA zur Verbindung von Eingang und Ausgang zu benötigen.
 
@@ -2352,14 +2197,14 @@ stehen bereits 30 Benutzerfunktionen bereit, die nur noch mit dem notwendigen Co
 
     // user functions, may be implemented by Enduser
     // for DPT-Check you can use constants beginning with VAL_DPT_*
-    LogicValue LogicFunction::userFunction01(uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut)
+    LogicValue LogicFunction::userFunction01(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
     {
         return E1; // just an example, result is first parameter value
     }
 
 In der Beispielimplementierung für die Benutzerfunktion_01 wird der Wert vom Eingang 1 zurückgegeben.
 
-Jeder Funktion stehen die Variablen E1 und E2 zur Verfügung, die die Werte der Eingänge 1 und 2 enthalten. Ferner stehen über die Variablen DptE1 und DptE2 die DPT der Eingänge E1 und E2 zur Verfügung. Die Werte können mittels Konstanten beginnend mit VAL_DPT_* abgefragt werden. Diese Konstanten sind folgendermaßen definiert:
+Jeder Funktion stehen die Variablen E1 und E2 zur Verfügung, die die Werte der Eingänge 1 und 2 enthalten. Über die Variable iOld wird der aktuelle Wert des Ausgang dieses Logikkanals bereitgestellt. Die Variable _channelIndex gibt die Nummer des aktuellen Kanals aus. Ferner stehen über die Variablen DptE1 und DptE2 die DPT der Eingänge E1 und E2 zur Verfügung, über DptOut der DPT des Ausgangs. Die DPT-Werte können mittels Konstanten beginnend mit VAL_DPT_* abgefragt werden. Diese Konstanten sind folgendermaßen definiert:
 
     // enum supported dpt
     #define VAL_DPT_1 0
@@ -2373,6 +2218,12 @@ Jeder Funktion stehen die Variablen E1 und E2 zur Verfügung, die die Werte der 
     #define VAL_DPT_16 8
     #define VAL_DPT_17 9
     #define VAL_DPT_232 10
+    #define VAL_DPT_10 11 // Time
+    #define VAL_DPT_11 12 // Date
+    #define VAL_DPT_12 13
+    #define VAL_DPT_13 14
+    #define VAL_DPT_14 15
+    #define VAL_DPT_19 16 // Date-Time
 
 ### **Beispiele von Benutzerfunktionen**
 
@@ -2409,29 +2260,29 @@ Das Diagnoseobjekt dient primär zu Debug-Zwecken, kann aber auch vom Enduser ge
 
 Es funktioniert wie ein einfaches Terminal. Man sendet an das KO 7 ein Kommando (Groß-Kleinschreibung beachten) und erhält über das gleiche KO eine Antwort. Im folgenden sind die Kommandos und die Antworten beschrieben.
 
-### **Kommando 't' - interne Zeit**
+### **Kommando 'logic time' - interne Zeit**
 
 Gibt die interne Zeit aus. Eine Zeit kann jederzeit von außen über die KO 2 (Uhrzeit) und KO 3 (Datum) gesetzt werden und läuft dann intern weiter. Die Genauigkeit der internen Uhr ist nicht besonders hoch, ein erneutes senden der Uhrzeit auf KO 2 korrigiert die interne Uhrzeit wieder. Die interne Uhrzeit kann mit diesem Kommando abgefragt werden.
 
-Auf KO 7 (Diagnoseobjekt) muss der Buchstabe 't' (klein) gesendet werden. Die Antwort erfolgt auf KO 7 (Diagnoseobjekt) im Format 'HH:MM:SS DD.MM', also als 'Stunden:Minuten:Sekunden Tag.Monat'.
+Auf KO 7 (Diagnoseobjekt) muss der Befehl 'logic time' (klein) gesendet werden. Die Antwort erfolgt auf KO 7 (Diagnoseobjekt) im Format 'HH:MM:SS DD.MM', also als 'Stunden:Minuten:Sekunden Tag.Monat'.
 
-### **Kommando 'r' - Sonnenauf-/-untergang**
+### **Kommando 'logic sun' - Sonnenauf-/-untergang**
 
 Gibt die intern berechneten Zeiten für Sonnenauf- und -untergang aus. Die Zeiten werden erst berechnet, nachdem mindestens einmal das Datum auf KO 3 gesetzt worden ist, dann bei jedem Datumswechsel, egal ob dieser Wechsel intern ermittelt oder durch ein neues von extern gesetztes Datum erfolgt. Die korrekte Berechnung von Zeiten für den Sonnenauf- und -untergang hängt auch von der korrekten Angabe der Geokoordinaten für den Standort ab.
 
-Auf KO 7 (Diagnoseobjekt) muss der Buchstabe 'r' (klein) gesendet werden. Die Antwort erfolgt auf KO 7 (Diagnoseobjekt) im Format 'RHH:MM SHH:MM'. Dabei bedeutet "R" den Sonnenaufgang (Sun**R**ise), gefolgt von Stunden:Minuten, und "S" den Sonnenuntergang (Sun**S**et), gefolgt von Stunden:Minuten.
+Auf KO 7 (Diagnoseobjekt) muss der Befehl 'logic sun' (klein) gesendet werden. Die Antwort erfolgt auf KO 7 (Diagnoseobjekt) im Format 'RHH:MM SHH:MM'. Dabei bedeutet "R" den Sonnenaufgang (Sun**R**ise), gefolgt von Stunden:Minuten, und "S" den Sonnenuntergang (Sun**S**et), gefolgt von Stunden:Minuten.
 
-### **Kommando 'o' - Ostern**
+### **Kommando 'logic easter' - Ostern**
 
 Gibt das intern berechnete Datum für den Ostersonntag aus. Das Datum wird erst berechnet, nachdem mindestens einmal das Datum auf KO 3 gesetzt worden ist, dann bei jedem Jahreswechsel, egal ob dieser Wechsel intern ermittelt oder durch ein neues von extern gesetztes Datum erfolgt.
 
-Auf KO 7 (Diagnoseobjekt) muss der Buchstabe 'o' (klein) gesendet werden. Die Antwort erfolgt auf KO 7 (Diagnoseobjekt) im Format 'ODD.MM'. Dabei steht "O" für **O**stern, gefolgt von Tag.Monat. Alle anderen Feiertage, die von Ostern abhängig sind, werden in Abhängigkeit von diesem Datum errechnet.
+Auf KO 7 (Diagnoseobjekt) muss der Befehl 'logic easter' (klein) gesendet werden. Die Antwort erfolgt auf KO 7 (Diagnoseobjekt) im Format 'ODD.MM'. Dabei steht "O" für **O**stern, gefolgt von Tag.Monat. Alle anderen Feiertage, die von Ostern abhängig sind, werden in Abhängigkeit von diesem Datum errechnet.
 
-### **Kommando 'l\<nn>' - interner Zustand vom Logikkanal \<nn>**
+### **Kommando 'logic ch\<nn>' - interner Zustand vom Logikkanal \<nn>**
 
 Gibt den internen Zustand des Logikkanals \<nn> aus. Konkret geht es um die Werte, die am Eingang des Funktionsblocks "Logische Verknüpfung" liegen und dessen Ausgang. Da die Werte am Eingang durch die Konverter-Funktionsblöcke erzeugt werden, ist es im Fehlerfalle interessant, die Eingangswerte zu kennen. Ebenso ist der Ausgangswert interessant, da dieser durch die Einstellungen des Funktionsblocks "Logische Verknüpfung" bestimmt wird.
 
-Auf KO 7 (Diagnoseobjekt) muss der Buchstabe 'l' (klein) gefolgt von der Nummer des Kanals (ohne Leerzeichen dazwischen) gesendet werden (z.B. l01). Die Antwort erfolgt auf KO 7 (Diagnoseobjekt) im Format 'Aa Bb Cc Dd Qq', wobei
+Auf KO 7 (Diagnoseobjekt) muss der Befehl 'logic ch' (klein) gefolgt von der Nummer des Kanals (zweistellig, ohne Leerzeichen dazwischen) gesendet werden (z.B. logic ch01). Die Antwort erfolgt auf KO 7 (Diagnoseobjekt) im Format 'Aa Bb Cc Dd Qq', wobei
 
 * A der Eingang 1
 * B der Eingang 2
@@ -2715,7 +2566,9 @@ Die Software für dieses Release wurde auf folgender Hardware getestet und läuf
 * **Smart-MF Sensormodul** [www.smart-mf.de](https://www.smart-mf.de), als Logikmodul mit der Option, über eine Zwischenplatine einen Buzzer und/oder einen RGB-LED-Signalgeber zu erhalten
 * **PiPico-BCU-Connector** [OpenKNX-Wiki](https://github.com/OpenKNX/OpenKNX/wiki/PiPico-BCU-Connector), als Logikmodul
 * **1TE-RP2040-Smart-MF** [www.smart-mf.de](https://www.smart-mf.de), auf allen Varianten als Logikmodul lauffähig
-* **OpenKNX-REG1-System** [OpenKNX-Wiki](https://github.com/OpenKNX/OpenKNX/wiki/OpenKNX-REG1), auf allen Varianten als Logikmodul lauffähig
+* **OpenKNX-UP1-System** [OpenKNX-Wiki](https://github.com/OpenKNX/OpenKNX/wiki/OpenKNX-UP1), auf allen Varianten als Logikmodul lauffähig
+* **OpenKNX-REG1-Base** [OpenKNX-Wiki](https://github.com/OpenKNX/OpenKNX/wiki/REG1-Base), Logikmodul lauffähig
+* **OpenKNX-REG1-Base-IP** [OpenKNX-Wiki](https://github.com/OpenKNX/OpenKNX/wiki/REG1-Base-IP), Logikmodul (reines KNX-IP-Gerät) lauffähig
 
 Andere Hardware kann genutzt werden, jedoch muss das Projekt dann neu compiliert werden. Alle notwendigen Teile für ein Aufsetzen der Build-Umgebung inclusive aller notwendigen Projekte finden sich im [OpenKNX-Projekt](https://github.com/OpenKNX)
 
