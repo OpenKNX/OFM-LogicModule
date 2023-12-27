@@ -78,7 +78,7 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 
 Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer das Gesamtdokument lesen muss, um Neuerungen zu erfahren.
 
-27.12.2023: Firmware 3.0.6, Applikation 3.0
+27.12.2023: Firmware 3.0.7, Applikation 3.0
 
 * NEU: Die Firmware kann jetzt über den KNX-Bus aktualisiert werden (nur bei RP2040-Prozessor aka Raspberry Pi Pico)
 * NEU: Die Firmware kann jetzt auch auf reinen IP-Geräten eingesetzt werden und als Logikmodul-IP genutzt werden

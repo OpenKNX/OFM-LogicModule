@@ -580,7 +580,7 @@ LogicValue LogicChannel::getKoValue(GroupObject *iKo, uint8_t iDpt, bool iIsInpu
         }
     }
     bool lInitial = iKo->commFlag() == ComFlag::Uninitialized;
-    if (!lInitial && iIsInput && pCurrentIn & BIT_FIRST_PROCESSING)
+    if (!lInitial && iIsInput && !(pCurrentOut & BIT_OUTPUT_INITIAL))
         lInitial = iKo->commFlag() == ComFlag::Transmitting;
     lValue.isInitial(lInitial);
     return lValue;
