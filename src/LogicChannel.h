@@ -320,7 +320,7 @@ class LogicChannel : public OpenKNX::Channel
     /* Runtime information per channel */
     uint8_t pTriggerIO;        // Bitfield: Which input (0-3) triggered processing, Bit 4-7 are not used
     uint8_t pValidActiveIO;    // Bitfield: validity flags for input (0-3) values and active inputs (4-7)
-    uint8_t pCurrentIn;        // Bitfield: current input (0-3), free (4), first processing (5), previous gate (6) and free (7) values
+    uint8_t pCurrentIn;        // Bitfield: current input (0-3), free (4), first processing (5), previous gate (6) and initial gate (7) values
     uint8_t pCurrentOut;       // Bitfield: logic output (0), blink output (1), previous output (2), initial output (3), debug output (4)
     uint32_t pCurrentPipeline; // Bitfield: indicator for current pipeline step
 
@@ -340,7 +340,6 @@ class LogicChannel : public OpenKNX::Channel
     ~LogicChannel();
 
     // static
-    static Logic *sLogic;
     static uint16_t calcKoNumber(uint8_t iIOIndex, uint8_t iChannelId);
     static GroupObject *getKoForChannel(uint8_t iIOIndex, uint8_t iChannelId);
     // static float getFloat(uint8_t *data);

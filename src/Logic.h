@@ -68,6 +68,7 @@ class Logic : public OpenKNX::Module
     const std::string version() override;
 
     tm &Now();
+    bool timeValid();
 
   private:
     static uint8_t sMagicWord[];

@@ -28,7 +28,6 @@ const std::string Logic::version()
 
 Logic::Logic()
 {
-    LogicChannel::sLogic = this;
     // init KoLookup (robustness)
     addKoLookup(0, 0, 0);
     mNumKoLookups = 0;
@@ -560,6 +559,11 @@ void Logic::sendHoliday()
 tm &Logic::Now()
 {
     return sTimer.mNow;
+}
+
+bool Logic::timeValid()
+{
+    return sTimer.isTimerValid();
 }
 
 Logic openknxLogic;

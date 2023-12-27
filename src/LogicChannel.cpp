@@ -8,7 +8,6 @@
     #define abs(x) ((x) > 0 ? (x) : -(x))
 #endif
 
-Logic *LogicChannel::sLogic = nullptr;
 Timer &LogicChannel::sTimer = Timer::instance();
 TimerRestore &LogicChannel::sTimerRestore = TimerRestore::instance(); // singleton
 #if LOGIC_TRACE
@@ -581,7 +580,7 @@ LogicValue LogicChannel::getKoValue(GroupObject *iKo, uint8_t iDpt, bool iIsInpu
         }
     }
     bool lInitial = iKo->commFlag() == ComFlag::Uninitialized;
-    if (!lInitial && iIsInput)
+    if (!lInitial && iIsInput && pCurrentIn & BIT_FIRST_PROCESSING)
         lInitial = iKo->commFlag() == ComFlag::Transmitting;
     lValue.isInitial(lInitial);
     return lValue;
@@ -1841,7 +1840,7 @@ void LogicChannel::processOutput(bool iValue)
 {
     bool lInternalInputs = ((iValue && ParamLOG_fOInternalOn) || (!iValue && ParamLOG_fOInternalOff));
     if (lInternalInputs)
-        LogicChannel::sLogic->processAllInternalInputs(this, iValue);
+        openknxLogic.processAllInternalInputs(this, iValue);
 #if LOGIC_TRACE
     if (debugFilter())
     {
@@ -2069,7 +2068,7 @@ void LogicChannel::prepareChannel()
             uint16_t lExternalKo = getWordParam(LOG_fE1OtherKO);
             if (lExternalKo & 0x8000) // LOG_fE1UseOtherKOMask)
             {
-                sLogic->addKoLookup(lExternalKo & 0x03FFF, channelIndex(), IO_Input1);
+                openknxLogic.addKoLookup(lExternalKo & 0x03FFF, channelIndex(), IO_Input1);
             }
             // prepare input for cyclic read
             pInputProcessing.repeatInput1Delay = ParamLOG_fE1RepeatTimeMS;
@@ -2127,7 +2126,7 @@ void LogicChannel::prepareChannel()
             uint16_t lExternalKo = getWordParam(LOG_fE2OtherKO);
             if (lExternalKo & 0x8000) // LOG_fE2UseOtherKOMask)
             {
-                sLogic->addKoLookup(lExternalKo & 0x3FFF, channelIndex(), IO_Input2);
+                openknxLogic.addKoLookup(lExternalKo & 0x3FFF, channelIndex(), IO_Input2);
             }
             // prepare input for cyclic read
             pInputProcessing.repeatInput2Delay = ParamLOG_fE2RepeatTimeMS;
