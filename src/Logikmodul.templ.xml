@@ -173,7 +173,7 @@
                 <Parameter Id="%AID%_UP-%TT%%CC%022" Name="f%C%E1HighDpt9"     ParameterType="%AID%_PT-ValueDpt9"         Offset="4"  BitOffset="0" Text="Bis-Wert" Value="670760" />
                 <Parameter Id="%AID%_UP-%TT%%CC%322" Name="f%C%E1LowDpt9Fix"   ParameterType="%AID%_PT-ValueDpt9"         Offset="0"  BitOffset="0" Text="Eingang ist konstant" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%405" Name="f%C%E1LowDpt12"     ParameterType="%AID%_PT-ValueDpt12"        Offset="0"  BitOffset="0" Text="Von-Wert" Value="2147483648" />
-                <Parameter Id="%AID%_UP-%TT%%CC%406" Name="f%C%E1HighDpt12"    ParameterType="%AID%_PT-ValueDpt12"        Offset="4"  BitOffset="0" Text="Bis-Wert" Value="4294967296" />
+                <Parameter Id="%AID%_UP-%TT%%CC%406" Name="f%C%E1HighDpt12"    ParameterType="%AID%_PT-ValueDpt12"        Offset="4"  BitOffset="0" Text="Bis-Wert" Value="4294967295" />
                 <Parameter Id="%AID%_UP-%TT%%CC%407" Name="f%C%E1LowDpt12Fix"  ParameterType="%AID%_PT-ValueDpt12"        Offset="0"  BitOffset="0" Text="Eingang ist konstant" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%408" Name="f%C%E1LowDpt13"     ParameterType="%AID%_PT-ValueDpt13"        Offset="0"  BitOffset="0" Text="Von-Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%409" Name="f%C%E1HighDpt13"    ParameterType="%AID%_PT-ValueDpt13"        Offset="4"  BitOffset="0" Text="Bis-Wert" Value="2147483647" />
@@ -259,7 +259,7 @@
                 <Parameter Id="%AID%_UP-%TT%%CC%042" Name="f%C%E2HighDpt9"     ParameterType="%AID%_PT-ValueDpt9"         Offset="12" BitOffset="0" Text="Bis-Wert" Value="670760" />
                 <Parameter Id="%AID%_UP-%TT%%CC%366" Name="f%C%E2LowDpt9Fix"   ParameterType="%AID%_PT-ValueDpt9"         Offset="8"  BitOffset="0" Text="Eingang ist konstant" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%414" Name="f%C%E2LowDpt12"     ParameterType="%AID%_PT-ValueDpt12"        Offset="8"  BitOffset="0" Text="Von-Wert" Value="2147483648" />
-                <Parameter Id="%AID%_UP-%TT%%CC%415" Name="f%C%E2HighDpt12"    ParameterType="%AID%_PT-ValueDpt12"        Offset="12" BitOffset="0" Text="Bis-Wert" Value="4294967296" />
+                <Parameter Id="%AID%_UP-%TT%%CC%415" Name="f%C%E2HighDpt12"    ParameterType="%AID%_PT-ValueDpt12"        Offset="12" BitOffset="0" Text="Bis-Wert" Value="4294967295" />
                 <Parameter Id="%AID%_UP-%TT%%CC%416" Name="f%C%E2LowDpt12Fix"  ParameterType="%AID%_PT-ValueDpt12"        Offset="8"  BitOffset="0" Text="Eingang ist konstant" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%417" Name="f%C%E2LowDpt13"     ParameterType="%AID%_PT-ValueDpt13"        Offset="8"  BitOffset="0" Text="Von-Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%418" Name="f%C%E2HighDpt13"    ParameterType="%AID%_PT-ValueDpt13"        Offset="12" BitOffset="0" Text="Bis-Wert" Value="2147483647" />
@@ -467,7 +467,7 @@
                 <Parameter Id="%AID%_UP-%TT%%CC%122" Name="f%C%OOnPALine"   ParameterType="%AID%_PT-PALine"        Offset="0" BitOffset="4" Text="" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%123" Name="f%C%OOnPADevice" ParameterType="%AID%_PT-PADevice"      Offset="1" BitOffset="0" Text="" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%279" Name="f%C%OOnFunction" ParameterType="%AID%_PT-ValueFunction" Offset="0" BitOffset="0" Text="    Wert für EIN ermitteln als" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%435" Name="f%C%OOnKONumber" ParameterType="%AID%_PT-KONumber"      Offset="0" BitOffset="0" Text="    Nummer des Kommunikationsobjekts" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%435" Name="f%C%OOnKONumber" ParameterType="%AID%_PT-KONumber"      Offset="0" BitOffset="0" Text="    Nummer des Kommunikationsobjekts" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%437" Name="f%C%OOnKODpt"    ParameterType="%AID%_PT-InputDpt"      Offset="2" BitOffset="0" Text="    DPT des Kommunikationsobjekts" Value="0" />
               </Union>
               <Union SizeInBit="8">
@@ -498,7 +498,7 @@
                 <Parameter Id="%AID%_UP-%TT%%CC%125" Name="f%C%OOffPALine"   ParameterType="%AID%_PT-PALine"        Offset="0" BitOffset="4" Text="" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%126" Name="f%C%OOffPADevice" ParameterType="%AID%_PT-PADevice"      Offset="1" BitOffset="0" Text="" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%280" Name="f%C%OOffFunction" ParameterType="%AID%_PT-ValueFunction" Offset="0" BitOffset="0" Text="    Wert für AUS ermitteln als" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%436" Name="f%C%OOffKONumber" ParameterType="%AID%_PT-KONumber"      Offset="0" BitOffset="0" Text="    Nummer des Kommunikationsobjekts" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%436" Name="f%C%OOffKONumber" ParameterType="%AID%_PT-KONumber"      Offset="0" BitOffset="0" Text="    Nummer des Kommunikationsobjekts" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%438" Name="f%C%OOffKODpt"    ParameterType="%AID%_PT-InputDpt"      Offset="2" BitOffset="0" Text="    DPT des Kommunikationsobjekts" Value="0" />
               </Union>
               <Union SizeInBit="32">
@@ -975,7 +975,7 @@
               <ParameterRef Id="%AID%_UP-%TT%%CC%404_R-%TT%%CC%40401" RefId="%AID%_UP-%TT%%CC%404" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%405_R-%TT%%CC%40501" RefId="%AID%_UP-%TT%%CC%405" Text="Von-Wert" Value="2147483648" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%405_R-%TT%%CC%40502" RefId="%AID%_UP-%TT%%CC%405" Text="Ausschalt-Wert" Value="300000" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%406_R-%TT%%CC%40601" RefId="%AID%_UP-%TT%%CC%406" Text="Bis-Wert" Value="4294967296" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%406_R-%TT%%CC%40601" RefId="%AID%_UP-%TT%%CC%406" Text="Bis-Wert" Value="4294967295" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%406_R-%TT%%CC%40602" RefId="%AID%_UP-%TT%%CC%406" Text="Einschalt-Wert" Value="600000" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%407_R-%TT%%CC%40701" RefId="%AID%_UP-%TT%%CC%407" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%408_R-%TT%%CC%40801" RefId="%AID%_UP-%TT%%CC%408" Text="Von-Wert" Value="0" />
@@ -990,7 +990,7 @@
               <ParameterRef Id="%AID%_UP-%TT%%CC%413_R-%TT%%CC%41301" RefId="%AID%_UP-%TT%%CC%413" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%414_R-%TT%%CC%41401" RefId="%AID%_UP-%TT%%CC%414" Text="Von-Wert" Value="2147483648" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%414_R-%TT%%CC%41402" RefId="%AID%_UP-%TT%%CC%414" Text="Ausschalt-Wert" Value="300000" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%415_R-%TT%%CC%41501" RefId="%AID%_UP-%TT%%CC%415" Text="Bis-Wert" Value="4294967296" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%415_R-%TT%%CC%41501" RefId="%AID%_UP-%TT%%CC%415" Text="Bis-Wert" Value="4294967295" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%415_R-%TT%%CC%41502" RefId="%AID%_UP-%TT%%CC%415" Text="Einschalt-Wert" Value="600000" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%416_R-%TT%%CC%41601" RefId="%AID%_UP-%TT%%CC%416" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%417_R-%TT%%CC%41701" RefId="%AID%_UP-%TT%%CC%417" Text="Von-Wert" Value="0" />
