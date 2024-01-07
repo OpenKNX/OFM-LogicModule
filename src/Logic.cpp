@@ -336,6 +336,9 @@ bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
     if (iCmd.substr(0, 6) != "logic " || iCmd.length() < 7)
         return lResult;
 
+    if (!knx.configured())
+        return lResult;
+
     if (iCmd.substr(6, 2) == "ch")
     {
         // Command ch<nn>: Logic inputs and output of last execution

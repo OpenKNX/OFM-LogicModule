@@ -1272,8 +1272,15 @@
                                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingangswert vorbelegen" UIHint="Headline" />
                                     <choose ParamRefId="%AID%_UP-%TT%%CC%377_R-%TT%%CC%37701">
                                       <when test="0">
-                                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%130_R-%TT%%CC%13001" HelpContext="%DOC%" IndentLevel="1" />
-                                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601" HelpContext="%DOC%" IndentLevel="1" />
+                                        <choose ParamRefId="%AID%_UP-%TT%00165_R-%TT%0016501">
+                                          <when test="0">
+                                            <ParameterRefRef RefId="%AID%_UP-%TT%%CC%393_R-%TT%%CC%39301" HelpContext="%DOC%" IndentLevel="1" />
+                                          </when>
+                                          <when test="1">
+                                            <ParameterRefRef RefId="%AID%_UP-%TT%%CC%130_R-%TT%%CC%13001" HelpContext="%DOC%" IndentLevel="1" />
+                                            <ParameterRefRef RefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601" HelpContext="%DOC%" IndentLevel="1" />
+                                          </when>
+                                        </choose>                                        
                                         <!-- <ParameterRefRef RefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701" HelpContext="%DOC%" IndentLevel="1" /> -->
                                         <!-- E1Repeat Delay pattern -->
                                         <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%E1RepeatCycle" Inline="true" Layout="Grid" HelpContext="LOG-Eingang-wird-gelesen-alle">
@@ -1938,8 +1945,15 @@
                                         <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingangswert vorbelegen" UIHint="Headline" />
                                         <choose ParamRefId="%AID%_UP-%TT%%CC%377_R-%TT%%CC%37701">
                                           <when test="0">
-                                            <ParameterRefRef RefId="%AID%_UP-%TT%%CC%130_R-%TT%%CC%13001" HelpContext="%DOC%" IndentLevel="1" />
-                                            <ParameterRefRef RefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601" HelpContext="%DOC%" IndentLevel="1" />
+                                            <choose ParamRefId="%AID%_UP-%TT%00165_R-%TT%0016501">
+                                              <when test="0">
+                                                <ParameterRefRef RefId="%AID%_UP-%TT%%CC%393_R-%TT%%CC%39301" HelpContext="%DOC%" IndentLevel="1" />
+                                              </when>
+                                              <when test="1">
+                                                <ParameterRefRef RefId="%AID%_UP-%TT%%CC%130_R-%TT%%CC%13001" HelpContext="%DOC%" IndentLevel="1" />
+                                                <ParameterRefRef RefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601" HelpContext="%DOC%" IndentLevel="1" />
+                                              </when>
+                                            </choose>                                        
                                             <!-- <ParameterRefRef RefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701" HelpContext="%DOC%" IndentLevel="1" /> -->
                                             <!-- E1Repeat Delay pattern -->
                                             <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%E1RepeatCycle" Inline="true" Layout="Grid" HelpContext="LOG-Eingang-wird-gelesen-alle">

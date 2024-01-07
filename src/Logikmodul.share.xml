@@ -6,6 +6,7 @@
   <op:config name="%LOG_LedDefault%" value="0" />
   <op:config name="%LOG_BuzzerAccess%" value="None" />
   <op:config name="%LOG_BuzzerDefault%" value="0" />
+  <op:config name="%LOG_EnableSave%" value="1" />
   <ManufacturerData>
     <Manufacturer RefId="M-00FA">
       <ApplicationPrograms>
@@ -27,6 +28,10 @@
               </ParameterType>
               <ParameterType Id="%AID%_PT-Percent" Name="Percent">
                 <TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="100" />
+              </ParameterType>
+              <!-- This type is necessary to allow op:config-parameters beeing changed in future -->
+              <ParameterType Id="%AID%_PT-EnableSave" Name="EnableSave">
+                <TypeNumber SizeInBit="1" Type="unsignedInt" minInclusive="%LOG_EnableSave%" maxInclusive="%LOG_EnableSave%" />
               </ParameterType>
               <!-- buzzer frequencies in Hz -->
               <ParameterType Id="%AID%_PT-BuzzerFrequency" Name="BuzzerFrequency">
@@ -878,7 +883,8 @@
                 <Parameter Id="%AID%_UP-%TT%00139" Name="HolidayKo" ParameterType="%AID%_PT-OnOffYesNo" Offset="0" BitOffset="3" Text="Feiertage auf dem Bus verfügbar machen?" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%00140" Name="VacationRead" ParameterType="%AID%_PT-OnOffYesNo" Offset="0" BitOffset="4" Text="Nach Neustart Urlaubsinfo lesen?" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%00141" Name="HolidaySend" ParameterType="%AID%_PT-OnOffYesNo" Offset="0" BitOffset="5" Text="Nach Neuberechnung Feiertagsinfo senden?" Value="0" />
-                <!-- 2 Bit free -->
+                <Parameter Id="%AID%_UP-%TT%00165" Name="EnableSave" ParameterType="%AID%_PT-EnableSave" Offset="0" BitOffset="6" Text="Speichern von Werten in Hardware möglich?" Value="%LOG_EnableSave%" Access="None" />
+                <!-- 1 Bit free -->
               </Union>
               <Union SizeInBit="32">
                 <Memory CodeSegment="%MID%" Offset="1" BitOffset="0" />
@@ -998,6 +1004,7 @@
               <!-- <ParameterRef Id="%AID%_UP-%TT%00162_R-%TT%0016201" RefId="%AID%_UP-%TT%00162" /> -->
               <ParameterRef Id="%AID%_P-%TT%00163_R-%TT%0016301" RefId="%AID%_P-%TT%00163" />
               <ParameterRef Id="%AID%_UP-%TT%00164_R-%TT%0016401" RefId="%AID%_UP-%TT%00164" />
+              <ParameterRef Id="%AID%_UP-%TT%00165_R-%TT%0016501" RefId="%AID%_UP-%TT%00165" />
             </ParameterRefs>
             <ComObjectTable>
               <!-- <ComObject Id="%AID%_O-%TT%00001" Name="Heartbeat" Text="In Betrieb" Number="1" FunctionText="Zyklisch" ObjectSize="1 Bit" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" DatapointType="DPST-1-2" />
@@ -1036,6 +1043,8 @@
                 <ParameterRefRef RefId="%AID%_UP-%TT%00035_R-%TT%0003501" />
                 <!-- RGB-LED installed? -->
                 <ParameterRefRef RefId="%AID%_UP-%TT%00036_R-%TT%0003601" />
+                <!-- Enable Save? -->
+                <ParameterRefRef RefId="%AID%_UP-%TT%00165_R-%TT%0016501" />
               </ParameterBlock>
               <ParameterBlock Name="Docu" Text="Dokumentation" Id="%AID%_PB-nnn" Icon="information-outline" HelpContext="LOG-Dokumentation">
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Dokumentation" UIHint="Headline" />

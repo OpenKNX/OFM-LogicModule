@@ -546,6 +546,12 @@ bool LogicValue::operator>(LogicValue const& value)
 {
     if (_type == FloatType || value._type == FloatType)
         return (floatValue() > value.floatValue());
+    else if (_type == UIntType && value._type == UIntType)
+        return (uintValue() > value.uintValue());
+    else if (_type == UIntType)
+        return (uintValue() > value.intValue());
+    else if (value._type == UIntType)
+        return (intValue() > value.uintValue());
     else
         return (intValue() > value.intValue());
 }
@@ -554,6 +560,12 @@ bool LogicValue::operator<(LogicValue const& value)
 {
     if (_type == FloatType || value._type == FloatType)
         return (floatValue() < value.floatValue());
+    else if (_type == UIntType && value._type == UIntType)
+        return (uintValue() < value.uintValue());
+    else if (_type == UIntType)
+        return (uintValue() < value.intValue());
+    else if (value._type == UIntType)
+        return (intValue() < value.uintValue());
     else
         return (intValue() < value.intValue());
 }
@@ -562,6 +574,12 @@ bool LogicValue::operator>=(LogicValue const& value)
 {
     if (_type == FloatType || value._type == FloatType)
         return (floatValue() >= value.floatValue());
+    else if (_type == UIntType && value._type == UIntType)
+        return (uintValue() >= value.uintValue());
+    else if (_type == UIntType)
+        return (uintValue() >= value.intValue());
+    else if (value._type == UIntType)
+        return (intValue() >= value.uintValue());
     else
         return (intValue() >= value.intValue());
 }
@@ -570,6 +588,12 @@ bool LogicValue::operator<=(LogicValue const& value)
 {
     if (_type == FloatType || value._type == FloatType)
         return (floatValue() <= value.floatValue());
+    else if (_type == UIntType && value._type == UIntType)
+        return (uintValue() <= value.uintValue());
+    else if (_type == UIntType)
+        return (uintValue() <= value.intValue());
+    else if (value._type == UIntType)
+        return (intValue() <= value.uintValue());
     else
         return (intValue() <= value.intValue());
 }

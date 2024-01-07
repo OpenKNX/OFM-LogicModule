@@ -582,6 +582,9 @@ LogicValue LogicChannel::getKoValue(GroupObject *iKo, uint8_t iDpt, bool iIsInpu
     bool lInitial = iKo->commFlag() == ComFlag::Uninitialized;
     if (!lInitial && iIsInput && !(pCurrentOut & BIT_OUTPUT_INITIAL))
         lInitial = iKo->commFlag() == ComFlag::Transmitting;
+    // this is the case when we restore a saved value and do not send it to the bus.
+    if (iKo->commFlag() == ComFlag::Transmitting && iIsInput && (pCurrentOut & BIT_OUTPUT_INITIAL))
+        iKo->commFlag(ComFlag::Ok);
     lValue.isInitial(lInitial);
     return lValue;
 }
