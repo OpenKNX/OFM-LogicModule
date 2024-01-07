@@ -108,7 +108,7 @@
                   <Enumeration Text="Hysterese" Value="2" Id="%ENID%" />
                   <Enumeration Text="Differenzhysterese" Value="3" Id="%ENID%" />
                   <Enumeration Text="Einzelwerte" Value="4" Id="%ENID%" />
-                  <Enumeration Text="Kontante (für Formeln)" Value="5" Id="%ENID%" />
+                  <Enumeration Text="Konstante (für Formeln)" Value="5" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
               <ParameterType Id="%AID%_PT-InputConvFloat" Name="InputConvFloat">
@@ -117,13 +117,13 @@
                   <Enumeration Text="Differenzintervall" Value="1" Id="%ENID%" />
                   <Enumeration Text="Hysterese" Value="2" Id="%ENID%" />
                   <Enumeration Text="Differenzhysterese" Value="3" Id="%ENID%" />
-                  <Enumeration Text="Kontante (für Formeln)" Value="5" Id="%ENID%" />
+                  <Enumeration Text="Konstante (für Formeln)" Value="5" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
               <ParameterType Id="%AID%_PT-InputConvSpecial" Name="InputConvSpecial">
                 <TypeRestriction Base="Value" SizeInBit="4">
                   <Enumeration Text="Einzelwerte" Value="4" Id="%ENID%" />
-                  <Enumeration Text="Kontante (für Formeln)" Value="5" Id="%ENID%" />
+                  <Enumeration Text="Konstante (für Formeln)" Value="5" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
               <!-- Input- und Output-DPT haben die selben Werte für Value!!!! -->
