@@ -26,8 +26,8 @@ Wird das Signal am Toreingang invertiert (negiert), dann sprechen wir von einer 
 
 Da ein Logikkanal 4 Eingänge hat, ist bei einem Tor
 
-    Dateneingang = Eingang 1 ODER Kanalausgang X
-    Toreingang = Eingang 2 ODER Kanalausgang Y
+    Dateneingang = Eingang 1 ODER Interner Eingang 3
+    Toreingang = Eingang 2 ODER Interner Eingang 4
 
 (in Worten: Jeweils ein externer und ein interner Eingang werden über ein ODER verknüpft und bilden den entsprechenden Eingang der TOR-Verknüpfung).
 

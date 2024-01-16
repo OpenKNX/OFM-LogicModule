@@ -109,6 +109,20 @@
                   <Enumeration Text="Differenzhysterese" Value="3" Id="%ENID%" />
                   <Enumeration Text="Einzelwerte" Value="4" Id="%ENID%" />
                   <Enumeration Text="Konstante (für Formeln)" Value="5" Id="%ENID%" />
+                  <!-- Eingangswert ist der Default, 0 und 1 wird ausgewertet -->
+                  <Enumeration Text="Eingangswert" Value="6" Id="%ENID%" />
+                  <!-- Trigger wird immer 1, egal ob durch 0 oder 1 getriggert -->
+                  <Enumeration Text="Trigger" Value="7" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-InputConvInt" Name="InputConvInt">
+                <TypeRestriction Base="Value" SizeInBit="4">
+                  <Enumeration Text="Wertintervall" Value="0" Id="%ENID%" />
+                  <Enumeration Text="Differenzintervall" Value="1" Id="%ENID%" />
+                  <Enumeration Text="Hysterese" Value="2" Id="%ENID%" />
+                  <Enumeration Text="Differenzhysterese" Value="3" Id="%ENID%" />
+                  <Enumeration Text="Einzelwerte" Value="4" Id="%ENID%" />
+                  <Enumeration Text="Konstante (für Formeln)" Value="5" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
               <ParameterType Id="%AID%_PT-InputConvFloat" Name="InputConvFloat">
@@ -124,6 +138,14 @@
                 <TypeRestriction Base="Value" SizeInBit="4">
                   <Enumeration Text="Einzelwerte" Value="4" Id="%ENID%" />
                   <Enumeration Text="Konstante (für Formeln)" Value="5" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-InputConvBool" Name="InputConvBool">
+                <TypeRestriction Base="Value" SizeInBit="4">
+                  <!-- Eingangswert ist der Default, 0 und 1 wird ausgewertet -->
+                  <Enumeration Text="Eingangswert" Value="6" Id="%ENID%" />
+                  <!-- Trigger wird immer 1, egal ob durch 0 oder 1 getriggert -->
+                  <Enumeration Text="Trigger" Value="7" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
               <!-- Input- und Output-DPT haben die selben Werte für Value!!!! -->

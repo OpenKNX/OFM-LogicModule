@@ -30,6 +30,8 @@
 #define VAL_InputConvert_DeltaHysterese 3
 #define VAL_InputConvert_Values 4
 #define VAL_InputConvert_Constant 5
+#define VAL_InputConvert_None 6
+#define VAL_InputConvert_Trigger 7
 
 // enum logical function
 #define VAL_Logic_And 1
@@ -226,10 +228,11 @@ class LogicChannel : public OpenKNX::Channel
     uint32_t getTimeDelayParam(uint16_t iParamIndex, bool iAsSeconds = false);
     GroupObject *getKo(uint8_t iIOIndex);
     Dpt &getKoDPT(uint8_t iIOIndex);
-    void knxWriteBool(uint8_t iIOIndex, bool iValue);
-    void knxWriteInt(uint8_t iIOIndex, int32_t iValue);
-    void knxWriteRawInt(uint8_t iIOIndex, int32_t iValue);
-    void knxWriteFloat(uint8_t iIOIndex, float iValue);
+    uint16_t checkAdditionalWrite(bool iOn);
+    void knxWriteBool(uint8_t iIOIndex, bool iValue, bool iOn);
+    void knxWriteInt(uint8_t iIOIndex, int32_t iValue, bool iOn);
+    void knxWriteRawInt(uint8_t iIOIndex, int32_t iValue, bool iOn);
+    void knxWriteFloat(uint8_t iIOIndex, float iValue, bool iOn);
     void knxWriteString(uint8_t iIOIndex, const char *iValue);
     void knxRead(uint8_t iIOIndex);
     void knxResetDevice(uint16_t iParamIndex);
@@ -239,11 +242,11 @@ class LogicChannel : public OpenKNX::Channel
     LogicValue getKoValue(uint8_t iIOIndex, uint8_t iDpt);
     LogicValue getKoValue(GroupObject *iKo, uint8_t iDpt, bool iIsInput);
     LogicValue getOtherKoValue(uint16_t iKoNumber, uint8_t iDptParamIndex);
-    void writeConstantValue(uint16_t iParamIndex);
-    void writeParameterValue(uint8_t iIOIndex);
-    void writeFunctionValue(uint16_t iParamIndex);
-    void writeOtherKoValue(uint16_t iParamIndex, uint16_t iDptIndex);
-    void writeValue(LogicValue iValue, uint8_t iDpt);
+    void writeConstantValue(uint16_t iParamIndex, bool iOn);
+    void writeParameterValue(uint8_t iIOIndex, bool iOn);
+    void writeFunctionValue(uint16_t iParamIndex, bool iOn);
+    void writeOtherKoValue(uint16_t iParamIndex, uint16_t iDptIndex, bool iOn);
+    void writeValue(LogicValue iValue, uint8_t iDpt, bool iOn);
     void setRGBColor(uint16_t iParamIndex);
     void setBuzzer(uint16_t iParamIndex);
 

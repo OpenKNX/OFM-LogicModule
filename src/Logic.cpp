@@ -6,6 +6,8 @@
 
 #include "ModuleVersionCheck.h"
 
+Logic openknxLogic;
+
 uint8_t Logic::sMagicWord[] = {0xAE, 0x49, 0xD2, 0x9F};
 Timer &Logic::sTimer = Timer::instance();                      // singleton
 TimerRestore &Logic::sTimerRestore = TimerRestore::instance(); // singleton
@@ -568,5 +570,3 @@ bool Logic::timeValid()
 {
     return sTimer.isTimerValid();
 }
-
-Logic openknxLogic;

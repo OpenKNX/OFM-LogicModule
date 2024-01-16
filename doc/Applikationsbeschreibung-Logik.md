@@ -78,6 +78,13 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 
 Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer das Gesamtdokument lesen muss, um Neuerungen zu erfahren.
 
+16.01.2024: Firmware 3.1.0, Applikation 3.1
+
+* NEU: Ein Logikausgang kann jetzt auch seinen Wert zusätzlich über ein internes KO versenden
+* NEU: Ein Eingangskonverter für DPT1 erlaubt jetzt auch die Auswertung eines DPT1-Telegramms als Trigger (unabhängig von seinem Wert wird der Konverter immer 1)
+* FIX: Man kann bei Logiken einstellen, dass sie erst ausgewertet werden, wenn alle Eingänge gültig sind. Die Prüfung, dass ein Eingang gültig ist, konnte schon erfolgreich sein, obwohl noch keine Antwort von einem ReadRequest eingegangen ist. Dies war ein seltener Fehler, der jetzt korrigiert ist.
+* FIX: Die Gültigprüfung von Eingängen konnte auch bei komplexeren Logiken versagen. Auch dies ist jetzt korrigiert.
+
 27.12.2023: Firmware 3.0.9, Applikation 3.0
 
 * NEU: Die Firmware kann jetzt über den KNX-Bus aktualisiert werden (nur bei RP2040-Prozessor aka Raspberry Pi Pico)
@@ -876,7 +883,7 @@ Dieses Auswahlfeld legt den DPT für den Eingang fest. Unterstützt werden:
 * DPT 17: Szenen Nummer (1-64)
 * DPT 232: RGB-Wert (0-16.777.216)
 
-Ist der DPT anders als DPT 1, erscheint je nach DPT ein Konverter, mit dem man den gewünschten Eingangs-DPT nach DPT 1 wandeln kann. Die gesamte weitere Verarbeitung des Eingangssignals erfolgt binär, also auf Basis von DPT 1.
+Für jeden DPT erscheint ein passender Konverter, mit dem man den gewünschten Eingangs-DPT nach DPT 1 wandeln kann. Die gesamte weitere Verarbeitung des Eingangssignals erfolgt binär, also auf Basis von DPT 1.
 
 > **Wichtig:** Wenn ein bestehendes Kommunikationsobjekt genutzt wird, muss der hier eingestellte DPT dem DPT des bestehenden KO entsprechen! Das kann nicht automatisch von der Applikation ermittelt werden. Wenn hier etwas falsch eingestellt wird und der falsche Eingangskonverter benutzt wird, kann der Logikkanal nicht korrekt funktionieren. 
 <!-- DOCEND -->
@@ -885,7 +892,17 @@ Darauf wird in der Applikation durch die folgende Information hingewiesen:
 
 ### **DPT 1.xxx (Schalten)**
 
-Für DPT 1 ist kein Konverter notwendig.
+<kbd>![Eingang DPT1](pics/EingangDPT1.png)</kbd>
+
+Für DPT 1 ist der Konverter sehr einfach. Es gibt nur 2 Möglichkeiten:
+
+#### **Eingangswert**
+
+Der Eingangswert wird direkt weitergegeben (also 0 zu 0 bzw. 1 zu 1). Der Konverter macht somit nichts (Identitätsfunktion).
+
+#### **Trigger**
+
+Es wird immer nur das Eingangstelegramm ausgewertet, unabhängig von seinem Wert. Damit kann man aus einem Telegramm eine 1 erzeugen, was faktisch einen Trigger ergibt. Der Konverter bildet also eine 0 oder eine 1 auf 1 ab.
 
 ### **DPT 2.xxx (Zwangsführung)**
 
@@ -1868,6 +1885,20 @@ Das Feld erscheint nur, wenn für "DPT für Ausgang" ein "DPT 323.xxx (3-Byte-We
 Hier wird die Farbe bestimmt, deren Wert gesendet werden soll. Wird die Farbe Schwarz gewählt (#000000), entspricht das einem Ausschalt-Signal. Für die Auswahl der Farbe kann auch ein Farbauswahldialog verwendet werden.
 
 <!-- DOC -->
+### **Wert für EIN an ein zusätzliches KO senden**
+
+<kbd>![Wert an ein zusätzliches KO senden](pics/WertAnEinZusätzlichesKOSenden.png)</kbd>
+
+Ein Ausgang kann seinen EIN-Wert nicht nur über das ihm zugewiesene KO senden, sondern auch zusätzlich an ein internes KO. Das bedeutet, der Wert wird in ein beliebiges KO des Gerätes (nicht nur des Logikmoduls) geschrieben, ohne dass dafür eine GA-Verknüpfung notwendig ist.
+
+> Wichtig: Der DPT des Ziel-KO muss der gleiche sein wie der DPT des Ausgangs. Falls nicht, sind die Ergebnisse nicht abschätzbar.
+
+<!-- DOC -->
+#### **Nummer des zusätzlichen KO**
+
+Hier wird die Nummer des Kommunikationsobjekts angegeben, über die der Wert zusätzlich gesendet werden soll. Das kann ein beliebiges KO (Eingang oder Ausgang) des Gerätes sein.
+
+<!-- DOC -->
 ### **Wert für AUS senden?**
 
 In dieser Auswahlbox wird festgelegt, ob und was für ein Wert bei einem AUS-Signal gesendet werden soll.
@@ -1972,6 +2003,18 @@ Diese Option kann nur funktionieren, wenn das Gerät, auf dem die Applikation Lo
 Das Feld erscheint nur, wenn für "DPT für Ausgang" ein "DPT 323.xxx (3-Byte-Wert)" ausgewählt wurde.
 
 Hier wird die Farbe bestimmt, deren Wert gesendet werden soll. Wird die Farbe Schwarz gewählt (#000000), entspricht das einem Ausschalt-Signal. Für die Auswahl der Farbe kann auch ein Farbauswahldialog verwendet werden.
+
+<!-- DOC -->
+### **Wert für AUS an ein zusätzliches KO senden**
+
+Ein Ausgang kann seinen AUS-Wert nicht nur über das ihm zugewiesene KO senden, sondern auch zusätzlich an ein internes KO. Das bedeutet, der Wert wird in ein beliebiges KO des Gerätes (nicht nur des Logikmoduls) geschrieben, ohne dass dafür eine GA-Verknüpfung notwendig ist.
+
+> Wichtig: Der DPT des Ziel-KO muss der gleiche sein wie der DPT des Ausgangs. Falls nicht, sind die Ergebnisse nicht abschätzbar.
+
+<!-- DOC -->
+#### **Nummer des zusätzlichen KO**
+
+Hier wird die Nummer des Kommunikationsobjekts angegeben, über die der Wert zusätzlich gesendet werden soll. Das kann ein beliebiges KO (Eingang oder Ausgang) des Gerätes sein.
 
 <!-- DOC -->
 ### **Alarmausgabe (Buzzer oder LED trotz Sperre schalten)?**

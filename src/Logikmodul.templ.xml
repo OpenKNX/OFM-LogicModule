@@ -48,9 +48,11 @@
               <Union SizeInBit="8">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="6" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%008" Name="f%C%E1"               ParameterType="%AID%_PT-InputEnable"      Offset="0" BitOffset="4" Text="Eingang 1" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%093" Name="f%C%E1Convert"        ParameterType="%AID%_PT-InputConv"        Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%093" Name="f%C%E1ConvertInt"     ParameterType="%AID%_PT-InputConvInt"     Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%446" Name="f%C%E1Convert"        ParameterType="%AID%_PT-InputConv"        Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="0" Access="None" />
                 <Parameter Id="%AID%_UP-%TT%%CC%369" Name="f%C%E1ConvertFloat"   ParameterType="%AID%_PT-InputConvFloat"   Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%370" Name="f%C%E1ConvertSpecial" ParameterType="%AID%_PT-InputConvSpecial" Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="4" />
+                <Parameter Id="%AID%_UP-%TT%%CC%444" Name="f%C%E1ConvertBool"    ParameterType="%AID%_PT-InputConvBool"    Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="6" />
               </Union>
               <Parameter Id="%AID%_P-%TT%%CC%009" Name="f%C%E1Dpt" ParameterType="%AID%_PT-InputDpt" Text="DPT für Eingang" Value="0">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="7" BitOffset="0" />
@@ -73,9 +75,11 @@
               <Union SizeInBit="8">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="11" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%028" Name="f%C%E2"               ParameterType="%AID%_PT-InputEnable"      Offset="0" BitOffset="4" Text="Eingang 2" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%094" Name="f%C%E2Convert"        ParameterType="%AID%_PT-InputConv"        Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%094" Name="f%C%E2ConvertInt"     ParameterType="%AID%_PT-InputConvInt"     Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%447" Name="f%C%E2Convert"        ParameterType="%AID%_PT-InputConv"        Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="0" Access="None" />
                 <Parameter Id="%AID%_UP-%TT%%CC%371" Name="f%C%E2ConvertFloat"   ParameterType="%AID%_PT-InputConvFloat"   Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%372" Name="f%C%E2ConvertSpecial" ParameterType="%AID%_PT-InputConvSpecial" Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="4" />
+                <Parameter Id="%AID%_UP-%TT%%CC%445" Name="f%C%E2ConvertBool"    ParameterType="%AID%_PT-InputConvBool"    Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="6" />
               </Union>
               <Parameter Id="%AID%_P-%TT%%CC%029" Name="f%C%E2Dpt" ParameterType="%AID%_PT-InputDpt" Text="DPT für Eingang" Value="0">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="12" BitOffset="0" />
@@ -469,6 +473,8 @@
                 <Parameter Id="%AID%_UP-%TT%%CC%279" Name="f%C%OOnFunction" ParameterType="%AID%_PT-ValueFunction" Offset="0" BitOffset="0" Text="    Wert für EIN ermitteln als" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%435" Name="f%C%OOnKONumber" ParameterType="%AID%_PT-KONumber"      Offset="0" BitOffset="0" Text="    Nummer des Kommunikationsobjekts" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%437" Name="f%C%OOnKODpt"    ParameterType="%AID%_PT-InputDpt"      Offset="2" BitOffset="0" Text="    DPT des Kommunikationsobjekts" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%440" Name="f%C%OOnKOSend"   ParameterType="%AID%_PT-CheckBox"      Offset="6" BitOffset="0" Text="    Wert für EIN an ein zusätzliches&#10;    KO senden?" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%442" Name="f%C%OOnKOSendNumber" ParameterType="%AID%_PT-KONumber"  Offset="6" BitOffset="1" Text="        Nummer des zusätzlichen KO" Value="1" />
               </Union>
               <Union SizeInBit="8">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="67" BitOffset="0" />
@@ -500,6 +506,8 @@
                 <Parameter Id="%AID%_UP-%TT%%CC%280" Name="f%C%OOffFunction" ParameterType="%AID%_PT-ValueFunction" Offset="0" BitOffset="0" Text="    Wert für AUS ermitteln als" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%436" Name="f%C%OOffKONumber" ParameterType="%AID%_PT-KONumber"      Offset="0" BitOffset="0" Text="    Nummer des Kommunikationsobjekts" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%438" Name="f%C%OOffKODpt"    ParameterType="%AID%_PT-InputDpt"      Offset="2" BitOffset="0" Text="    DPT des Kommunikationsobjekts" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%441" Name="f%C%OOffKOSend"   ParameterType="%AID%_PT-CheckBox"      Offset="6" BitOffset="0" Text="    Wert für AUS an ein zusätzliches&#10;    KO senden?" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%443" Name="f%C%OOffKOSendNumber" ParameterType="%AID%_PT-KONumber"  Offset="6" BitOffset="1" Text="        Nummer des zusätzlichen KO" Value="1" />
               </Union>
               <Union SizeInBit="32">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="82" BitOffset="0" />
@@ -1025,6 +1033,14 @@
               <ParameterRef Id="%AID%_UP-%TT%%CC%437_R-%TT%%CC%43701" RefId="%AID%_UP-%TT%%CC%437" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%438_R-%TT%%CC%43801" RefId="%AID%_UP-%TT%%CC%438" />
               <!-- <ParameterRef Id="%AID%_P-%TT%%CC%439_R-%TT%%CC%43901" RefId="%AID%_P-%TT%%CC%439" /> -->
+              <ParameterRef Id="%AID%_UP-%TT%%CC%440_R-%TT%%CC%44001" RefId="%AID%_UP-%TT%%CC%440" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%441_R-%TT%%CC%44101" RefId="%AID%_UP-%TT%%CC%441" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%442_R-%TT%%CC%44201" RefId="%AID%_UP-%TT%%CC%442" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%443_R-%TT%%CC%44301" RefId="%AID%_UP-%TT%%CC%443" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%444_R-%TT%%CC%44401" RefId="%AID%_UP-%TT%%CC%444" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%445_R-%TT%%CC%44501" RefId="%AID%_UP-%TT%%CC%445" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%446_R-%TT%%CC%44601" RefId="%AID%_UP-%TT%%CC%446" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%447_R-%TT%%CC%44701" RefId="%AID%_UP-%TT%%CC%447" />
             </ParameterRefs>
             <ComObjectTable>
               <ComObject Id="%AID%_O-%TT%%CC%000" Name="KOf%C%E1" Text="Eingang 1" Number="%K0%" FunctionText="Logik %C%, Eingang 1" ObjectSize="4 Bytes" ReadFlag="Disabled" WriteFlag="Enabled"  CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled"  ReadOnInitFlag="Disabled" />
@@ -1188,7 +1204,7 @@
                           <!-- Delta ext. 1 Input-->
                           <choose ParamRefId="%AID%_UP-%TT%%CC%008_R-%TT%%CC%00801">
                             <when test="0">
-                              <choose ParamRefId="%AID%_UP-%TT%%CC%094_R-%TT%%CC%09401">
+                              <choose ParamRefId="%AID%_UP-%TT%%CC%447_R-%TT%%CC%44701">
                                 <when test="1 3">
                                   <ParameterBlock Id="%AID%_PB-%C%11" Name="f%C%ExtInput1Delta" Text="Eingang 1: {{0:Differenzwert}}" TextParameterRefId="%AID%_P-%TT%%CC%128_R-%TT%%CC%12801" Icon="chevron-right-circle-outline" HelpContext="Empty">
                                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Definition Eingang 1" UIHint="Headline" />
@@ -1361,27 +1377,31 @@
                                     <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingangskonverter" UIHint="Headline" />
                                     <ParameterRefRef RefId="%AID%_P-%TT%%CC%009_R-%TT%%CC%00901" HelpContext="%DOC%" IndentLevel="1" />
+                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%446_R-%TT%%CC%44601" />
                                     <choose ParamRefId="%AID%_P-%TT%%CC%009_R-%TT%%CC%00901">
                                       <when test="0">
-                                        <!-- E1 no Konverter (DPT1) -->
-                                        <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%093_R-%TT%%CC%09301" Value="0" />
+                                        <!-- E1 bool Konverter (DPT1) -->
+                                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%444_R-%TT%%CC%44401" HelpContext="%DOC%" IndentLevel="1" />
+                                        <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%446_R-%TT%%CC%44601" SourceParamRefRef="%AID%_UP-%TT%%CC%444_R-%TT%%CC%44401" />
                                       </when>
                                       <when test="1 9">
                                         <!-- E1 Konverter special -->
                                         <ParameterRefRef RefId="%AID%_UP-%TT%%CC%370_R-%TT%%CC%37001" HelpContext="%DOC%" IndentLevel="1" />
-                                        <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%093_R-%TT%%CC%09301" SourceParamRefRef="%AID%_UP-%TT%%CC%370_R-%TT%%CC%37001" />
+                                        <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%446_R-%TT%%CC%44601" SourceParamRefRef="%AID%_UP-%TT%%CC%370_R-%TT%%CC%37001" />
                                       </when>
                                       <when test="7 10 13 14 15">
                                         <!-- E1 Konverter no single values -->
                                         <ParameterRefRef RefId="%AID%_UP-%TT%%CC%369_R-%TT%%CC%36901" HelpContext="%DOC%" IndentLevel="1" />
-                                        <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%093_R-%TT%%CC%09301" SourceParamRefRef="%AID%_UP-%TT%%CC%369_R-%TT%%CC%36901" />
+                                        <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%446_R-%TT%%CC%44601" SourceParamRefRef="%AID%_UP-%TT%%CC%369_R-%TT%%CC%36901" />
                                       </when>
                                       <when test="2 3 4 5 6">
                                         <!-- E1 Konverter -->
                                         <ParameterRefRef RefId="%AID%_UP-%TT%%CC%093_R-%TT%%CC%09301" HelpContext="%DOC%" IndentLevel="1" />
+                                        <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%446_R-%TT%%CC%44601" SourceParamRefRef="%AID%_UP-%TT%%CC%093_R-%TT%%CC%09301" />
                                       </when>
-                                      <when test="!=0">
-                                        <choose ParamRefId="%AID%_UP-%TT%%CC%093_R-%TT%%CC%09301">
+                                      <!-- soll immer true sein -->
+                                      <when test="!=10"> 
+                                        <choose ParamRefId="%AID%_UP-%TT%%CC%446_R-%TT%%CC%44601">
                                           <when test="0">
                                             <ParameterSeparator Id="%AID%_PS-nnn" Text="Das Wertintervall liefert EIN, wenn Eingang 1 zwischen Von-Wert und Bis-Wert liegt." />
                                             <ParameterSeparator Id="%AID%_PS-nnn" Text="Formal: EIN bei Von-Wert &lt;= Eingang 1 &lt;= Bis-Wert; AUS sonst" />
@@ -1410,6 +1430,14 @@
                                           <when test="5">
                                             <ParameterSeparator Id="%AID%_PS-nnn" Text="Die konstante Belegung ist für Formeln gedacht. Das Eingangs-KO ist nicht aktiv, es wird der hier angegebene Wert für dieses KO angenommen. Der Wert für die Logik ist immer EIN." />
                                             <ParameterSeparator Id="%AID%_PS-nnn" Text="Formal: EIN für jeglichen angegebenen konstanten Wert" />
+                                          </when>
+                                          <when test="6">
+                                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Der Eingangswert wird einfach an die Logik durchgereicht, der Konverter ist die Identitätsfunktion (macht gar nichts)." />
+                                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Formal: EIN bei Eingang 1 gleich 1; AUS bei Eingang 1 gleich 0" />
+                                          </when>
+                                          <when test="7">
+                                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Der Eingang triggert nur die Logik, egal welcher Wert anliegt, der Konverter macht immer ein EIN daraus." />
+                                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Formal: EIN bei Eingang 1 gleich 0 oder 1" />
                                           </when>
                                         </choose>
                                       </when>
@@ -1442,7 +1470,7 @@
                                       </when>
                                       <when test="2">
                                         <!-- DPT5 -->
-                                        <choose ParamRefId="%AID%_UP-%TT%%CC%093_R-%TT%%CC%09301">
+                                        <choose ParamRefId="%AID%_UP-%TT%%CC%446_R-%TT%%CC%44601">
                                           <when test="0 1 2 3 4">
                                             <choose ParamRefId="%AID%_UP-%TT%%CC%377_R-%TT%%CC%37701">
                                               <when test="0">
@@ -1512,7 +1540,7 @@
                                       </when>
                                       <when test="3">
                                         <!-- DPT5.001 -->
-                                        <choose ParamRefId="%AID%_UP-%TT%%CC%093_R-%TT%%CC%09301">
+                                        <choose ParamRefId="%AID%_UP-%TT%%CC%446_R-%TT%%CC%44601">
                                           <when test="0 1 2 3 4">
                                             <choose ParamRefId="%AID%_UP-%TT%%CC%377_R-%TT%%CC%37701">
                                               <when test="0">
@@ -1582,7 +1610,7 @@
                                       </when>
                                       <when test="4">
                                         <!-- DPT6 -->
-                                        <choose ParamRefId="%AID%_UP-%TT%%CC%093_R-%TT%%CC%09301">
+                                        <choose ParamRefId="%AID%_UP-%TT%%CC%446_R-%TT%%CC%44601">
                                           <when test="0 1 2 3 4">
                                             <choose ParamRefId="%AID%_UP-%TT%%CC%377_R-%TT%%CC%37701">
                                               <when test="0">
@@ -1652,7 +1680,7 @@
                                       </when>
                                       <when test="5">
                                         <!-- DPT7 -->
-                                        <choose ParamRefId="%AID%_UP-%TT%%CC%093_R-%TT%%CC%09301">
+                                        <choose ParamRefId="%AID%_UP-%TT%%CC%446_R-%TT%%CC%44601">
                                           <when test="0 1 2 3 4">
                                             <choose ParamRefId="%AID%_UP-%TT%%CC%377_R-%TT%%CC%37701">
                                               <when test="0">
@@ -1706,7 +1734,7 @@
                                       </when>
                                       <when test="6">
                                         <!-- DPT8 -->
-                                        <choose ParamRefId="%AID%_UP-%TT%%CC%093_R-%TT%%CC%09301">
+                                        <choose ParamRefId="%AID%_UP-%TT%%CC%446_R-%TT%%CC%44601">
                                           <when test="0 1 2 3 4">
                                             <choose ParamRefId="%AID%_UP-%TT%%CC%377_R-%TT%%CC%37701">
                                               <when test="0">
@@ -1760,7 +1788,7 @@
                                       </when>
                                       <when test="7">
                                         <!-- DPT9 -->
-                                        <choose ParamRefId="%AID%_UP-%TT%%CC%093_R-%TT%%CC%09301">
+                                        <choose ParamRefId="%AID%_UP-%TT%%CC%446_R-%TT%%CC%44601">
                                           <when test="0 1 2 3">
                                             <choose ParamRefId="%AID%_UP-%TT%%CC%377_R-%TT%%CC%37701">
                                               <when test="0">
@@ -1791,7 +1819,7 @@
                                       </when>
                                       <when test="13">
                                         <!-- DPT12 -->
-                                        <choose ParamRefId="%AID%_UP-%TT%%CC%093_R-%TT%%CC%09301">
+                                        <choose ParamRefId="%AID%_UP-%TT%%CC%446_R-%TT%%CC%44601">
                                           <when test="0 1 2 3">
                                             <choose ParamRefId="%AID%_UP-%TT%%CC%377_R-%TT%%CC%37701">
                                               <when test="0">
@@ -1822,7 +1850,7 @@
                                       </when>
                                       <when test="14">
                                         <!-- DPT13 -->
-                                        <choose ParamRefId="%AID%_UP-%TT%%CC%093_R-%TT%%CC%09301">
+                                        <choose ParamRefId="%AID%_UP-%TT%%CC%446_R-%TT%%CC%44601">
                                           <when test="0 1 2 3">
                                             <choose ParamRefId="%AID%_UP-%TT%%CC%377_R-%TT%%CC%37701">
                                               <when test="0">
@@ -1853,7 +1881,7 @@
                                       </when>
                                       <when test="15">
                                         <!-- DPT14 -->
-                                        <choose ParamRefId="%AID%_UP-%TT%%CC%093_R-%TT%%CC%09301">
+                                        <choose ParamRefId="%AID%_UP-%TT%%CC%446_R-%TT%%CC%44601">
                                           <when test="0 1 2 3">
                                             <choose ParamRefId="%AID%_UP-%TT%%CC%377_R-%TT%%CC%37701">
                                               <when test="0">
@@ -1909,7 +1937,7 @@
                                       </when>
                                       <when test="10">
                                         <!-- DPT232 -->
-                                        <choose ParamRefId="%AID%_UP-%TT%%CC%093_R-%TT%%CC%09301">
+                                        <choose ParamRefId="%AID%_UP-%TT%%CC%446_R-%TT%%CC%44601">
                                           <when test="0 1 2 3">
                                             <choose ParamRefId="%AID%_UP-%TT%%CC%377_R-%TT%%CC%37701">
                                               <when test="0">
@@ -1939,7 +1967,7 @@
                                         </choose>
                                       </when>
                                     </choose>
-                                    <choose ParamRefId="%AID%_UP-%TT%%CC%093_R-%TT%%CC%09301">
+                                    <choose ParamRefId="%AID%_UP-%TT%%CC%446_R-%TT%%CC%44601">
                                       <when test="!=5">
                                         <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                                         <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingangswert vorbelegen" UIHint="Headline" />
@@ -1990,7 +2018,7 @@
                           <!-- Delta ext. 2 Input-->
                           <choose ParamRefId="%AID%_UP-%TT%%CC%028_R-%TT%%CC%02801">
                             <when test="0">
-                              <choose ParamRefId="%AID%_UP-%TT%%CC%093_R-%TT%%CC%09301">
+                              <choose ParamRefId="%AID%_UP-%TT%%CC%446_R-%TT%%CC%44601">
                                 <when test="1 3">
                                   <ParameterBlock Id="%AID%_PB-%C%13" Name="f%C%ExtInput2Delta" Text="Eingang 2: {{0:Differenzwert}}" TextParameterRefId="%AID%_P-%TT%%CC%129_R-%TT%%CC%12901" Icon="chevron-right-circle-outline" HelpContext="Empty">
                                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Definition Eingang 2" UIHint="Headline" />
@@ -2157,27 +2185,30 @@
                                     <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingangskonverter" UIHint="Headline" />
                                     <ParameterRefRef RefId="%AID%_P-%TT%%CC%029_R-%TT%%CC%02901" HelpContext="%DOC%" IndentLevel="1" />
+                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%447_R-%TT%%CC%44701" />
                                     <choose ParamRefId="%AID%_P-%TT%%CC%029_R-%TT%%CC%02901">
                                       <when test="0">
-                                        <!-- E2 no Konverter (DPT1) -->
-                                        <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%094_R-%TT%%CC%09401" Value="0" />
+                                        <!-- E2 bool Konverter (DPT1) -->
+                                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%445_R-%TT%%CC%44501" HelpContext="%DOC%" IndentLevel="1" />
+                                        <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%447_R-%TT%%CC%44701" SourceParamRefRef="%AID%_UP-%TT%%CC%445_R-%TT%%CC%44501" />
                                       </when>
                                       <when test="1 9">
                                         <!-- E2 Konverter special -->
                                         <ParameterRefRef RefId="%AID%_UP-%TT%%CC%372_R-%TT%%CC%37201" HelpContext="%DOC%" IndentLevel="1" />
-                                        <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%094_R-%TT%%CC%09401" SourceParamRefRef="%AID%_UP-%TT%%CC%372_R-%TT%%CC%37201" />
+                                        <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%447_R-%TT%%CC%44701" SourceParamRefRef="%AID%_UP-%TT%%CC%372_R-%TT%%CC%37201" />
                                       </when>
                                       <when test="7 10 13 14 15">
                                         <!-- E2 Konverter no single values -->
                                         <ParameterRefRef RefId="%AID%_UP-%TT%%CC%371_R-%TT%%CC%37101" HelpContext="%DOC%" IndentLevel="1" />
-                                        <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%094_R-%TT%%CC%09401" SourceParamRefRef="%AID%_UP-%TT%%CC%371_R-%TT%%CC%37101" />
+                                        <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%447_R-%TT%%CC%44701" SourceParamRefRef="%AID%_UP-%TT%%CC%371_R-%TT%%CC%37101" />
                                       </when>
                                       <when test="2 3 4 5 6">
                                         <!-- E2 Konverter -->
                                         <ParameterRefRef RefId="%AID%_UP-%TT%%CC%094_R-%TT%%CC%09401" HelpContext="%DOC%" IndentLevel="1" />
+                                        <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%447_R-%TT%%CC%44701" SourceParamRefRef="%AID%_UP-%TT%%CC%094_R-%TT%%CC%09401" />
                                       </when>
-                                      <when test="!=0">
-                                        <choose ParamRefId="%AID%_UP-%TT%%CC%094_R-%TT%%CC%09401">
+                                      <when test="!=10">
+                                        <choose ParamRefId="%AID%_UP-%TT%%CC%447_R-%TT%%CC%44701">
                                           <when test="0">
                                             <ParameterSeparator Id="%AID%_PS-nnn" Text="Das Wertintervall liefert EIN, wenn Eingang 2 zwischen Von-Wert und Bis-Wert liegt." />
                                             <ParameterSeparator Id="%AID%_PS-nnn" Text="Formal: EIN bei Von-Wert &lt;= Eingang 2 &lt;= Bis-Wert; AUS sonst" />
@@ -2206,6 +2237,14 @@
                                           <when test="5">
                                             <ParameterSeparator Id="%AID%_PS-nnn" Text="Die konstante Belegung ist für Formeln gedacht. Das Eingangs-KO ist nicht aktiv, es wird der hier angegebene Wert für dieses KO angenommen. Der Wert für die Logik ist immer EIN." />
                                             <ParameterSeparator Id="%AID%_PS-nnn" Text="Formal: EIN für jeglichen angegebenen konstanten Wert" />
+                                          </when>
+                                          <when test="6">
+                                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Der Eingangswert wird einfach an die Logik durchgereicht, der Konverter ist die Identitätsfunktion (macht gar nichts)." />
+                                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Formal: EIN bei Eingang 2 gleich 1; AUS bei Eingang 2 gleich 0" />
+                                          </when>
+                                          <when test="7">
+                                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Der Eingang triggert nur die Logik, egal welcher Wert anliegt, der Konverter macht immer ein EIN daraus." />
+                                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Formal: EIN bei Eingang 2 gleich 0 oder 1" />
                                           </when>
                                         </choose>
                                       </when>
@@ -2238,7 +2277,7 @@
                                       </when>
                                       <when test="2">
                                         <!-- DPT5 -->
-                                        <choose ParamRefId="%AID%_UP-%TT%%CC%094_R-%TT%%CC%09401">
+                                        <choose ParamRefId="%AID%_UP-%TT%%CC%447_R-%TT%%CC%44701">
                                           <when test="0 1 2 3 4">
                                             <choose ParamRefId="%AID%_UP-%TT%%CC%379_R-%TT%%CC%37901">
                                               <when test="0">
@@ -2308,7 +2347,7 @@
                                       </when>
                                       <when test="3">
                                         <!-- DPT5.001 -->
-                                        <choose ParamRefId="%AID%_UP-%TT%%CC%094_R-%TT%%CC%09401">
+                                        <choose ParamRefId="%AID%_UP-%TT%%CC%447_R-%TT%%CC%44701">
                                           <when test="0 1 2 3 4">
                                             <choose ParamRefId="%AID%_UP-%TT%%CC%379_R-%TT%%CC%37901">
                                               <when test="0">
@@ -2382,7 +2421,7 @@
                                       </when>
                                       <when test="4">
                                         <!-- DPT6 -->
-                                        <choose ParamRefId="%AID%_UP-%TT%%CC%094_R-%TT%%CC%09401">
+                                        <choose ParamRefId="%AID%_UP-%TT%%CC%447_R-%TT%%CC%44701">
                                           <when test="0 1 2 3 4">
                                             <choose ParamRefId="%AID%_UP-%TT%%CC%379_R-%TT%%CC%37901">
                                               <when test="0">
@@ -2452,7 +2491,7 @@
                                       </when>
                                       <when test="5">
                                         <!-- DPT7 -->
-                                        <choose ParamRefId="%AID%_UP-%TT%%CC%094_R-%TT%%CC%09401">
+                                        <choose ParamRefId="%AID%_UP-%TT%%CC%447_R-%TT%%CC%44701">
                                           <when test="0 1 2 3 4">
                                             <choose ParamRefId="%AID%_UP-%TT%%CC%379_R-%TT%%CC%37901">
                                               <when test="0">
@@ -2506,7 +2545,7 @@
                                       </when>
                                       <when test="6">
                                         <!-- DPT8 -->
-                                        <choose ParamRefId="%AID%_UP-%TT%%CC%094_R-%TT%%CC%09401">
+                                        <choose ParamRefId="%AID%_UP-%TT%%CC%447_R-%TT%%CC%44701">
                                           <when test="0 1 2 3 4">
                                             <choose ParamRefId="%AID%_UP-%TT%%CC%379_R-%TT%%CC%37901">
                                               <when test="0">
@@ -2560,7 +2599,7 @@
                                       </when>
                                       <when test="7">
                                         <!-- DPT9 -->
-                                        <choose ParamRefId="%AID%_UP-%TT%%CC%094_R-%TT%%CC%09401">
+                                        <choose ParamRefId="%AID%_UP-%TT%%CC%447_R-%TT%%CC%44701">
                                           <when test="0 1 2 3">
                                             <choose ParamRefId="%AID%_UP-%TT%%CC%379_R-%TT%%CC%37901">
                                               <when test="0">
@@ -2591,7 +2630,7 @@
                                       </when>
                                       <when test="13">
                                         <!-- DPT12 -->
-                                        <choose ParamRefId="%AID%_UP-%TT%%CC%094_R-%TT%%CC%09401">
+                                        <choose ParamRefId="%AID%_UP-%TT%%CC%447_R-%TT%%CC%44701">
                                           <when test="0 1 2 3">
                                             <choose ParamRefId="%AID%_UP-%TT%%CC%379_R-%TT%%CC%37901">
                                               <when test="0">
@@ -2622,7 +2661,7 @@
                                       </when>
                                       <when test="14">
                                         <!-- DPT13 -->
-                                        <choose ParamRefId="%AID%_UP-%TT%%CC%094_R-%TT%%CC%09401">
+                                        <choose ParamRefId="%AID%_UP-%TT%%CC%447_R-%TT%%CC%44701">
                                           <when test="0 1 2 3">
                                             <choose ParamRefId="%AID%_UP-%TT%%CC%379_R-%TT%%CC%37901">
                                               <when test="0">
@@ -2653,7 +2692,7 @@
                                       </when>
                                       <when test="15">
                                         <!-- DPT14 -->
-                                        <choose ParamRefId="%AID%_UP-%TT%%CC%094_R-%TT%%CC%09401">
+                                        <choose ParamRefId="%AID%_UP-%TT%%CC%447_R-%TT%%CC%44701">
                                           <when test="0 1 2 3">
                                             <choose ParamRefId="%AID%_UP-%TT%%CC%379_R-%TT%%CC%37901">
                                               <when test="0">
@@ -2709,7 +2748,7 @@
                                       </when>
                                       <when test="10">
                                         <!-- DPT232 -->
-                                        <choose ParamRefId="%AID%_UP-%TT%%CC%094_R-%TT%%CC%09401">
+                                        <choose ParamRefId="%AID%_UP-%TT%%CC%447_R-%TT%%CC%44701">
                                           <when test="0 1 2 3">
                                             <choose ParamRefId="%AID%_UP-%TT%%CC%379_R-%TT%%CC%37901">
                                               <when test="0">
@@ -2739,7 +2778,7 @@
                                         </choose>
                                       </when>
                                     </choose>
-                                    <choose ParamRefId="%AID%_UP-%TT%%CC%094_R-%TT%%CC%09401">
+                                    <choose ParamRefId="%AID%_UP-%TT%%CC%447_R-%TT%%CC%44701">
                                       <when test="!=5">
                                         <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                                         <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingangswert vorbelegen" UIHint="Headline" />
@@ -3376,6 +3415,7 @@
                             <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                             <ParameterSeparator Id="%AID%_PS-nnn" Text="Wert für Ausgang" UIHint="Headline" />
                             <ParameterRefRef RefId="%AID%_P-%TT%%CC%064_R-%TT%%CC%06401" HelpContext="%DOC%" IndentLevel="1" />
+                            <!-- Wert für EIN senden -->
                             <choose ParamRefId="%AID%_UP-%TT%00035_R-%TT%0003501">
                               <when test="0">
                                 <choose ParamRefId="%AID%_UP-%TT%00036_R-%TT%0003601">
@@ -3491,6 +3531,45 @@
                                 <ParameterRefRef RefId="%AID%_UP-%TT%%CC%437_R-%TT%%CC%43701" HelpContext="%DOC%" IndentLevel="1" />
                               </when>
                             </choose>
+
+                            <choose ParamRefId="%AID%_UP-%TT%%CC%136_R-%TT%%CC%13601">
+                              <when test="1 2 3 8 9">
+                                <choose ParamRefId="%AID%_P-%TT%%CC%064_R-%TT%%CC%06401">
+                                  <when test="0 1 2 3 4 5 6 7 9 10 13 14 15">
+                                    <ParameterBlock Id="%AID%_PB-%C%002" Name="KO%C%001" Inline="true" Layout="Grid" HelpContext="LOG-Wert-fuer-EIN-an-ein-zusaetzliches-KO-senden">
+                                      <Rows>
+                                        <Row Id="%AID%_PB-%C%001_R-1" Name="Row%C%001" />
+                                      </Rows>
+                                      <Columns>
+                                        <Column Id="%AID%_PB-%C%001_C-1" Name="Col1" Width="4%" />
+                                        <Column Id="%AID%_PB-%C%001_C-2" Name="Col2" Width="41%" />
+                                        <Column Id="%AID%_PB-%C%001_C-3" Name="Col3" Width="15%" />
+                                        <Column Id="%AID%_PB-%C%001_C-4" Name="Col4" Width="21%" />
+                                        <Column Id="%AID%_PB-%C%001_C-5" Name="Col5" Width="20%" />
+                                      </Columns>
+                                      <ParameterSeparator Id="%AID%_PS-nnn" Text="Wert für EIN an ein zusätzliches&#10;KO senden?" Cell="1,2" />
+                                      <ParameterRefRef RefId="%AID%_UP-%TT%%CC%440_R-%TT%%CC%44001" HelpContext="%DOC%" IndentLevel="1" Cell="1,3" />
+                                      <choose ParamRefId="%AID%_UP-%TT%%CC%440_R-%TT%%CC%44001">
+                                        <when test="1">
+                                          <ParameterSeparator Id="%AID%_PS-nnn" Text="Nummer des KO" Cell="1,4" />
+                                          <ParameterRefRef RefId="%AID%_UP-%TT%%CC%442_R-%TT%%CC%44201" HelpContext="%DOC%" Cell="1,5"/>
+                                        </when>
+                                      </choose>
+                                    </ParameterBlock>
+
+  
+                                    <!-- <ParameterRefRef RefId="%AID%_UP-%TT%%CC%440_R-%TT%%CC%44001" HelpContext="%DOC%" IndentLevel="1" />
+                                    <choose ParamRefId="%AID%_UP-%TT%%CC%440_R-%TT%%CC%44001">
+                                      <when test="1">
+                                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%442_R-%TT%%CC%44201" HelpContext="%DOC%" IndentLevel="1" />
+                                      </when>
+                                    </choose> -->
+                                  </when>
+                                </choose>
+                              </when>
+                            </choose>
+
+                            <!-- Wert für AUS senden -->
                             <choose ParamRefId="%AID%_UP-%TT%00035_R-%TT%0003501">
                               <when test="0">
                                 <choose ParamRefId="%AID%_UP-%TT%00036_R-%TT%0003601">
@@ -3606,17 +3685,58 @@
                                 <ParameterRefRef RefId="%AID%_UP-%TT%%CC%438_R-%TT%%CC%43801" HelpContext="%DOC%" IndentLevel="1" />
                               </when>
                             </choose>
+                            <choose ParamRefId="%AID%_UP-%TT%%CC%139_R-%TT%%CC%13901">
+                              <when test="1 2 3 8 9">
+                                <choose ParamRefId="%AID%_P-%TT%%CC%064_R-%TT%%CC%06401">
+                                  <when test="0 1 2 3 4 5 6 7 9 10 13 14 15">
+                                    <ParameterBlock Id="%AID%_PB-%C%003" Name="KO%C%002" Inline="true" Layout="Grid" HelpContext="LOG-Wert-fuer-AUS-an-ein-zusaetzliches-KO-senden">
+                                      <Rows>
+                                        <Row Id="%AID%_PB-%C%001_R-1" Name="Row%C%001" />
+                                      </Rows>
+                                      <Columns>
+                                        <Column Id="%AID%_PB-%C%001_C-1" Name="Col1" Width="4%" />
+                                        <Column Id="%AID%_PB-%C%001_C-2" Name="Col2" Width="41%" />
+                                        <Column Id="%AID%_PB-%C%001_C-3" Name="Col3" Width="15%" />
+                                        <Column Id="%AID%_PB-%C%001_C-4" Name="Col4" Width="21%" />
+                                        <Column Id="%AID%_PB-%C%001_C-5" Name="Col5" Width="20%" />
+                                      </Columns>
+                                      <ParameterSeparator Id="%AID%_PS-nnn" Text="Wert für AUS an ein zusätzliches&#10;KO senden?" Cell="1,2" />
+                                      <ParameterRefRef RefId="%AID%_UP-%TT%%CC%441_R-%TT%%CC%44101" HelpContext="%DOC%" IndentLevel="1" Cell="1,3" />
+                                      <choose ParamRefId="%AID%_UP-%TT%%CC%441_R-%TT%%CC%44101">
+                                        <when test="1">
+                                          <ParameterSeparator Id="%AID%_PS-nnn" Text="Nummer des KO" Cell="1,4" />
+                                          <ParameterRefRef RefId="%AID%_UP-%TT%%CC%443_R-%TT%%CC%44301" HelpContext="%DOC%" Cell="1,5"/>
+                                        </when>
+                                      </choose>
+                                    </ParameterBlock>
+
+
+
+
+
+
+                                    <!-- <ParameterRefRef RefId="%AID%_UP-%TT%%CC%441_R-%TT%%CC%44101" HelpContext="%DOC%" IndentLevel="1" />
+                                    <choose ParamRefId="%AID%_UP-%TT%%CC%441_R-%TT%%CC%44101">
+                                      <when test="1">
+                                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%443_R-%TT%%CC%44301" HelpContext="%DOC%" IndentLevel="1" />
+                                      </when>
+                                    </choose> -->
+                                  </when>
+                                </choose>
+                              </when>
+                            </choose>
+                            <!-- Wert für AUS senden -->
                             <!-- Warning for "Send value of KO", just present once -->
                             <choose ParamRefId="%AID%_UP-%TT%%CC%136_R-%TT%%CC%13601">
                               <when test="9">
                                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Beim Senden vom 'Wert eines KO' ist der DPT des zu sendenden KO sehr wichtig. Er muss korrekt angegeben werden, da er nicht automatisch ermittelt werden kann." UIHint="Information" />
                               </when>
                               <when test="!=9">
-                              <choose ParamRefId="%AID%_UP-%TT%%CC%139_R-%TT%%CC%13901">
-                                <when test="9">
-                                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Beim Senden vom 'Wert eines KO' ist der DPT des zu sendenden KO sehr wichtig. Er muss korrekt angegeben werden, da er nicht automatisch ermittelt werden kann." UIHint="Information" />
-                                </when>
-                              </choose>
+                                <choose ParamRefId="%AID%_UP-%TT%%CC%139_R-%TT%%CC%13901">
+                                  <when test="9">
+                                    <ParameterSeparator Id="%AID%_PS-nnn" Text="Beim Senden vom 'Wert eines KO' ist der DPT des zu sendenden KO sehr wichtig. Er muss korrekt angegeben werden, da er nicht automatisch ermittelt werden kann." UIHint="Information" />
+                                  </when>
+                                </choose>
                               </when>
                             </choose>
 
