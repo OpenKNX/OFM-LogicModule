@@ -80,6 +80,8 @@ Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer d
 
 16.01.2024: Firmware 3.1.0, Applikation 3.1
 
+* ACHTUNG: Falls ein Update einer früheren Firmware versagt, liegt das daran, dass bei einer internen KO-Verbindung vom Eingang 2 eines Logikkanals auch das "eigene" KO des Eingang 2 mit einer GA belegt wurde. Der Eingang 2 ist definiert als: Externe KO-Verknüpfung, DPT5.001, Eingangskonverter ist ungleich "Wertintervall". 
+* ACHTUNG: Nach einem Update müssen alle Zeitschaltuhren, deren Schaltzeiten durch "Sonnenauf-/-untergang plus/minus Zeitversatz" definiert sind, neu definiert werden!
 * NEU: Ein Logikausgang kann jetzt auch seinen Wert zusätzlich über ein internes KO versenden
 * NEU: Ein Eingangskonverter für DPT1 erlaubt jetzt auch die Auswertung eines DPT1-Telegramms als Trigger (unabhängig von seinem Wert wird der Konverter immer 1)
 * FIX: Man kann bei Logiken einstellen, dass sie erst ausgewertet werden, wenn alle Eingänge gültig sind. Die Prüfung, dass ein Eingang gültig ist, konnte schon erfolgreich sein, obwohl noch keine Antwort von einem ReadRequest eingegangen ist. Dies war ein seltener Fehler, der jetzt korrigiert ist.

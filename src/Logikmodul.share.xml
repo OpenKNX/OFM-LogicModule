@@ -792,7 +792,7 @@
                   <Enumeration Text="04" Value="4" Id="%ENID%" />
                   <Enumeration Text="05" Value="5" Id="%ENID%" />
                   <Enumeration Text="06" Value="6" Id="%ENID%" />
-                  <!-- <Enumeration Text="07" Value="7" Id="%ENID%" />
+                  <Enumeration Text="07" Value="7" Id="%ENID%" />
                   <Enumeration Text="08" Value="8" Id="%ENID%" />
                   <Enumeration Text="09" Value="9" Id="%ENID%" />
                   <Enumeration Text="10" Value="10" Id="%ENID%" />
@@ -808,7 +808,18 @@
                   <Enumeration Text="20" Value="20" Id="%ENID%" />
                   <Enumeration Text="21" Value="21" Id="%ENID%" />
                   <Enumeration Text="22" Value="22" Id="%ENID%" />
-                  <Enumeration Text="23" Value="23" Id="%ENID%" /> -->
+                  <Enumeration Text="23" Value="23" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-HourRelShort" Name="HourRelShort">
+                <TypeRestriction Base="Value" SizeInBit="5">
+                  <Enumeration Text="00" Value="0" Id="%ENID%" />
+                  <Enumeration Text="01" Value="1" Id="%ENID%" />
+                  <Enumeration Text="02" Value="2" Id="%ENID%" />
+                  <Enumeration Text="03" Value="3" Id="%ENID%" />
+                  <Enumeration Text="04" Value="4" Id="%ENID%" />
+                  <Enumeration Text="05" Value="5" Id="%ENID%" />
+                  <Enumeration Text="06" Value="6" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
               <ParameterType Id="%AID%_PT-Weekday" Name="Weekday">
