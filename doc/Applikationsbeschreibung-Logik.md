@@ -344,6 +344,8 @@ Hier werden Einstellungen vorgenommen, die für das gesamte Logikmodul und alle 
 
 Um die Applikation übersichtlicher zu gestalten, kann hier ausgewählt werden, wie viele Logikkanäle in der Applikation verfügbar und editierbar sind. Die Maximalanzahl der Kanäle hängt von der Firmware des Gerätes ab, dass das Logikmodul verwendet.
 
+Die ETS ist auch schneller in der Anzeige, wenn sie weniger (leere) Kanäle darstellen muss. Insofern macht es Sinn, nur so viele Kanäle anzuzeigen, wie man wirklich braucht.
+
 ### **Urlaub**
 
 <kbd>![Urlaubsangaben](pics/Urlaub.PNG)</kbd>
@@ -1889,6 +1891,7 @@ Hier wird die Farbe bestimmt, deren Wert gesendet werden soll. Wird die Farbe Sc
 <!-- DOC -->
 ### **Wert für EIN an ein zusätzliches KO senden**
 
+<!-- DOC Skip="1" -->
 <kbd>![Wert an ein zusätzliches KO senden](pics/WertAnEinZusätzlichesKOSenden.png)</kbd>
 
 Ein Ausgang kann seinen EIN-Wert nicht nur über das ihm zugewiesene KO senden, sondern auch zusätzlich an ein internes KO. Das bedeutet, der Wert wird in ein beliebiges KO des Gerätes (nicht nur des Logikmoduls) geschrieben, ohne dass dafür eine GA-Verknüpfung notwendig ist.
