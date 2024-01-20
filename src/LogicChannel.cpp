@@ -537,14 +537,14 @@ LogicValue LogicChannel::getParamByDpt(uint8_t iDpt, uint16_t iParamIndex)
 LogicValue LogicChannel::getInputValue(uint8_t iIOIndex, uint8_t *eDpt)
 {
     // check for constant
-    uint16_t lParamIndex = (iIOIndex == 1) ? LOG_fE1Convert : LOG_fE2Convert;
+    uint16_t lParamIndex = (iIOIndex == IO_Input1) ? LOG_fE1Convert : LOG_fE2Convert;
     uint8_t lConvert = (getByteParam(lParamIndex) & LOG_fE1ConvertMask) >> LOG_fE1ConvertShift;
-    lParamIndex = (iIOIndex == 1) ? LOG_fE1Dpt : LOG_fE2Dpt;
+    lParamIndex = (iIOIndex == IO_Input1) ? LOG_fE1Dpt : LOG_fE2Dpt;
     *eDpt = getByteParam(lParamIndex);
     if (lConvert == VAL_InputConvert_Constant)
     {
         // input value is a constant stored in param memory
-        uint16_t lParamIndex = (iIOIndex == 1) ? LOG_fE1LowDelta : LOG_fE2LowDelta;
+        uint16_t lParamIndex = (iIOIndex == IO_Input1) ? LOG_fE1LowDelta : LOG_fE2LowDelta;
         LogicValue lValue = getParamByDpt(*eDpt, lParamIndex);
         return lValue;
     }
@@ -828,9 +828,9 @@ void LogicChannel::processStartup()
 
 void LogicChannel::processInput(uint8_t iIOIndex)
 {
-    if (iIOIndex == 0 || iIOIndex == 3)
+    if (iIOIndex == IO_Absolute || iIOIndex == IO_Output)
         return;
-    uint16_t lParamBase = (iIOIndex == 1) ? LOG_fE1 : LOG_fE2;
+    uint16_t lParamBase = (iIOIndex == IO_Input1) ? LOG_fE1 : LOG_fE2;
     // we have now an event for an input, first we check, if this input is active
     uint8_t lActive = getByteParam(lParamBase) & BIT_INPUT_MASK;
     if (lActive > 0)
@@ -841,12 +841,12 @@ void LogicChannel::processInput(uint8_t iIOIndex)
         pValidActiveIO |= iIOIndex;
     }
     // this input might also be used for delta conversion in the other input
-    uint16_t lOtherParamBase = (iIOIndex == 2) ? LOG_fE1 : LOG_fE2;
+    uint16_t lOtherParamBase = (iIOIndex == IO_Input2) ? LOG_fE1 : LOG_fE2;
     uint8_t lConverter = getByteParam(lOtherParamBase) >> LOG_fE1ConvertShift;
-    if ((lConverter < VAL_InputConvert_Values) && (lConverter & 1))
+    if ((lConverter <= VAL_InputConvert_Constant) && (lConverter & 1))
     {
-        // delta conversion, we start convert for the other input
-        startConvert(3 - iIOIndex, iIOIndex);
+        // delta and constant conversion, we start convert for the other input
+        startConvert(IO_Output - iIOIndex, iIOIndex);
         // we also add that this input was used and is now valid
         pValidActiveIO |= iIOIndex;
     }
@@ -918,9 +918,9 @@ void LogicChannel::stopRepeatInput(uint8_t iIOIndex)
 
 void LogicChannel::startConvert(uint8_t iIOIndex, uint8_t iStopIndex)
 {
-    if (iIOIndex == 1 || iIOIndex == 2)
+    if (iIOIndex == IO_Input1 || iIOIndex == IO_Input2)
     {
-        pCurrentPipeline |= (iIOIndex == 1) ? PIP_CONVERT_INPUT1 : PIP_CONVERT_INPUT2;
+        pCurrentPipeline |= (iIOIndex == IO_Input1) ? PIP_CONVERT_INPUT1 : PIP_CONVERT_INPUT2;
         stopRepeatInput(iStopIndex);
     }
 }
@@ -969,8 +969,8 @@ bool LogicChannel::checkConvertValues(uint16_t iParamValues, uint8_t iDpt, int32
 
 void LogicChannel::processConvertInput(uint8_t iIOIndex)
 {
-    uint16_t lParamBase = (iIOIndex == 1) ? LOG_fE1 : LOG_fE2;
-    uint16_t lParamLow = (iIOIndex == 1) ? LOG_fE1LowDelta : LOG_fE2LowDelta;
+    uint16_t lParamBase = (iIOIndex == IO_Input1) ? LOG_fE1 : LOG_fE2;
+    uint16_t lParamLow = (iIOIndex == IO_Input1) ? LOG_fE1LowDelta : LOG_fE2LowDelta;
     uint8_t lConvert = (getByteParam(lParamBase) & LOG_fE1ConvertMask) >> LOG_fE1ConvertShift;
     bool lValueOut = 0;
     // get input value
@@ -2034,13 +2034,7 @@ void LogicChannel::restore(uint8_t iIOIndex)
     for (uint8_t lIndex = 0; lIndex < lKo->valueSize(); lIndex++)
         lKo->valueRef()[lIndex] = lValue[lIndex];
 
-    // if (iIOIndex == 1)
-    //     mFlashLoadedInput1[channelIndex()] = true;
-    // else
-    //     mFlashLoadedInput2[channelIndex()] = true;
-
     lKo->commFlag(Ok);
-    // lKo->objectWritten(); // we set the restored KO as valid for read (if L-Flat is set) and as sending (if Ü-Flag is set)
 }
 
 void LogicChannel::save()
@@ -2058,11 +2052,11 @@ void LogicChannel::saveKoDpt(uint8_t iIOIndex)
     if (isInputActive(iIOIndex) && isInputValid(iIOIndex))
     {
         // now get input default value
-        uint8_t lParInput = getByteParam(iIOIndex == 1 ? LOG_fE1Default : LOG_fE2Default);
+        uint8_t lParInput = getByteParam(iIOIndex == IO_Input1 ? LOG_fE1Default : LOG_fE2Default);
         if (lParInput & VAL_InputDefault_EEPROM)
         {
             // if the default is Flash, we get correct dpt
-            lDpt = getByteParam(iIOIndex == 1 ? LOG_fE1Dpt : LOG_fE2Dpt);
+            lDpt = getByteParam(iIOIndex == IO_Input1 ? LOG_fE1Dpt : LOG_fE2Dpt);
         }
     }
 
