@@ -161,7 +161,7 @@ void Logic::processReadRequests()
         eTimeValid lValid = sTimer.isTimerValid();
         if (delayCheck(sDelay, 30000) && lValid != tmValid)
         {
-            logDebugP("Time Valid? %i", lValid);
+            // logDebugP("Time Valid? %i", lValid);
             sDelay = millis();
             if (ParamBASE_CombinedTimeDate)
             {
