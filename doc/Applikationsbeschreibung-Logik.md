@@ -2582,6 +2582,132 @@ Wenn als nächstes z.B. die Szene 23 (ambiente2) gesendet wird, passiert in der 
 
 Fall die Szene 18 (normal) gesendet wird, sendet Eingang 2 ein EIN-Signal an die Schalter-Logik. Diese schaltet den Ausgang auf AUS, wodurch auf der GA 31/5/88 ein AUS-Telegramm an den PM geschickt wird und diesen entsperrt.
 
+### **Betriebszeitzähler mit maximaler Betriebszeit pro Tag**
+
+Hier wird in einem einfachen 2-Kanal-Beispiel gezeigt, wie man mit dem Logikmodul die Betriebszeit von Geräten kontrollieren kann. Die Betriebszeit ist im Beispiel als Sekundenzähler realisiert, das kann natürlich auch in Minuten oder Stunden abgeändert werden. 
+
+Es wird folgendes Verhalten realisiert:
+
+* Ein EIN-Signal am Schalteingang führt zum Einschalten des Geräts (EIN-Signal am Schaltausgang) und zum starten der Betriebszeit.
+* Ein AUS-Signal am Schalteingang führt zum Ausschalten des Geräts (AUA-Signal am Schaltausgang) und zum stoppen der Betriebszeit.
+* Jedes weitere EIN- oder AUS-Signal lässt die Betriebszeit entsprechend weiterlaufen oder stoppen.
+* Beim erreichen der maximalen Betriebszeit (im Beispiel 30 Sekunden) wird das Gerät durch ein AUS-Signal gestoppt. 
+* Darauffolgende EIN-Signale führen nicht zu erneuten starten des Geräts. 
+* Wird die Betriebszeit auf 0 zurückgesetzt (z.B. durch eine Zeitschaltuhr um Mitternacht), kann das Gerät durch ein EIN-Signal erneut gestartet werden.
+
+Diese Beispiellogik realisiert somit einen Betriebszeitzähler, der eine maximale Einschaltzeit pro Zeitintervall (z.B. pro Tag) eines Gerätes sicherstellt.
+
+Vorgehen:
+
+Das normale Einschaltsignal des Gerätes wird durch ein TOR geschickt, dass im AUS-Fall auf jeden Fall auch ein AUS-Signal schickt. Im EIN-Fall wird nur ein EIN-Signal weitergeschickt, wenn der Betriebszeitzähler noch nicht die maximale Einschaltzeit (im Beispiel 30 Sekunden) erreicht hat. Der Ausgang schaltet das Gerät ein und schaltet gleichzeitig einen einfachen Zähler, der weiterzählt, solange ein EIN vorliegt.
+
+
+#### **Schaltsignal auswerten**
+
+<kbd>![Betriebszeitzähler](examples/bsp03/bsp03a-betriebssekundenzaehler.png)</kbd>
+
+Es wird ein Tor verwendet, dass beim Öffnen den Wert vom Eingang 1 sendet, beim Schließen immer ein AUS sendet.
+
+Es wird immer nur beim geänderten Ergebnis gesendet, damit mehrere aufeinanderfolgende EIN-Signale den Zählvorgang nicht stören.
+
+#### **Zählerwert auswerten**
+
+<kbd>![Zählwert](examples/bsp03/bsp03a-e1-zaehlwert.png)</kbd>
+
+Eingang 1 bekommt den Zählwert über eine interne KO-Verknüpfung vom Eingang 1 des anderen Kanals. Bei der Übernahme der Logik zum ausprobieren bitte darauf achten, dass die KO-Nummer passend zum Kanal angepasst wird.
+
+Der Zählerwert muss im Intervall 0 bis 29 liegen, damit der Eingang EIN ist. Somit kann das TOR nur ein EIN-Signal senden, wenn die Betriebszeit innerhalb des vorgegebenen Intervalls ist. Hier muss man auch die Obergrenze ändern, wenn man eine andere Betriebszeit haben will.
+
+#### **Einschaltsignal empfangen
+
+<kbd>![Einschaltsignal](examples/bsp03/bsp03a-e2-einschaltsignal.png)</kbd>
+
+Über Eingang 2 wird das Schaltsignal empfangen, mit dem das Gerät eingeschaltet werden soll. Das ist ein Standard-DPT1-Eingang ohne spezielle Einstellungen. 
+
+#### **Gerät schalten**
+
+<kbd>![Gerät schalten](examples/bsp03/bsp03a-o-geraet-schalten.png)</kbd>
+
+Das ist der Ausgang, über den das Gerät geschaltet wird. Das ist ein Standard-DPT1-Ausgang, bei dem als einziges sichergestellt wird, dass mehrere aufeinanderfolgende EIN- bzw. AUS-Signale am Ausgang nicht wiederholt werden, um die Zählfunktion nicht zu beeinflussen.
+
+#### **Betriebszeitzähler realisieren**
+
+<kbd>![Betriebszeitzähler-Zählen](examples/bsp03/bsp03b-betriebssekundenzaehler-zaehlen.png)</kbd>
+
+Der eigentliche Zähler wird durch ein UND realisiert, das von dem Kanal vorher freigeschaltet wird und das durch zyklisches Senden am Ausgang, verbunden mit einer Formel, die immer +1 zählt, zu einem Zähler wird. 
+
+Da der Trigger der Logik durch den Internen Eingang 3 erfolgt, kann ein Hochzählen des Eingangssignals keine Auswirkungen auf die Logik haben. Andernfalls gäbe es eine Endlosschleife (also nicht vergessen, das so einzustellen)!
+
+#### **Der eigentliche Wert des Zählers**
+
+<kbd>![Zähler](examples/bsp03/bsp03b-e1-zaehler.png)</kbd>
+
+Eingang 1 repräsentiert den eigentlichen Zählwert. Dieser Wert wird bei einem Busausfall gespeichert und nach der Buswiederkehr neu geladen. Somit ist der Wert ausfallsicher. Für den Fall, dass noch kein Wert im Speicher existiert, wird mit dem Wert 0 begonnen.
+
+#### **Konstante mit Wert 1 zum hochzählen**
+
+<kbd>![Konstante für Formel](examples/bsp03/bsp03b-e2-konstante-1.png)</kbd>
+
+Der Eingang 2 repräsentiert den konstanten Wert 1, der in der Ausgangsformel bestimmt, um wie viel der vorherige Wert hochgezählt wird.
+
+#### **Interne Verknüpfung zum Schaltkanal**
+
+<kbd>![Interne Verknüpfung](examples/bsp03/bsp03b-i-interne-verknuepfung.png)</kbd>
+
+Diese Verknüpfung zum Ausgang von Kanal 1 aktiviert den Zähler immer dann, wenn Kanal 1 auf EIN steht.
+
+#### **Zählausgang mit Zeitglied und Increment-Formel**
+
+<kbd>![Betriebssekunden](examples/bsp03/bsp03b-o-betriebssekunden.png)</kbd>
+
+Der Zählausgang vereinigt einige der fortgeschrittenen Funktionen des Logikmoduls.
+
+Zum einen wird hier im Sekundentakt zyklisch gesendet. Dies repräsentiert die Zeitbasis des Zählers. Hier müsste man Minute oder Stunde einstellen, um es zu einem Minuten- oder Stundenzähler zu machen. Man könnte aber auch z.B. 10 Sekunden wählen, damit nur zu vollen 10 Sekunden abgeschaltet wird. 
+Änderungen an der Zeitbasis erlauben somit auch andere Arten von Zählungen.
+
+Der Ausgangswert wird als Wert einer Funktion ermittelt, in diesem Fall als Summe von Eingang 1 und Eingang 2. Wir wissen, das Eingang 1 den Zählwert repräsentiert und Eingang 2 den konstanten Wert 1. Hier wird also immer um 1 hochgezählt.
+
+Wenn die Logik AUS ist, wird nichts gesendet und somit auch nichts hochgezählt.
+
+#### **Kommunikationsobjekte und deren GA-Zuweisungen**
+
+<kbd>![KO-Belegung](examples/bsp03/bsp03b-ko-belegung.png)</kbd>
+
+Die Beispielverknüpfung zeigt uns die GA
+
+* 31/6/120 - dies ist der Zählwert, also die abgelaufene Betriebszeit
+* 31/6/121 - ein EIN- bzw. AUS-Signal auf diesem Eingang schaltet das Gerät ein bzw. aus.
+* 31/6/122 - Dies ist der Schaltausgang der Logik und sollte mit dem zu schaltenden Gerät verbunden werden.
+
+#### **Detaillierte Funktionsbeschreibung**
+
+Zuerst gehen wir davon aus, dass der Zählwert 31/6/120 auf 0 steht, der Schalteingang 31/6/121 AUS ist und somit auch der Ausgang 31/6/122 AUS ist, das Gerät ist ausgeschaltet.
+
+Ein EIN auf der 31/6/121 führt dazu, dass das TOR von Kanal 1 aufgeht. Ab Eingang 1 vom TOR liegt ein EIN-Signal, da der Zähler im Wertintervall von 0-29 ist. Dieses EIN-Signal wird zum Ausgang geschickt und damit ein EIN ausgesendet. Das Gerät wird eingeschaltet.
+
+Durch die interne Verknüpfung wird das UND von Kanal 2 getriggert. Dieses UND hat am Einang 1 ein EIN-Signal, da der Zähler im Wertebereich von 0-2147483647 liegt. Einang 2 ist EIN, weil Konstante Werte immer ein EIN-Signal ergeben. Interner Eingang 3 ist EIN, weil Kanal 1 am Ausgang ein EIN hat.
+
+Das UND schickt also ein EIN-Signal zu seinem Ausgang, der erstmal den Wert von Eingang 1 um eins hoch zählt. Der Zähler hat jetzt den Wert 1. 
+
+Diese Änderung triggert den Eingang 1 von Kanal 1, aber 1 liegt immer noch im Intervall von 0-29, der Eingang bleibt somit auf EIN.
+
+Da der Ausgang von Kanal 2 zyklisch senden soll, wird er nach einer Sekunde ein erneutes EIN senden. Der Ausgang addiert also wieder eine 1. Der Zähler hat jetzt den Wert 2.
+
+Diese Änderung triggert den Eingang 1 von Kanal 1, aber 2 liegt immer noch im Intervall von 0-29, der Eingang bleibt somit auf EIN.
+
+Das geht jetzt so weiter, bis der Zählwert am Ausgang von Kanal 2 von 29 auf 30 erhöht wird. 
+
+Diese Änderung triggert den Eingang 1 von Kanal 1, 30 liegt jetzt außerhalb vom Intervall von 0-29, der Eingang geht auf AUS und das TOR sendet an seinem Ausgang auch ein AUS.
+
+Durch die interne Verknüpfung wird das UND von Kanal 2 getriggert. Dieses UND hat jetzt am internen Eingang 3 ein AUS, weil Kanal 1 am Ausgang ein AUS hat. Das UND schickt ein AUS-Signal an seinen Ausgang und der Kanal 2 hört auf zu zählen.
+
+Wird zwischendurch ein AUS am Schalteingang von Kanal 1 empfangen, geht das TOR zu und schickt ein AUS an seinem Ausgang, was das Gerät ausschaltet. Durch die interne Verknüpfung hört auch Kanal 2 auf zu zählen.
+
+Wird, nachdem der Zähler seinen maximalwert erreicht hat, erneut ein EIN-Signal an den Schalteingang vom TOR gesendet, dann geht das TOR zwar auf, aber da der Zählwert 30 außerhalb des Intervalls 0-29 liegt, ist der Eingang 1 vom TOR AUS, somit wird dieses AUS-Signal am Ausgang gesendet. Genauer gesagt, es wird unterdrückt, weil keine Wiederholungen von AUS zugelassen sind. Auf jeden Fall wird das Gerät nicht erneut eingeschaltet.
+
+Um das Gerät wieder einschalten zu können, muss man den Zähler auf 0 setzen. Das kann man z.B. durch eine Zeitschaltuhr machen, die eine 0 auf die GA 31/6/120 schickt.
+
+
 ## **Weitere Beispiele**
 
 Die folgenden Beispiele müssen noch ausgearbeitet werden. Die gegebenen Überschriften zeigen aber bereits jetzt eine Liste der möglichen Funktionen.

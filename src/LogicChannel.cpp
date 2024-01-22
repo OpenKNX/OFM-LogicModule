@@ -2079,7 +2079,6 @@ void LogicChannel::saveKoValue(uint8_t iIOIndex)
 
 // returns true, if any DPT from Flash does not fit to according input DPT.
 // in such a case the DPTs have to be written to Flash again
-// bool LogicChannel::prepareChannel()
 void LogicChannel::prepareChannel()
 {
     // bool lResult = false;
@@ -2117,11 +2116,11 @@ void LogicChannel::prepareChannel()
             }
             // now set input default value
             uint8_t lParInput = getByteParam(LOG_fE1Default);
+            GroupObject *lKo = getKo(IO_Input1);
             // should default be fetched from Flash
             if (lParInput & VAL_InputDefault_EEPROM)
             {
                 // we expect, that the KO was loaded from Flash, if applicable
-                GroupObject *lKo = getKo(IO_Input1);
                 lInput1Flash = lKo->initialized();
                 if (lInput1Flash)
                     lKo->objectWritten();
@@ -2141,6 +2140,9 @@ void LogicChannel::prepareChannel()
                     startLogic(BIT_EXT_INPUT_1, false);
                     // we also add that this input was used and is now valid
                     pValidActiveIO |= BIT_EXT_INPUT_1;
+                    // for Formulas, we initialize the KO, too
+                    // lKo->commFlag(Ok);
+                    lKo->value(false, getKoDPT(IO_Input1));
                     break;
 
                 case VAL_InputDefault_True:
@@ -2148,6 +2150,9 @@ void LogicChannel::prepareChannel()
                     startLogic(BIT_EXT_INPUT_1, true);
                     // we also add that this input was used and is now valid
                     pValidActiveIO |= BIT_EXT_INPUT_1;
+                    // for Formulas, we initialize the KO, too
+                    // lKo->commFlag(Ok);
+                    lKo->value(false, getKoDPT(IO_Input1));
                     break;
 
                 default:
@@ -2174,11 +2179,11 @@ void LogicChannel::prepareChannel()
                 pCurrentPipeline |= PIP_REPEAT_INPUT2;
             }
             uint8_t lParInput = getByteParam(LOG_fE2Default);
+            GroupObject *lKo = getKo(IO_Input2);
             // should default be fetched from Flash
             if (lParInput & VAL_InputDefault_EEPROM)
             {
                 // we expect, that the KO was loaded from Flash, if applicable
-                GroupObject *lKo = getKo(IO_Input2);
                 lInput2Flash = lKo->initialized();
                 if (lInput2Flash)
                     lKo->objectWritten();
@@ -2198,6 +2203,9 @@ void LogicChannel::prepareChannel()
                     startLogic(BIT_EXT_INPUT_2, false);
                     // we also add that this input was used and is now valid
                     pValidActiveIO |= BIT_EXT_INPUT_2;
+                    // for Formulas, we initialize the KO, too
+                    // lKo->commFlag(Ok);
+                    lKo->value(false, getKoDPT(IO_Input2));
                     break;
 
                 case VAL_InputDefault_True:
@@ -2205,6 +2213,9 @@ void LogicChannel::prepareChannel()
                     startLogic(BIT_EXT_INPUT_2, true);
                     // we also add that this input was used and is now valid
                     pValidActiveIO |= BIT_EXT_INPUT_2;
+                    // for Formulas, we initialize the KO, too
+                    // lKo->commFlag(Ok);
+                    lKo->value(false, getKoDPT(IO_Input2));
                     break;
 
                 default:
