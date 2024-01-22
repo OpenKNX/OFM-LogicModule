@@ -2589,7 +2589,7 @@ Hier wird in einem einfachen 2-Kanal-Beispiel gezeigt, wie man mit dem Logikmodu
 Es wird folgendes Verhalten realisiert:
 
 * Ein EIN-Signal am Schalteingang führt zum Einschalten des Geräts (EIN-Signal am Schaltausgang) und zum starten der Betriebszeit.
-* Ein AUS-Signal am Schalteingang führt zum Ausschalten des Geräts (AUA-Signal am Schaltausgang) und zum stoppen der Betriebszeit.
+* Ein AUS-Signal am Schalteingang führt zum Ausschalten des Geräts (AUS-Signal am Schaltausgang) und zum stoppen der Betriebszeit.
 * Jedes weitere EIN- oder AUS-Signal lässt die Betriebszeit entsprechend weiterlaufen oder stoppen.
 * Beim erreichen der maximalen Betriebszeit (im Beispiel 30 Sekunden) wird das Gerät durch ein AUS-Signal gestoppt. 
 * Darauffolgende EIN-Signale führen nicht zu erneuten starten des Geräts. 

@@ -335,10 +335,11 @@ void Logic::showHelp()
 bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
 {
     bool lResult = false;
-    if (iCmd.substr(0, 6) != "logic " || iCmd.length() < 7)
-        return lResult;
 
     if (!knx.configured())
+        return lResult;
+
+    if (iCmd.substr(0, 6) != "logic " || iCmd.length() < 7)
         return lResult;
 
     if (iCmd.substr(6, 2) == "ch")
