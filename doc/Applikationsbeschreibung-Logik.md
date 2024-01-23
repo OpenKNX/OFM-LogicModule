@@ -2620,7 +2620,7 @@ Eingang 1 bekommt den Zählwert über eine interne KO-Verknüpfung vom Eingang 1
 
 Der Zählerwert muss im Intervall 0 bis 29 liegen, damit der Eingang EIN ist. Somit kann das TOR nur ein EIN-Signal senden, wenn die Betriebszeit innerhalb des vorgegebenen Intervalls ist. Hier muss man auch die Obergrenze ändern, wenn man eine andere Betriebszeit haben will.
 
-#### **Einschaltsignal empfangen
+#### **Einschaltsignal empfangen**
 
 <kbd>![Einschaltsignal](examples/bsp03/bsp03a-e2-einschaltsignal.png)</kbd>
 
