@@ -1,6 +1,5 @@
 ﻿### Wert für EIN senden?
 
-<kbd>![WertEinDropdown](pics/WertEinSenden.PNG)</kbd>
 
 In dieser Auswahlbox wird festgelegt, ob und was für ein Wert bei einem EIN-Signal gesendet werden soll.
 
@@ -51,7 +50,6 @@ Falls der Buzzer gerade über das Kommunikationsobjekt 9 gesperrt ist, wird kein
 
 Falls dieser Kanal als Alarmkanal gekennzeichnet ist, wird ein Ton unabhängig von der Sperre ausgegeben.
 
-<kbd>![Tonwiedergabe](pics/Tonwiedergabe.PNG)</kbd>
 
 #### Ja - RGB-LED schalten
 

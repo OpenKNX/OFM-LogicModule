@@ -24,6 +24,5 @@ Sobald ein neues Eingangstelegramm eintrifft, wird das Ergebnis der logischen Ve
 
 #### bei folgenden Eingangstelegrammen
 
-<kbd>![Logik sendet](pics/LogikSendet.PNG)</kbd>
 
 Es erscheint eine Liste mit allen aktiven Eingängen. 

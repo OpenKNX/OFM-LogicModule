@@ -812,6 +812,7 @@ Sobald ein neues Eingangstelegramm eintrifft, wird das Ergebnis der logischen Ve
 
 #### **bei folgenden Eingangstelegrammen**
 
+<!-- DOC Skip="1" -->
 <kbd>![Logik sendet](pics/LogikSendet.PNG)</kbd>
 
 Es erscheint eine Liste mit allen aktiven Eingängen. 
@@ -1244,6 +1245,8 @@ Diese Feld erlaubt eine kurze Beschreibung, wozu dieser Eingang verwendet wird. 
 Als Eingabe wird hier die Nummer der Logik erwartet, deren Ausgang als interner Eingang genutzt werden soll. Solange der Eingang nicht verbunden ist (Wert im Eingabefeld ist 0) erscheint eine Warnmeldung, dass der Eingang inaktiv (undefiniert) ist.
 
 Es kann auch der Ausgang des aktuellen Kanals als interner Eingang verwendet werden. Da dies aber schwer abzusehende Seiteneffekte haben kann, die im Falle einer Schleife auch den Bus mit vielen Telegrammen fluten können, erscheint in einem solchen Fall eine Warnung:
+
+<!-- DOC Skip="1" -->
 <kbd>![Warnung Rückkopplung](pics/Rueckkopplung.PNG)</kbd>
 
 ## **Schaltzeiten: unbenannt**
@@ -1770,6 +1773,7 @@ Je nach gewähltem DPT unterscheiden sich die folgenden Felder leicht. Es werden
 <!-- DOC -->
 ### **Wert für EIN senden?**
 
+<!-- DOC Skip="1" -->
 <kbd>![WertEinDropdown](pics/WertEinSenden.PNG)</kbd>
 
 In dieser Auswahlbox wird festgelegt, ob und was für ein Wert bei einem EIN-Signal gesendet werden soll.
@@ -1821,6 +1825,7 @@ Falls der Buzzer gerade über das Kommunikationsobjekt 9 gesperrt ist, wird kein
 
 Falls dieser Kanal als Alarmkanal gekennzeichnet ist, wird ein Ton unabhängig von der Sperre ausgegeben.
 
+<!-- DOC Skip="1" -->
 <kbd>![Tonwiedergabe](pics/Tonwiedergabe.PNG)</kbd>
 
 #### **Ja - RGB-LED schalten**
@@ -1838,6 +1843,7 @@ Falls dieser Kanal als Alarmkanal gekennzeichnet ist, wird die LED unabhängig v
 <!-- DOC -->
 ### **Wert für EIN senden als**
 
+<!-- DOC Skip="1" -->
 <kbd>![Wert senden in Prozent](pics/WertSendenProzent.PNG)</kbd>
 
 Das Feld erscheint nur, wenn für "Wert für EIN senden" ein "Ja - Wert vorgeben" ausgewählt wurde.

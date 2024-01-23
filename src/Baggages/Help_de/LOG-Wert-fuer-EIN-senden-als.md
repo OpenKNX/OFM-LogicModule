@@ -1,6 +1,5 @@
 ﻿### Wert für EIN senden als
 
-<kbd>![Wert senden in Prozent](pics/WertSendenProzent.PNG)</kbd>
 
 Das Feld erscheint nur, wenn für "Wert für EIN senden" ein "Ja - Wert vorgeben" ausgewählt wurde.
 
