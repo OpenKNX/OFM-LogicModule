@@ -29,6 +29,7 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 * [Beispiele](#beispiele)
   * [Zeitschaltuhr soll jeden n-ten Tag schalten](#zeitschaltuhr-soll-jeden-n-ten-tag-schalten)
   * [Einfacher Szenen-Controller](#einfacher-szenen-controller)
+  * [Betriebszeitzähler](#betriebszeitzähler-mit-maximaler-betriebszeit-pro-tag)
 * [Update der Applikation](#update-der-applikation)
 * [Unterstützte Hardware](#unterstützte-hardware)
 * Fortgeschrittene Funktionen
@@ -78,11 +79,12 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 
 Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer das Gesamtdokument lesen muss, um Neuerungen zu erfahren.
 
-16.01.2024: Firmware 3.1.0, Applikation 3.1
+23.01.2024: Firmware 3.1.2, Applikation 3.1
 
 * ACHTUNG: Falls ein Update einer früheren Firmware versagt, liegt das daran, dass bei einer internen KO-Verbindung vom Eingang 2 eines Logikkanals auch das "eigene" KO des Eingang 2 mit einer GA belegt wurde. Der Eingang 2 ist definiert als: Externe KO-Verknüpfung, DPT5.001, Eingangskonverter ist ungleich "Wertintervall". 
 * ACHTUNG: Nach einem Update müssen alle Zeitschaltuhren, deren Schaltzeiten durch "Sonnenauf-/-untergang plus/minus Zeitversatz" definiert sind, neu definiert werden!
 * NEU: Ein Logikausgang kann jetzt auch seinen Wert zusätzlich über ein internes KO versenden
+* NEU: Jede Logik kann jetzt auch einen mehrzeiligen Langtext (bis 512 Zeichen) als Kommentar enthalten
 * NEU: Ein Eingangskonverter für DPT1 erlaubt jetzt auch die Auswertung eines DPT1-Telegramms als Trigger (unabhängig von seinem Wert wird der Konverter immer 1)
 * FIX: Man kann bei Logiken einstellen, dass sie erst ausgewertet werden, wenn alle Eingänge gültig sind. Die Prüfung, dass ein Eingang gültig ist, konnte schon erfolgreich sein, obwohl noch keine Antwort von einem ReadRequest eingegangen ist. Dies war ein seltener Fehler, der jetzt korrigiert ist.
 * FIX: Die Gültigprüfung von Eingängen konnte auch bei komplexeren Logiken versagen. Auch dies ist jetzt korrigiert.
@@ -103,8 +105,8 @@ Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer d
 
 22.08.2023: Firmware 1.5.1, Applikation 1.5
 
-* NEW: TOR hat jetzt einen Tri-State-Eingang zum öffnen vom Tor: Das Tor ist beim Neustart weder offen noch geschlossen und agiert somit beim ersten Telegramm erwartungskonform
-* NEW: TOR ist bei Neustart am Ausgang undefiniert und wird mit dem ersten öffnen/schließen erst initialisiert.
+* NEU: TOR hat jetzt einen Tri-State-Eingang zum öffnen vom Tor: Das Tor ist beim Neustart weder offen noch geschlossen und agiert somit beim ersten Telegramm erwartungskonform
+* NEU: TOR ist bei Neustart am Ausgang undefiniert und wird mit dem ersten öffnen/schließen erst initialisiert.
 * NEU: Mathematische Funktion "Glättung" von Werten eingeführt
 * FIX: Zeitschaltuhren Sonnenauf-/untergang mit Zeitversatz konnten intern zu ungültigen Zeiten führen und schalteten dann unerwartet oder gar nicht.
 * FIX: Beim nachholen von Schaltzeiten wurde die Sommerzeit nicht beachtet.
