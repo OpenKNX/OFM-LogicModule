@@ -845,10 +845,16 @@ void LogicChannel::processInput(uint8_t iIOIndex)
     uint8_t lConverter = getByteParam(lOtherParamBase) >> LOG_fE1ConvertShift;
     if ((lConverter <= VAL_InputConvert_Constant) && (lConverter & 1))
     {
-        // delta and constant conversion, we start convert for the other input
-        startConvert(IO_Output - iIOIndex, iIOIndex);
-        // we also add that this input was used and is now valid
-        pValidActiveIO |= iIOIndex;
+        // reading "the other" Input is just necessary, if this input was not activated by the user
+        // otherwise this value is fetched by normal KO input processing
+        // for constants this is always necessary
+        if (lConverter == VAL_InputConvert_Constant || lActive == 0)
+        {
+            // delta and constant conversion, we start convert for the other input
+            startConvert(IO_Output - iIOIndex, iIOIndex);
+            // we also add that this input was used and is now valid
+            pValidActiveIO |= iIOIndex;
+        }
     }
 }
 

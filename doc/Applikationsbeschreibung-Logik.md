@@ -1035,7 +1035,13 @@ Mit "anderer" Eingang ist folgendes gemeint:
 
 Der Differenzeingang muss nicht vom gleichen DPT sein, er wird generisch in eine Zahl konvertiert. Allerdings kann das zu unerwarteten Ergebnissen führen. Empfohlen wird bei Differenzkonvertern der gleiche DPT.
 
-Wird ein Differenzeingang genutzt, sollte dieser nicht auch noch als "normal aktiv" oder "invertiert aktiv" bei einer logischen Operation genutzt werden, obwohl das grundsätzlich möglich ist. Dann würde der Differenzeingang auch einen Konverter anbieten und entsprechend ein EIN- oder AUS-Signal für die logische Operation erzeugen. Dies ist ausdrücklich nicht empfohlen und auch bisher nicht getestet. Ob man die Komplexität eines solchen Aufbaus noch durchblicken kann, ist auch zu bezweifeln.
+Wird ein Differenzeingang genutzt, muss dieser nicht auch noch als "normal aktiv" oder "invertiert aktiv" bei einer logischen Operation genutzt werden. Der Differenzeingang wird automatisch verfügbar gemacht und nimmt nicht an der logischen Operation Teil. Jedes Telegramm, dass beim Differenzeingang eingeht, triggert die Auswertung der Logik so, als ob das Telegramm am eigentlichen Werteingang eingegangen wäre.
+
+Wenn man den Differenzeingang aber explizit als "normal aktiv" oder "invertiert aktiv" aktiviert, gibt es einen kleinen Unterschied in dem Verhalten. Zum Einen nimmt der Eingang wie ein normaler Eingang an der Logikauswertung teil. Man muss also darauf achten, dass der Eingang ein passendes EIN- oder AUS-Signal für die Logik erzeugt. Des Weiteren kann man Einfluss auf das Triggerverhalten des Eingangs nehmen. Man kann also einstellen, ob der Werteingang, der Differenzeingang oder beide die Logikauswertung triggern.
+
+Falls man einen Differenzeingang haben will, der explizit aktiviert wurde, um Einfluss auf das Triggerverhalten zu haben, der aber keine Auswirkungen auf die Logik haben soll, definiert man für den Differenzeingang den Eingangskonverter "Einzelwerte" und deaktiviert für alle Einzelwerte die dahinterliegende Checkbox. Dann triggert der Eingang die Logik, ist aber bei jedem Wert falsch. Ist die Logik ein ODER, aktiviert man den Differenzeingang als "normal aktiv", ist die Logik ein UND, aktiviert man ihn als "invertiert aktiv".   
+
+Für den Standard-Nutzungsfall sollte man auf eine explizite Aktivierung des Differenzeingangs verzichten um die Logik nicht unnötig komplex zu gestalten.
 
 <!-- DOC HelpContext="Von-Wert" -->
 <!-- DOCCONTENT
