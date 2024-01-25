@@ -2,7 +2,8 @@
 
 Erscheint nur, wenn die Logik-Operation nicht auf ZEITSCHALTUHR gestellt wurde.
 
-Wie bereits in "Logikkanäle -> [Startverhalten](#startverhalten)" beschrieben, ist es notwendig, einer Logikverknüpfung zu sagen, wie sie mit undefinierten Eingängen umgehen soll.
+Es ist notwendig, einer Logikverknüpfung zu sagen, wie sie mit undefinierten Eingängen umgehen soll.
+
 
 #### auch wenn noch nicht alle Werte gültig sind
 

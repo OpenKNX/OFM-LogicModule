@@ -574,7 +574,10 @@ Der hier vergebene Name hat keinen funktionalen Einfluss, erlaubt es aber, dem K
 <!-- DOC -->
 ### **Zeit bis der Kanal nach einem Neustart aktiv wird**
 
-Neben "Allgemeine Parameter -> Zeit bis das Gerät nach einem Neustart aktiv wird" kann auch noch pro Kanal eine Startverzögerung sinnvoll sein. Der Grund ist in "Logikkanäle -> [Startverhalten](#startverhalten)" beschrieben.
+Neben "Allgemeine Parameter -> Zeit bis das Gerät nach einem Neustart aktiv wird" kann auch noch pro Kanal eine Startverzögerung sinnvoll sein. 
+
+<!-- DOC Skip="1" -->
+Der Grund ist in "Logikkanäle -> [Startverhalten](#startverhalten)" beschrieben.
 
 Die Verzögerungszeit wird hier angegeben.
 
@@ -693,7 +696,10 @@ Hier werden die Einstellungen vorgenommen, die für die Auswertung der Logik rel
 
 Erscheint nur, wenn die Logik-Operation nicht auf ZEITSCHALTUHR gestellt wurde.
 
-Wie bereits in "Logikkanäle -> [Startverhalten](#startverhalten)" beschrieben, ist es notwendig, einer Logikverknüpfung zu sagen, wie sie mit undefinierten Eingängen umgehen soll.
+Es ist notwendig, einer Logikverknüpfung zu sagen, wie sie mit undefinierten Eingängen umgehen soll.
+
+<!-- DOC Skip="1" -->
+Dies ist auch in "Logikkanäle -> [Startverhalten](#startverhalten)" beschrieben. 
 
 #### **auch wenn noch nicht alle Werte gültig sind**
 
