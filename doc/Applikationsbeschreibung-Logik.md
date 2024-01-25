@@ -79,15 +79,16 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 
 Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer das Gesamtdokument lesen muss, um Neuerungen zu erfahren.
 
-23.01.2024: Firmware 3.1.2, Applikation 3.1
+25.01.2024: Firmware 3.1.3, Applikation 3.1
 
 * ACHTUNG: Falls ein Update einer früheren Firmware versagt, liegt das daran, dass bei einer internen KO-Verbindung vom Eingang 2 eines Logikkanals auch das "eigene" KO des Eingang 2 mit einer GA belegt wurde. Der Eingang 2 ist definiert als: Externe KO-Verknüpfung, DPT5.001, Eingangskonverter ist ungleich "Wertintervall". 
-* ACHTUNG: Nach einem Update müssen alle Zeitschaltuhren, deren Schaltzeiten durch "Sonnenauf-/-untergang plus/minus Zeitversatz" definiert sind, neu definiert werden!
-* NEU: Ein Logikausgang kann jetzt auch seinen Wert zusätzlich über ein internes KO versenden
-* NEU: Jede Logik kann jetzt auch einen mehrzeiligen Langtext (bis 512 Zeichen) als Kommentar enthalten
-* NEU: Ein Eingangskonverter für DPT1 erlaubt jetzt auch die Auswertung eines DPT1-Telegramms als Trigger (unabhängig von seinem Wert wird der Konverter immer 1)
+* ACHTUNG: Nach einem Update müssen alle Zeitschaltuhren, deren Schaltzeiten durch "Sonnenauf-/-untergang plus/minus Zeitversatz" definiert sind, neu definiert werden! Der Stunden-Zeitversatz geht durch das Update verloren und steht auf 0 Stunden.
+* NEU: Ein Logikausgang kann jetzt auch seinen Wert zusätzlich über ein internes KO versenden, siehe [Zusätzlich senden](#wert-für-ein-an-ein-zusätzliches-ko-senden)
+* NEU: Jede Logik kann jetzt auch einen mehrzeiligen Langtext (bis 512 Zeichen) als Kommentar enthalten, siehe [Kommentar](#kommentar)
+* NEU: Ein Eingangskonverter für DPT1 erlaubt jetzt auch die Auswertung eines DPT1-Telegramms als Trigger, siehe [Eingangskonverter DPT1](#dpt-1xxx-schalten)
+* NEU: Die Anzahl der verfügbaren Kanäle kann jetzt in der Applikation reduziert werden. Dies dient der Übersicht, siehe [Verfügbare Kanäle](#verfügbare-kanäle)
 * FIX: Man kann bei Logiken einstellen, dass sie erst ausgewertet werden, wenn alle Eingänge gültig sind. Die Prüfung, dass ein Eingang gültig ist, konnte schon erfolgreich sein, obwohl noch keine Antwort von einem ReadRequest eingegangen ist. Dies war ein seltener Fehler, der jetzt korrigiert ist.
-* FIX: Die Gültigprüfung von Eingängen konnte auch bei komplexeren Logiken versagen. Auch dies ist jetzt korrigiert.
+* FIX: Die Prüfung, ob ein Eingang einen gültigen Wert hat, konnte bei komplexeren Logiken versagen. Auch dies ist jetzt korrigiert.
 
 27.12.2023: Firmware 3.0.9, Applikation 3.0
 
@@ -588,6 +589,8 @@ Dieser Logikkanal ist außer Funktion. Er kann vollständig definiert sein und k
 ### **Kommentar**
 
 Hier kann man einen Freitext eingeben, der die Logik beschreibt. Dieser Text kann mehrzeilig sein. Leider unterstütz die ETS von sich aus keine mehrzeiligen Texte. Mit dem Button unter der Textbox kann man alle Eingaben der Zeichenfolge '\n' in neue Zeilen umwandeln lassen. 
+
+Ein Kommentar kann aus maximal 512 Zeichen bestehen.
 
 ## Logikdefinition
 
