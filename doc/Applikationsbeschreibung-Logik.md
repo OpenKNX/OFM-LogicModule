@@ -79,6 +79,12 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 
 Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer das Gesamtdokument lesen muss, um Neuerungen zu erfahren.
 
+04.02.2024: Firmware 3.1.4, Applikation 3.1
+
+* FIX: Zeitschaltuhren haben bei hoher Auslastung des Gerätes sporadisch ihre Schaltzeiten "verpasst". Das ist korrigiert.
+* FIX: Wenn man Befehle im Diagnosemodus falsch oder unvollständig geschrieben hat, konnte das zum Aufhängen des Gerätes führen.
+* NEU: Der Befehl "logic help" ist jetzt nicht nur in der Console, sondern auch im Diagnoseobjekt verfügbar.
+
 25.01.2024: Firmware 3.1.3, Applikation 3.1
 
 * ACHTUNG: Falls ein Update einer früheren Firmware versagt, liegt das daran, dass bei einer internen KO-Verbindung vom Eingang 2 eines Logikkanals auch das "eigene" KO des Eingang 2 mit einer GA belegt wurde. Der Eingang 2 ist definiert als: Externe KO-Verknüpfung, DPT5.001, Eingangskonverter ist ungleich "Wertintervall". 
@@ -2331,6 +2337,19 @@ Das Diagnoseobjekt dient primär zu Debug-Zwecken, kann aber auch vom Enduser ge
 
 Es funktioniert wie ein einfaches Terminal. Man sendet an das KO 7 ein Kommando (Groß-Kleinschreibung beachten) und erhält über das gleiche KO eine Antwort. Im folgenden sind die Kommandos und die Antworten beschrieben.
 
+### **Kommando 'logic help' - Kurzhilfe der Befehle**
+
+Gibt die verfügbaren Befehle für die Logik aus. Da im Diagnoseobjekt nur 14 Zeichen zur Verfügung stehen, ist die Ausgabe sehr komprimiert. Es werden mehrere Antworten (Zeilen) an das Diagnoseobjekt geschickt, der Inhalt sind die möglichen Argumente für das "logic" Kommando.
+
+Auf KO 7 (Diagnoseobjekt) muss der Befehl 'logic help' (klein) gesendet werden. Die Antwort erfolgt auf KO 7 (Diagnoseobjekt). Folgende Liste wird sichtbar:
+
+    -> chNN
+    -> time
+    -> easter
+    -> sun
+    -> sun[+-]DDMM
+
+
 ### **Kommando 'logic time' - interne Zeit**
 
 Gibt die interne Zeit aus. Eine Zeit kann jederzeit von außen über die KO 2 (Uhrzeit) und KO 3 (Datum) gesetzt werden und läuft dann intern weiter. Die Genauigkeit der internen Uhr ist nicht besonders hoch, ein erneutes senden der Uhrzeit auf KO 2 korrigiert die interne Uhrzeit wieder. Die interne Uhrzeit kann mit diesem Kommando abgefragt werden.
@@ -2341,7 +2360,17 @@ Auf KO 7 (Diagnoseobjekt) muss der Befehl 'logic time' (klein) gesendet werden. 
 
 Gibt die intern berechneten Zeiten für Sonnenauf- und -untergang aus. Die Zeiten werden erst berechnet, nachdem mindestens einmal das Datum auf KO 3 gesetzt worden ist, dann bei jedem Datumswechsel, egal ob dieser Wechsel intern ermittelt oder durch ein neues von extern gesetztes Datum erfolgt. Die korrekte Berechnung von Zeiten für den Sonnenauf- und -untergang hängt auch von der korrekten Angabe der Geokoordinaten für den Standort ab.
 
-Auf KO 7 (Diagnoseobjekt) muss der Befehl 'logic sun' (klein) gesendet werden. Die Antwort erfolgt auf KO 7 (Diagnoseobjekt) im Format 'RHH:MM SHH:MM'. Dabei bedeutet "R" den Sonnenaufgang (Sun**R**ise), gefolgt von Stunden:Minuten, und "S" den Sonnenuntergang (Sun**S**et), gefolgt von Stunden:Minuten.
+Man kann hinter **sun** noch den Winkel über den Horizont angeben und so die Zeiten rausfinden, an denen der Sonnenmittelpunkt entsprechend über oder unter dem Horizont liegt. Die Notation ist
+
+    [+-]DDMM
+
+wobei plus (+) die Position über dem Horizont, minus (-) die Position unter dem Horizont, DD den Winkel in Grad (Degree) angibt und MM die Winkelminuten angibt. Das Kommando 
+
+    logic sun-0600
+
+gibt somit die Uhrzeit (=Schaltzeit) aus, an der der Sonnenmittelpunkt 6° unter dem Horizont ist. Das entspricht dem Zeitpunkt, an dem der obere Rand der Sonne am Horizont auftaucht -> Beginn der Dämmerung.
+
+Auf KO 7 (Diagnoseobjekt) muss der Befehl 'logic sun' oder 'logic sun+DDMM' oder 'logic sun-DDMM' (alle Buchstaben klein) gesendet werden. Die Antwort erfolgt auf KO 7 (Diagnoseobjekt) im Format 'RHH:MM SHH:MM'. Dabei bedeutet "R" den Sonnenaufgang (Sun**R**ise), gefolgt von Stunden:Minuten, und "S" den Sonnenuntergang (Sun**S**et), gefolgt von Stunden:Minuten.
 
 ### **Kommando 'logic easter' - Ostern**
 

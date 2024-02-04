@@ -15,7 +15,7 @@ TimerRestore &Logic::sTimerRestore = TimerRestore::instance(); // singleton
 uint16_t Logic::flashSize()
 {
     // Version + Data (Channel * Inputs * (Dpt + Value))
-    return 1 + (LOG_ChannelsFirmware * 2 * 5);
+    return 1 + (LOG_ChannelCount * 2 * 5);
 }
 
 const std::string Logic::name()
@@ -342,17 +342,17 @@ bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
     if (iCmd.substr(0, 6) != "logic " || iCmd.length() < 7)
         return lResult;
 
-    if (iCmd.substr(6, 2) == "ch")
+    if (iCmd.length() == 10 && iCmd.substr(6, 2) == "ch")
     {
         // Command ch<nn>: Logic inputs and output of last execution
         // find channel and dispatch
         uint16_t lIndex = std::stoi(iCmd.substr(8, 2)) - 1;
-        if (lIndex < LOG_ChannelCount)
+        if (lIndex < ParamLOG_VisibleChannels)
         {
             lResult = mChannel[lIndex]->processCommand(iCmd, iDebugKo);
         }
     }
-    else if (iCmd.substr(6, 4) == "time")
+    else if (iCmd.length() >= 7 && iCmd.substr(6, 1) == "t") // time
     {
         // return internal time (might differ from external)
         uint8_t lHour = sTimer.getHour();
@@ -372,9 +372,9 @@ bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
         }
         lResult = true;
     }
-    else if (iCmd.substr(6, 3) == "sun")
+    else if (iCmd.length() >= 9 && iCmd.substr(6, 3) == "sun")
     {
-        if (iCmd.substr(9, 1) == "-" || iCmd.substr(9, 1) == "+")
+        if (iCmd.length() == 14 && (iCmd.substr(9, 1) == "-" || iCmd.substr(9, 1) == "+"))
         {
             // return sunrise and sunset for a specific elevation teSDD,
             // where S=Sign(+,-) and DD ist elevation in degree
@@ -396,7 +396,7 @@ bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
                 lResult = true;
             }
         }
-        else
+        else if (iCmd.length() == 9)
         {
             // return sunrise and sunset
             sTime *lSunrise = sTimer.getSunInfo(SUN_SUNRISE);
@@ -406,30 +406,46 @@ bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
             {
                 logInfoP("Sunrise: %02d:%02d Sunset: %02d:%02d", lSunrise->hour, lSunrise->minute, lSunset->hour, lSunset->minute);
                 if (iDebugKo)
-                {
                     openknx.console.writeDiagenoseKo("R%02d:%02d S%02d:%02d", lSunrise->hour, lSunrise->minute, lSunset->hour, lSunset->minute);
-                }
                 lResult = true;
             }
         }
+        else
+        {
+            logInfoP("Command format is logic sun[+-]DDMM");
+            if (iDebugKo)
+                openknx.console.writeDiagenoseKo("-> sun+-DDMM");
+        }
     }
-    else if (iCmd.substr(6, 6) == "easter")
+    else if (iCmd.length() >= 7 && iCmd.substr(6, 1) == "e") // easter
     {
         // calculate easter date
         logInfoP("Easter date: %02d.%02d", sTimer.getEaster()->day, sTimer.getEaster()->month);
         if (iDebugKo)
-        {
             openknx.console.writeDiagenoseKo("O%02d.%02d", sTimer.getEaster()->day, sTimer.getEaster()->month);
-        }
         lResult = true;
+    }
+    else if (iCmd.length() >= 7 && iCmd.substr(6, 1) == "h") // help
+    {
+        showHelp();
+        if (iDebugKo)
+        {
+            openknx.console.writeDiagenoseKo("-> chNN");
+            openknx.console.writeDiagenoseKo(""); // workaround, on mass output each 2nd line ist skipped
+            openknx.console.writeDiagenoseKo("-> time");
+            openknx.console.writeDiagenoseKo("");
+            openknx.console.writeDiagenoseKo("-> easter");
+            openknx.console.writeDiagenoseKo("");
+            openknx.console.writeDiagenoseKo("-> sun");
+            openknx.console.writeDiagenoseKo("");
+            openknx.console.writeDiagenoseKo("-> sun[+-]DDMM");
+        }
     }
     return lResult;
 }
 
 void Logic::debug()
 {
-    // logInfoP("Logik-LOG_ChannelsFirmware (in Firmware): %d", LOG_ChannelsFirmware);
-
     // // logInfoP("Aktuelle Zeit: %s", sTimer.getTimeAsc());
     // sTimer.debug();
 #ifdef ARDUINO_ARCH_RP2040
@@ -444,7 +460,7 @@ void Logic::setup()
     logInfoP("Setting: RGBLed available: %d", ParamLOG_LedInstalled);
     // setup channels, not possible in constructor, because knx is not configured there
     // get number of channels from knxprod
-    mNumChannels = LOG_ChannelCount;
+    mNumChannels = ParamLOG_VisibleChannels; // LOG_ChannelCount;
     for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
     {
         mChannel[lIndex] = new LogicChannel(lIndex);
@@ -472,15 +488,24 @@ void Logic::loop()
     uint32_t lLoopTime = millis();
     processReadRequests();
     sTimer.loop(); // clock and timer async methods
-    // we loop on all channels and execute pipeline
+    // special case timer handling, we have to loop through all channels once
+    if (sTimer.isTimerValid() && sTimer.minuteChanged())
+    {
+        for (uint8_t lChannelNr = 0; lChannelNr < mNumChannels; lChannelNr++)
+        {
+            LogicChannel *lChannel = mChannel[lChannelNr];
+            lChannel->startTimerInput();
+        }
+        sendHoliday();
+        sTimer.clearMinuteChanged();
+    }
 
+    // we loop on all channels and execute pipeline
     uint8_t lChannelsProcessed = 0;
     // for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
     while (lChannelsProcessed < mNumChannels && openknx.freeLoopTime())
     {
         LogicChannel *lChannel = mChannel[mChannelIterator++];
-        if (sTimer.minuteChanged())
-            lChannel->startTimerInput();
         lChannel->loop();
         lChannelsProcessed++;
         // the following operations are done only once after iteration of all channels
@@ -488,11 +513,6 @@ void Logic::loop()
         {
             mChannelIterator = 0;
             // here we do actions which happen after all channels are iterated
-            if (sTimer.minuteChanged())
-            {
-                sendHoliday();
-                sTimer.clearMinuteChanged();
-            }
             processTimerRestore();
         }
     }

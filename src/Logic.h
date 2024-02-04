@@ -75,12 +75,12 @@ class Logic : public OpenKNX::Module
     static Timer &sTimer;
     static TimerRestore &sTimerRestore;
 
-    LogicChannel *mChannel[LOG_ChannelsFirmware];
+    LogicChannel *mChannel[LOG_ChannelCount];
     uint8_t mNumChannels; // Number of channels defined in knxprod
     uint8_t mChannelIterator = 0;
 
     // we need a lookup for external KO
-    static const uint16_t cCountKoLookups = LOG_ChannelsFirmware * 3;
+    static const uint16_t cCountKoLookups = LOG_ChannelCount * 3;
     sKoLookup mKoLookup[cCountKoLookups]; // max 3*4*100 = 1200 Byte, too much?
     uint16_t mNumKoLookups = 0;
 
