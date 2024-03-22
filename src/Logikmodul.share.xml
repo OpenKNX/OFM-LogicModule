@@ -11,6 +11,11 @@
     <Manufacturer RefId="M-00FA">
       <ApplicationPrograms>
         <ApplicationProgram Id="%AID%" ApplicationNumber="102" ApplicationVersion="21" ProgramType="ApplicationProgram" MaskVersion="MV-07B0" Name="WP-Logic" LoadProcedureStyle="MergedProcedure" PeiType="0" DefaultLanguage="de" DynamicTableManagement="false" Linkable="true" MinEtsVersion="4.0">
+          <op:part name="OVERVIEW-KO" href="Logikmodul.inputko.part.xml" instances="2">
+            <op:param name="%En%" value="1" increment="1" />
+            <op:param name="%PPP1%" value="0" increment="1" digits="3" />
+            <op:param name="%PPP2%" value="0" increment="2" digits="3" />
+          </op:part>
           <Static>
             <ParameterTypes>
               <!-- Number of channels (module specific) -->
@@ -889,15 +894,15 @@
                 </TypeRestriction>
               </ParameterType>
               <!-- Use this for an Input on one page -->
-              <ParameterType Id="%AID%_PT-KOInput" Name="KOInput">
-                <TypeRestriction Base="Value" SizeInBit="1">
+              <!-- <ParameterType Id="%AID%_PT-KOInput" Name="KOInput">
+                <TypeRestriction Base="Value" SizeInBit="1" UIHint="DropDown">
                   <Enumeration Text="Neues KO erzeugen" Value="0" Id="%ENID%" />
                   <Enumeration Text="Bestehendes KO nutzen" Value="1" Id="%ENID%" />
                 </TypeRestriction>
-              </ParameterType>
+              </ParameterType> -->
               <!-- Use this for external input assignment in a table -->
-              <ParameterType Id="%AID%_PT-KOInputTab" Name="KOInputTab">
-                <TypeRestriction Base="Value" SizeInBit="1">
+              <ParameterType Id="%AID%_PT-KOInput" Name="KOInputTab">
+                <TypeRestriction Base="Value" SizeInBit="1" UIHint="DropDown">
                   <Enumeration Text="Neues KO" Value="0" Id="%ENID%" />
                   <Enumeration Text="Bestehendes KO" Value="1" Id="%ENID%" />
                 </TypeRestriction>
@@ -1183,6 +1188,11 @@
                     </choose>
                   </when>
                 </choose>
+              </ParameterBlock>
+              <ParameterBlock Id="%AID%_PB-nnn" Name="KoOverview" Text="Übersicht interne KO" Icon="electric-switch" HelpContext="Empty" ShowInComObjectTree="false">
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Übersicht interne KO-Verknüpfungen" UIHint="Headline" />
+                <op:include href="Logikmodul.intko.templ.xml" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock[@Name='Channel-List']/*"
+                  type="template" prefix="LOG" IsInner="true" />
               </ParameterBlock>
               <!-- followed by all logic channels -->
               <op:include href="Logikmodul.templ.xml" xpath="//ApplicationProgram/Dynamic/ChannelIndependentBlock/*" type="template" prefix="LOG" IsInner="true" />

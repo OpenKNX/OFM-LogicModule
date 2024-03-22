@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-model href="../../Organization/knxprod-support/knx_project_20/knx-editor.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<KNX xmlns:op="http://github.com/OpenKNX/OpenKNXproducer" xmlns="http://knx.org/xml/project/20" CreatedBy="KNX MT" ToolVersion="5.1.255.16695">
+  <ManufacturerData>
+    <Manufacturer RefId="M-00FA">
+      <ApplicationPrograms>
+        <ApplicationProgram Id="%AID%" ApplicationNumber="102" ApplicationVersion="10" ProgramType="ApplicationProgram" MaskVersion="MV-07B0" Name="WP-Logic" LoadProcedureStyle="MergedProcedure" PeiType="0" DefaultLanguage="de" DynamicTableManagement="false" Linkable="true" MinEtsVersion="4.0">
+          <Static>
+          </Static>
+          <Dynamic>
+            <ChannelIndependentBlock>
+              <ParameterBlock Id="%AID%_PB-nnn" Name="ChooseInputKO" >
+                <ParameterRefRef RefId="%AID%_P-%TT%%CC%%PPP1+128%_R-%TT%%CC%%PPP1+128%01" HelpContext="%DOC%" IndentLevel="1" />
+                <!-- choose KO -->
+                <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%E%En%aKoDisplay" Inline="true" Layout="Grid" HelpContext="Empty">
+                  <Rows>
+                    <Row Id="%AID%_PB-nnn_R-1" Name="Row1" />
+                  </Rows>
+                  <Columns>
+                    <Column Id="%AID%_PB-nnn_C-1" Name="Col1" Width="1%" />
+                    <Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="44%" />
+                    <Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="30%" />
+                    <Column Id="%AID%_PB-nnn_C-4" Name="Col4" Width="25%" />
+                  </Columns>
+                  <ParameterSeparator Id="%AID%_PS-nnn" Text=" Kommunikationsobjekt für Eingang %C%" Cell="1,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP2+377%_R-%TT%%CC%%PPP2+377%01" Cell="1,3" HelpContext="%DOC%" />
+                  <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP2+377%_R-%TT%%CC%%PPP2+377%01">
+                    <when test="0">
+                      <ParameterSeparator Id="%AID%_PS-nnn" Text="%K%En-1%%" Cell="1,4" />
+                    </when>
+                    <when test="1">
+                      <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP2+378%_R-%TT%%CC%%PPP2+378%02" Cell="1,4" HelpContext="%DOC%" />
+                    </when>
+                  </choose>
+                </ParameterBlock>
+              </ParameterBlock>
+            </ChannelIndependentBlock>            
+          </Dynamic>
+        </ApplicationProgram>
+      </ApplicationPrograms>
+    </Manufacturer>
+  </ManufacturerData>
+</KNX>
