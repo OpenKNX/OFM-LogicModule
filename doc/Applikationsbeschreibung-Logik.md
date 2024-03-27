@@ -79,11 +79,19 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 
 Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer das Gesamtdokument lesen muss, um Neuerungen zu erfahren.
 
+26.03.2024: Firmware 3.2, Applikation 3.2
+
+* NEU: Übersichtsseite mit allen internen KO-Verknüpfungen hinzugefügt
+* FIX: TOR
+
+Um in der ETS ein Update der Logik von einer Version vor 3.1 auf die 3.2 vornehmen zu können, muss man erst ein Update auf die 3.1 machen. Anschließend funktioniert ein Update auf die 3.2. Die Firmware kann gleich auf die 3.2 aktualisiert werden.
+
 04.02.2024: Firmware 3.1.4, Applikation 3.1
 
 * FIX: Zeitschaltuhren haben bei hoher Auslastung des Gerätes sporadisch ihre Schaltzeiten "verpasst". Das ist korrigiert.
 * FIX: Wenn man Befehle im Diagnosemodus falsch oder unvollständig geschrieben hat, konnte das zum Aufhängen des Gerätes führen.
 * NEU: Der Befehl "logic help" ist jetzt nicht nur in der Console, sondern auch im Diagnoseobjekt verfügbar.
+
 
 25.01.2024: Firmware 3.1.3, Applikation 3.1
 

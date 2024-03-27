@@ -7,15 +7,12 @@
   <op:config name="%LOG_BuzzerAccess%" value="None" />
   <op:config name="%LOG_BuzzerDefault%" value="0" />
   <op:config name="%LOG_EnableSave%" value="1" />
+  <op:config name="%LOG_NumChannelsDefault%" value="%N%" />
+  
   <ManufacturerData>
     <Manufacturer RefId="M-00FA">
       <ApplicationPrograms>
         <ApplicationProgram Id="%AID%" ApplicationNumber="102" ApplicationVersion="21" ProgramType="ApplicationProgram" MaskVersion="MV-07B0" Name="WP-Logic" LoadProcedureStyle="MergedProcedure" PeiType="0" DefaultLanguage="de" DynamicTableManagement="false" Linkable="true" MinEtsVersion="4.0">
-          <op:part name="OVERVIEW-KO" href="Logikmodul.inputko.part.xml" instances="2">
-            <op:param name="%En%" value="1" increment="1" />
-            <op:param name="%PPP1%" value="0" increment="1" digits="3" />
-            <op:param name="%PPP2%" value="0" increment="2" digits="3" />
-          </op:part>
           <Static>
             <ParameterTypes>
               <!-- Number of channels (module specific) -->
@@ -893,15 +890,8 @@
                   <Enumeration Text="Dez" Value="12" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <!-- Use this for an Input on one page -->
-              <!-- <ParameterType Id="%AID%_PT-KOInput" Name="KOInput">
-                <TypeRestriction Base="Value" SizeInBit="1" UIHint="DropDown">
-                  <Enumeration Text="Neues KO erzeugen" Value="0" Id="%ENID%" />
-                  <Enumeration Text="Bestehendes KO nutzen" Value="1" Id="%ENID%" />
-                </TypeRestriction>
-              </ParameterType> -->
               <!-- Use this for external input assignment in a table -->
-              <ParameterType Id="%AID%_PT-KOInput" Name="KOInputTab">
+              <ParameterType Id="%AID%_PT-KOInput" Name="KOInput">
                 <TypeRestriction Base="Value" SizeInBit="1" UIHint="DropDown">
                   <Enumeration Text="Neues KO" Value="0" Id="%ENID%" />
                   <Enumeration Text="Bestehendes KO" Value="1" Id="%ENID%" />
@@ -910,6 +900,7 @@
             </ParameterTypes>
             <Parameters>
               <Parameter Id="%AID%_P-%TT%00163" Name="EnableHardware" ParameterType="%AID%_PT-OnOffYesNo" Text="Enable Hardware" Value="1" Access="None" />
+              <Parameter Id="%AID%_P-%TT%00166" Name="OverviewFilter" ParameterType="%AID%_PT-CheckBox" Text="Nur Kanäle mit internen Verknüpfungen anzeigen" Value="1" />
               <Union SizeInBit="8">
                 <Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
                 <!-- <Parameter Id="%AID%_UP-%TT%00034" Name="ReadTimeDate" ParameterType="%AID%_PT-OnOffYesNo" Offset="0" BitOffset="0" Text="Uhrzeit und Datum nach einem Neustart vom Bus lesen" Value="1" /> -->
@@ -969,7 +960,7 @@
               </Union>
               <Union SizeInBit="16">
                 <Memory CodeSegment="%MID%" Offset="11" BitOffset="0" />
-                <Parameter Id="%AID%_UP-%TT%00164" Name="VisibleChannels" ParameterType="%AID%_PT-LOGNumChannels" Offset="0" BitOffset="0" Text="Verfügbare Kanäle" Value="%N%" SuffixText=" von %N%" />
+                <Parameter Id="%AID%_UP-%TT%00164" Name="VisibleChannels" ParameterType="%AID%_PT-LOGNumChannels" Offset="0" BitOffset="0" Text="Verfügbare Kanäle" Value="%LOG_NumChannelsDefault%" SuffixText=" von %N%" />
                 <Parameter Id="%AID%_UP-%TT%00151" Name="LedMapping" ParameterType="%AID%_PT-RGBMapping" Offset="1" BitOffset="0" Text="Lötpad A / B / C entspricht" Value="1" />
                 <!-- <Parameter Id="%AID%_UP-%TT%00144" Name="Timezone" ParameterType="%AID%_PT-Timezone" Offset="0" BitOffset="3" Text="Zeitzone" Value="1" /> -->
                 <!-- <Parameter Id="%AID%_UP-%TT%00157" Name="TimezoneSign" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="3" Text="Zeitzone-Vorzeichen" Value="0" /> -->
@@ -1043,6 +1034,7 @@
               <ParameterRef Id="%AID%_P-%TT%00163_R-%TT%0016301" RefId="%AID%_P-%TT%00163" />
               <ParameterRef Id="%AID%_UP-%TT%00164_R-%TT%0016401" RefId="%AID%_UP-%TT%00164" />
               <ParameterRef Id="%AID%_UP-%TT%00165_R-%TT%0016501" RefId="%AID%_UP-%TT%00165" />
+              <ParameterRef Id="%AID%_P-%TT%00166_R-%TT%0016601" RefId="%AID%_P-%TT%00166" />
             </ParameterRefs>
             <ComObjectTable>
               <!-- <ComObject Id="%AID%_O-%TT%00001" Name="Heartbeat" Text="In Betrieb" Number="1" FunctionText="Zyklisch" ObjectSize="1 Bit" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" DatapointType="DPST-1-2" />
@@ -1094,7 +1086,7 @@
                 <!-- Hope this is enough for activating the following parameter -->
                 <ParameterRefRef RefId="%AID%_P-%TT%00163_R-%TT%0016301" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00164_R-%TT%0016401" HelpContext="%DOC%" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00164_R-%TT%0016401" HelpContext="BASE-Verfuegbare-Kanaele" IndentLevel="1" />
                 <ParameterSeparator Id="%AID%_PS-52" Text="" UIHint="HorizontalRuler" />
                 <ParameterSeparator Id="%AID%_PS-50" Text="Urlaub" UIHint="Headline" />
                 <ParameterSeparator Id="%AID%_PS-51" Text="Zeitschaltuhren können auch Urlaubszeiten berücksichtigen. Damit das funktioniert, muss eine Urlaubszeit über das KO 4 dem Gerät mitgeteilt werden." />
@@ -1189,13 +1181,39 @@
                   </when>
                 </choose>
               </ParameterBlock>
-              <ParameterBlock Id="%AID%_PB-nnn" Name="KoOverview" Text="Übersicht interne KO" Icon="electric-switch" HelpContext="Empty" ShowInComObjectTree="false">
+              <ParameterBlock Id="%AID%_PB-nnn" Name="KoOverview" Text="Übersicht interne KO" Icon="view-list-outline" HelpContext="Empty" ShowInComObjectTree="false">
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Übersicht interne KO-Verknüpfungen" UIHint="Headline" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Die folgende Liste kann leer sein, falls noch keine Logikkanäle definiert wurden oder noch keine internen KO-Verknüpfungen genutzt werden." />
+                <ParameterRefRef RefId="%AID%_P-%TT%00166_R-%TT%0016601" />
+                <ParameterBlock Id="%AID%_PB-nnn" Name="fIntKoOverview" Inline="true" Layout="Grid" HelpContext="Empty">
+                  <Rows>
+                    <Row Id="%AID%_PB-nnn_R-1" Name="Row1" />
+                  </Rows>
+                  <Columns>
+                    <Column Id="%AID%_PB-nnn_C-1" Name="Col1" Width="11%" />
+                    <Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="37%" />
+                    <Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="37%" />
+                    <Column Id="%AID%_PB-nnn_C-4" Name="Col4" Width="37%" />
+                    <Column Id="%AID%_PB-nnn_C-5" Name="Col4" Width="27%" />
+                  </Columns>
+                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingang" UIHint="Headline" Cell="1,2" />
+                  <ParameterSeparator Id="%AID%_PS-nnn" Text="KO" UIHint="Headline" Cell="1,3" />
+                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Ausgang" UIHint="Headline" Cell="1,4" />
+                  <ParameterSeparator Id="%AID%_PS-nnn" Text="zusätzliche KO" UIHint="Headline" Cell="1,5" />
+                </ParameterBlock>
                 <op:include href="Logikmodul.intko.templ.xml" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock[@Name='Channel-List']/*"
                   type="template" prefix="LOG" IsInner="true" />
               </ParameterBlock>
               <!-- followed by all logic channels -->
               <op:include href="Logikmodul.templ.xml" xpath="//ApplicationProgram/Dynamic/ChannelIndependentBlock/*" type="template" prefix="LOG" IsInner="true" />
+              <choose ParamRefId="%AID%_UP-%TT%00164_R-%TT%0016401">
+                <when test="&lt;%N%">
+                  <ParameterBlock Id="%AID%_PB-nnn" Name="fAdditionalChannels" Text="(mehr)" Icon="dots-horizontal" HelpContext="Empty">
+                    <ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" />
+                    <ParameterRefRef RefId="%AID%_UP-%TT%00164_R-%TT%0016401" HelpContext="BASE-Verfuegbare-Kanaele" IndentLevel="1" />
+                  </ParameterBlock>
+                </when>
+              </choose>
             </Channel>
           </Dynamic>
         </ApplicationProgram>

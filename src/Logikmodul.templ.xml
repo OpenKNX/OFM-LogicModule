@@ -309,6 +309,9 @@
               <!-- <Parameter Id="%AID%_P-%TT%%CC%145" Name="f%C%E2AnySceneChosen" ParameterType="%AID%_PT-ValueDpt5" Text="Eingang2: Welches Szenenfeld wird benutzt (interner Wert)" Access="None" Value="0" /> -->
               <Parameter Id="%AID%_P-%TT%%CC%278" Name="f%C%AskForAlarm" ParameterType="%AID%_PT-OnOffYesNo" Text="LED oder Buzzer aktiv (interner Wert)" Access="None" Value="0" />
               <!-- <Parameter Id="%AID%_P-%TT%%CC%395" Name="f%C%OKONumber" ParameterType="%AID%_PT-KONumber" Text="Kommunikationsobjekt für Ausgang" Access="Read" Value="%K2%" /> -->
+              <Parameter Id="%AID%_P-%TT%%CC%456" Name="f%C%E1InputDeltaOrAll" ParameterType="%AID%_PT-OnOffYesNo" Text="E1 Delta oder Full (interner Wert)" Access="None" Value="0" />
+              <Parameter Id="%AID%_P-%TT%%CC%457" Name="f%C%E2InputDeltaOrAll" ParameterType="%AID%_PT-OnOffYesNo" Text="E2 Delta oder Full (interner Wert)" Access="None" Value="0" />
+              <Parameter Id="%AID%_P-%TT%%CC%458" Name="f%C%OverviewDisplay" ParameterType="%AID%_PT-OnOffYesNo" Text="Kanal anzeigen im Overview (interner Wert)" Access="None" Value="0" />
             </Parameters>
             <ParameterRefs>
               <op:usePart name="INPUT" xpath="//ParameterRefs/*" />
@@ -543,6 +546,9 @@
               <ParameterRef Id="%AID%_UP-%TT%%CC%453_R-%TT%%CC%45301" RefId="%AID%_UP-%TT%%CC%453" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%454_R-%TT%%CC%45401" RefId="%AID%_UP-%TT%%CC%454" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%455_R-%TT%%CC%45501" RefId="%AID%_UP-%TT%%CC%455" />
+              <ParameterRef Id="%AID%_P-%TT%%CC%456_R-%TT%%CC%45601" RefId="%AID%_P-%TT%%CC%456" />
+              <ParameterRef Id="%AID%_P-%TT%%CC%457_R-%TT%%CC%45701" RefId="%AID%_P-%TT%%CC%457" />
+              <ParameterRef Id="%AID%_P-%TT%%CC%458_R-%TT%%CC%45801" RefId="%AID%_P-%TT%%CC%458" />
             </ParameterRefs>
             <ComObjectTable>
               <op:usePart name="INPUT" xpath="//ComObjectTable/*" />
@@ -573,6 +579,12 @@
                   <ParameterBlock Id="%AID%_PB-%C%17" Name="f%C%Logic" Text="Logik %C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%001_R-%TT%%CC%00101" Icon="gate-nand">
                     <!-- Any input active (hidden) -->
                     <ParameterRefRef RefId="%AID%_P-%TT%%CC%133_R-%TT%%CC%13301" />
+                    <!-- Input 1 active as full or delta (hidden) -->
+                    <ParameterRefRef RefId="%AID%_P-%TT%%CC%456_R-%TT%%CC%45601" />
+                    <!-- Input 2 active as full or delta (hidden) -->
+                    <ParameterRefRef RefId="%AID%_P-%TT%%CC%457_R-%TT%%CC%45701" />
+                    <!-- internal KO overview channel display helper (hidden) -->
+                    <ParameterRefRef RefId="%AID%_P-%TT%%CC%458_R-%TT%%CC%45801" />
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Kanaldefinition" UIHint="Headline" />
                     <ParameterRefRef RefId="%AID%_P-%TT%%CC%001_R-%TT%%CC%00101" HelpContext="%DOC%" IndentLevel="1" />
                     <!-- <ParameterRefRef RefId="%AID%_P-%TT%%CC%002_R-%TT%%CC%00201" HelpContext="%DOC%" IndentLevel="1" /> -->

@@ -398,8 +398,6 @@
                     </when>
                   </choose>
                 </when>
-              </choose>
-              <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP20+008%_R-%TT%%CC%%PPP20+008%01">
                 <when test="!=0">
                   <!-- Full ext Input -->
                   <ParameterBlock Id="%AID%_PB-%C%12" Name="f%C%ExtInput%En%" Text="Eingang %En%: {{0:Wert}}" TextParameterRefId="%AID%_P-%TT%%CC%%PPP1+128%_R-%TT%%CC%%PPP1+128%01" Icon="chevron-right-circle-outline" HelpContext="Empty">
