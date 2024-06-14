@@ -138,23 +138,7 @@ void Logic::processAfterStartupDelay()
 // REVIEW: Check if handling is equivalent to Commons v1 implementation
 void Logic::processReadRequests()
 {
-    // TODO obsolete durch kompakteres firstLoop()
-    // static bool sLogicProcessReadRequestsCalled = false;
     static uint32_t sDelay = 19000;
-
-    /*
-    // the following code should be called only once after initial startup delay
-    if (!sLogicProcessReadRequestsCalled) {
-        if (knx.paramByte(LOG_VacationRead) & LOG_VacationReadMask)
-        {
-            knx.getGroupObject(LOG_KoVacation).requestObjectRead();
-        }
-        // we put this here, because all other places are too early, knx stack is not up to date to send according init values
-        // got from flash storage
-        prepareChannels();
-        sLogicProcessReadRequestsCalled = true;
-    }
-    */
 
     // date and time are red from bus every 30 seconds until a response is received
     if (ParamBASE_ReadTimeDate)
