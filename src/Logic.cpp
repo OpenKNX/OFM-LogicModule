@@ -10,7 +10,10 @@
 Logic openknxLogic;
 
 uint8_t Logic::sMagicWord[] = {0xAE, 0x49, 0xD2, 0x9F};
+
+// TODO Common Time
 Timer &Logic::sTimer = Timer::instance();                      // singleton
+
 TimerRestore &Logic::sTimerRestore = TimerRestore::instance(); // singleton
 
 uint16_t Logic::flashSize()
@@ -135,7 +138,7 @@ void Logic::processAfterStartupDelay()
     logIndentDown();
 }
 
-// REVIEW: Check if handling is equivalent to Commons v1 implementation
+// TODO Common Time
 void Logic::processReadRequests()
 {
     static uint32_t sDelay = 19000;
@@ -225,6 +228,7 @@ void Logic::processInputKo(GroupObject &iKo)
         LogicChannel *lChannel = mChannel[lKoLookup->channelIndex];
         lChannel->processInput(lKoLookup->ioIndex);
     }
+    // TODO Common Time {{{
     if (iKo.asap() == BASE_KoTime)
     {
         if (ParamBASE_CombinedTimeDate)
@@ -294,6 +298,7 @@ void Logic::processInputKo(GroupObject &iKo)
     {
         sTimer.IsSummertime(iKo.value(getDPT(VAL_DPT_1)));
     }
+    // }}} TODO Common Time
 #ifdef BUZZER_PIN
     else if (iKo.asap() == LOG_KoBuzzerLock)
     {
@@ -330,10 +335,12 @@ void Logic::showHelp()
     if (!knx.configured())
         return;
 
+    // TODO Common Time {{{
     openknx.console.printHelpLine("logic time", "Print current time");
     openknx.console.printHelpLine("logic easter", "Print calculated easter Sunday date");
     openknx.console.printHelpLine("logic sun", "Print sunrise and sunset times");
     openknx.console.printHelpLine("logic sun+DDMM", "Print sunrise/sunset at elevation +/- degree/minute");
+    // }}} TODO Common Time
 
     openknx.console.printHelpLine("logic lim", "Show call limit counter max value and channel");
     openknx.console.printHelpLine("logic lim res", "Reset all call limit counter");
@@ -363,6 +370,7 @@ bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
             lResult = mChannel[lIndex]->processCommand(iCmd, iDebugKo);
         }
     }
+    // TODO Common Time {{{
     else if (iCmd.length() >= 7 && iCmd.substr(6, 1) == "t") // time
     {
         // return internal time (might differ from external)
@@ -436,6 +444,7 @@ bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
             openknx.console.writeDiagnoseKo("O%02d.%02d", sTimer.getEaster()->day, sTimer.getEaster()->month);
         lResult = true;
     }
+    // }}} TODO Common Time
     else if (iCmd.length() >= 7 && iCmd.length() <= 9 && iCmd.substr(6, 1) == "l") // limit
     {
         // display max call limit and according channel
@@ -502,8 +511,10 @@ void Logic::initLoadCounter(bool iAll)
 
 void Logic::debug()
 {
+    // TODO Common Time {{{
     // // logInfoP("Aktuelle Zeit: %s", sTimer.getTimeAsc());
     // sTimer.debug();
+    // }}} TODO Common Time
 #ifdef ARDUINO_ARCH_RP2040
     // logInfoP("Free Heap: %i", rp2040.getFreeHeap());
 #endif
@@ -525,12 +536,15 @@ void Logic::setup()
 #ifdef BUZZER_PIN
     pinMode(BUZZER_PIN, OUTPUT);
 #endif
+
+    // TODO Common Time {{{
     bool lTimezoneSign = ParamBASE_TimezoneSign;
     int8_t lTimezone = ParamBASE_TimezoneValue;
     lTimezone = lTimezone * (lTimezoneSign ? -1 : 1);
     bool lUseSummertime = (ParamBASE_SummertimeAll == VAL_STIM_FROM_INTERN);
     uint64_t lHolidayBitmask = holidaysToUInt64(knx.paramData(LOG_Neujahr), 5);
     sTimer.setup(ParamBASE_Longitude, ParamBASE_Latitude, ParamBASE_Timezone, lUseSummertime, lHolidayBitmask); // do not fetch just ParamLOG_Neujahr here, we need the whole bitfield
+    // }}} TODO Common Time
     // for TimerRestore we prepare all Timer channels
     for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
     {
