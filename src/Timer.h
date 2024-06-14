@@ -6,6 +6,7 @@
  *
  * *********************************/
 
+#include "OpenKNX.h"
 #include <ctime>
 #include <math.h>
 #include <stdint.h>
@@ -22,6 +23,21 @@
 #define REMOVED 0
 #define EASTER -1
 #define ADVENT -2
+
+// Values for Summertime
+#define VAL_STIM_FROM_KO 0
+#define VAL_STIM_FROM_DPT19 1
+#define VAL_STIM_FROM_INTERN 2
+
+// DPT19 special flags
+#define DPT19_FAULT 0x80
+#define DPT19_WORKING_DAY 0x40
+#define DPT19_NO_WORKING_DAY 0x20
+#define DPT19_NO_YEAR 0x10
+#define DPT19_NO_DATE 0x08
+#define DPT19_NO_DAY_OF_WEEK 0x04
+#define DPT19_NO_TIME 0x02
+#define DPT19_SUMMERTIME 0x01
 
 struct sTime
 {
@@ -45,13 +61,16 @@ enum eTimeValid
 
 class Timer
 {
-#ifdef OPENKNX_EXPERIMENTAL_RP2040RTC_LOCALTIME
   private:
+    void busTime_loop();
+    void busTime_processReadRequests();
+#ifdef OPENKNX_EXPERIMENTAL_RP2040RTC_LOCALTIME
     // Experimental Inclusion of UTC-Timer in RP2040
     void setHardwareDateTime(tm *iDateTime);
     void setHardwareDateTime(datetime_t t);
     void setHardwareValidDateTime();
 #endif
+
 
   protected:
     static const uint8_t cHolidaysCount = 34;
@@ -109,8 +128,10 @@ class Timer
     float mLatitude;
     int8_t mTimezone;
 
-    void setup(double iLongitude, double iLatitude, int8_t iTimezone, bool iUseSummertime, uint64_t iHolidayBitmask);
+    // use double iLongitude, double iLatitude, int8_t iTimezone, bool iUseSummertime from Parameters
+    void setup(uint64_t iHolidayBitmask);
     void loop();
+    void busTime_processInputKo(GroupObject &iKo);
     void debug();
 
     uint8_t getDay();

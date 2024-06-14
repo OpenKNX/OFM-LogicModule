@@ -138,43 +138,6 @@ void Logic::processAfterStartupDelay()
     logIndentDown();
 }
 
-// TODO Move to BusTime
-void Logic::busTime_processReadRequests()
-{
-    static uint32_t sDelay = 19000;
-
-    // date and time are red from bus every 30 seconds until a response is received
-    if (ParamBASE_ReadTimeDate)
-    {
-        eTimeValid lValid = sTimer.isTimerValid();
-        if (delayCheck(sDelay, 30000) && lValid != tmValid)
-        {
-            // logDebugP("Time Valid? %i", lValid);
-            sDelay = millis();
-            if (ParamBASE_CombinedTimeDate)
-            {
-                // combined date and time
-                KoBASE_Time.requestObjectRead();
-            }
-            else
-            {
-                // date and time from separate KOs
-                if (lValid != tmMinutesValid)
-                    KoBASE_Time.requestObjectRead();
-                if (lValid != tmDateValid)
-                    KoBASE_Date.requestObjectRead();
-            }
-        }
-        // if date and/or time is known, we read also summertime information
-        // TODO check dependency to configuration
-        if (sDelay > 0 && lValid == tmValid)
-        {
-            sDelay = 0;
-            KoBASE_IsSummertime.requestObjectRead();
-        }
-    }
-}
-
 bool Logic::sendReadRequest(GroupObject &ko)
 {
     // ensure, that we do not send too many read requests at the same time
@@ -218,79 +181,6 @@ void Logic::writeFlash()
     }
 }
 
-void Logic::busTime_processInputKo(GroupObject &iKo)
-{
-    if (iKo.asap() == BASE_KoTime)
-    {
-        if (ParamBASE_CombinedTimeDate)
-        {
-            KNXValue value = "";
-
-            // first ensure we have a valid data-time content
-            // (including the correct length)
-            if (iKo.tryValue(value, getDPT(VAL_DPT_19)))
-            {
-
-                // use raw value, as current version of knx do not provide access to all fields
-                // TODO DPT19: check integration of extended DPT19 access into knx or OpenKNX-Commons
-                // size is ensured to be 8 Byte
-                uint8_t *raw = iKo.valueRef();
-
-                /*
-                const bool flagFault = raw[6] & 0x80;
-                // ignore working day (WD, NWD): raw[6] & 0x40, raw[6] & 0x20
-                const bool flagNoYear = raw[6] & 0x10;
-                const bool flagNoDate = raw[6] & 0x08;
-                // ignore NDOW: raw[6] & 0x04
-                const bool flagNoTime = raw[6] & 0x02;
-                const bool flagSuti = raw[6] & 0x01;
-                // ignore quality of clock (CLQ): raw[7] & 0x80
-                // ignore synchronisation source reliablity (SRC): raw[7] & 0x40
-                */
-
-                // ignore inputs with:
-                // * F - fault
-                // * NY - missing year
-                // * ND - missing date
-                // * NT - missing time
-                if (!(raw[6] & (DPT19_FAULT | DPT19_NO_YEAR | DPT19_NO_DATE | DPT19_NO_TIME)))
-                {
-                    struct tm lTmp = value;
-                    sTimer.setDateTimeFromBus(&lTmp);
-                    const bool lSummertime = raw[6] & DPT19_SUMMERTIME;
-                    // TODO check using ParamLOG_SummertimeAll
-                    if (((knx.paramByte(BASE_SummertimeAll) & BASE_SummertimeAllMask) >> BASE_SummertimeAllShift) == VAL_STIM_FROM_DPT19)
-                        sTimer.IsSummertime(lSummertime);
-                }
-            }
-        }
-        else
-        {
-            KNXValue value = "";
-            // ensure we have a valid time content
-            if (iKo.tryValue(value, getDPT(VAL_DPT_10)))
-            {
-                struct tm lTmp = value;
-                sTimer.setTimeFromBus(&lTmp);
-            }
-        }
-    }
-    else if (iKo.asap() == BASE_KoDate)
-    {
-        KNXValue value = "";
-        // ensure we have a valid date content
-        if (iKo.tryValue(value, getDPT(VAL_DPT_11)))
-        {
-            struct tm lTmp = value;
-            sTimer.setDateFromBus(&lTmp);
-        }
-    }
-    else if (iKo.asap() == BASE_KoIsSummertime)
-    {
-        sTimer.IsSummertime(iKo.value(getDPT(VAL_DPT_1)));
-    }
-}
-
 // on input level, all dpt > 1 values are converted to bool by the according converter
 void Logic::processInputKo(GroupObject &iKo)
 {
@@ -330,7 +220,7 @@ void Logic::processInputKo(GroupObject &iKo)
 #endif
     else
     {
-        busTime_processInputKo(iKo);
+        sTimer.busTime_processInputKo(iKo);
     }
 }
 
@@ -543,14 +433,9 @@ void Logic::setup()
     pinMode(BUZZER_PIN, OUTPUT);
 #endif
 
-    // TODO Common Time {{{
-    bool lTimezoneSign = ParamBASE_TimezoneSign;
-    int8_t lTimezone = ParamBASE_TimezoneValue;
-    lTimezone = lTimezone * (lTimezoneSign ? -1 : 1);
-    bool lUseSummertime = (ParamBASE_SummertimeAll == VAL_STIM_FROM_INTERN);
     uint64_t lHolidayBitmask = holidaysToUInt64(knx.paramData(LOG_Neujahr), 5);
-    sTimer.setup(ParamBASE_Longitude, ParamBASE_Latitude, ParamBASE_Timezone, lUseSummertime, lHolidayBitmask); // do not fetch just ParamLOG_Neujahr here, we need the whole bitfield
-    // }}} TODO Common Time
+    sTimer.setup(lHolidayBitmask); // do not fetch just ParamLOG_Neujahr here, we need the whole bitfield
+
     // for TimerRestore we prepare all Timer channels
     for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
     {
@@ -568,22 +453,11 @@ uint64_t Logic::holidaysToUInt64(uint8_t *iData, uint8_t iCount)
     return l;
 }
 
-void Logic::busTime_loop()
-{
-    // TODO needed after Separation only
-    if (!openknx.afterStartupDelay())
-        return;
-
-    busTime_processReadRequests();
-}
-
 void Logic::loop()
 {
     if (!openknx.afterStartupDelay())
         return;
     uint32_t lLoopTime = millis();
-
-    busTime_loop();
 
     sTimer.loop(); // clock and timer async methods
     // special case timer handling, we have to loop through all channels once
