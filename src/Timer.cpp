@@ -238,8 +238,7 @@ void Timer::busTime_processInputKo(GroupObject &iKo)
                     struct tm lTmp = value;
                     setDateTimeFromBus(&lTmp);
                     const bool lSummertime = raw[6] & DPT19_SUMMERTIME;
-                    // TODO check using ParamLOG_SummertimeAll
-                    if (((knx.paramByte(BASE_SummertimeAll) & BASE_SummertimeAllMask) >> BASE_SummertimeAllShift) == VAL_STIM_FROM_DPT19)
+                    if (ParamBASE_SummertimeAll == VAL_STIM_FROM_DPT19)
                         IsSummertime(lSummertime);
                 }
             }
