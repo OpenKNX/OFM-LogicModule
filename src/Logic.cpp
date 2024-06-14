@@ -218,17 +218,8 @@ void Logic::writeFlash()
     }
 }
 
-// on input level, all dpt > 1 values are converted to bool by the according converter
-void Logic::processInputKo(GroupObject &iKo)
+void Logic::busTime_processInputKo(GroupObject &iKo)
 {
-    // we have to check first, if external KO are used
-    sKoLookup *lKoLookup = nullptr;
-    while (getKoLookup(iKo.asap(), &lKoLookup))
-    {
-        LogicChannel *lChannel = mChannel[lKoLookup->channelIndex];
-        lChannel->processInput(lKoLookup->ioIndex);
-    }
-    // TODO Common Time {{{
     if (iKo.asap() == BASE_KoTime)
     {
         if (ParamBASE_CombinedTimeDate)
@@ -298,7 +289,29 @@ void Logic::processInputKo(GroupObject &iKo)
     {
         sTimer.IsSummertime(iKo.value(getDPT(VAL_DPT_1)));
     }
-    // }}} TODO Common Time
+}
+
+// on input level, all dpt > 1 values are converted to bool by the according converter
+void Logic::processInputKo(GroupObject &iKo)
+{
+    // we have to check first, if external KO are used
+    sKoLookup *lKoLookup = nullptr;
+    while (getKoLookup(iKo.asap(), &lKoLookup))
+    {
+        LogicChannel *lChannel = mChannel[lKoLookup->channelIndex];
+        lChannel->processInput(lKoLookup->ioIndex);
+    }
+    // REVIEW: Wäre dieser Check nicht im LogicChannel besser aufgehoben?
+    // Nein, denn dann müsste man alle channels durchgehen, um den richtigen zu finden
+    // So wird nur der Kanal berechnet, der dann final prozessiert wird.
+    if (iKo.asap() >= LOG_KoOffset + LOG_KoKOfE1 && iKo.asap() < LOG_KoOffset + LOG_KoKOfE1 + mNumChannels * LOG_KoBlockSize)
+    {
+        uint16_t lKoNumber = iKo.asap() - LOG_KoOffset - LOG_KoKOfE1;
+        uint8_t lChannelId = lKoNumber / LOG_KoBlockSize;
+        uint8_t lIOIndex = lKoNumber % LOG_KoBlockSize + 1;
+        LogicChannel *lChannel = mChannel[lChannelId];
+        lChannel->processInput(lIOIndex);
+    }
 #ifdef BUZZER_PIN
     else if (iKo.asap() == LOG_KoBuzzerLock)
     {
@@ -315,16 +328,9 @@ void Logic::processInputKo(GroupObject &iKo)
             PCA9632_SetColor(0, 0, 0);
     }
 #endif
-    // REVIEW: Wäre dieser Check nicht im LogicChannel besser aufgehoben?
-    // Nein, denn dann müsste man alle channels durchgehen, um den richtigen zu finden
-    // So wird nur der Kanal berechnet, der dann final prozessiert wird.
-    else if (iKo.asap() >= LOG_KoOffset + LOG_KoKOfE1 && iKo.asap() < LOG_KoOffset + LOG_KoKOfE1 + mNumChannels * LOG_KoBlockSize)
+    else
     {
-        uint16_t lKoNumber = iKo.asap() - LOG_KoOffset - LOG_KoKOfE1;
-        uint8_t lChannelId = lKoNumber / LOG_KoBlockSize;
-        uint8_t lIOIndex = lKoNumber % LOG_KoBlockSize + 1;
-        LogicChannel *lChannel = mChannel[lChannelId];
-        lChannel->processInput(lIOIndex);
+        busTime_processInputKo(iKo);
     }
 }
 

@@ -81,6 +81,7 @@ class Logic : public OpenKNX::Module
 
     void busTime_loop();
     void busTime_processReadRequests();
+    void busTime_processInputKo(GroupObject &iKo);
 
     static const uint8_t helpCommandCount = 10;
 
