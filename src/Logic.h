@@ -55,7 +55,6 @@ class Logic : public OpenKNX::Module
 
     void processAllInternalInputs(LogicChannel *iChannel, bool iValue);
     void processAfterStartupDelay();
-    void processReadRequests();
     void processInputKo(GroupObject &iKo);
     void showHelp() override;
     bool processCommand(const std::string cmd, bool debugKo) override;
@@ -79,8 +78,12 @@ class Logic : public OpenKNX::Module
     char gBuffer[14] = {0};
 
   private:
+
+    void busTime_loop();
+    void busTime_processReadRequests();
+
     static const uint8_t helpCommandCount = 10;
-    
+
     static uint8_t sMagicWord[];
     static Timer &sTimer;
     static TimerRestore &sTimerRestore;

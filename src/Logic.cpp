@@ -138,8 +138,8 @@ void Logic::processAfterStartupDelay()
     logIndentDown();
 }
 
-// TODO Common Time
-void Logic::processReadRequests()
+// TODO Move to BusTime
+void Logic::busTime_processReadRequests()
 {
     static uint32_t sDelay = 19000;
 
@@ -562,12 +562,23 @@ uint64_t Logic::holidaysToUInt64(uint8_t *iData, uint8_t iCount)
     return l;
 }
 
+void Logic::busTime_loop()
+{
+    // TODO needed after Separation only
+    if (!openknx.afterStartupDelay())
+        return;
+
+    busTime_processReadRequests();
+}
+
 void Logic::loop()
 {
     if (!openknx.afterStartupDelay())
         return;
     uint32_t lLoopTime = millis();
-    processReadRequests();
+
+    busTime_loop();
+
     sTimer.loop(); // clock and timer async methods
     // special case timer handling, we have to loop through all channels once
     if (sTimer.isTimerValid() && sTimer.minuteChanged())
