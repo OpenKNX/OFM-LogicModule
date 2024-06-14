@@ -133,6 +133,7 @@ void Timer::loop()
                 calculateSummertime(); // initial summertime calculation if year changes
                 calculateHolidays();
                 mYearTick = mNow.tm_year;
+                // TODO check setting `mDayTick = -1;` for cases when year changes only. E.g. initial
             }
             // important: Day calculations AFTER year calculations
             if (mDayTick != mNow.tm_mday)

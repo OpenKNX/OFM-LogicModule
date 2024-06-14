@@ -73,6 +73,7 @@ class Logic : public OpenKNX::Module
     const std::string name() override;
     const std::string version() override;
 
+    // TODO check removal from public api!
     tm &Now();
     bool timeValid();
     char gBuffer[14] = {0};

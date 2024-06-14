@@ -163,6 +163,7 @@ void Logic::processReadRequests()
             }
         }
         // if date and/or time is known, we read also summertime information
+        // TODO check dependency to configuration
         if (sDelay > 0 && lValid == tmValid)
         {
             sDelay = 0;
