@@ -112,14 +112,6 @@ class Timer
     Timer(const Timer &);            // make copy constructor private
     Timer &operator=(const Timer &); // prevent copy
 
-    int sunRiseSet(int year, int month, int day, double lon, double lat,
-                   double altit, int upper_limb, double *rise, double *set);
-    void sunPos(double d, double *lon, double *r);
-    void sunRadDec(double d, double *RA, double *dec, double *r);
-    double revolution(double x);
-    double rev180(double x);
-    double GMST0(double d);
-
   public:
     // singleton!
     static Timer &instance();
@@ -160,28 +152,3 @@ class Timer
     bool UseSummertime();
 };
 
-/* A macro to compute the number of days elapsed since 2000 Jan 0.0 */
-/* (which is equal to 1999 Dec 31, 0h UT)                           */
-
-#define days_since_2000_Jan_0(y, m, d) \
-    (367L * (y) - ((7 * ((y) + (((m) + 9) / 12))) / 4) + ((275 * (m)) / 9) + (d) - 730530L)
-
-/* Some conversion factors between radians and degrees */
-
-// #ifndef PI
-// #define PI 3.1415926535897932384
-// #endif
-
-#define RADEG (180.0 / PI)
-#define DEGRAD (PI / 180.0)
-
-/* The trigonometric functions in degrees */
-
-#define sind(x) sin((x) * DEGRAD)
-#define cosd(x) cos((x) * DEGRAD)
-#define tand(x) tan((x) * DEGRAD)
-
-#define atand(x) (RADEG * atan(x))
-#define asind(x) (RADEG * asin(x))
-#define acosd(x) (RADEG * acos(x))
-#define atan2d(y, x) (RADEG * atan2(y, x))
