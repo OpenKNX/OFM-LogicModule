@@ -394,6 +394,8 @@ void Timer::clearMinuteChanged()
     mMinuteChanged = false;
 }
 
+#pragma region LOG_TIME_GETTER
+
 uint16_t Timer::getYear()
 {
     return mNow.tm_year + 1900;
@@ -428,6 +430,8 @@ uint8_t Timer::getWeekday()
 {
     return mNow.tm_wday;
 }
+
+#pragma endregion
 
 sTime *Timer::getSunInfo(uint8_t iSunInfo)
 {
@@ -485,6 +489,8 @@ eTimeValid Timer::isTimerValid()
 {
     return mTimeValid;
 }
+
+#pragma region LOG_TIME_DST
 
 bool Timer::IsSummertime()
 {
@@ -565,6 +571,10 @@ bool Timer::calculateSummertime()
     return lResult;
 }
 
+#pragma endregion
+
+#pragma region LOG_TIME_CALC_SPECIAL_DAYS
+
 void Timer::calculateAdvent()
 {
     // calculates the 4th advent
@@ -614,6 +624,8 @@ void Timer::calculateEaster()
             mEaster.day = 18;
     }
 }
+
+#pragma endregion
 
 void Timer::debug()
 {
@@ -710,6 +722,8 @@ sDay Timer::getDayByOffset(int8_t iOffset, sDay &iDate)
     sDay lResult = {(int8_t)mTimeHelper.tm_mday, (int8_t)(mTimeHelper.tm_mon + 1)};
     return lResult;
 }
+
+#pragma region LOG_TIME_CALC_SUN 
 
 /***************************************************************************/
 /* Note: year,month,date = calendar date, 1801-2099 only.             */
@@ -916,3 +930,5 @@ double Timer::GMST0(double d)
                          (0.9856002585 + 4.70935E-5) * d);
     return sidtim0;
 } /* GMST0 */
+
+#pragma endregion
