@@ -421,26 +421,25 @@ void Logic::setup()
     // check for hidden parameters
     logInfoP("Setting: Buzzer available: %d", ParamLOG_BuzzerInstalled);
     logInfoP("Setting: RGBLed available: %d", ParamLOG_LedInstalled);
-    // setup channels, not possible in constructor, because knx is not configured there
-    // get number of channels from knxprod
-    mNumChannels = ParamLOG_VisibleChannels; // LOG_ChannelCount;
-    for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
-    {
-        mChannel[lIndex] = new LogicChannel(lIndex);
-    }
     // setup buzzer
 #ifdef BUZZER_PIN
     pinMode(BUZZER_PIN, OUTPUT);
 #endif
 
+    // do not fetch just ParamLOG_Neujahr here, we need the whole bitfield
     uint64_t lHolidayBitmask = holidaysToUInt64(knx.paramData(LOG_Neujahr), 5);
-    sTimer.setup(lHolidayBitmask); // do not fetch just ParamLOG_Neujahr here, we need the whole bitfield
+    sTimer.setup(lHolidayBitmask);
 
+    // not use LOG_ChannelCount, get number of visible channels set in ETS only
+    mNumChannels = ParamLOG_VisibleChannels;
+
+    // setup channels, not possible in constructor, because knx is not configured there
     // for TimerRestore we prepare all Timer channels
     for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
     {
-        LogicChannel *lChannel = mChannel[lIndex];
+        LogicChannel *lChannel = new LogicChannel(lIndex);
         lChannel->startTimerRestoreState();
+        mChannel[lIndex] = lChannel;
     }
 }
 
