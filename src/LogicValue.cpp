@@ -1012,9 +1012,29 @@ const char* LogicValue::stringValue() const
             return openknxLogic.gBuffer;
         case FloatType:
         case DoubleType:
-            // TODO not all double values will fit in 13 characters as %f
-            snprintf(openknxLogic.gBuffer, 14, "%f", _value.doubleValue);
+        {
+            const size_t gBufferLen = sizeof(openknxLogic.gBuffer); // = 14; // TODO check increasing to 14+1
+
+            // Try first allowing all characters as significant digits:
+            // In most cases (integer part is not to large) we are done and
+            // fractional parts will be removed with rounding when required.
+            //
+            // In other cases reduce significant digits step by step, output format can change.
+            //
+            // Note: Simple calculation by difference of written and allowed is NOT stable,
+            //       but could be used for optimization
+            for (int maxSigDigits = gBufferLen - 1; maxSigDigits > 0; maxSigDigits--)
+            {
+                int len = snprintf(openknxLogic.gBuffer, gBufferLen, "%.*g", _value.doubleValue, maxSigDigits);
+                if (len < gBufferLen && len >= 0)
+                {
+                    // value written complete and successful into buffer
+                    return openknxLogic.gBuffer;
+                }
+            }
+            strncpy(openknxLogic.gBuffer, "ERR:float2str", gBufferLen - 1);
             return openknxLogic.gBuffer;
+        }
         case StringType:
             return _value.stringValue;
     }
