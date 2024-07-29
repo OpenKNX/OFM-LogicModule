@@ -72,6 +72,7 @@ class Logic : public OpenKNX::Module
 
     tm &Now();
     bool timeValid();
+    // TODO check increasing size to 14+1
     char gBuffer[14] = {0};
 
   private:

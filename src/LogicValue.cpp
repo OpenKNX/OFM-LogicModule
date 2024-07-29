@@ -1002,17 +1002,18 @@ const char* LogicValue::stringValue() const
         case UShortType:
         // case ULongType:
         case UIntType:
-            sprintf(openknxLogic.gBuffer, "%u", _value.uintValue);
+            snprintf(openknxLogic.gBuffer, 14, "%u", _value.uintValue);
             return openknxLogic.gBuffer;
         case CharType:
         case ShortType:
         // case LongType:
         case IntType:
-            sprintf(openknxLogic.gBuffer, "%i", _value.intValue);
+            snprintf(openknxLogic.gBuffer, 14, "%i", _value.intValue);
             return openknxLogic.gBuffer;
         case FloatType:
         case DoubleType:
-            sprintf(openknxLogic.gBuffer, "%f", _value.doubleValue);
+            // TODO not all double values will fit in 13 characters as %f
+            snprintf(openknxLogic.gBuffer, 14, "%f", _value.doubleValue);
             return openknxLogic.gBuffer;
         case StringType:
             return _value.stringValue;
