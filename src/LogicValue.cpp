@@ -993,7 +993,7 @@ const char* LogicValue::stringValue() const
 {
 
     if (_isInitial)
-        return 0;
+        return nullptr;
     switch (_type)
     {
         // case DoubleType:
@@ -1017,7 +1017,7 @@ const char* LogicValue::stringValue() const
         case StringType:
             return _value.stringValue;
     }
-    return 0;
+    return nullptr;
 }
 
 bool LogicValue::isInitial()
