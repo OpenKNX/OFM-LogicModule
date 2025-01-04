@@ -259,6 +259,7 @@ class LogicChannel : public OpenKNX::Channel
 
     bool isInputActive(uint8_t iIOIndex);
     bool isInputValid(uint8_t iIOIndex);
+    bool isInputInverted(uint8_t iIOIndex);
 
     void startStartup();
     void processStartup();

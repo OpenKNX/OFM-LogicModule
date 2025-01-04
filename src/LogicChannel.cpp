@@ -1163,6 +1163,8 @@ void LogicChannel::processConvertInput(uint8_t iIOIndex)
                 break;
             case VAL_InputConvert_Hysterese:
                 lValueOut = pCurrentIn & iIOIndex; // retrieve old result, will be send if current value is in Hysterese interval
+                if (isInputInverted(iIOIndex))
+                    lValueOut = !lValueOut;
                 if (lValue1In <= getParamByDpt(lDpt, lParamLow + 0))
                     lValueOut = false;
                 if (lValue1In >= getParamByDpt(lDpt, lParamLow + 4))
@@ -1180,6 +1182,8 @@ void LogicChannel::processConvertInput(uint8_t iIOIndex)
                 break;
             case VAL_InputConvert_DeltaHysterese:
                 lValueOut = pCurrentIn & iIOIndex; // retrieve old result, will be send if current value is in Hysterese interval
+                if (isInputInverted(iIOIndex))
+                    lValueOut = !lValueOut;
                 lDiff = lValue1In - lValue2In;
                 // lDiff = uValueSubtract(lValue1In, lValue2In, lDpt, lDptValue2);
                 // lDptResult = (lDpt == VAL_DPT_9 || lDptValue2 == VAL_DPT_9) ? VAL_DPT_9 : lDpt;
@@ -1235,6 +1239,29 @@ void LogicChannel::processConvertInput(uint8_t iIOIndex)
     startLogic(iIOIndex, lValueOut);
 }
 
+// This method checks if the input specified by iIOIndex is inverted.
+// The BIT_INPUT_MASK value is used to determine the inversion status of the input.
+bool LogicChannel::isInputInverted(uint8_t iIOIndex) {
+    uint8_t lInput = 0;
+    switch (iIOIndex) {
+    case BIT_EXT_INPUT_1:
+        lInput = ParamLOG_fE1;
+        break;
+    case BIT_EXT_INPUT_2:
+        lInput = ParamLOG_fE2;
+        break;
+    case BIT_INT_INPUT_1:
+        lInput = ParamLOG_fI1;
+        break;
+    case BIT_INT_INPUT_2:
+        lInput = ParamLOG_fI2;
+        break;
+    default:
+        break;
+    }
+    return (lInput & BIT_INPUT_MASK) == 2;
+}
+
 void LogicChannel::startLogic(uint8_t iIOIndex, bool iValue)
 {
     // try to catch endless loops caused by logic itself
@@ -1255,26 +1282,9 @@ void LogicChannel::startLogic(uint8_t iIOIndex, bool iValue)
         }
         // invert input
         bool lValue = iValue;
-        uint8_t lInput = 0;
-        switch (iIOIndex)
-        {
-            case BIT_EXT_INPUT_1:
-                lInput = ParamLOG_fE1;
-                break;
-            case BIT_EXT_INPUT_2:
-                lInput = ParamLOG_fE2;
-                break;
-            case BIT_INT_INPUT_1:
-                lInput = ParamLOG_fI1;
-                break;
-            case BIT_INT_INPUT_2:
-                lInput = ParamLOG_fI2;
-                break;
-            default:
-                break;
-        }
-        if ((lInput & BIT_INPUT_MASK) == 2)
+        if (isInputInverted(iIOIndex)) {
             lValue = !iValue;
+        }
         // set according input bit
         pCurrentIn &= ~iIOIndex;
         pCurrentIn |= iIOIndex * lValue;

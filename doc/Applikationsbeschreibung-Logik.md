@@ -83,6 +83,10 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 
 Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer das Gesamtdokument lesen muss, um Neuerungen zu erfahren.
 
+23.12.2024: Firmware 3.5.3, Applikation 3.5
+
+* FIX: Hysterese/Differenzhysterese mit invertiertem Eingang führte beim Schreiben von Werten im Hysteresebereich zu Toggeln des Ausgangs.
+
 07.12.2024: Firmware 3.5.2, Applikation 3.5
 
 * FIX: Das neue Sendeverhalten am Ausgang und der Wiederholungsfilter haben sich leider gegenseitig beeinflusst und zu unerwarteten Ergebnissen geführt, die Logiken kaputt machen konnten. Deswegen ein Hotfix. 
