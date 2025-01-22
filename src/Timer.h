@@ -13,9 +13,6 @@
 
 #include "TimerHoliday.h"
 
-#ifdef OPENKNX_EXPERIMENTAL_RP2040RTC_LOCALTIME
-    #include "pico/util/datetime.h"
-#endif
 
 #define MINYEAR 2022
 
@@ -60,13 +57,6 @@ class Timer
   private:
     void busTime_loop();
     void busTime_processReadRequests();
-#ifdef OPENKNX_EXPERIMENTAL_RP2040RTC_LOCALTIME
-    // Experimental Inclusion of UTC-Timer in RP2040
-    void setHardwareDateTime(tm *iDateTime);
-    void setHardwareDateTime(datetime_t t);
-    void setHardwareValidDateTime();
-#endif
-
 
   protected:
     TimerHoliday holiday;
