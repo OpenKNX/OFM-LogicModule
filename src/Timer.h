@@ -11,6 +11,8 @@
 #include <math.h>
 #include <stdint.h>
 
+#include "TimerHoliday.h"
+
 #ifdef OPENKNX_EXPERIMENTAL_RP2040RTC_LOCALTIME
     #include "pico/util/datetime.h"
 #endif
@@ -45,12 +47,6 @@ struct sTime
     int8_t hour;
 };
 
-struct sDay
-{
-    int8_t day;
-    int8_t month;
-};
-
 enum eTimeValid
 {
     tmInvalid,
@@ -73,8 +69,8 @@ class Timer
 
 
   protected:
-    static const uint8_t cHolidaysCount = 34;
-    static sDay cHolidays[cHolidaysCount];
+    TimerHoliday holiday;
+
     struct tm mTimeHelper;
     // double mLongitude;
     // double mLatitude;
@@ -84,28 +80,19 @@ class Timer
     eTimeValid mTimeValid = tmInvalid;
     uint32_t mTimeDelay = 0;
     bool mMinuteChanged = false;
-    uint8_t mHolidayToday = 0;
-    uint8_t mHolidayTomorrow = 0;
-    bool mHolidayChanged = false;
     sTime mSunrise;
     sTime mSunset;
-    sDay mEaster = {0, 0};   // easter sunday
-    sDay mAdvent = {0, 0};   // fourth advent
     int8_t mMinuteTick = -1; // timer evaluation is called each time the minute changes
     int8_t mHourTick = -1;   // timer evaluation is called each time the hour changes
     int8_t mDayTick = -1;    // sunrise/sunset calculation happens each time the day changes
     int8_t mMonthTick = -1;  // sunrise/sunset calculation happens each time the month changes
     int16_t mYearTick = -1;  // easter calculation happens each time year changes
 
-    void calculateEaster();
-    void calculateAdvent();
     bool calculateSummertime();
     uint8_t calculateLastSundayInMonth(uint8_t iMonth);
     void calculateHolidays(bool iDebugOutput = false);
     void calculateSunriseSunset();
     void convertToLocalTime(double iTime, sTime *eTime);
-    bool isEqualDate(sDay &iDate1, sDay &iDate2);
-    sDay getDayByOffset(int8_t iOffset, sDay &iDate);
 
     Timer();
     ~Timer();
@@ -120,8 +107,7 @@ class Timer
     float mLatitude;
     int8_t mTimezone;
 
-    // use double iLongitude, double iLatitude, int8_t iTimezone, bool iUseSummertime from Parameters
-    void setup(uint64_t iHolidayBitmask);
+    void setup();
     void loop();
     void busTime_processInputKo(GroupObject &iKo);
     void debug();
@@ -144,8 +130,7 @@ class Timer
     void setDateTimeFromBus(tm *iDateTime);
     uint8_t holidayToday();
     uint8_t holidayTomorrow();
-    bool holidayChanged();
-    void clearHolidayChanged();
+    void sendHoliday();
     eTimeValid isTimerValid();
     bool IsSummertime();
     void IsSummertime(bool iValue);

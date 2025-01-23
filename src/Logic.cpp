@@ -426,9 +426,7 @@ void Logic::setup()
     pinMode(BUZZER_PIN, OUTPUT);
 #endif
 
-    // do not fetch just ParamLOG_Neujahr here, we need the whole bitfield
-    uint64_t lHolidayBitmask = holidaysToUInt64(knx.paramData(LOG_Neujahr), 5);
-    sTimer.setup(lHolidayBitmask);
+    sTimer.setup();
 
     // not use LOG_ChannelCount, get number of visible channels set in ETS only
     mNumChannels = ParamLOG_VisibleChannels;
@@ -441,15 +439,6 @@ void Logic::setup()
         lChannel->startTimerRestoreState();
         mChannel[lIndex] = lChannel;
     }
-}
-
-uint64_t Logic::holidaysToUInt64(uint8_t *iData, uint8_t iCount)
-{
-    uint64_t l = 0;
-    uint8_t *p = (uint8_t *)&l;
-    for (uint8_t i = 0; i < iCount; i++)
-        p[7-i] = iData[i];
-    return l;
 }
 
 void Logic::loop()
@@ -467,7 +456,7 @@ void Logic::loop()
             LogicChannel *lChannel = mChannel[lChannelNr];
             lChannel->startTimerInput();
         }
-        sendHoliday();
+        sTimer.sendHoliday();
         sTimer.clearMinuteChanged();
     }
 
@@ -530,25 +519,6 @@ void Logic::processTimerRestore()
                 LogicChannel *lChannel = mChannel[lIndex];
                 lChannel->stopTimerRestoreState();
             }
-        }
-    }
-}
-
-// send holiday information on bus
-void Logic::sendHoliday()
-{
-    if (sTimer.holidayChanged())
-    {
-        // write the newly calculated holiday information into KO (can be read externally)
-
-        KoLOG_Holiday1.valueNoSend(sTimer.holidayToday(), getDPT(VAL_DPT_5));
-        KoLOG_Holiday2.valueNoSend(sTimer.holidayTomorrow(), getDPT(VAL_DPT_5));
-        sTimer.clearHolidayChanged();
-        if (ParamLOG_HolidaySend)
-        {
-            // and send it, if requested by application setting
-            KoLOG_Holiday1.objectWritten();
-            KoLOG_Holiday2.objectWritten();
         }
     }
 }

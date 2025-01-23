@@ -32,8 +32,8 @@ void TimerRestore::setup(Timer &iTimer)
     mUseSummertime = iTimer.UseSummertime();
     mIsSummertime = iTimer.IsSummertime();
     mTimeValid = tmValid;
-    calculateEaster();
-    calculateAdvent();
+    holiday.calculateEaster(getYear());
+    holiday.calculateAdvent(mNow.tm_year);
     doDayCalculations();
 }
 
@@ -58,8 +58,8 @@ void TimerRestore::doDayCalculations()
         calculateSunriseSunset();
     if (lYear != mNow.tm_year)
     {
-        calculateEaster();
-        calculateAdvent();
+        holiday.calculateEaster(getYear());
+        holiday.calculateAdvent(mNow.tm_year);
     }
     calculateHolidays();
 }

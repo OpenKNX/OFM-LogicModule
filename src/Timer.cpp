@@ -1,3 +1,4 @@
+#include "KnxHelper.h"
 #include "Timer.h"
 #include "SunRiSet.h"
 #include "Arduino.h"
@@ -12,42 +13,6 @@
     #include "hardware/rtc.h"
     #include "pico/util/datetime.h"
 #endif
-
-sDay Timer::cHolidays[cHolidaysCount] = {
-    {1, 1},
-    {6, 1},
-    {-52, EASTER},
-    {-48, EASTER},
-    {-47, EASTER},
-    {-46, EASTER},
-    {8, 3},
-    {-3, EASTER},
-    {-2, EASTER},
-    {0, EASTER},
-    {1, EASTER},
-    {1, 5},
-    {39, EASTER},
-    {49, EASTER},
-    {50, EASTER},
-    {60, EASTER},
-    {8, 8},
-    {15, 8},
-    {3, 10},
-    {31, 10},
-    {1, 11},
-    {-32, ADVENT},
-    {-21, ADVENT},
-    {-14, ADVENT},
-    {-7, ADVENT},
-    {0, ADVENT},
-    {24, 12},
-    {25, 12},
-    {26, 12},
-    {31, 12},
-    {26, 10},
-    {8, 12},
-    {1, 8},
-    {-28, ADVENT}};
 
 Timer::Timer()
 {
@@ -69,7 +34,7 @@ Timer &Timer::instance()
     return sInstance;
 }
 
-void Timer::setup(uint64_t iHolidayBitmask)
+void Timer::setup()
 {
     bool lTimezoneSign = ParamBASE_TimezoneSign;
     int8_t lTimezone = ParamBASE_TimezoneValue;
@@ -80,13 +45,8 @@ void Timer::setup(uint64_t iHolidayBitmask)
     mLatitude = ParamBASE_Latitude;
     mTimezone = ParamBASE_Timezone;
     mUseSummertime = iUseSummertime;
-    // we delete all unnecessary holidays from holiday data
-    for (uint8_t i = 0; i < cHolidaysCount; i++)
-    {
-        if ((iHolidayBitmask & 0x8000000000000000) == 0)
-            cHolidays[i].month = REMOVED;
-        iHolidayBitmask <<= 1;
-    }
+
+    holiday.setup();
 }
 
 bool Timer::UseSummertime()
@@ -180,8 +140,8 @@ void Timer::loop()
             }
             if (mYearTick != mNow.tm_year)
             {
-                calculateEaster();
-                calculateAdvent();
+                holiday.calculateEaster(getYear());
+                holiday.calculateAdvent(mNow.tm_year);
                 calculateSummertime(); // initial summertime calculation if year changes
                 calculateHolidays();
                 mYearTick = mNow.tm_year;
@@ -191,7 +151,7 @@ void Timer::loop()
             if (mDayTick != mNow.tm_mday)
             {
                 calculateSunriseSunset();
-                if (!mHolidayChanged)
+                if (!holiday.holidayChanged())
                     calculateHolidays();
                 mDayTick = mNow.tm_mday;
             }
@@ -458,7 +418,7 @@ void Timer::getSunDegree(uint8_t iSunInfo, double iDegree, sTime *eSun)
 
 sDay *Timer::getEaster()
 {
-    return &mEaster;
+    return holiday.getEaster();
 }
 
 char *Timer::getTimeAsc()
@@ -468,22 +428,12 @@ char *Timer::getTimeAsc()
 
 uint8_t Timer::holidayToday()
 {
-    return mHolidayToday;
+    return holiday.holidayToday();
 }
 
 uint8_t Timer::holidayTomorrow()
 {
-    return mHolidayTomorrow;
-}
-
-bool Timer::holidayChanged()
-{
-    return mHolidayChanged;
-}
-
-void Timer::clearHolidayChanged()
-{
-    mHolidayChanged = false;
+    return holiday.holidayTomorrow();
 }
 
 eTimeValid Timer::isTimerValid()
@@ -574,60 +524,6 @@ bool Timer::calculateSummertime()
 
 #pragma endregion
 
-#pragma region LOG_TIME_CALC_SPECIAL_DAYS
-
-void Timer::calculateAdvent()
-{
-    // calculates the 4th advent
-    mTimeHelper.tm_year = mNow.tm_year;
-    mTimeHelper.tm_mon = 11;
-    mTimeHelper.tm_mday = 24;
-    mTimeHelper.tm_hour = 12;
-    mTimeHelper.tm_min = 0;
-    mTimeHelper.tm_sec = 0;
-    mktime(&mTimeHelper); //   -timezone;
-    mAdvent.day = 24 - mTimeHelper.tm_wday;
-    mAdvent.month = 12;
-}
-
-void Timer::calculateEaster()
-{
-    uint16_t lYear = getYear();
-    uint8_t a = lYear % 19;
-    uint8_t b = lYear % 4;
-    uint8_t c = lYear % 7;
-
-    uint8_t k = lYear / 100;
-    uint8_t q = k / 4;
-    uint8_t p = ((8 * k) + 13) / 25;
-    uint8_t Egz = (38 - (k - q) + p) % 30; // Die Jahrhundertepakte
-    uint8_t M = (53 - Egz) % 30;
-    uint8_t N = (4 + k - q) % 7;
-
-    uint8_t d = ((19 * a) + M) % 30;
-    uint8_t e = ((2 * b) + (4 * c) + (6 * d) + N) % 7;
-
-    // Ausrechnen des Ostertermins:
-    if ((22 + d + e) <= 31)
-    {
-        mEaster.day = 22 + d + e;
-        mEaster.month = 3;
-    }
-    else
-    {
-        mEaster.day = d + e - 9;
-        mEaster.month = 4;
-
-        // Zwei Ausnahmen berücksichtigen:
-        if (mEaster.day == 26)
-            mEaster.day = 19;
-        else if ((mEaster.day == 25) && (d == 28) && (a > 10))
-            mEaster.day = 18;
-    }
-}
-
-#pragma endregion
-
 void Timer::debug()
 {
     if (mTimeValid & tmMinutesValid)
@@ -651,75 +547,25 @@ void Timer::calculateHolidays(bool iDebugOutput)
     if (mTimeValid < tmDateValid)
         return;
     // check if today or tomorrow is a holiday
-    sDay lToday = {(int8_t)getDay(), (int8_t)getMonth()};
-    sDay lTomorrow = getDayByOffset(1, lToday);
-    uint8_t lHolidayToday = 0;
-    uint8_t lHolidayTomorrow = 0;
-    for (uint8_t i = 0; i < cHolidaysCount; i++)
-    {
-        sDay lHoliday = {REMOVED, REMOVED};
-        switch (cHolidays[i].month)
-        {
-            case REMOVED:
-                // do nothing
-                break;
-            case EASTER:
-                lHoliday = getDayByOffset(cHolidays[i].day, mEaster);
-                break;
-            case ADVENT:
-                lHoliday = getDayByOffset(cHolidays[i].day, mAdvent);
-                // do nothing
-                break;
-            default:
-                // constant holiday
-                lHoliday = cHolidays[i];
-                break;
-        }
-        if (lHoliday.month > REMOVED)
-        {
-            if (iDebugOutput)
-                logInfo("LogicTimer", "%02d.%02d., ", lHoliday.day, lHoliday.month);
-            if (isEqualDate(lHoliday, lToday))
-                lHolidayToday = i + 1;
-            if (isEqualDate(lHoliday, lTomorrow))
-                lHolidayTomorrow = i + 1;
-            if (lHolidayToday > 0 && lHolidayTomorrow > 0 && !iDebugOutput)
-                break;
-        }
-    }
-    if (lHolidayToday != mHolidayToday)
-    {
-        mHolidayToday = lHolidayToday;
-        mHolidayChanged = true;
-    }
-    if (lHolidayTomorrow != mHolidayTomorrow)
-    {
-        mHolidayTomorrow = lHolidayTomorrow;
-        mHolidayChanged = true;
-    }
+    // TODO use sDay lToday = {(int8_t)getDay(), (int8_t)getMonth()};
+    holiday.calculateHolidays(mNow.tm_year, getMonth(), getDay());
 }
 
-bool Timer::isEqualDate(sDay &iDate1, sDay &iDate2)
+// send holiday information on bus
+void Timer::sendHoliday()
 {
-    return (iDate1.day == iDate2.day && iDate1.month == iDate2.month);
-}
+    if (holiday.holidayChanged())
+    {
+        // write the newly calculated holiday information into KO (can be read externally)
 
-sDay Timer::getDayByOffset(int8_t iOffset, sDay &iDate)
-{
-    mTimeHelper.tm_year = mNow.tm_year;
-    mTimeHelper.tm_mon = iDate.month - 1;
-    mTimeHelper.tm_mday = iDate.day + iOffset;
-    mTimeHelper.tm_hour = 12;
-    mTimeHelper.tm_min = 0;
-    mTimeHelper.tm_sec = 0;
-
-    // save a little time, if we are for sure within same month
-    if (mTimeHelper.tm_mday < 1 || mTimeHelper.tm_mday > 28)
-        mktime(&mTimeHelper); //   -timezone;
-
-    // time_t nt_seconds = mktime(&mTimeHelper);     //   -timezone;
-    //  return gmtime(&nt_seconds);
-
-    sDay lResult = {(int8_t)mTimeHelper.tm_mday, (int8_t)(mTimeHelper.tm_mon + 1)};
-    return lResult;
+        KoLOG_Holiday1.valueNoSend(holidayToday(), getDPT(VAL_DPT_5));
+        KoLOG_Holiday2.valueNoSend(holidayTomorrow(), getDPT(VAL_DPT_5));
+        holiday.clearHolidayChanged();
+        if (ParamLOG_HolidaySend)
+        {
+            // and send it, if requested by application setting
+            KoLOG_Holiday1.objectWritten();
+            KoLOG_Holiday2.objectWritten();
+        }
+    }
 }

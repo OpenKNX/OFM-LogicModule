@@ -85,9 +85,7 @@ class Logic : public OpenKNX::Module
 
     void processDiagnoseCommand(GroupObject &iKo);
 
-    void sendHoliday();
     void processTimerRestore();
-    uint64_t holidaysToUInt64(uint8_t *iData, uint8_t iCount);
 };
 
 extern Logic openknxLogic;

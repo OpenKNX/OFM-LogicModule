@@ -1,0 +1,236 @@
+#include "TimerHoliday.h"
+#include "Arduino.h"
+#include <ctime>
+
+sDay TimerHoliday::cHolidays[cHolidaysCount] = {
+    {1, 1},
+    {6, 1},
+    {-52, EASTER},
+    {-48, EASTER},
+    {-47, EASTER},
+    {-46, EASTER},
+    {8, 3},
+    {-3, EASTER},
+    {-2, EASTER},
+    {0, EASTER},
+    {1, EASTER},
+    {1, 5},
+    {39, EASTER},
+    {49, EASTER},
+    {50, EASTER},
+    {60, EASTER},
+    {8, 8},
+    {15, 8},
+    {3, 10},
+    {31, 10},
+    {1, 11},
+    {-32, ADVENT},
+    {-21, ADVENT},
+    {-14, ADVENT},
+    {-7, ADVENT},
+    {0, ADVENT},
+    {24, 12},
+    {25, 12},
+    {26, 12},
+    {31, 12},
+    {26, 10},
+    {8, 12},
+    {1, 8},
+    {-28, ADVENT}};
+
+
+uint64_t TimerHoliday::holidaysToUInt64(uint8_t *iData, uint8_t iCount)
+{
+    uint64_t l = 0;
+    uint8_t *p = (uint8_t *)&l;
+    for (uint8_t i = 0; i < iCount; i++)
+        p[7-i] = iData[i];
+    return l;
+}
+
+void TimerHoliday::setup()
+{
+    // do not fetch just ParamLOG_Neujahr here, we need the whole bitfield
+    uint64_t iHolidayBitmask = holidaysToUInt64(knx.paramData(LOG_Neujahr), 5);
+
+    // we delete all unnecessary holidays from holiday data
+    for (uint8_t i = 0; i < cHolidaysCount; i++)
+    {
+        if ((iHolidayBitmask & 0x8000000000000000) == 0)
+            cHolidays[i].month = REMOVED;
+        iHolidayBitmask <<= 1;
+    }
+}
+
+sDay *TimerHoliday::getEaster()
+{
+    return &mEaster;
+}
+
+uint8_t TimerHoliday::holidayToday()
+{
+    return mHolidayToday;
+}
+
+uint8_t TimerHoliday::holidayTomorrow()
+{
+    return mHolidayTomorrow;
+}
+
+bool TimerHoliday::holidayChanged()
+{
+    return mHolidayChanged;
+}
+
+void TimerHoliday::clearHolidayChanged()
+{
+    mHolidayChanged = false;
+}
+
+#pragma region LOG_TIME_CALC_SPECIAL_DAYS
+
+void TimerHoliday::calculateAdvent(int tm_year)
+{
+    // calculates the 4th advent
+    mTimeHelper.tm_year = tm_year;
+    mTimeHelper.tm_mon = 11;
+    mTimeHelper.tm_mday = 24;
+    mTimeHelper.tm_hour = 12;
+    mTimeHelper.tm_min = 0;
+    mTimeHelper.tm_sec = 0;
+    mktime(&mTimeHelper); //   -timezone;
+    mAdvent.day = 24 - mTimeHelper.tm_wday;
+    mAdvent.month = 12;
+}
+
+void TimerHoliday::calculateEaster(uint16_t lYear)
+{
+    uint8_t a = lYear % 19;
+    uint8_t b = lYear % 4;
+    uint8_t c = lYear % 7;
+
+    uint8_t k = lYear / 100;
+    uint8_t q = k / 4;
+    uint8_t p = ((8 * k) + 13) / 25;
+    uint8_t Egz = (38 - (k - q) + p) % 30; // Die Jahrhundertepakte
+    uint8_t M = (53 - Egz) % 30;
+    uint8_t N = (4 + k - q) % 7;
+
+    uint8_t d = ((19 * a) + M) % 30;
+    uint8_t e = ((2 * b) + (4 * c) + (6 * d) + N) % 7;
+
+    // Ausrechnen des Ostertermins:
+    if ((22 + d + e) <= 31)
+    {
+        mEaster.day = 22 + d + e;
+        mEaster.month = 3;
+    }
+    else
+    {
+        mEaster.day = d + e - 9;
+        mEaster.month = 4;
+
+        // Zwei Ausnahmen berücksichtigen:
+        if (mEaster.day == 26)
+            mEaster.day = 19;
+        else if ((mEaster.day == 25) && (d == 28) && (a > 10))
+            mEaster.day = 18;
+    }
+}
+
+#pragma endregion
+
+/*
+void TimerHoliday::debug()
+{
+    if (mTimeValid & tmMinutesValid)
+    {
+        logInfo("LogicTimer", "Aktuelle Zeit: %s", getTimeAsc());
+    }
+#if LOGIC_TRACE
+    if (mTimeValid & tmDateValid)
+    {
+        logInfo("LogicTimer", "\nFeiertage %d: ", getYear());
+        calculateHolidays(true);
+        logInfo("LogicTimer", "\nEnd of holiday debug\n");
+        logInfo("LogicTimer", "Sonnenaufgang: %02d:%02d, Sonnenuntergang: %02d:%02d\n\n", mSunrise.hour, mSunrise.minute, mSunset.hour, mSunset.minute);
+    }
+#endif
+}
+*/
+
+void TimerHoliday::calculateHolidays(uint16_t year, int8_t month, int8_t day, bool iDebugOutput)
+{
+    // check if today or tomorrow is a holiday
+    sDay lToday = {day, month};
+    sDay lTomorrow = getDayByOffset(1, lToday, year);
+    uint8_t lHolidayToday = 0;
+    uint8_t lHolidayTomorrow = 0;
+    for (uint8_t i = 0; i < cHolidaysCount; i++)
+    {
+        sDay lHoliday = {REMOVED, REMOVED};
+        switch (cHolidays[i].month)
+        {
+            case REMOVED:
+                // do nothing
+                break;
+            case EASTER:
+                lHoliday = getDayByOffset(cHolidays[i].day, mEaster, year);
+                break;
+            case ADVENT:
+                lHoliday = getDayByOffset(cHolidays[i].day, mAdvent, year);
+                // do nothing
+                break;
+            default:
+                // constant holiday
+                lHoliday = cHolidays[i];
+                break;
+        }
+        if (lHoliday.month > REMOVED)
+        {
+            if (iDebugOutput)
+                logInfo("LogicTimer", "%02d.%02d., ", lHoliday.day, lHoliday.month);
+            if (isEqualDate(lHoliday, lToday))
+                lHolidayToday = i + 1;
+            if (isEqualDate(lHoliday, lTomorrow))
+                lHolidayTomorrow = i + 1;
+            if (lHolidayToday > 0 && lHolidayTomorrow > 0 && !iDebugOutput)
+                break;
+        }
+    }
+    if (lHolidayToday != mHolidayToday)
+    {
+        mHolidayToday = lHolidayToday;
+        mHolidayChanged = true;
+    }
+    if (lHolidayTomorrow != mHolidayTomorrow)
+    {
+        mHolidayTomorrow = lHolidayTomorrow;
+        mHolidayChanged = true;
+    }
+}
+
+bool TimerHoliday::isEqualDate(sDay &iDate1, sDay &iDate2)
+{
+    return (iDate1.day == iDate2.day && iDate1.month == iDate2.month);
+}
+
+sDay TimerHoliday::getDayByOffset(int8_t iOffset, sDay &iDate, uint16_t year)
+{
+    mTimeHelper.tm_year = year;
+    mTimeHelper.tm_mon = iDate.month - 1;
+    mTimeHelper.tm_mday = iDate.day + iOffset;
+    mTimeHelper.tm_hour = 12;
+    mTimeHelper.tm_min = 0;
+    mTimeHelper.tm_sec = 0;
+
+    // save a little time, if we are for sure within same month
+    if (mTimeHelper.tm_mday < 1 || mTimeHelper.tm_mday > 28)
+        mktime(&mTimeHelper); //   -timezone;
+
+    // time_t nt_seconds = mktime(&mTimeHelper);     //   -timezone;
+    //  return gmtime(&nt_seconds);
+
+    sDay lResult = {(int8_t)mTimeHelper.tm_mday, (int8_t)(mTimeHelper.tm_mon + 1)};
+    return lResult;
+}
