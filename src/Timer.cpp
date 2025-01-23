@@ -76,7 +76,6 @@ void Timer::setup(double iLongitude, double iLatitude, int8_t iTimezone, bool iU
     mLatitude = iLatitude;
     mTimezone = iTimezone;
     mUseSummertime = iUseSummertime;
-    mTimezone = iTimezone;
     // we delete all unnecessary holidays from holiday data
     for (uint8_t i = 0; i < cHolidaysCount; i++)
     {
