@@ -37,7 +37,7 @@ void Timer::setup()
 
     mLongitude = ParamBASE_Longitude;
     mLatitude = ParamBASE_Latitude;
-    mTimezone = ParamBASE_Timezone;
+    mTimezone = lTimezone;
     mUseSummertime = iUseSummertime;
 
     holiday.setup();
