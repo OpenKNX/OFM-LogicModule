@@ -30,15 +30,13 @@ Timer &Timer::instance()
 
 void Timer::setup()
 {
-    bool lTimezoneSign = ParamBASE_TimezoneSign;
-    int8_t lTimezone = ParamBASE_TimezoneValue;
-    lTimezone = lTimezone * (lTimezoneSign ? -1 : 1);
-    bool iUseSummertime = (ParamBASE_SummertimeAll == VAL_STIM_FROM_INTERN);
-
     mLongitude = ParamBASE_Longitude;
     mLatitude = ParamBASE_Latitude;
-    mTimezone = lTimezone;
-    mUseSummertime = iUseSummertime;
+
+    // TODO Common Time {{{
+    mTimezone = ParamBASE_TimezoneValue * (ParamBASE_TimezoneSign ? -1 : 1);
+    mUseSummertime = (ParamBASE_SummertimeAll == VAL_STIM_FROM_INTERN);
+    // TODO Common Time }}}
 
     holiday.setup();
 }
