@@ -32,6 +32,3 @@ Dpt &getDPT(uint8_t iDptIndex);
 #define VAL_TIMEBASE_MASK 0xC000
 
 uint32_t getDelayPattern(uint16_t iParamIndex, bool iAsSeconds = false);
-
-uint8_t byteToChar2(char *iOut, uint8_t iValue);
-char *versionString(uint8_t iVersion, uint8_t iRevision);
