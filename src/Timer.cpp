@@ -483,7 +483,7 @@ void Timer::calculateHolidays(bool iDebugOutput)
         return;
     // check if today or tomorrow is a holiday
     // TODO use sDay lToday = {(int8_t)getDay(), (int8_t)getMonth()};
-    holiday.calculateHolidays(mNow.tm_year, getMonth(), getDay());
+    holiday.calculateHolidays(mNow.tm_year, getMonth(), getDay(), iDebugOutput);
 }
 
 // send holiday information on bus
