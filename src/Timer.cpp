@@ -48,7 +48,7 @@ bool Timer::UseSummertime()
     return mUseSummertime;
 }
 
-// TODO Move to BusTime
+/*
 void Timer::busTime_processReadRequests()
 {
     static uint32_t sDelay = 19000;
@@ -84,19 +84,14 @@ void Timer::busTime_processReadRequests()
         }
     }
 }
-
-void Timer::busTime_loop()
-{
-    // TODO needed after Separation only
-    if (!openknx.afterStartupDelay())
-        return;
-
-    busTime_processReadRequests();
-}
+*/
 
 void Timer::loop()
 {
-    busTime_loop();
+    /* TODO check complete removal, as read requests are send by new common time implementation
+    if (openknx.afterStartupDelay())
+        busTime_processReadRequests();
+    */
 
     if (mTimeDelay == 0 || delayCheck(mTimeDelay, 1000))
     {

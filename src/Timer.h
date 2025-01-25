@@ -54,9 +54,10 @@ enum eTimeValid
 
 class Timer
 {
+  /*
   private:
-    void busTime_loop();
     void busTime_processReadRequests();
+  */
 
   protected:
     TimerHoliday holiday;
