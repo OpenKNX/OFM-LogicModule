@@ -104,7 +104,34 @@ void Timer::loop()
         }
         if (mTimeValid == tmValid)
         {
-            // prevent that a minute is missed, if an other hour is set with the same minute
+            
+            // year changed => month changed => day change => hour changed => minute changed (=> second changed)
+            if (mYearTick != mNow.tm_year)
+            {
+                holiday.calculateEaster(getYear());
+                holiday.calculateAdvent(mNow.tm_year);
+
+                mYearTick = mNow.tm_year;
+                mMonthTick = -1;
+            }
+            if (mMonthTick != mNow.tm_mon)
+            {
+                calculateSummertime(); // initial summertime calculation if year changes
+                calculateHolidays();
+
+                mMonthTick = mNow.tm_mon;
+                mDayTick = -1;
+            }
+            // important: Day calculations AFTER year calculations
+            if (mDayTick != mNow.tm_mday)
+            {
+                calculateSunriseSunset();
+                if (!holiday.holidayChanged())
+                    calculateHolidays();
+
+                mDayTick = mNow.tm_mday;
+                mHourTick = -1;
+            }
             if (mHourTick != mNow.tm_hour)
             {
                 mHourTick = mNow.tm_hour;
@@ -115,32 +142,9 @@ void Timer::loop()
                 mMinuteChanged = true;
                 // just call once a minute
                 mMinuteTick = mNow.tm_min;
+
                 if (mUseSummertime && (getMonth() == 3 || getMonth() == 10) && getHour() == 3 && getMinute() == 1)
                     calculateSummertime();
-            }
-            // Ensure that a changed month causes a recalculation of all static dates/times
-            if (mMonthTick != mNow.tm_mon)
-            {
-                mMonthTick = mNow.tm_mon;
-                mYearTick = -1;
-                mDayTick = -1;
-            }
-            if (mYearTick != mNow.tm_year)
-            {
-                holiday.calculateEaster(getYear());
-                holiday.calculateAdvent(mNow.tm_year);
-                calculateSummertime(); // initial summertime calculation if year changes
-                calculateHolidays();
-                mYearTick = mNow.tm_year;
-                // TODO check setting `mDayTick = -1;` for cases when year changes only. E.g. initial
-            }
-            // important: Day calculations AFTER year calculations
-            if (mDayTick != mNow.tm_mday)
-            {
-                calculateSunriseSunset();
-                if (!holiday.holidayChanged())
-                    calculateHolidays();
-                mDayTick = mNow.tm_mday;
             }
         }
     }
