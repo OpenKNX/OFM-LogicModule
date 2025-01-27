@@ -10,8 +10,8 @@
 
 Timer::Timer()
 {
-    mNow.tm_year = 120;
-    mNow.tm_mon = 0;
+    mNow.tm_year = 2020 - 1900;
+    mNow.tm_mon = 1 - 1;
     mNow.tm_mday = 1;
     mNow.tm_wday = 3;
     mktime(&mNow);
@@ -123,7 +123,6 @@ void Timer::loop()
                 mMonthTick = mNow.tm_mon;
                 mDayTick = -1;
             }
-            // important: Day calculations AFTER year calculations
             if (mDayTick != mNow.tm_mday)
             {
                 calculateSunriseSunset();
