@@ -100,6 +100,9 @@ void Timer::loop()
             mTimeDelay += 1000;
             mNow.tm_sec += 1;
             mktime(&mNow);
+
+            // TODO Common Time: check if time is expected
+            openknx.time.getLocalTime().toTm(mNow);
         }
         if (openknx.time.isValid())
         {
