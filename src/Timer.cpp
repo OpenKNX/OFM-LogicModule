@@ -126,7 +126,10 @@ void Timer::loop()
             if (mDayTick != mNow.tm_mday)
             {
                 calculateSunriseSunset();
-                calculateHolidays();
+
+                // TODO Common Time: Move into TimerHoliday
+                if (calculateHolidays())
+                    holiday.sendHoliday();
 
                 mDayTick = mNow.tm_mday;
                 mHourTick = -1;
@@ -147,9 +150,6 @@ void Timer::loop()
                 if (mUseSummertime && (getMonth() == 3 || getMonth() == 10) && getHour() == 3 && getMinute() == 1)
                     calculateSummertime();
                 */
-
-               // Common Time: Moved from Logic // Condition: if (sTimer.isTimerValid() && sTimer.minuteChanged())
-               holiday.sendHoliday();
             }
             // TODO Common Time: set mUseSummertime, mIsSummertime, mTimezone
         }
@@ -494,13 +494,13 @@ void Timer::debug()
 
 // TODO Common Time: Remove
 // TODO Common Time: Recalc and send holidays based on date update
-void Timer::calculateHolidays(bool iDebugOutput)
+bool Timer::calculateHolidays(bool iDebugOutput)
 {
-    // we check only if date is valid
+    // we check only if date is valid // TODO check if needed in TimerRestore
     if (mTimeValid < tmDateValid)
-        return;
+        return false;
+
     // check if today or tomorrow is a holiday
-    // TODO use sDay lToday = {(int8_t)getDay(), (int8_t)getMonth()};
-    holiday.calculateHolidays(mNow.tm_year, getMonth(), getDay(), iDebugOutput);
+    return holiday.calculateHolidays(mNow.tm_year, getMonth(), getDay(), iDebugOutput);
 }
 

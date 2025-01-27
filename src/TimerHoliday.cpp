@@ -81,18 +81,6 @@ uint8_t TimerHoliday::holidayTomorrow()
     return mHolidayTomorrow;
 }
 
-// TODO Common Time: Remove
-bool TimerHoliday::holidayChanged()
-{
-    return mHolidayChanged;
-}
-
-// TODO Common Time: Remove
-void TimerHoliday::clearHolidayChanged()
-{
-    mHolidayChanged = false;
-}
-
 #pragma region LOG_TIME_CALC_SPECIAL_DAYS
 
 void TimerHoliday::calculateAdvent(int tm_year)
@@ -165,7 +153,7 @@ void TimerHoliday::debug()
 }
 */
 
-void TimerHoliday::calculateHolidays(uint16_t year, int8_t month, int8_t day, bool iDebugOutput)
+bool TimerHoliday::calculateHolidays(uint16_t year, int8_t month, int8_t day, bool iDebugOutput)
 {
     // check if today or tomorrow is a holiday
     sDay lToday = {day, month};
@@ -204,16 +192,18 @@ void TimerHoliday::calculateHolidays(uint16_t year, int8_t month, int8_t day, bo
                 break;
         }
     }
+    bool changed = false;
     if (lHolidayToday != mHolidayToday)
     {
         mHolidayToday = lHolidayToday;
-        mHolidayChanged = true;
+        changed = true;
     }
     if (lHolidayTomorrow != mHolidayTomorrow)
     {
         mHolidayTomorrow = lHolidayTomorrow;
-        mHolidayChanged = true;
+        changed = true;
     }
+    return changed;
 }
 
 bool TimerHoliday::isEqualDate(sDay &iDate1, sDay &iDate2)
@@ -244,18 +234,14 @@ sDay TimerHoliday::getDayByOffset(int8_t iOffset, sDay &iDate, uint16_t year)
 // send holiday information on bus
 void TimerHoliday::sendHoliday()
 {
-    if (holidayChanged())
-    {
-        // write the newly calculated holiday information into KO (can be read externally)
+    // write the newly calculated holiday information into KO (can be read externally)
 
-        KoLOG_Holiday1.valueNoSend(holidayToday(), getDPT(VAL_DPT_5));
-        KoLOG_Holiday2.valueNoSend(holidayTomorrow(), getDPT(VAL_DPT_5));
-        clearHolidayChanged();
-        if (ParamLOG_HolidaySend)
-        {
-            // and send it, if requested by application setting
-            KoLOG_Holiday1.objectWritten();
-            KoLOG_Holiday2.objectWritten();
-        }
+    KoLOG_Holiday1.valueNoSend(holidayToday(), getDPT(VAL_DPT_5));
+    KoLOG_Holiday2.valueNoSend(holidayTomorrow(), getDPT(VAL_DPT_5));
+    if (ParamLOG_HolidaySend)
+    {
+        // and send it, if requested by application setting
+        KoLOG_Holiday1.objectWritten();
+        KoLOG_Holiday2.objectWritten();
     }
 }

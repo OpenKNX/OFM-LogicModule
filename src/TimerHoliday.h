@@ -33,7 +33,6 @@ class TimerHoliday
     static sDay cHolidays[cHolidaysCount];
     uint8_t mHolidayToday = 0;
     uint8_t mHolidayTomorrow = 0;
-    bool mHolidayChanged = false;
     sDay mEaster = {0, 0};   // easter sunday
     sDay mAdvent = {0, 0};   // fourth advent
 
@@ -43,7 +42,7 @@ class TimerHoliday
   public:
     void calculateEaster(uint16_t lYear);
     void calculateAdvent(int tm_year);
-    void calculateHolidays(uint16_t year, int8_t month, int8_t day, bool iDebugOutput = false);
+    bool calculateHolidays(uint16_t year, int8_t month, int8_t day, bool iDebugOutput = false);
 
     void setup();
     // void loop();
@@ -52,8 +51,6 @@ class TimerHoliday
     char *getTimeAsc();
     uint8_t holidayToday();
     uint8_t holidayTomorrow();
-    bool holidayChanged();
-    void clearHolidayChanged();
     void sendHoliday();
 };
 
