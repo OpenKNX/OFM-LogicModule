@@ -459,7 +459,7 @@ void Logic::loop()
             LogicChannel *lChannel = mChannel[lChannelNr];
             lChannel->startTimerInput();
         }
-        sTimer.sendHoliday();
+        // Common Time: Moved sTimer.sendHoliday(); to TimerHoliday in sTimer.loop();
         sTimer.clearMinuteChanged();
     }
 

@@ -1,3 +1,4 @@
+#include "KnxHelper.h"
 #include "TimerHoliday.h"
 #include "Arduino.h"
 #include <ctime>
@@ -238,4 +239,23 @@ sDay TimerHoliday::getDayByOffset(int8_t iOffset, sDay &iDate, uint16_t year)
 
     sDay lResult = {(int8_t)mTimeHelper.tm_mday, (int8_t)(mTimeHelper.tm_mon + 1)};
     return lResult;
+}
+
+// send holiday information on bus
+void TimerHoliday::sendHoliday()
+{
+    if (holidayChanged())
+    {
+        // write the newly calculated holiday information into KO (can be read externally)
+
+        KoLOG_Holiday1.valueNoSend(holidayToday(), getDPT(VAL_DPT_5));
+        KoLOG_Holiday2.valueNoSend(holidayTomorrow(), getDPT(VAL_DPT_5));
+        clearHolidayChanged();
+        if (ParamLOG_HolidaySend)
+        {
+            // and send it, if requested by application setting
+            KoLOG_Holiday1.objectWritten();
+            KoLOG_Holiday2.objectWritten();
+        }
+    }
 }

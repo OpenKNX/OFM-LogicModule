@@ -54,5 +54,6 @@ class TimerHoliday
     uint8_t holidayTomorrow();
     bool holidayChanged();
     void clearHolidayChanged();
+    void sendHoliday();
 };
 

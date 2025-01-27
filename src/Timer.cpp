@@ -147,6 +147,9 @@ void Timer::loop()
                 if (mUseSummertime && (getMonth() == 3 || getMonth() == 10) && getHour() == 3 && getMinute() == 1)
                     calculateSummertime();
                 */
+
+               // Common Time: Moved from Logic // Condition: if (sTimer.isTimerValid() && sTimer.minuteChanged())
+               holiday.sendHoliday();
             }
             // TODO Common Time: set mUseSummertime, mIsSummertime, mTimezone
         }
@@ -501,21 +504,3 @@ void Timer::calculateHolidays(bool iDebugOutput)
     holiday.calculateHolidays(mNow.tm_year, getMonth(), getDay(), iDebugOutput);
 }
 
-// send holiday information on bus
-void Timer::sendHoliday()
-{
-    if (holiday.holidayChanged())
-    {
-        // write the newly calculated holiday information into KO (can be read externally)
-
-        KoLOG_Holiday1.valueNoSend(holidayToday(), getDPT(VAL_DPT_5));
-        KoLOG_Holiday2.valueNoSend(holidayTomorrow(), getDPT(VAL_DPT_5));
-        holiday.clearHolidayChanged();
-        if (ParamLOG_HolidaySend)
-        {
-            // and send it, if requested by application setting
-            KoLOG_Holiday1.objectWritten();
-            KoLOG_Holiday2.objectWritten();
-        }
-    }
-}

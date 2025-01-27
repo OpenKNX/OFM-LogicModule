@@ -121,7 +121,6 @@ class Timer
     void setDateTimeFromBus(tm *iDateTime);
     uint8_t holidayToday();
     uint8_t holidayTomorrow();
-    void sendHoliday();
     eTimeValid isTimerValid();
     bool IsSummertime();
     void IsSummertime(bool iValue);
