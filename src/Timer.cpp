@@ -33,14 +33,12 @@ void Timer::setup()
     mLongitude = ParamBASE_Longitude;
     mLatitude = ParamBASE_Latitude;
 
-    // TODO Common Time {{{
-    mTimezone = ParamBASE_TimezoneValue * (ParamBASE_TimezoneSign ? -1 : 1);
-    mUseSummertime = (ParamBASE_SummertimeAll == VAL_STIM_FROM_INTERN);
-    // TODO Common Time }}}
+    // TZ and DST handled in Common Time only
 
     holiday.setup();
 }
 
+// TODO Common Time: Remove
 bool Timer::UseSummertime()
 {
     return mUseSummertime;
@@ -93,6 +91,7 @@ void Timer::loop()
 
     if (mTimeDelay == 0 || delayCheck(mTimeDelay, 1000))
     {
+        // TODO Common Time: No special handling of set from bus, but try to detect missed second
         // if time is set from bus, we have immediately to recalculate everything which is necessary
         if (mTimeDelay == 0)
             mTimeDelay = millis();
@@ -102,7 +101,7 @@ void Timer::loop()
             mNow.tm_sec += 1;
             mktime(&mNow);
         }
-        if (mTimeValid == tmValid)
+        if (openknx.time.isValid())
         {
             
             // year changed => month changed => day change => hour changed => minute changed (=> second changed)
@@ -116,8 +115,10 @@ void Timer::loop()
             }
             if (mMonthTick != mNow.tm_mon)
             {
+                // TZ and DST handled in Common Time only
+                /*
                 calculateSummertime(); // initial summertime calculation if year changes
-                calculateHolidays();
+                */
 
                 mMonthTick = mNow.tm_mon;
                 mDayTick = -1;
@@ -126,8 +127,7 @@ void Timer::loop()
             if (mDayTick != mNow.tm_mday)
             {
                 calculateSunriseSunset();
-                if (!holiday.holidayChanged())
-                    calculateHolidays();
+                calculateHolidays();
 
                 mDayTick = mNow.tm_mday;
                 mHourTick = -1;
@@ -143,9 +143,13 @@ void Timer::loop()
                 // just call once a minute
                 mMinuteTick = mNow.tm_min;
 
+                // TZ and DST handled in Common Time only
+                /*
                 if (mUseSummertime && (getMonth() == 3 || getMonth() == 10) && getHour() == 3 && getMinute() == 1)
                     calculateSummertime();
+                */
             }
+            // TODO Common Time: set mUseSummertime, mIsSummertime, mTimezone
         }
     }
 }
@@ -222,6 +226,7 @@ void Timer::busTime_processInputKo(GroupObject &iKo)
     }
 }
 
+// TODO Common Time: Remove
 void Timer::convertToLocalTime(double iTime, sTime *eTime)
 {
     eTime->hour = (int)floor(iTime);
@@ -239,6 +244,7 @@ void Timer::calculateSunriseSunset()
     convertToLocalTime(set, &mSunset);
 }
 
+// TODO Common Time: Remove
 void Timer::setTimeFromBus(tm *iTime)
 {
     if (mNow.tm_min != iTime->tm_min || mNow.tm_hour != iTime->tm_hour)
@@ -251,6 +257,7 @@ void Timer::setTimeFromBus(tm *iTime)
     mTimeValid = static_cast<eTimeValid>(mTimeValid | tmMinutesValid);
 }
 
+// TODO Common Time: Remove
 void Timer::setDateFromBus(tm *iDate)
 {
     // we have to check, if some date dependant calculations have to be done
@@ -275,6 +282,7 @@ void Timer::setDateFromBus(tm *iDate)
         mTimeValid = static_cast<eTimeValid>(mTimeValid | tmDateValid);
 }
 
+// TODO Common Time: Remove
 void Timer::setDateTimeFromBus(tm *iDateTime)
 {
     // TODO DPT19: check optimizations
@@ -284,6 +292,7 @@ void Timer::setDateTimeFromBus(tm *iDateTime)
     // RTC is set from inside previous functions
 }
 
+// TODO Common Time: Remove
 bool Timer::minuteChanged()
 {
     return mMinuteChanged && mTimeValid == tmValid;
@@ -405,6 +414,7 @@ uint8_t Timer::calculateLastSundayInMonth(uint8_t iMonth)
     return mTimeHelper.tm_mday - mTimeHelper.tm_wday;
 }
 
+// TODO Common Time: Remove
 // should be called only at 03:01 o'clock
 bool Timer::calculateSummertime()
 {
@@ -480,6 +490,8 @@ void Timer::debug()
 #endif
 }
 
+// TODO Common Time: Remove
+// TODO Common Time: Recalc and send holidays based on date update
 void Timer::calculateHolidays(bool iDebugOutput)
 {
     // we check only if date is valid

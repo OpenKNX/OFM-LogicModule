@@ -80,11 +80,13 @@ uint8_t TimerHoliday::holidayTomorrow()
     return mHolidayTomorrow;
 }
 
+// TODO Common Time: Remove
 bool TimerHoliday::holidayChanged()
 {
     return mHolidayChanged;
 }
 
+// TODO Common Time: Remove
 void TimerHoliday::clearHolidayChanged()
 {
     mHolidayChanged = false;

@@ -443,14 +443,17 @@ void Logic::setup()
 
 void Logic::loop()
 {
+    // TODO Common-Time: Check Using flag
     if (!openknx.afterStartupDelay())
         return;
     uint32_t lLoopTime = millis();
 
+    // TODO Common-Time: Check Starting loop before startup Delay...
     sTimer.loop(); // clock and timer async methods
     // special case timer handling, we have to loop through all channels once
     if (sTimer.isTimerValid() && sTimer.minuteChanged())
     {
+        // TODO Common-Time: Check moving all others to sTimer...
         for (uint8_t lChannelNr = 0; lChannelNr < mNumChannels; lChannelNr++)
         {
             LogicChannel *lChannel = mChannel[lChannelNr];
