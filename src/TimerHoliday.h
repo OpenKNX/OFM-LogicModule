@@ -31,8 +31,11 @@ class TimerHoliday
   protected:
     static const uint8_t cHolidaysCount = 34;
     static sDay cHolidays[cHolidaysCount];
-    uint8_t mHolidayToday = 0;
-    uint8_t mHolidayTomorrow = 0;
+
+    // force update on first holiday calculation
+    uint8_t mHolidayToday = 255;
+    uint8_t mHolidayTomorrow = 255;
+
     sDay mEaster = {0, 0};   // easter sunday
     sDay mAdvent = {0, 0};   // fourth advent
 
