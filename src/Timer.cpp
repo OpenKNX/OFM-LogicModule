@@ -28,6 +28,11 @@ Timer &Timer::instance()
     return sInstance;
 }
 
+const std::string Timer::logPrefix()
+{
+    return "LOG-Time";
+}
+
 void Timer::setup()
 {
     mLongitude = ParamBASE_Longitude;
@@ -115,6 +120,8 @@ void Timer::loop()
             // year changed => month changed => day change => hour changed => minute changed (=> second changed)
             if (mYearTick != mNow.tm_year)
             {
+                logDebugP("tick: year %d -> %d", mYearTick, mNow.tm_year);
+
                 holiday.calculateEaster(getYear());
                 holiday.calculateAdvent(mNow.tm_year);
 
@@ -123,6 +130,8 @@ void Timer::loop()
             }
             if (mMonthTick != mNow.tm_mon)
             {
+                logDebugP("tick: month %d -> %d", mMonthTick, mNow.tm_mon);
+
                 // TZ and DST handled in Common Time only
                 /*
                 calculateSummertime(); // initial summertime calculation if year changes
@@ -133,22 +142,31 @@ void Timer::loop()
             }
             if (mDayTick != mNow.tm_mday)
             {
+                logDebugP("tick: day %d -> %d", mDayTick, mNow.tm_mday);
+
                 calculateSunriseSunset();
 
                 // TODO Common Time: Move into TimerHoliday
                 if (calculateHolidays())
+                {
+                    logDebugP("send holidays: %d, %d", holiday.holidayToday(), holiday.holidayTomorrow());
                     holiday.sendHoliday();
+                }
 
                 mDayTick = mNow.tm_mday;
                 mHourTick = -1;
             }
             if (mHourTick != mNow.tm_hour)
             {
+                logDebugP("tick: hour %d -> %d", mHourTick, mNow.tm_hour);
+
                 mHourTick = mNow.tm_hour;
                 mMinuteTick = -1;
             }
             if (mMinuteTick != mNow.tm_min)
             {
+                logDebugP("tick: minute %d -> %d", mMinuteTick, mNow.tm_min);
+
                 mMinuteChanged = true;
                 // just call once a minute
                 mMinuteTick = mNow.tm_min;

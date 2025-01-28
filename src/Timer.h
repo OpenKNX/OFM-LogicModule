@@ -54,6 +54,8 @@ enum eTimeValid
 
 class Timer
 {
+  private:
+    const std::string logPrefix();
   /*
   private:
     void busTime_processReadRequests();
