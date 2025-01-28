@@ -159,6 +159,7 @@ void Timer::loop()
     }
 }
 
+/*
 void Timer::busTime_processInputKo(GroupObject &iKo)
 {
     if (iKo.asap() == BASE_KoTime)
@@ -176,18 +177,6 @@ void Timer::busTime_processInputKo(GroupObject &iKo)
                 // TODO DPT19: check integration of extended DPT19 access into knx or OpenKNX-Commons
                 // size is ensured to be 8 Byte
                 uint8_t *raw = iKo.valueRef();
-
-                /*
-                const bool flagFault = raw[6] & 0x80;
-                // ignore working day (WD, NWD): raw[6] & 0x40, raw[6] & 0x20
-                const bool flagNoYear = raw[6] & 0x10;
-                const bool flagNoDate = raw[6] & 0x08;
-                // ignore NDOW: raw[6] & 0x04
-                const bool flagNoTime = raw[6] & 0x02;
-                const bool flagSuti = raw[6] & 0x01;
-                // ignore quality of clock (CLQ): raw[7] & 0x80
-                // ignore synchronisation source reliablity (SRC): raw[7] & 0x40
-                */
 
                 // ignore inputs with:
                 // * F - fault
@@ -230,6 +219,7 @@ void Timer::busTime_processInputKo(GroupObject &iKo)
         IsSummertime(iKo.value(DPT_Date));
     }
 }
+*/
 
 // TODO Common Time: Remove
 void Timer::convertToLocalTime(double iTime, sTime *eTime)
@@ -249,6 +239,7 @@ void Timer::calculateSunriseSunset()
     convertToLocalTime(set, &mSunset);
 }
 
+/*
 // TODO Common Time: Remove
 void Timer::setTimeFromBus(tm *iTime)
 {
@@ -296,6 +287,7 @@ void Timer::setDateTimeFromBus(tm *iDateTime)
 
     // RTC is set from inside previous functions
 }
+*/
 
 // TODO Common Time: Remove
 bool Timer::minuteChanged()

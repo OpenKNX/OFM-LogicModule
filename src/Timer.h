@@ -100,7 +100,9 @@ class Timer
 
     void setup();
     void loop();
+    /*
     void busTime_processInputKo(GroupObject &iKo);
+    */
     void debug();
 
     uint8_t getDay();
@@ -116,9 +118,11 @@ class Timer
     char *getTimeAsc();
     bool minuteChanged();      // true every minute
     void clearMinuteChanged(); // has to be cleared externally
+    /*
     void setTimeFromBus(tm *iTime);
     void setDateFromBus(tm *iDate);
     void setDateTimeFromBus(tm *iDateTime);
+    */
     uint8_t holidayToday();
     uint8_t holidayTomorrow();
     eTimeValid isTimerValid();

@@ -218,10 +218,12 @@ void Logic::processInputKo(GroupObject &iKo)
             PCA9632_SetColor(0, 0, 0);
     }
 #endif
+    /* // TODO Common Time: Remove
     else
     {
         sTimer.busTime_processInputKo(iKo);
     }
+    */
 }
 
 const char* Logic::helpCommands[Logic::helpCommandCount] = {"logic help", "logic time", "logic easter", "logic sun", "logic sun+DDMM", "logic lim", "logic lim res", "logic chNN", "logic chNN lim", "logic chNN res"};
