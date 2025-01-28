@@ -106,6 +106,11 @@ void Timer::loop()
         }
         if (openknx.time.isValid())
         {
+            // TODO Common Time: Replace mTimeValid
+            mTimeValid = tmValid;
+        }
+        if (mTimeValid == tmValid)
+        {
             
             // year changed => month changed => day change => hour changed => minute changed (=> second changed)
             if (mYearTick != mNow.tm_year)
