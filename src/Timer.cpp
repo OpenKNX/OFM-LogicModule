@@ -87,8 +87,14 @@ void Timer::busTime_processReadRequests()
 }
 */
 
-void Timer::loop()
+/**
+ * Update the internal timer.
+ * @return if time was changed and depending updates should be triggered
+ */
+bool Timer::loop()
 {
+    bool lMinuteChanged = false;
+
     /* TODO check complete removal, as read requests are send by new common time implementation
     if (openknx.afterStartupDelay())
         busTime_processReadRequests();
@@ -174,7 +180,7 @@ void Timer::loop()
             {
                 logDebugP("tick: minute %d -> %d", mMinuteTick, mNow.tm_min);
 
-                mMinuteChanged = true;
+                lMinuteChanged = true;
                 // just call once a minute
                 mMinuteTick = mNow.tm_min;
 
@@ -187,6 +193,7 @@ void Timer::loop()
             // TODO Common Time: set mUseSummertime, mIsSummertime, mTimezone
         }
     }
+    return lMinuteChanged;
 }
 
 /*
@@ -318,17 +325,6 @@ void Timer::setDateTimeFromBus(tm *iDateTime)
     // RTC is set from inside previous functions
 }
 */
-
-// TODO Common Time: Remove
-bool Timer::minuteChanged()
-{
-    return mMinuteChanged && mTimeValid == tmValid;
-}
-
-void Timer::clearMinuteChanged()
-{
-    mMinuteChanged = false;
-}
 
 #pragma region LOG_TIME_GETTER
 

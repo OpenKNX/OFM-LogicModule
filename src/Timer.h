@@ -101,7 +101,7 @@ class Timer
     int8_t mTimezone;
 
     void setup();
-    void loop();
+    bool loop();
     /*
     void busTime_processInputKo(GroupObject &iKo);
     */
@@ -118,8 +118,6 @@ class Timer
     void getSunDegree(uint8_t iSunInfo, double iDegree, sTime *eSun);
     sDay *getEaster();
     char *getTimeAsc();
-    bool minuteChanged();      // true every minute
-    void clearMinuteChanged(); // has to be cleared externally
     /*
     void setTimeFromBus(tm *iTime);
     void setDateFromBus(tm *iDate);

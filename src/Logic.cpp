@@ -451,18 +451,14 @@ void Logic::loop()
     uint32_t lLoopTime = millis();
 
     // TODO Common-Time: Check Starting loop before startup Delay...
-    sTimer.loop(); // clock and timer async methods
-    // special case timer handling, we have to loop through all channels once
-    if (sTimer.isTimerValid() && sTimer.minuteChanged())
+    if (sTimer.loop())
     {
-        // TODO Common-Time: Check moving all others to sTimer...
+        // special case timer handling, we have to loop through all channels once
         for (uint8_t lChannelNr = 0; lChannelNr < mNumChannels; lChannelNr++)
         {
             LogicChannel *lChannel = mChannel[lChannelNr];
             lChannel->startTimerInput();
         }
-        // Common Time: Moved sTimer.sendHoliday(); to TimerHoliday in sTimer.loop();
-        sTimer.clearMinuteChanged();
     }
 
     // we loop on all channels and execute pipeline
