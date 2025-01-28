@@ -99,16 +99,19 @@ void Timer::loop()
         // TODO Common Time: No special handling of set from bus, but try to detect missed second
         // if time is set from bus, we have immediately to recalculate everything which is necessary
         if (mTimeDelay == 0)
+            // external update
             mTimeDelay = millis();
         else
         {
+            // regular running of internal clock
             mTimeDelay += 1000;
             mNow.tm_sec += 1;
             mktime(&mNow);
 
             // TODO Common Time: check if time is expected
-            openknx.time.getLocalTime().toTm(mNow);
         }
+        // always use current time from Common
+        openknx.time.getLocalTime().toTm(mNow);
         if (openknx.time.isValid())
         {
             // TODO Common Time: Replace mTimeValid
