@@ -94,6 +94,8 @@ void Timer::loop()
         busTime_processReadRequests();
     */
 
+    // TODO Common Time: mTimeDelay=0 was set be Update from Bus
+    // TODO mTimeDelay == 0 will be reached after 49 days...
     if (mTimeDelay == 0 || delayCheck(mTimeDelay, 1000))
     {
         // TODO Common Time: No special handling of set from bus, but try to detect missed second
@@ -116,6 +118,8 @@ void Timer::loop()
         {
             // TODO Common Time: Replace mTimeValid
             mTimeValid = tmValid;
+
+            // TODO set IsSummertime(lSummertime);
         }
         if (mTimeValid == tmValid)
         {
