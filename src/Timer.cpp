@@ -49,44 +49,6 @@ bool Timer::UseSummertime()
     return mUseSummertime;
 }
 
-/*
-void Timer::busTime_processReadRequests()
-{
-    static uint32_t sDelay = 19000;
-
-    // date and time are red from bus every 30 seconds until a response is received
-    if (ParamBASE_ReadTimeDate)
-    {
-        const eTimeValid lValid = isTimerValid();
-        if (delayCheck(sDelay, 30000) && lValid != tmValid)
-        {
-            // logDebugP("Time Valid? %i", lValid);
-            sDelay = millis();
-            if (ParamBASE_CombinedTimeDate)
-            {
-                // combined date and time
-                KoBASE_Time.requestObjectRead();
-            }
-            else
-            {
-                // date and time from separate KOs
-                if (lValid != tmMinutesValid)
-                    KoBASE_Time.requestObjectRead();
-                if (lValid != tmDateValid)
-                    KoBASE_Date.requestObjectRead();
-            }
-        }
-        // if date and/or time is known, we read also summertime information
-        // TODO check dependency to configuration
-        if (sDelay > 0 && lValid == tmValid)
-        {
-            sDelay = 0;
-            KoBASE_IsSummertime.requestObjectRead();
-        }
-    }
-}
-*/
-
 /**
  * Update the internal timer.
  * @return if time was changed and depending updates should be triggered
@@ -196,68 +158,6 @@ bool Timer::loop()
     return lMinuteChanged;
 }
 
-/*
-void Timer::busTime_processInputKo(GroupObject &iKo)
-{
-    if (iKo.asap() == BASE_KoTime)
-    {
-        if (ParamBASE_CombinedTimeDate)
-        {
-            KNXValue value = "";
-
-            // first ensure we have a valid data-time content
-            // (including the correct length)
-            if (iKo.tryValue(value, DPT_DateTime))
-            {
-
-                // use raw value, as current version of knx do not provide access to all fields
-                // TODO DPT19: check integration of extended DPT19 access into knx or OpenKNX-Commons
-                // size is ensured to be 8 Byte
-                uint8_t *raw = iKo.valueRef();
-
-                // ignore inputs with:
-                // * F - fault
-                // * NY - missing year
-                // * ND - missing date
-                // * NT - missing time
-                if (!(raw[6] & (DPT19_FAULT | DPT19_NO_YEAR | DPT19_NO_DATE | DPT19_NO_TIME)))
-                {
-                    struct tm lTmp = value;
-                    setDateTimeFromBus(&lTmp);
-                    const bool lSummertime = raw[6] & DPT19_SUMMERTIME;
-                    if (ParamBASE_SummertimeAll == VAL_STIM_FROM_DPT19)
-                        IsSummertime(lSummertime);
-                }
-            }
-        }
-        else
-        {
-            KNXValue value = "";
-            // ensure we have a valid time content
-            if (iKo.tryValue(value, DPT_TimeOfDay))
-            {
-                struct tm lTmp = value;
-                setTimeFromBus(&lTmp);
-            }
-        }
-    }
-    else if (iKo.asap() == BASE_KoDate)
-    {
-        KNXValue value = "";
-        // ensure we have a valid date content
-        if (iKo.tryValue(value, DPT_Date))
-        {
-            struct tm lTmp = value;
-            setDateFromBus(&lTmp);
-        }
-    }
-    else if (iKo.asap() == BASE_KoIsSummertime)
-    {
-        IsSummertime(iKo.value(DPT_Date));
-    }
-}
-*/
-
 // TODO Common Time: Remove
 void Timer::convertToLocalTime(double iTime, sTime *eTime)
 {
@@ -275,56 +175,6 @@ void Timer::calculateSunriseSunset()
     convertToLocalTime(rise, &mSunrise);
     convertToLocalTime(set, &mSunset);
 }
-
-/*
-// TODO Common Time: Remove
-void Timer::setTimeFromBus(tm *iTime)
-{
-    if (mNow.tm_min != iTime->tm_min || mNow.tm_hour != iTime->tm_hour)
-        mMinuteChanged = true;
-    mNow.tm_sec = iTime->tm_sec;
-    mNow.tm_min = iTime->tm_min;
-    mNow.tm_hour = iTime->tm_hour;
-    mktime(&mNow);
-    mTimeDelay = 0; // force time/year calculations
-    mTimeValid = static_cast<eTimeValid>(mTimeValid | tmMinutesValid);
-}
-
-// TODO Common Time: Remove
-void Timer::setDateFromBus(tm *iDate)
-{
-    // we have to check, if some date dependant calculations have to be done
-    // in case of date changes
-    if (iDate->tm_year != getYear())
-    {
-        mYearTick = -1; // triggers easter calculation
-        mDayTick = -1;  // triggers sunrise/sunset calculation
-        mMinuteChanged = true;
-    }
-    else if (iDate->tm_mon != getMonth() || iDate->tm_mday != getDay())
-    {
-        mDayTick = -1; // triggers sunrise/sunset calculation
-        mMinuteChanged = true;
-    }
-    mNow.tm_mday = iDate->tm_mday;
-    mNow.tm_mon = iDate->tm_mon - 1;
-    mNow.tm_year = iDate->tm_year - 1900;
-    mktime(&mNow);
-    mTimeDelay = 0; // force time/year calculations
-    if (mNow.tm_year >= MINYEAR - 1900)
-        mTimeValid = static_cast<eTimeValid>(mTimeValid | tmDateValid);
-}
-
-// TODO Common Time: Remove
-void Timer::setDateTimeFromBus(tm *iDateTime)
-{
-    // TODO DPT19: check optimizations
-    setTimeFromBus(iDateTime);
-    setDateFromBus(iDateTime);
-
-    // RTC is set from inside previous functions
-}
-*/
 
 #pragma region LOG_TIME_GETTER
 
