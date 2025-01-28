@@ -40,29 +40,18 @@ sDay TimerHoliday::cHolidays[cHolidaysCount] = {
     {-28, ADVENT}};
 
 
-uint64_t TimerHoliday::holidaysToUInt64()
-{
-    // do not fetch just ParamLOG_Neujahr here, we need the whole bitfield
-    uint8_t *iData = knx.paramData(LOG_Neujahr);
-    uint8_t iCount = (cHolidaysCount + 7) / 8;
-
-    uint64_t l = 0;
-    uint8_t *p = (uint8_t *)&l;
-    for (uint8_t i = 0; i < iCount; i++)
-        p[7-i] = iData[i];
-    return l;
-}
-
 void TimerHoliday::setup()
 {
-    uint64_t iHolidayBitmask = holidaysToUInt64();
-
-    // we delete all unnecessary holidays from holiday data
+    // do not fetch just ParamLOG_Neujahr here, we need the whole bitfield (first is MSB)
+    uint8_t *iData = knx.paramData(LOG_Neujahr);
+    // "remove" all holidays not enabled in configuration
     for (uint8_t i = 0; i < cHolidaysCount; i++)
     {
-        if ((iHolidayBitmask & 0x8000000000000000) == 0)
+        const uint8_t dayBitMask = 0x80 >> (i % 8);
+        if ((iData[i/8] & dayBitMask) == 0)
+        {
             cHolidays[i].month = REMOVED;
-        iHolidayBitmask <<= 1;
+        }
     }
 }
 

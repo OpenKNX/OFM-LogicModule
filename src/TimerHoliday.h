@@ -26,7 +26,6 @@ class TimerHoliday
 {
   private:
     struct tm mTimeHelper;
-    uint64_t holidaysToUInt64();
 
   protected:
     static const uint8_t cHolidaysCount = 34;
