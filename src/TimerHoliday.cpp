@@ -182,11 +182,11 @@ void TimerHoliday::debug()
 }
 */
 
-bool TimerHoliday::calculateHolidays(uint16_t year, int8_t month, int8_t day, bool iDebugOutput)
+bool TimerHoliday::calculateHolidays(uint16_t tm_year, int8_t month, int8_t day, bool iDebugOutput)
 {
     // check if today or tomorrow is a holiday
     sDay lToday = {day, month};
-    sDay lTomorrow = getDayByOffset(1, lToday, year);
+    sDay lTomorrow = getDayByOffset(1, lToday, tm_year);
     uint8_t lHolidayToday = 0;
     uint8_t lHolidayTomorrow = 0;
     for (uint8_t i = 0; i < cHolidaysCount; i++)
@@ -198,10 +198,10 @@ bool TimerHoliday::calculateHolidays(uint16_t year, int8_t month, int8_t day, bo
                 // do nothing
                 break;
             case EASTER:
-                lHoliday = getDayByOffset(cHolidays[i].day, mEaster, year);
+                lHoliday = getDayByOffset(cHolidays[i].day, mEaster, tm_year);
                 break;
             case ADVENT:
-                lHoliday = getDayByOffset(cHolidays[i].day, mAdvent, year);
+                lHoliday = getDayByOffset(cHolidays[i].day, mAdvent, tm_year);
                 // do nothing
                 break;
             default:
@@ -235,9 +235,9 @@ bool TimerHoliday::calculateHolidays(uint16_t year, int8_t month, int8_t day, bo
     return changed;
 }
 
-sDay TimerHoliday::getDayByOffset(int8_t iOffset, sDay &iDate, uint16_t year)
+sDay TimerHoliday::getDayByOffset(int8_t iOffset, sDay &iDate, uint16_t tm_year)
 {
-    mTimeHelper.tm_year = year;
+    mTimeHelper.tm_year = tm_year;
     mTimeHelper.tm_mon = iDate.month - 1;
     mTimeHelper.tm_mday = iDate.day + iOffset;
     mTimeHelper.tm_hour = 12;
