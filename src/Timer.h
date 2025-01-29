@@ -56,18 +56,11 @@ class Timer
 {
   private:
     const std::string logPrefix();
-  /*
-  private:
-    void busTime_processReadRequests();
-  */
 
   protected:
     TimerHoliday holiday;
 
     struct tm mTimeHelper;
-    // double mLongitude;
-    // double mLatitude;
-    // int8_t mTimezone;
     bool mUseSummertime;
     bool mIsSummertime;
     eTimeValid mTimeValid = tmInvalid;
@@ -118,11 +111,6 @@ class Timer
     void getSunDegree(uint8_t iSunInfo, double iDegree, sTime *eSun);
     sDay *getEaster();
     char *getTimeAsc();
-    /*
-    void setTimeFromBus(tm *iTime);
-    void setDateFromBus(tm *iDate);
-    void setDateTimeFromBus(tm *iDateTime);
-    */
     uint8_t holidayToday();
     uint8_t holidayTomorrow();
     eTimeValid isTimerValid();

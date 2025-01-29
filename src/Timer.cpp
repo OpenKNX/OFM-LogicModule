@@ -57,11 +57,6 @@ bool Timer::loop()
 {
     bool lMinuteChanged = false;
 
-    /* TODO check complete removal, as read requests are send by new common time implementation
-    if (openknx.afterStartupDelay())
-        busTime_processReadRequests();
-    */
-
     // TODO Common Time: mTimeDelay=0 was set be Update from Bus
     // TODO mTimeDelay == 0 will be reached after 49 days...
     if (mTimeDelay == 0 || delayCheck(mTimeDelay, 1000))
@@ -108,9 +103,6 @@ bool Timer::loop()
                 logDebugP("tick: month %d -> %d", mMonthTick, mNow.tm_mon);
 
                 // TZ and DST handled in Common Time only
-                /*
-                calculateSummertime(); // initial summertime calculation if year changes
-                */
 
                 mMonthTick = mNow.tm_mon;
                 mDayTick = -1;
@@ -287,7 +279,7 @@ uint8_t Timer::calculateLastSundayInMonth(uint8_t iMonth)
     return mTimeHelper.tm_mday - mTimeHelper.tm_wday;
 }
 
-// TODO Common Time: Remove
+// TODO Common Time: Remove => Replace 
 // should be called only at 03:01 o'clock
 bool Timer::calculateSummertime()
 {
