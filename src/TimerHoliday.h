@@ -20,6 +20,10 @@ struct sDay
 {
     int8_t day;
     int8_t month;
+
+    bool operator==(const sDay &other) const {
+        return (day == other.day && month == other.month);
+    }
 };
 
 class TimerHoliday
@@ -38,7 +42,6 @@ class TimerHoliday
     sDay mEaster = {0, 0};   // easter sunday
     sDay mAdvent = {0, 0};   // fourth advent
 
-    bool isEqualDate(sDay &iDate1, sDay &iDate2);
     sDay getDayByOffset(int8_t iOffset, sDay &iDate, uint16_t year);
 
   public:

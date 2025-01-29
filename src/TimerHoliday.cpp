@@ -173,9 +173,9 @@ bool TimerHoliday::calculateHolidays(uint16_t year, int8_t month, int8_t day, bo
         {
             if (iDebugOutput)
                 logInfo("LogicTimer", "%02d.%02d., ", lHoliday.day, lHoliday.month);
-            if (isEqualDate(lHoliday, lToday))
+            if (lHoliday == lToday)
                 lHolidayToday = i + 1;
-            if (isEqualDate(lHoliday, lTomorrow))
+            if (lHoliday == lTomorrow)
                 lHolidayTomorrow = i + 1;
             if (lHolidayToday > 0 && lHolidayTomorrow > 0 && !iDebugOutput)
                 break;
@@ -193,11 +193,6 @@ bool TimerHoliday::calculateHolidays(uint16_t year, int8_t month, int8_t day, bo
         changed = true;
     }
     return changed;
-}
-
-bool TimerHoliday::isEqualDate(sDay &iDate1, sDay &iDate2)
-{
-    return (iDate1.day == iDate2.day && iDate1.month == iDate2.month);
 }
 
 sDay TimerHoliday::getDayByOffset(int8_t iOffset, sDay &iDate, uint16_t year)
