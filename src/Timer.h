@@ -76,7 +76,6 @@ class Timer
 
     bool calculateSummertime();
     uint8_t calculateLastSundayInMonth(uint8_t iMonth);
-    bool calculateHolidays(bool iDebugOutput = false);
     void calculateSunriseSunset();
     void convertToLocalTime(double iTime, sTime *eTime);
 

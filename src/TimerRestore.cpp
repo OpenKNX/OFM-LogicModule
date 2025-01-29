@@ -32,8 +32,7 @@ void TimerRestore::setup(Timer &iTimer)
     mUseSummertime = iTimer.UseSummertime();
     mIsSummertime = iTimer.IsSummertime();
     mTimeValid = tmValid;
-    holiday.calculateEaster(getYear());
-    holiday.calculateAdvent(mNow.tm_year);
+    holiday.updateDate(mNow, false);
     doDayCalculations();
 }
 
@@ -50,18 +49,15 @@ void TimerRestore::decreaseDay()
 
 void TimerRestore::doDayCalculations()
 {
-    uint16_t lYear = mNow.tm_year;
     mktime(&mNow);
     mDayIteration += 1;
     // printDebug("TimerRestore: Day %02d.%02d.%02d\n", this->getDay(), this->getMonth(), this->getYear());
+
+    // TODO Common Time: Replace summertime calculation!
     if (!calculateSummertime()) // initial summertime calculation if year changes
         calculateSunriseSunset();
-    if (lYear != mNow.tm_year)
-    {
-        holiday.calculateEaster(getYear());
-        holiday.calculateAdvent(mNow.tm_year);
-    }
-    calculateHolidays();
+
+    holiday.updateDate(mNow, false);
 }
 
 uint16_t TimerRestore::getDayIteration()

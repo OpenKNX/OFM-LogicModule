@@ -92,8 +92,7 @@ bool Timer::loop()
             {
                 logDebugP("tick: year %d -> %d", mYearTick, mNow.tm_year);
 
-                holiday.calculateEaster(getYear());
-                holiday.calculateAdvent(mNow.tm_year);
+                // update of easter and advend is triggered in holiday.updateDate(mNow)
 
                 mYearTick = mNow.tm_year;
                 mMonthTick = -1;
@@ -113,12 +112,8 @@ bool Timer::loop()
 
                 calculateSunriseSunset();
 
-                // TODO Common Time: Move into TimerHoliday
-                if (calculateHolidays())
-                {
-                    logDebugP("send holidays: %d, %d", holiday.holidayToday(), holiday.holidayTomorrow());
-                    holiday.sendHoliday();
-                }
+                // set current date to trigger recalc of holiday related days and update/send GOs for today/tomorrow
+                holiday.updateDate(mNow);
 
                 mDayTick = mNow.tm_mday;
                 mHourTick = -1;
@@ -348,22 +343,9 @@ void Timer::debug()
     if (mTimeValid & tmDateValid)
     {
         logInfo("LogicTimer", "\nFeiertage %d: ", getYear());
-        calculateHolidays(true);
+        holiday.calculateHolidays(mNow.tm_year, getMonth(), getDay(), true);
         logInfo("LogicTimer", "\nEnd of holiday debug\n");
         logInfo("LogicTimer", "Sonnenaufgang: %02d:%02d, Sonnenuntergang: %02d:%02d\n\n", mSunrise.hour, mSunrise.minute, mSunset.hour, mSunset.minute);
     }
 #endif
 }
-
-// TODO Common Time: Remove
-// TODO Common Time: Recalc and send holidays based on date update
-bool Timer::calculateHolidays(bool iDebugOutput)
-{
-    // we check only if date is valid // TODO check if needed in TimerRestore
-    if (mTimeValid < tmDateValid)
-        return false;
-
-    // check if today or tomorrow is a holiday
-    return holiday.calculateHolidays(mNow.tm_year, getMonth(), getDay(), iDebugOutput);
-}
-

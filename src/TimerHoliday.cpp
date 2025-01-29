@@ -40,6 +40,11 @@ sDay TimerHoliday::cHolidays[cHolidaysCount] = {
     {-28, ADVENT}};
 
 
+const std::string TimerHoliday::logPrefix()
+{
+    return "LOG-Holiday";
+}
+
 void TimerHoliday::setup()
 {
     // do not fetch just ParamLOG_Neujahr here, we need the whole bitfield (first is MSB)
@@ -52,6 +57,41 @@ void TimerHoliday::setup()
         {
             cHolidays[i].month = REMOVED;
         }
+    }
+}
+
+void TimerHoliday::updateDate(tm mNow, bool sendHolidays /* = true */)
+{
+    // year changed => month changed => day change
+    if (mYearTick != mNow.tm_year)
+    {
+        logDebugP("tick: year %d -> %d", mYearTick, mNow.tm_year);
+
+        calculateEaster(mNow.tm_year + 1900);
+        calculateAdvent(mNow.tm_year);
+
+        mYearTick = mNow.tm_year;
+        mMonthTick = -1;
+    }
+    if (mMonthTick != mNow.tm_mon)
+    {
+        logDebugP("tick: month %d -> %d", mMonthTick, mNow.tm_mon);
+
+        mMonthTick = mNow.tm_mon;
+        mDayTick = -1;
+    }
+    if (mDayTick != mNow.tm_mday)
+    {
+        logDebugP("tick: day %d -> %d", mDayTick, mNow.tm_mday);
+
+        const bool holidaysChanged = calculateHolidays(mNow.tm_year, mNow.tm_mon + 1, mNow.tm_mday);
+        if (holidaysChanged && sendHolidays)
+        {
+            logDebugP("send holidays: %d, %d", holidayToday(), holidayTomorrow());
+            sendHoliday();
+        }
+
+        mDayTick = mNow.tm_mday;
     }
 }
 

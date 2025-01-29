@@ -31,6 +31,15 @@ class TimerHoliday
   private:
     struct tm mTimeHelper;
 
+    int16_t mYearTick = -1;  // easter calculation happens each time year changes
+    int8_t mMonthTick = -1;  // sunrise/sunset calculation happens each time the month changes
+    int8_t mDayTick = -1;    // sunrise/sunset calculation happens each time the day changes
+
+    const std::string logPrefix();
+
+    void calculateEaster(uint16_t lYear);
+    void calculateAdvent(int tm_year);
+
   protected:
     static const uint8_t cHolidaysCount = 34;
     static sDay cHolidays[cHolidaysCount];
@@ -45,12 +54,11 @@ class TimerHoliday
     sDay getDayByOffset(int8_t iOffset, sDay &iDate, uint16_t year);
 
   public:
-    void calculateEaster(uint16_t lYear);
-    void calculateAdvent(int tm_year);
     bool calculateHolidays(uint16_t year, int8_t month, int8_t day, bool iDebugOutput = false);
 
     void setup();
     // void loop();
+    void updateDate(tm mNow, bool sendHolidays = true);
 
     sDay *getEaster();
     char *getTimeAsc();
