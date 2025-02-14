@@ -1,7 +1,5 @@
 ﻿### Logik auswerten
 
-Erscheint nur, wenn die Logik-Operation nicht auf ZEITSCHALTUHR gestellt wurde.
-
 Es ist notwendig, einer Logikverknüpfung zu sagen, wie sie mit undefinierten Eingängen umgehen soll.
 
 
