@@ -531,7 +531,7 @@ void Logic::setup()
     logInfoP("Setting: RGBLed available: %d", ParamLOG_LedInstalled);
     // setup channels, not possible in constructor, because knx is not configured there
     // get number of channels from knxprod
-    mNumChannels = ParamLOG_VisibleChannels; // LOG_ChannelCount;
+    mNumChannels = MIN(ParamLOG_VisibleChannels, LOG_ChannelCount); // LOG_ChannelCount;
     for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
     {
         mChannel[lIndex] = new LogicChannel(lIndex);

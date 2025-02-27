@@ -54,7 +54,7 @@ class Timer
 #endif
 
   protected:
-    static const uint8_t cHolidaysCount = 34;
+    static const uint8_t cHolidaysCount = 35;
     static sDay cHolidays[cHolidaysCount];
     struct tm mTimeHelper;
     // double mLongitude;
