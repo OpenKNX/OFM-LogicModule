@@ -927,6 +927,7 @@ Der Schalter ermöglicht die Realisierung eines einfachen Szenen-Controllers (si
 <!-- DOC HelpContext="Eingang n" -->
 ### **Eingang 1/2**
 
+<!-- DOC Skip="2" -->
 Erscheint nur, wenn die Logik-Operation nicht auf "ZEITSCHALTUHR" gestellt wurde.
 
 Jeder Eingang kann durch die Auswahlfelder deaktiviert bzw. normal oder invertiert (negiert) aktiviert werden.
@@ -946,6 +947,7 @@ Für diesen Eingang erscheint ein Kommunikationsobjekt. Detailangaben zu diesem 
 <!-- DOC HelpContext="Interner Eingang n" -->
 ### **Interner Eingang 3/4**
 
+<!-- DOC Skip="2" -->
 Erscheint nur, wenn die Logik-Operation nicht auf ZEITSCHALTUHR gestellt wurde.
 
 Es handelt sich um interne Eingänge, die mit einem Ausgang eines anderen Kanals verbunden sind. Jeder interne Eingang kann durch die Auswahlfelder deaktiviert bzw. normal oder invertiert (negiert) aktiviert werden.
@@ -971,6 +973,7 @@ Hier werden die Einstellungen vorgenommen, die für die Auswertung der Logik rel
 <!-- DOC -->
 ### **Logik auswerten**
 
+<!-- DOC Skip="2" -->
 Erscheint nur, wenn die Logik-Operation nicht auf ZEITSCHALTUHR gestellt wurde.
 
 Es ist notwendig, einer Logikverknüpfung zu sagen, wie sie mit undefinierten Eingängen umgehen soll.
@@ -1578,6 +1581,7 @@ Wird diese Funktion gewählt, wird jeder Wert, den der Eingang bekommt, in ein E
 
 ## **Schaltzeiten: unbenannt**
 
+<!-- DOC Skip="2" -->
 Erscheint nur, wenn die Logik-Operation auf ZEITSCHALTUHR gestellt wurde.
 
 Auf dieser Seite können die Schaltpunkte für eine Zeitschaltuhr eingegeben werden. Die Einstellmöglichkeiten sind bei jedem Logikkanal gleich, so dass nur ein Kanal beschrieben wird.
@@ -2426,6 +2430,7 @@ Hier wird die Nummer des Kommunikationsobjekts angegeben, über die der Wert zus
 <!-- DOC -->
 ### **Alarmausgabe (Buzzer oder LED trotz Sperre schalten)?**
 
+<!-- DOC Skip="2" -->
 Diese Einstellung erscheint nur, wenn die LED- oder Buzzer-Ausgabe aktiviert ist.
 
 Wenn die Einstellung aktiviert ist, wird eine akustische oder optische Ausgabe trotz Sperre vorgenommen.

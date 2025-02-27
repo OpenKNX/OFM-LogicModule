@@ -1,7 +1,5 @@
 ﻿### Eingang 1/2
 
-Erscheint nur, wenn die Logik-Operation nicht auf "ZEITSCHALTUHR" gestellt wurde.
-
 Jeder Eingang kann durch die Auswahlfelder deaktiviert bzw. normal oder invertiert (negiert) aktiviert werden.
 
 #### inaktiv
