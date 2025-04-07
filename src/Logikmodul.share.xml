@@ -56,6 +56,10 @@
                   <Enumeration Text="Rot / Grün / Blau" Value="1" Id="%ENID%" />
                   <Enumeration Text="Rot / Blau / Grün" Value="2" Id="%ENID%" />
                   <Enumeration Text="Grün / Rot / Blau" Value="3" Id="%ENID%" />
+                <!-- </TypeRestriction>
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-RGBMapping" Name="RGBMapping">
+                <TypeRestriction Base="Value" SizeInBit="3"> -->
                   <Enumeration Text="Grün / Blau / Rot" Value="4" Id="%ENID%" />
                   <Enumeration Text="Blau / Grün / Rot" Value="5" Id="%ENID%" />
                   <Enumeration Text="Blau / Rot / Grün" Value="6" Id="%ENID%" />
@@ -1041,6 +1045,7 @@
                 <Parameter Id="%AID%_UP-%TT%00155" Name="MariaEmpfaengnis" ParameterType="%AID%_PT-CheckBox" Offset="3" BitOffset="7" Text="32. Maria Empfängnis (AT)" SuffixText="8. Dezember" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%00172" Name="NationalfeiertagSchweiz" ParameterType="%AID%_PT-CheckBox" Offset="4" BitOffset="0" Text="33. Nationalfeiertag (CH)" SuffixText="1. August" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%00173" Name="Totensonntag" ParameterType="%AID%_PT-CheckBox" Offset="4" BitOffset="1" Text="34. Totensonntag" SuffixText="7 Tage vor 1. Adv." Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00174" Name="Weltkindertag" ParameterType="%AID%_PT-CheckBox" Offset="4" BitOffset="2" Text="35. Weltkindertag" SuffixText="20. September" Value="0" />
                 <!-- 6 Bit free -->
               </Union>
               <Union SizeInBit="48">
@@ -1138,6 +1143,7 @@
               <ParameterRef Id="%AID%_P-%TT%00171_R-%TT%0017101" RefId="%AID%_P-%TT%00171" />
               <ParameterRef Id="%AID%_UP-%TT%00172_R-%TT%0017201" RefId="%AID%_UP-%TT%00172" />
               <ParameterRef Id="%AID%_UP-%TT%00173_R-%TT%0017301" RefId="%AID%_UP-%TT%00173" />
+              <ParameterRef Id="%AID%_UP-%TT%00174_R-%TT%0017401" RefId="%AID%_UP-%TT%00174" />
               <!-- starts with %TT%00200 -->
               <op:usePart name="FORMULA" xpath="//Static/ParameterRefs/*" />
             </ParameterRefs>
@@ -1243,6 +1249,7 @@
                 <ParameterRefRef RefId="%AID%_UP-%TT%00172_R-%TT%0017201" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
                 <ParameterRefRef RefId="%AID%_UP-%TT%00124_R-%TT%0012401" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
                 <ParameterRefRef RefId="%AID%_UP-%TT%00125_R-%TT%0012501" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00174_R-%TT%0017401" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
                 <ParameterRefRef RefId="%AID%_UP-%TT%00126_R-%TT%0012601" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
                 <ParameterRefRef RefId="%AID%_UP-%TT%00154_R-%TT%0015401" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
                 <ParameterRefRef RefId="%AID%_UP-%TT%00127_R-%TT%0012701" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />

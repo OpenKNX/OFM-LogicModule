@@ -41,7 +41,7 @@ class TimerHoliday
     void calculateAdvent(int tm_year);
 
   protected:
-    static const uint8_t cHolidaysCount = 34;
+    static const uint8_t cHolidaysCount = 35;
     static sDay cHolidays[cHolidaysCount];
 
     // force update on first holiday calculation

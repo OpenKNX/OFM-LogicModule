@@ -37,8 +37,8 @@ sDay TimerHoliday::cHolidays[cHolidaysCount] = {
     {26, 10},
     {8, 12},
     {1, 8},
-    {-28, ADVENT}};
-
+    {-28, ADVENT},
+    {20, 9}};
 
 const std::string TimerHoliday::logPrefix()
 {

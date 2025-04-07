@@ -424,8 +424,8 @@ void Logic::setup()
 
     sTimer.setup();
 
-    // not use LOG_ChannelCount, get number of visible channels set in ETS only
-    mNumChannels = ParamLOG_VisibleChannels;
+    // Number of available channels is the minimum of configured and available channels
+    mNumChannels = MIN(ParamLOG_VisibleChannels, LOG_ChannelCount);
 
     // setup channels, not possible in constructor, because knx is not configured there
     // for TimerRestore we prepare all Timer channels

@@ -2264,7 +2264,7 @@ void LogicChannel::prepareChannel()
     bool lInput2Flash = false;
     uint8_t lLogicFunction = ParamLOG_fDisable ? 0 : ParamLOG_fLogic;
 
-    // logChannel("       prepareChannel");
+    // logDebugP("prepareChannel %i", _channelIndex);
     if (lLogicFunction == 5)
     {
         if (ParamLOG_fTYearDay >= VAL_Tim_Timer_Daily_Linked)

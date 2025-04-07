@@ -1,7 +1,5 @@
 ﻿### Interner Eingang 3/4
 
-Erscheint nur, wenn die Logik-Operation nicht auf ZEITSCHALTUHR gestellt wurde.
-
 Es handelt sich um interne Eingänge, die mit einem Ausgang eines anderen Kanals verbunden sind. Jeder interne Eingang kann durch die Auswahlfelder deaktiviert bzw. normal oder invertiert (negiert) aktiviert werden.
 
 #### inaktiv

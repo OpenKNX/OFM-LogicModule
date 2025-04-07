@@ -83,13 +83,18 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 
 Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer das Gesamtdokument lesen muss, um Neuerungen zu erfahren.
 
+25.02.2025: Firmware 3.6, Applikation 3.6
+
+* NEU: Weltkindertag (20. September) als Feiertag zugefügt
+* FIX: Wenn der Default für initial sichbare Kanäle größer war als die max. verfügbare Kanäle, hat sich das Logikmodul aufgehängt (Fix ist nur für developer wichtig, nicht für Enduser)
+
 23.12.2024: Firmware 3.5.3, Applikation 3.5
 
 * FIX: Hysterese/Differenzhysterese mit invertiertem Eingang führte beim Schreiben von Werten im Hysteresebereich zu Toggeln des Ausgangs.
 
 07.12.2024: Firmware 3.5.2, Applikation 3.5
 
-* FIX: Das neue Sendeverhalten am Ausgang und der Wiederholungsfilter haben sich leider gegenseitig beeinflusst und zu unerwarteten Ergebnissen geführt, die Logiken kaputt machen konnten. Deswegen ein Hotfix. 
+* FIX: Das neue Sendeverhalten am Ausgang und der Wiederholungsfilter haben sich leider gegenseitig beeinflusst und zu unerwarteten Ergebnissen geführt, die Logiken kaputt machen konnten. 
 * NEU: Firmware-Update über den KNX-Bus lastet den Bus weniger aus (weniger Telegrammwiederholungen)
 * NEU: Die Erzeugung der ETS-Produktdatenbank (knxprod) funktioniert jetzt auch mit der ETS 6.3
 
@@ -922,6 +927,7 @@ Der Schalter ermöglicht die Realisierung eines einfachen Szenen-Controllers (si
 <!-- DOC HelpContext="Eingang n" -->
 ### **Eingang 1/2**
 
+<!-- DOC Skip="2" -->
 Erscheint nur, wenn die Logik-Operation nicht auf "ZEITSCHALTUHR" gestellt wurde.
 
 Jeder Eingang kann durch die Auswahlfelder deaktiviert bzw. normal oder invertiert (negiert) aktiviert werden.
@@ -941,6 +947,7 @@ Für diesen Eingang erscheint ein Kommunikationsobjekt. Detailangaben zu diesem 
 <!-- DOC HelpContext="Interner Eingang n" -->
 ### **Interner Eingang 3/4**
 
+<!-- DOC Skip="2" -->
 Erscheint nur, wenn die Logik-Operation nicht auf ZEITSCHALTUHR gestellt wurde.
 
 Es handelt sich um interne Eingänge, die mit einem Ausgang eines anderen Kanals verbunden sind. Jeder interne Eingang kann durch die Auswahlfelder deaktiviert bzw. normal oder invertiert (negiert) aktiviert werden.
@@ -966,6 +973,7 @@ Hier werden die Einstellungen vorgenommen, die für die Auswertung der Logik rel
 <!-- DOC -->
 ### **Logik auswerten**
 
+<!-- DOC Skip="2" -->
 Erscheint nur, wenn die Logik-Operation nicht auf ZEITSCHALTUHR gestellt wurde.
 
 Es ist notwendig, einer Logikverknüpfung zu sagen, wie sie mit undefinierten Eingängen umgehen soll.
@@ -1131,13 +1139,28 @@ Der hier angegebene Text erscheint in der Seitenbeschreibung "Eingang n: unbenan
 
 Ein Eingang des Logikobjekts wird durch ein Kommunikationsobjekt repräsentiert. Dabei kann jedes Kommunikationsobjekt des Gerätes verwendet werden, auch KO, die nicht vom Logikmodul verwaltet werden. Dies ermöglicht, KO intern zu verbinden und so die Kommunikation auf dem Bus zu reduzieren. Eine solche interne Verbindung verhält sich genau so, als wäre der Eingang mit einer GA verbunden und Telegramme erhalten würde.
 
-#### **Neues KO erzeugen**
+Es gibt 2 Möglichkeiten, interne KO-Verknüpfungen zu realisieren: Absolut und relativ. 
 
-Für den Eingang wird ein neues Kommunikationsobjekt erzeugt. Dieses KO ist somit komplett vom Logikmodul kontrolliert und verwaltet.
+* Absolute KO-Verknüpfungen werden über die Angabe einer KO-Nummer vorgenommen. Dieses KO wird dann für den Eingang benutzt.
+* Relative KO-Verknüpfungen werden über die Angabe eines KO-Offsets vorgenommen. Das eigentliche KO wird dadurch ermittelt, dass der angegebene Offset zur Nummer des eigenen KO addiert wird und so das Ziel-KO ermittelt wird.
 
-#### **Bestehendes KO nutzen**
+Relative und absolute KO-Verknüpfungen funktionieren absolut identisch. Relative Verknüpfungen sind von Vorteil, wenn man Logikblöcke baut, die aus mehreren Kanälen bestehen. Falls solche Logikblöcke mal verschoben oder auf ein anderes Gerät kopiert werden sollen, bekommen die Ein- und Ausgänge neue KO-Nummern. Wenn innerhalb der Logikblöcke mit relativen KO-Verknüpfungen gearbeitet wurde, funktionieren die Logikblöcke weiterhin, bei absoluten KO-Verknüpfungen müssen alle KO-Nummern angepasst werden.
 
-Der Eingang wird durch ein existierendes Kommunikationsobjekt erzeugt. Das Kommunikationsobjekt wird somit anderweitig verwaltet, z.B. durch einen anderen Kanal oder eine andere Teilapplikation. Der Eingang "lauscht" somit nur auf die ankommenden Signale und kann keinerlei Aktionen an dem KO vornehmen, wie z.B. den DPT bestimmen oder Lese-Anforderungen verschicken.
+#### **Eigenes KO**
+
+Für den Eingang wird das Kommunikationsobjekt benutzt, dass für diesen Eingang vorgesehen ist. Dieses KO ist somit komplett vom Logikmodul kontrolliert und verwaltet.
+
+#### **Absolutes KO"
+
+Der Eingang wird durch ein existierendes Kommunikationsobjekt erzeugt, dessen KO-Nummer direkt angegeben wird. 
+
+Das Kommunikationsobjekt wird anderweitig verwaltet, z.B. durch einen anderen Kanal oder eine andere Teilapplikation. Der Eingang "lauscht" somit nur auf die ankommenden Signale und kann keinerlei Aktionen an dem KO vornehmen, wie z.B. den DPT bestimmen oder Lese-Anforderungen verschicken.
+
+#### **Relatives KO"
+
+Der Eingang wird durch ein existierendes Kommunikationsobjekt erzeugt, dessen KO-Nummer berechnet wird, indem die eigene KO-Nummer genommen wird und der eingegebene Offset addiert wird. 
+
+Das Kommunikationsobjekt wird anderweitig verwaltet, z.B. durch einen anderen Kanal oder eine andere Teilapplikation. Der Eingang "lauscht" somit nur auf die ankommenden Signale und kann keinerlei Aktionen an dem KO vornehmen, wie z.B. den DPT bestimmen oder Lese-Anforderungen verschicken.
 
 <!-- DOC -->
 ### **Nummer des Kommunikationsobjekts**
@@ -1489,7 +1512,7 @@ Der Eingang wird konstant mit einer 1 vorbelegt und hat somit sofort einen defin
 <!-- DOC HelpContext="Eingang wird gelesen alle" -->
 ### **Eingang wird alle n Sekunden gelesen (0=nicht zyklisch lesen)**
 
-Erscheint nur, wenn bei "Kommunikationsobjekt für Eingang" der Wert "Neues KO erzeugen" ausgewählt ist.
+Erscheint nur, wenn bei "Kommunikationsobjekt für Eingang" der Wert "Eigenes KO" ausgewählt ist.
 
 Manche Geräte können nicht von sich aus zyklisch senden. Hier kann man einstellen, dass ein Eingang aktiv den Wert zyklisch liest. In den Feld kann man angeben, wie viele Sekunden zwischen 2 Leseintervallen vergehen sollen.
 
@@ -1558,6 +1581,7 @@ Wird diese Funktion gewählt, wird jeder Wert, den der Eingang bekommt, in ein E
 
 ## **Schaltzeiten: unbenannt**
 
+<!-- DOC Skip="2" -->
 Erscheint nur, wenn die Logik-Operation auf ZEITSCHALTUHR gestellt wurde.
 
 Auf dieser Seite können die Schaltpunkte für eine Zeitschaltuhr eingegeben werden. Die Einstellmöglichkeiten sind bei jedem Logikkanal gleich, so dass nur ein Kanal beschrieben wird.
@@ -2406,6 +2430,7 @@ Hier wird die Nummer des Kommunikationsobjekts angegeben, über die der Wert zus
 <!-- DOC -->
 ### **Alarmausgabe (Buzzer oder LED trotz Sperre schalten)?**
 
+<!-- DOC Skip="2" -->
 Diese Einstellung erscheint nur, wenn die LED- oder Buzzer-Ausgabe aktiviert ist.
 
 Wenn die Einstellung aktiviert ist, wird eine akustische oder optische Ausgabe trotz Sperre vorgenommen.
