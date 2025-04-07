@@ -263,6 +263,23 @@
               <!-- <ParameterType Id="%AID%_PT-TimeBasedTime" Name="TimeBasedTime">
                 <TypeNumber SizeInBit="32" Type="signedInt" minInclusive="0" maxInclusive="32767" />
               </ParameterType> -->
+              <ParameterType Id="%AID%_PT-ValueDpt3" Name="ValueDpt3">
+                <TypeRestriction Base="Value" SizeInBit="4">
+                  <Enumeration Text="nicht genutzt" Value="4" Id="%ENID%" />
+                  <Enumeration Text="normal AUS (00)" Value="0" Id="%ENID%" />
+                  <Enumeration Text="normal EIN (01)" Value="1" Id="%ENID%" />
+                  <Enumeration Text="priorität AUS (10)" Value="2" Id="%ENID%" />
+                  <Enumeration Text="priorität EIN (11)" Value="3" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-ValueDpt3Out" Name="ValueDpt3Out">
+                <TypeRestriction Base="Value" SizeInBit="4">
+                  <Enumeration Text="normal AUS (00)" Value="0"    Id="%ENID%" />
+                  <Enumeration Text="normal EIN (01)" Value="1"    Id="%ENID%" />
+                  <Enumeration Text="priorität AUS (10)" Value="2" Id="%ENID%" />
+                  <Enumeration Text="priorität EIN (11)" Value="3" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
               <ParameterType Id="%AID%_PT-ValueSceneIn" Name="ValueSceneIn">
                 <TypeRestriction Base="Value" SizeInBit="8">
                   <Enumeration Text="Nicht genutzt" Value="0" Id="%ENID%" />
