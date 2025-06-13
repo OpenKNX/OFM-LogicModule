@@ -53,9 +53,7 @@ void TimerRestore::doDayCalculations()
     mDayIteration += 1;
     // printDebug("TimerRestore: Day %02d.%02d.%02d\n", this->getDay(), this->getMonth(), this->getYear());
 
-    // TODO Common Time: Replace summertime calculation!
-    if (!calculateSummertime()) // initial summertime calculation if year changes
-        calculateSunriseSunset();
+    calculateSunriseSunset();
 
     holiday.updateDate(mNow, false);
 }
