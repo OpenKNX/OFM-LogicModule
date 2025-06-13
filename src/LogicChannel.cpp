@@ -542,6 +542,7 @@ LogicValue LogicChannel::getParamByDpt(uint8_t iDpt, uint16_t iParamIndex)
             return lValue;
         }
         case VAL_DPT_2:
+        case VAL_DPT_3:
         case VAL_DPT_5:
         case VAL_DPT_17:
         case VAL_DPT_5001:
@@ -661,6 +662,11 @@ LogicValue LogicChannel::getKoValue(GroupObject *iKo, uint8_t iDpt, bool iIsInpu
             lValue = iKo->valueRef()[0];
             break;
         }
+        case VAL_DPT_3:
+        {
+            lValue = (uint8_t)(iKo->valueRef()[0] & 0x0F);
+            break;
+        }
         case VAL_DPT_6:
         {
             lValue = (int8_t)iKo->value(getDPT(VAL_DPT_6));
@@ -721,6 +727,7 @@ void LogicChannel::writeConstantValue(uint16_t iParamIndex, bool iOn)
             knxWriteBool(IO_Output, lValueBool, iOn);
             break;
         case VAL_DPT_2:
+        case VAL_DPT_3:
             lValueByte = getByteParam(iParamIndex);
             knxWriteInt(IO_Output, lValueByte, iOn);
             break;
@@ -783,7 +790,7 @@ void LogicChannel::writeParameterValue(uint8_t iIOIndex, bool iOn)
 {
     uint8_t lInputDpt;
     LogicValue lValue = getInputValue(iIOIndex, &lInputDpt);
-    writeValue(lValue, lInputDpt, iOn);
+    writeValue(lValue, iOn);
 }
 
 void LogicChannel::writeOtherKoValue(uint16_t iKoParamIndex, bool iIsRelative, uint16_t iDptIndex, bool iOn)
@@ -794,8 +801,7 @@ void LogicChannel::writeOtherKoValue(uint16_t iKoParamIndex, bool iIsRelative, u
     if (lKoNumber > 1 && lKoNumber <= MAIN_MaxKoNumber)
     {
         LogicValue lValue = getOtherKoValue(lKoNumber, iDptIndex);
-        uint8_t lDptOut = getByteParam(LOG_fODpt);
-        writeValue(lValue, lDptOut, iOn);
+        writeValue(lValue, iOn);
     }
 }
 
@@ -810,10 +816,10 @@ void LogicChannel::writeFunctionValue(uint16_t iParamIndex, bool iOn)
     LogicValue lKoValue = getKoValue(IO_Output, lDptOut);
     LogicValue lValue = LogicFunction::callFunction(_channelIndex, lFunction, lDptE1, lE1, lDptE2, lE2, &lDptOut, lKoValue);
     if (isfinite((double)lValue))
-        writeValue(lValue, lDptOut, iOn);
+        writeValue(lValue, iOn);
 }
 
-void LogicChannel::writeValue(LogicValue iValue, uint8_t iDpt, bool iOn)
+void LogicChannel::writeValue(LogicValue iValue, bool iOn)
 {
     uint8_t lDpt = getByteParam(LOG_fODpt);
     uint8_t lValueByte;
@@ -825,6 +831,11 @@ void LogicChannel::writeValue(LogicValue iValue, uint8_t iDpt, bool iOn)
         case VAL_DPT_2:
             lValueByte = iValue;
             lValueByte &= 3;
+            knxWriteInt(IO_Output, lValueByte, iOn);
+            break;
+        case VAL_DPT_3:
+            lValueByte = iValue;
+            lValueByte &= 0x0F;
             knxWriteInt(IO_Output, lValueByte, iOn);
             break;
         case VAL_DPT_5:
@@ -1031,6 +1042,9 @@ bool LogicChannel::checkConvertValues(uint16_t iParamValues, uint8_t iDpt, int32
             lNumValues = 4;
             lValid = 0xFF;
             break;
+        case VAL_DPT_3:
+            lNumValues = 4;
+            break;
         case VAL_DPT_5:
         case VAL_DPT_5001:
         case VAL_DPT_6:
@@ -1214,6 +1228,7 @@ void LogicChannel::processConvertInput(uint8_t iIOIndex)
 #endif
                 break;
             case VAL_InputConvert_Constant:
+            case VAL_InputConvert_Trigger:
                 lValueOut = true;
 #if LOGIC_TRACE
                 if (debugFilter())

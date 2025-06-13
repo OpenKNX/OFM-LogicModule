@@ -4,6 +4,7 @@ Dieses Auswahlfeld legt den DPT für den Eingang fest. Unterstützt werden:
 
 * DPT 1: binärer Wert
 * DPT 2: Zwangsführung
+* DPT 3: Dimmen relativ
 * DPT 5: vorzeichenlose Zahl (0 bis 255)
 * DPT 5.001: Prozentzahl (0 bis 100)
 * DPT 6: vorzeichenbehaftete Zahl (-128 bis 127)

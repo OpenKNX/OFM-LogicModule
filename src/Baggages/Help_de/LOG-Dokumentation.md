@@ -25,7 +25,7 @@ Einstellbare Ausgangstrigger
 
 Mehrere Kanäle können zu größeren Logikblöcken zusammengefasst werden
 
-Eingänge unterstützen DPT 1, 2, 5, 5.001, 6, 7, 8, 9, 12, 13, 14, 17
+Eingänge unterstützen DPT 1, 2, 3, 5, 5.001, 6, 7, 8, 9, 12, 13, 14, 17
 
 Ausgänge unterstützen zusätzlich den DPT 16
 

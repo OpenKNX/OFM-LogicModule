@@ -17,7 +17,8 @@ static Dpt sDpt[] = {
     Dpt(12, 1),
     Dpt(13, 1),
     Dpt(14, 1),
-    Dpt(19, 1)};
+    Dpt(19, 1),
+    Dpt(5, 10)}; // DPT3 is sent as a number 
 
 Dpt &getDPT(uint8_t iDptIndex)
 {

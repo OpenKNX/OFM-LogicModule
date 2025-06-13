@@ -83,6 +83,12 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 
 Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer das Gesamtdokument lesen muss, um Neuerungen zu erfahren.
 
+09.04.2025: Firmware 3.7, Applikation 3.7:
+
+* NEU: Eingangskonverter für DPT3 (Dimmen)
+* NEU: Ausgangskonverter für DPT3 (Dimmen)
+* NEU: Alle Eingangskonverter können auch als Trigger fungieren (jedes Telegramm triggert die Logik)
+
 25.02.2025: Firmware 3.6, Applikation 3.6
 
 * NEU: Weltkindertag (20. September) als Feiertag zugefügt
@@ -318,7 +324,7 @@ Einstellbare Ausgangstrigger
 
 Mehrere Kanäle können zu größeren Logikblöcken zusammengefasst werden
 
-Eingänge unterstützen DPT 1, 2, 5, 5.001, 6, 7, 8, 9, 12, 13, 14, 17
+Eingänge unterstützen DPT 1, 2, 3, 5, 5.001, 6, 7, 8, 9, 12, 13, 14, 17
 
 Ausgänge unterstützen zusätzlich den DPT 16
 
@@ -726,7 +732,7 @@ Alle Funktionsblöcke kann man sich wie an einer Perlenschnur aufgereiht hintere
 
 <kbd>![Übersicht](pics/Uebersicht.PNG)</kbd>
 
-**) Derzeit implementiert: DPT 1, 2, 5, 5.001, 6, 7, 8, 9, 12, 13, 14, 16, 17, 232; DPT 16 nicht als Eingang (Abweichend zum Bild)
+**) Abweichend zum Bild: Derzeit implementiert: DPT 1, 2, 3, 5, 5.001, 6, 7, 8, 9, 12, 13, 14, 16, 17, 232; DPT 16 nicht als Eingang
 
 Jeder Funktionsblock arbeitet rein binär, also nur mit den Werten 0 oder 1 (DPT 1). Damit auch andere DPT möglich sind, besitzen externe Eingänge Konverter-Funktionsblöcke, die von einem beliebigen DPT nach DPT 1 konvertieren. Derzeit sind Schwellwertschalter und Vergleicher als Konverterfunktionen implementiert. Interne Eingänge und die Zeitschaltuhr benötigen keinen Konverter, da sie rein binär funktionieren.
 
@@ -1182,6 +1188,7 @@ Dieses Auswahlfeld legt den DPT für den Eingang fest. Unterstützt werden:
 
 * DPT 1: binärer Wert
 * DPT 2: Zwangsführung
+* DPT 3: Dimmen relativ
 * DPT 5: vorzeichenlose Zahl (0 bis 255)
 * DPT 5.001: Prozentzahl (0 bis 100)
 * DPT 6: vorzeichenbehaftete Zahl (-128 bis 127)
@@ -1244,6 +1251,36 @@ Wird der Zwangsführungs-Wert "priorität AUS" empfangen (im KNX durch eine 10 r
 #### **priorität EIN (11)**
 
 Wird der Zwangsführungs-Wert "priorität EIN" empfangen (im KNX durch eine 11 repräsentiert), dann wird dieser zu einem EIN-Signal konvertiert.
+
+
+### **DPT 3.xxx (Dimmen relativ)**
+
+<kbd>![Eingangskonverter DPT3](pics/RelativDimmen.png)</kbd>
+
+
+Ein Dimm-Schritt besteht entweder aus einem Stop-Wert oder einem Dimm-Wert, der 100%, 50%, 25%, 13%, 6%, 3% oder 2% sein kann. Zusätzlich muss man noch sagen, ob es heller oder dunkler werden soll.
+
+Somit gibt es 8 Werte pro Richtung, also 16 Werte insgesamt. In dem Eingangskonverter für DPT3 kann man 4 dieser Werte auswählen. Der Eingang wird EIN, wenn einer dieser Werte empfangen wird. Bei allen anderen Werten wird der Eingang ein AUS.
+
+In dem Bildschirmausschnitt ist der Konverter so konfiguriert, dass Dimm-Stop zu einem EIN-Signal führt. Das Beispiel zeigt auch, dass es 2 verschiedene Stop-Befehle gibt, einen der das "Hoch-Dimmen" und einen, der das "Runter-Dimmen" stoppt.
+
+In den Zeilen können folgende Werte ausgewählt werden:
+
+#### **dunkler**
+
+Es geht um ein "runter-dimmen" Telegramm. 
+
+#### **hoch**
+
+Es geht um ein "hoch-dimmen" Telegramm. 
+
+#### **Wert**
+
+Der eigentliche Dimm-Wert, er kann Stop oder 100%, 50%, 25%, 13%, 6%, 3% oder 2% sein.
+
+#### **Checkbox**
+
+Wird die Checkbox ausgewählt, wird die entsprechende Zeile beim Telegrammempfang berücksichtigt, wenn nicht, spielt die entsprechende Zeile keine Rolle.
 
 ### **DPT 17.001 (Szene)**
 
@@ -2131,6 +2168,7 @@ Dieses Auswahlfeld legt den DPT für den Ausgang fest. Unterstützt werden:
 
 * DPT 1: binärer Wert
 * DPT 2: Zwangsführung
+* DPT 3: Dimmen
 * DPT 5: vorzeichenlose Zahl (0 bis 255)
 * DPT 5.001: Prozentzahl (0 bis 100)
 * DPT 6: vorzeichenbehaftete Zahl (-128 bis 127)

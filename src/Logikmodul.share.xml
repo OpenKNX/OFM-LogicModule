@@ -50,6 +50,7 @@
                <ParameterType Id="%AID%_PT-UserFormula" Name="UserFormula">
                 <TypeText SizeInBit="792" />
                </ParameterType>
+              <!-- Test MERGE vom Producer -->
               <!-- LED color mapping -->
               <ParameterType Id="%AID%_PT-RGBMapping" Name="RGBMapping">
                 <TypeRestriction Base="Value" SizeInBit="3">
@@ -125,6 +126,7 @@
                   <Enumeration Text="invertiert aktiv" Value="2" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
+              <!-- Internal, not used für display -->
               <ParameterType Id="%AID%_PT-InputConv" Name="InputConv">
                 <TypeRestriction Base="Value" SizeInBit="4">
                   <Enumeration Text="Wertintervall" Value="0" Id="%ENID%" />
@@ -146,6 +148,8 @@
                   <Enumeration Text="Hysterese" Value="2" Id="%ENID%" />
                   <Enumeration Text="Differenzhysterese" Value="3" Id="%ENID%" />
                   <Enumeration Text="Einzelwerte" Value="4" Id="%ENID%" />
+                  <!-- Trigger wird immer 1, egal ob durch 0 oder 1 getriggert -->
+                  <Enumeration Text="Trigger" Value="7" Id="%ENID%" />
                   <Enumeration Text="Konstante (für Formeln)" Value="5" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
@@ -155,12 +159,16 @@
                   <Enumeration Text="Differenzintervall" Value="1" Id="%ENID%" />
                   <Enumeration Text="Hysterese" Value="2" Id="%ENID%" />
                   <Enumeration Text="Differenzhysterese" Value="3" Id="%ENID%" />
+                  <!-- Trigger wird immer 1, egal ob durch 0 oder 1 getriggert -->
+                  <Enumeration Text="Trigger" Value="7" Id="%ENID%" />
                   <Enumeration Text="Konstante (für Formeln)" Value="5" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
               <ParameterType Id="%AID%_PT-InputConvSpecial" Name="InputConvSpecial">
                 <TypeRestriction Base="Value" SizeInBit="4">
                   <Enumeration Text="Einzelwerte" Value="4" Id="%ENID%" />
+                  <!-- Trigger wird immer 1, egal ob durch 0 oder 1 getriggert -->
+                  <Enumeration Text="Trigger" Value="7" Id="%ENID%" />
                   <Enumeration Text="Konstante (für Formeln)" Value="5" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
@@ -177,6 +185,7 @@
                 <TypeRestriction Base="Value" SizeInBit="8">
                   <Enumeration Text="DPT 1.xxx (Schalten)" Value="0" Id="%ENID%" />
                   <Enumeration Text="DPT 2.xxx (Zwangsführung)" Value="1" Id="%ENID%" />
+                  <Enumeration Text="DPT 3.xxx (Dimmen)" Value="17" Id="%ENID%" />
                   <Enumeration Text="DPT 5.xxx (1-Byte-Wert)" Value="2" Id="%ENID%" />
                   <Enumeration Text="DPT 5.001 (Prozent)" Value="3" Id="%ENID%" />
                   <Enumeration Text="DPT 6.xxx (1-Byte-Wert-Vorzeichen)" Value="4" Id="%ENID%" />
@@ -194,6 +203,7 @@
                 <TypeRestriction Base="Value" SizeInBit="8">
                   <Enumeration Text="DPT 1.xxx (Schalten)" Value="0" Id="%ENID%" />
                   <Enumeration Text="DPT 2.xxx (Zwangsführung)" Value="1" Id="%ENID%" />
+                  <Enumeration Text="DPT 3.xxx (Dimmen)" Value="17" Id="%ENID%" />
                   <Enumeration Text="DPT 5.xxx (1-Byte-Wert)" Value="2" Id="%ENID%" />
                   <Enumeration Text="DPT 5.001 (Prozentwert)" Value="3" Id="%ENID%" />
                   <Enumeration Text="DPT 6.xxx (1-Byte-Wert-Vorzeichen)" Value="4" Id="%ENID%" />
@@ -263,21 +273,22 @@
               <!-- <ParameterType Id="%AID%_PT-TimeBasedTime" Name="TimeBasedTime">
                 <TypeNumber SizeInBit="32" Type="signedInt" minInclusive="0" maxInclusive="32767" />
               </ParameterType> -->
-              <ParameterType Id="%AID%_PT-ValueDpt3" Name="ValueDpt3">
-                <TypeRestriction Base="Value" SizeInBit="4">
-                  <Enumeration Text="nicht genutzt" Value="4" Id="%ENID%" />
-                  <Enumeration Text="normal AUS (00)" Value="0" Id="%ENID%" />
-                  <Enumeration Text="normal EIN (01)" Value="1" Id="%ENID%" />
-                  <Enumeration Text="priorität AUS (10)" Value="2" Id="%ENID%" />
-                  <Enumeration Text="priorität EIN (11)" Value="3" Id="%ENID%" />
+              <ParameterType Id="%AID%_PT-ValueDpt3Dir" Name="ValueDpt3Dir">
+                <TypeRestriction Base="Value" SizeInBit="5">
+                  <Enumeration Text="dunkler" Value="0" Id="%ENID%" />
+                  <Enumeration Text="heller" Value="1" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-ValueDpt3Out" Name="ValueDpt3Out">
-                <TypeRestriction Base="Value" SizeInBit="4">
-                  <Enumeration Text="normal AUS (00)" Value="0"    Id="%ENID%" />
-                  <Enumeration Text="normal EIN (01)" Value="1"    Id="%ENID%" />
-                  <Enumeration Text="priorität AUS (10)" Value="2" Id="%ENID%" />
-                  <Enumeration Text="priorität EIN (11)" Value="3" Id="%ENID%" />
+              <ParameterType Id="%AID%_PT-ValueDpt3Dim" Name="ValueDpt3Dim">
+                <TypeRestriction Base="Value" SizeInBit="3">
+                  <Enumeration Text="Stop" Value="0" Id="%ENID%" />
+                  <Enumeration Text="100%" Value="1" Id="%ENID%" />
+                  <Enumeration Text="50%" Value="2" Id="%ENID%" />
+                  <Enumeration Text="25%" Value="3" Id="%ENID%" />
+                  <Enumeration Text="13%" Value="4" Id="%ENID%" />
+                  <Enumeration Text="6%" Value="5" Id="%ENID%" />
+                  <Enumeration Text="3%" Value="6" Id="%ENID%" />
+                  <Enumeration Text="2%" Value="7" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
               <ParameterType Id="%AID%_PT-ValueSceneIn" Name="ValueSceneIn">

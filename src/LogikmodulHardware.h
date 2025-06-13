@@ -1,18 +1,12 @@
 #pragma once
 
-#ifdef BOARD_KONNEKTION_TEST
-    #define PROG_LED_PIN A3
-    #define PROG_LED_PIN_ACTIVE_ON HIGH
-    #define PROG_BUTTON_PIN 38
-    #define PROG_BUTTON_PIN_INTERRUPT_ON FALLING
-    // #define KNX_UART_RX_PIN 0
-    // #define KNX_UART_TX_PIN 1
-    #define HARDWARE_NAME "KONNEKTING-TEST"
+#ifndef KNX_UART_NUM
+    #define KNX_UART_NUM 0
 #endif
 
 #ifndef BOARD_ENDUSER
 
-    #include <OpenKNXHardware.h>
+    // #include <OpenKNXHardware.h>
 
     // // Board specific definitions
     // // #define BOARD_MASIFI
@@ -122,39 +116,6 @@
         #define I2C_RGBLED_DEVICE_ADDRESS 0x60  // Address of PCA9632 RBGW-LED-Driver
     #endif
 
-    // Sensormodul auf RP2040 Basis produktiv
-    #ifdef BOARD_MASIFI_V40
-        #define PROG_LED_PIN 1
-        #define PROG_LED_PIN_ACTIVE_ON HIGH
-        #define PROG_BUTTON_PIN 0
-        #define PROG_BUTTON_PIN_INTERRUPT_ON FALLING
-        #define SAVE_INTERRUPT_PIN 29
-        // #define INFO_LED_PIN 38
-        // #define INFO_LED_PIN_ACTIVE_ON HIGH
-        // #define COUNT_1WIRE_BUSMASTER 1
-        // #define COUNT_1WIRE_CHANNEL 30
-        // #define COUNT_PM_CHANNEL 6
-        // #define COUNT_LOG_CHANNEL 99
-        #define KNX_UART_RX_PIN 17
-        #define KNX_UART_TX_PIN 16
-        #define KNX_I2C_SDA_PIN 20
-        #define KNX_I2C_SCL_PIN 21
-        // Buzzer
-        #define BUZZER_PIN 27
-        // #define I2C_1WIRE_DEVICE_ADDRESSS 0x18  // Address of DS2484 1-Wire-Busmaster chip
-        // #define I2C_EEPROM_DEVICE_ADDRESSS 0x50 // Address of 24LC256 eeprom chip
-        #define I2C_RGBLED_DEVICE_ADDRESS 0x60 // Address of PCA9632 RBGW-LED-Driver
-        // #define HW_ANALOG_ID 26
-        // #define HW_REVISION_ID1 10
-        // #define HW_REVISION_ID2 11
-        // #define HW_REVISION_ID3 12
-        #define SmartMF_HardwareVariant_PIN 26
-        #define SmartMF_HardwareRevision_ID1 10
-        #define SmartMF_HardwareRevision_ID2 11
-        #define SmartMF_HardwareRevision_ID3 12
-
-    #endif
-
     // Sensormodul-Breakout-Board
     #ifdef BOARD_MASIFI_SENSOR_BREAKOUT
         #define PROG_LED_PIN 1
@@ -224,20 +185,6 @@
         #define I2C_RGBLED_DEVICE_ADDRESS 0x60 // Address of PCA9632 RBGW-LED-Driver
     #endif
 
-    #ifdef OKNXHW_PIPICO_BCU_CONNECTOR
-        #define BUZZER_PIN 27
-    #endif
-
-    #ifdef BOARD_SMARTMF_1TE_RP2040
-        #define PROG_LED_PIN 1
-        #define PROG_LED_PIN_ACTIVE_ON HIGH
-        #define PROG_BUTTON_PIN 0
-        #define PROG_BUTTON_PIN_INTERRUPT_ON FALLING
-        #define SAVE_INTERRUPT_PIN 29
-        #define KNX_UART_RX_PIN 17
-        #define KNX_UART_TX_PIN 16
-    #endif
-
     // HF-Firmware-Test auf RP2040-Sensormodul Basis (reiner Test)
     #ifdef BOARD_MASIFI_PICO_SEN_PM_TEST
         #define PROG_LED_PIN 12
@@ -302,37 +249,6 @@
     // #define COUNT_LOG_CHANNEL 80
     // Buzzer
     // #define I2C_EEPROM_DEVICE_ADDRESSS 0x50 // Address of 24LC256 eeprom chip
-    #endif
-
-    // HFPM-Board fuer das Gehaeuse
-    #ifdef BOARD_MASIFI_HFPM_DEVEL2
-        #define PROG_LED_PIN 18
-        #define PROG_LED_PIN_ACTIVE_ON HIGH
-        #define PROG_BUTTON_PIN 17
-        #define PROG_BUTTON_PIN_INTERRUPT_ON FALLING
-        // #define INFO_LED_PIN 9
-        // #define INFO_LED_PIN_ACTIVE_ON HIGH
-        #define PRESENCE_LED_PIN 0
-        #define PRESENCE_LED_PIN_ACTIVE_ON HIGH
-        #define MOVE_LED_PIN 1
-        #define MOVE_LED_PIN_ACTIVE_ON HIGH
-        #define KNX_UART_TX_PIN 12
-        #define KNX_UART_RX_PIN 13
-        #define I2C_SDA_PIN 26 // I2C1
-        #define I2C_SCL_PIN 27 // I2C1
-        #define HF_UART_TX_PIN 4
-        #define HF_UART_RX_PIN 5
-        #define HF_S1_PIN 2
-        #define HF_S2_PIN 3
-        #define HF_POWER_PIN 10
-        #define SAVE_INTERRUPT_PIN 11
-        #define SmartMF_HardwareVariant_PIN 29
-        #define SmartMF_HardwareRevision_ID1 22
-        #define SmartMF_HardwareRevision_ID2 23
-        #define SmartMF_HardwareRevision_ID3 24
-
-    // #define SENSOR_I2C_OPT300x Wire1
-    // #define SENSOR_I2C_VEML7700 Wire1
     #endif
 
     #ifdef BOARD_ABTOOLS_FINGERPRINT_V13

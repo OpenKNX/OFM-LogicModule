@@ -47,12 +47,14 @@
               <!-- Parameter for input E1 -->
               <Union SizeInBit="64">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="%ParamOffset+13%" BitOffset="0" />
+                <!-- Delta values -->
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP27+115%" Name="f%C%E%En%LowDelta" ParameterType="%AID%_PT-Delta" Offset="0" BitOffset="0" Text="Von-Wert" Value="-10" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP27+116%" Name="f%C%E%En%HighDelta" ParameterType="%AID%_PT-Delta" Offset="4" BitOffset="0" Text="Bis-Wert" Value="10" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP2+373%" Name="f%C%E%En%LowDeltaFloat" ParameterType="%AID%_PT-ValueDpt9" Offset="0" BitOffset="0" Text="Von-Wert" Value="-10" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP2+374%" Name="f%C%E%En%HighDeltaFloat" ParameterType="%AID%_PT-ValueDpt9" Offset="4" BitOffset="0" Text="Bis-Wert" Value="10" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP2+423%" Name="f%C%E%En%LowDeltaDouble" ParameterType="%AID%_PT-ValueDpt14" Offset="0" BitOffset="0" Text="Von-Wert" Value="-10" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP2+424%" Name="f%C%E%En%HighDeltaDouble" ParameterType="%AID%_PT-ValueDpt14" Offset="4" BitOffset="0" Text="Bis-Wert" Value="10" />
+                <!-- Valid checkboxes -->
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+281%" Name="f%C%E%En%Low0Valid" ParameterType="%AID%_PT-CheckBox" Offset="7" BitOffset="0" Text="Nächste Zeile auswerten?" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+282%" Name="f%C%E%En%Low1Valid" ParameterType="%AID%_PT-CheckBox" Offset="7" BitOffset="1" Text="Nächste Zeile auswerten?" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+283%" Name="f%C%E%En%Low2Valid" ParameterType="%AID%_PT-CheckBox" Offset="7" BitOffset="2" Text="Nächste Zeile auswerten?" Value="0" />
@@ -61,11 +63,24 @@
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+286%" Name="f%C%E%En%Low5Valid" ParameterType="%AID%_PT-CheckBox" Offset="7" BitOffset="5" Text="Nächste Zeile auswerten?" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+287%" Name="f%C%E%En%Low6Valid" ParameterType="%AID%_PT-CheckBox" Offset="7" BitOffset="6" Text="Nächste Zeile auswerten?" Value="0" />
                 <!-- <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+288%" Name="f%C%E%En%Low7Valid" ParameterType="%AID%_PT-CheckBox" Offset="7" BitOffset="7" Text="Nächste Zeile auswerten?" Value="0" /> -->
+                <!-- Dpt 2 -->
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+010%" Name="f%C%E%En%Low0Dpt2" ParameterType="%AID%_PT-ValueDpt2" Offset="0" BitOffset="0" Text="Eingang ist EIN, wenn Wert gleich" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP-3+098%" Name="f%C%E%En%Low1Dpt2" ParameterType="%AID%_PT-ValueDpt2" Offset="1" BitOffset="0" Text="... oder wenn Wert gleich " Value="4" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP-3+099%" Name="f%C%E%En%Low2Dpt2" ParameterType="%AID%_PT-ValueDpt2" Offset="2" BitOffset="0" Text="... oder wenn Wert gleich " Value="4" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP-3+100%" Name="f%C%E%En%Low3Dpt2" ParameterType="%AID%_PT-ValueDpt2" Offset="3" BitOffset="0" Text="... oder wenn Wert gleich " Value="4" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+289%" Name="f%C%E%En%LowDpt2Fix" ParameterType="%AID%_PT-ValueDpt2Out" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" />
+                <!-- Dpt 3 -->
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+491%" Name="f%C%E%En%Low0Dpt3Dir" ParameterType="%AID%_PT-ValueDpt3Dir" Offset="0" BitOffset="0" Text="Eingang ist EIN, wenn Wert gleich" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+493%" Name="f%C%E%En%Low0Dpt3Dim" ParameterType="%AID%_PT-ValueDpt3Dim" Offset="0" BitOffset="5" Text="" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+495%" Name="f%C%E%En%Low1Dpt3Dir" ParameterType="%AID%_PT-ValueDpt3Dir" Offset="1" BitOffset="0" Text="... oder wenn Wert gleich " Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+497%" Name="f%C%E%En%Low1Dpt3Dim" ParameterType="%AID%_PT-ValueDpt3Dim" Offset="1" BitOffset="5" Text="" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+499%" Name="f%C%E%En%Low2Dpt3Dir" ParameterType="%AID%_PT-ValueDpt3Dir" Offset="2" BitOffset="0" Text="... oder wenn Wert gleich " Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+501%" Name="f%C%E%En%Low2Dpt3Dim" ParameterType="%AID%_PT-ValueDpt3Dim" Offset="2" BitOffset="5" Text="" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+503%" Name="f%C%E%En%Low3Dpt3Dir" ParameterType="%AID%_PT-ValueDpt3Dir" Offset="3" BitOffset="0" Text="... oder wenn Wert gleich " Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+505%" Name="f%C%E%En%Low3Dpt3Dim" ParameterType="%AID%_PT-ValueDpt3Dim" Offset="3" BitOffset="5" Text="" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+507%" Name="f%C%E%En%LowDpt3FixDir" ParameterType="%AID%_PT-ValueDpt3Dir" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+509%" Name="f%C%E%En%LowDpt3FixDim" ParameterType="%AID%_PT-ValueDpt3Dim" Offset="0" BitOffset="5" Text="" Value="0" />
+                <!-- Dpt 5 -->
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+011%" Name="f%C%E%En%LowDpt5" ParameterType="%AID%_PT-ValueDpt5" Offset="0" BitOffset="0" Text="Von-Wert" Value="128" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+012%" Name="f%C%E%En%HighDpt5" ParameterType="%AID%_PT-ValueDpt5" Offset="4" BitOffset="0" Text="Bis-Wert" Value="255" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+290%" Name="f%C%E%En%Low0Dpt5In" ParameterType="%AID%_PT-ValueDpt5" Offset="0" BitOffset="0" Text="Eingang ist EIN bei Wert" Value="0" />
@@ -76,6 +91,7 @@
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+295%" Name="f%C%E%En%Low5Dpt5In" ParameterType="%AID%_PT-ValueDpt5" Offset="5" BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+296%" Name="f%C%E%En%Low6Dpt5In" ParameterType="%AID%_PT-ValueDpt5" Offset="6" BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+297%" Name="f%C%E%En%LowDpt5Fix" ParameterType="%AID%_PT-ValueDpt5" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" />
+                <!-- Dpt 5.001 -->
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+013%" Name="f%C%E%En%LowDpt5001" ParameterType="%AID%_PT-ValueDpt5001" Offset="0" BitOffset="0" Text="Von-Wert" Value="50" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+014%" Name="f%C%E%En%HighDpt5001" ParameterType="%AID%_PT-ValueDpt5001" Offset="4" BitOffset="0" Text="Bis-Wert" Value="100" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+298%" Name="f%C%E%En%Low0Dpt5xIn" ParameterType="%AID%_PT-ValueDpt5001" Offset="0" BitOffset="0" Text="Eingang ist EIN bei Wert" Value="0" />
@@ -86,6 +102,7 @@
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+303%" Name="f%C%E%En%Low5Dpt5xIn" ParameterType="%AID%_PT-ValueDpt5001" Offset="5" BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+304%" Name="f%C%E%En%Low6Dpt5xIn" ParameterType="%AID%_PT-ValueDpt5001" Offset="6" BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+305%" Name="f%C%E%En%LowDpt5xFix" ParameterType="%AID%_PT-ValueDpt5001" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" />
+                <!-- Dpt 6 -->
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+015%" Name="f%C%E%En%LowDpt6" ParameterType="%AID%_PT-ValueDpt6" Offset="0" BitOffset="0" Text="Von-Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+016%" Name="f%C%E%En%HighDpt6" ParameterType="%AID%_PT-ValueDpt6" Offset="4" BitOffset="0" Text="Bis-Wert" Value="127" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+306%" Name="f%C%E%En%Low0Dpt6In" ParameterType="%AID%_PT-ValueDpt6" Offset="0" BitOffset="0" Text="Eingang ist EIN bei Wert" Value="0" />
@@ -96,30 +113,37 @@
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+311%" Name="f%C%E%En%Low5Dpt6In" ParameterType="%AID%_PT-ValueDpt6" Offset="5" BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+312%" Name="f%C%E%En%Low6Dpt6In" ParameterType="%AID%_PT-ValueDpt6" Offset="6" BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+313%" Name="f%C%E%En%LowDpt6Fix" ParameterType="%AID%_PT-ValueDpt6" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" />
+                <!-- Dpt 7 -->
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+017%" Name="f%C%E%En%LowDpt7" ParameterType="%AID%_PT-ValueDpt7" Offset="0" BitOffset="0" Text="Von-Wert" Value="32768" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+018%" Name="f%C%E%En%HighDpt7" ParameterType="%AID%_PT-ValueDpt7" Offset="4" BitOffset="0" Text="Bis-Wert" Value="65535" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+314%" Name="f%C%E%En%Low0Dpt7In" ParameterType="%AID%_PT-ValueDpt7" Offset="0" BitOffset="0" Text="Eingang ist EIN bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+315%" Name="f%C%E%En%Low1Dpt7In" ParameterType="%AID%_PT-ValueDpt7" Offset="2" BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+316%" Name="f%C%E%En%Low2Dpt7In" ParameterType="%AID%_PT-ValueDpt7" Offset="4" BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+317%" Name="f%C%E%En%LowDpt7Fix" ParameterType="%AID%_PT-ValueDpt7" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" />
+                <!-- Dpt 8 -->
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+019%" Name="f%C%E%En%LowDpt8" ParameterType="%AID%_PT-ValueDpt8" Offset="0" BitOffset="0" Text="Von-Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+020%" Name="f%C%E%En%HighDpt8" ParameterType="%AID%_PT-ValueDpt8" Offset="4" BitOffset="0" Text="Bis-Wert" Value="32767" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+318%" Name="f%C%E%En%Low0Dpt8In" ParameterType="%AID%_PT-ValueDpt8" Offset="0" BitOffset="0" Text="Eingang ist EIN bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+319%" Name="f%C%E%En%Low1Dpt8In" ParameterType="%AID%_PT-ValueDpt8" Offset="2" BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+320%" Name="f%C%E%En%Low2Dpt8In" ParameterType="%AID%_PT-ValueDpt8" Offset="4" BitOffset="0" Text="... oder bei Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+321%" Name="f%C%E%En%LowDpt8Fix" ParameterType="%AID%_PT-ValueDpt8" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" />
+                <!-- Dpt 9 -->
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+021%" Name="f%C%E%En%LowDpt9" ParameterType="%AID%_PT-ValueDpt9" Offset="0" BitOffset="0" Text="Von-Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+022%" Name="f%C%E%En%HighDpt9" ParameterType="%AID%_PT-ValueDpt9" Offset="4" BitOffset="0" Text="Bis-Wert" Value="670760" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+322%" Name="f%C%E%En%LowDpt9Fix" ParameterType="%AID%_PT-ValueDpt9" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" />
+                <!-- Dpt 12 -->
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP9+405%" Name="f%C%E%En%LowDpt12" ParameterType="%AID%_PT-ValueDpt12" Offset="0" BitOffset="0" Text="Von-Wert" Value="2147483648" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP9+406%" Name="f%C%E%En%HighDpt12" ParameterType="%AID%_PT-ValueDpt12" Offset="4" BitOffset="0" Text="Bis-Wert" Value="4294967295" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP9+407%" Name="f%C%E%En%LowDpt12Fix" ParameterType="%AID%_PT-ValueDpt12" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" />
+                <!-- Dpt 13 -->
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP9+408%" Name="f%C%E%En%LowDpt13" ParameterType="%AID%_PT-ValueDpt13" Offset="0" BitOffset="0" Text="Von-Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP9+409%" Name="f%C%E%En%HighDpt13" ParameterType="%AID%_PT-ValueDpt13" Offset="4" BitOffset="0" Text="Bis-Wert" Value="2147483647" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP9+410%" Name="f%C%E%En%LowDpt13Fix" ParameterType="%AID%_PT-ValueDpt13" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" />
+                <!-- Dpt 14 -->
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP9+411%" Name="f%C%E%En%LowDpt14" ParameterType="%AID%_PT-ValueDpt14" Offset="0" BitOffset="0" Text="Von-Wert" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP9+412%" Name="f%C%E%En%HighDpt14" ParameterType="%AID%_PT-ValueDpt14" Offset="4" BitOffset="0" Text="Bis-Wert" Value="1000000000" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP9+413%" Name="f%C%E%En%LowDpt14Fix" ParameterType="%AID%_PT-ValueDpt14" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" />
+                <!-- Dpt 17 -->
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+023%" Name="f%C%E%En%Low0Dpt17" ParameterType="%AID%_PT-ValueSceneIn" Offset="0" BitOffset="0" Text="Eingang ist EIN bei Szene" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP7+101%" Name="f%C%E%En%Low1Dpt17" ParameterType="%AID%_PT-ValueSceneIn" Offset="1" BitOffset="0" Text="... oder bei Szene" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP7+102%" Name="f%C%E%En%Low2Dpt17" ParameterType="%AID%_PT-ValueSceneIn" Offset="2" BitOffset="0" Text="... oder bei Szene" Value="0" />
@@ -129,6 +153,7 @@
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP7+106%" Name="f%C%E%En%Low6Dpt17" ParameterType="%AID%_PT-ValueSceneIn" Offset="6" BitOffset="0" Text="... oder bei Szene" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP7+107%" Name="f%C%E%En%Low7Dpt17" ParameterType="%AID%_PT-ValueSceneIn" Offset="7" BitOffset="0" Text="... oder bei Szene" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+323%" Name="f%C%E%En%LowDpt17Fix" ParameterType="%AID%_PT-ValueSceneOut" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="1" />
+                <!-- Dpt RGB -->
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+024%" Name="f%C%E%En%LowDptRGB" ParameterType="%AID%_PT-ValueRGB" Offset="0" BitOffset="0" Text="Von-Wert" Value="8388608" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+025%" Name="f%C%E%En%HighDptRGB" ParameterType="%AID%_PT-ValueRGB" Offset="4" BitOffset="0" Text="Bis-Wert" Value="16777216" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+324%" Name="f%C%E%En%LowDptRGBFix" ParameterType="%AID%_PT-ValueRGB" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" />
@@ -273,6 +298,16 @@
               <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP44+324%_R-%TT%%CC%%PPP44+324%01" RefId="%AID%_UP-%TT%%CC%%PPP44+324%" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP1+459%_R-%TT%%CC%%PPP1+459%01" RefId="%AID%_UP-%TT%%CC%%PPP1+459%" />
               <ParameterRef Id="%AID%_P-%TT%%CC%%PPP1+461%_R-%TT%%CC%%PPP1+461%01" RefId="%AID%_P-%TT%%CC%%PPP1+461%" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP1+491%_R-%TT%%CC%%PPP1+491%01" RefId="%AID%_UP-%TT%%CC%%PPP1+491%" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP1+493%_R-%TT%%CC%%PPP1+493%01" RefId="%AID%_UP-%TT%%CC%%PPP1+493%" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP1+495%_R-%TT%%CC%%PPP1+495%01" RefId="%AID%_UP-%TT%%CC%%PPP1+495%" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP1+497%_R-%TT%%CC%%PPP1+497%01" RefId="%AID%_UP-%TT%%CC%%PPP1+497%" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP1+499%_R-%TT%%CC%%PPP1+499%01" RefId="%AID%_UP-%TT%%CC%%PPP1+499%" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP1+501%_R-%TT%%CC%%PPP1+501%01" RefId="%AID%_UP-%TT%%CC%%PPP1+501%" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP1+503%_R-%TT%%CC%%PPP1+503%01" RefId="%AID%_UP-%TT%%CC%%PPP1+503%" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP1+505%_R-%TT%%CC%%PPP1+505%01" RefId="%AID%_UP-%TT%%CC%%PPP1+505%" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP1+507%_R-%TT%%CC%%PPP1+507%01" RefId="%AID%_UP-%TT%%CC%%PPP1+507%" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP1+509%_R-%TT%%CC%%PPP1+509%01" RefId="%AID%_UP-%TT%%CC%%PPP1+509%" />
             </ParameterRefs>
             <ParameterCalculations>
               <ParameterCalculation Id="%AID%_PC-%TT%%CC%0%En%" Language="JavaScript" Name="CalcRelAbs%CC%E%En%" RLTransformationFunc="LOG_CalcAbsFromRel" RLTransformationParameters="{&quot;OwnKO&quot;: %K%En-1%%}" LRTransformationFunc="LOG_CalcRelFromAbs" LRTransformationParameters="{&quot;OwnKO&quot;: %K%En-1%%}">
@@ -293,6 +328,7 @@
             <ComObjectRefs>
               <ComObjectRef Id="%AID%_O-%TT%%CC%%KKK+0%_R-%TT%%CC%%KKK+0%01" RefId="%AID%_O-%TT%%CC%%KKK+0%" Text="{{0:Eingang %En%}}" ObjectSize="1 Bit" DatapointType="DPST-1-1" TextParameterRefId="%AID%_P-%TT%%CC%%PPP1+128%_R-%TT%%CC%%PPP1+128%01" />
               <ComObjectRef Id="%AID%_O-%TT%%CC%%KKK+0%_R-%TT%%CC%%KKK+0%02" RefId="%AID%_O-%TT%%CC%%KKK+0%" Text="{{0:Eingang %En%}}" ObjectSize="2 Bit" DatapointType="DPST-2-1" TextParameterRefId="%AID%_P-%TT%%CC%%PPP1+128%_R-%TT%%CC%%PPP1+128%01" />
+              <ComObjectRef Id="%AID%_O-%TT%%CC%%KKK+0%_R-%TT%%CC%%KKK+0%14" RefId="%AID%_O-%TT%%CC%%KKK+0%" Text="{{0:Eingang %En%}}" ObjectSize="4 Bit" DatapointType="DPST-3-7" TextParameterRefId="%AID%_P-%TT%%CC%%PPP1+128%_R-%TT%%CC%%PPP1+128%01" />
               <ComObjectRef Id="%AID%_O-%TT%%CC%%KKK+0%_R-%TT%%CC%%KKK+0%03" RefId="%AID%_O-%TT%%CC%%KKK+0%" Text="{{0:Eingang %En%}}" ObjectSize="1 Byte" DatapointType="DPST-5-5" TextParameterRefId="%AID%_P-%TT%%CC%%PPP1+128%_R-%TT%%CC%%PPP1+128%01" />
               <ComObjectRef Id="%AID%_O-%TT%%CC%%KKK+0%_R-%TT%%CC%%KKK+0%04" RefId="%AID%_O-%TT%%CC%%KKK+0%" Text="{{0:Eingang %En%}}" ObjectSize="1 Byte" DatapointType="DPST-5-1" TextParameterRefId="%AID%_P-%TT%%CC%%PPP1+128%_R-%TT%%CC%%PPP1+128%01" />
               <ComObjectRef Id="%AID%_O-%TT%%CC%%KKK+0%_R-%TT%%CC%%KKK+0%05" RefId="%AID%_O-%TT%%CC%%KKK+0%" Text="{{0:Eingang %En%}}" ObjectSize="1 Byte" DatapointType="DPST-6-10" TextParameterRefId="%AID%_P-%TT%%CC%%PPP1+128%_R-%TT%%CC%%PPP1+128%01" />
@@ -456,7 +492,7 @@
                             <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP1+444%_R-%TT%%CC%%PPP1+444%01" HelpContext="%DOC%" IndentLevel="1" />
                             <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%%PPP1+446%_R-%TT%%CC%%PPP1+446%01" SourceParamRefRef="%AID%_UP-%TT%%CC%%PPP1+444%_R-%TT%%CC%%PPP1+444%01" />
                           </when>
-                          <when test="1 9">
+                          <when test="1 9 17">
                             <!-- Konverter special -->
                             <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP2+370%_R-%TT%%CC%%PPP2+370%01" HelpContext="%DOC%" IndentLevel="1" />
                             <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%%PPP1+446%_R-%TT%%CC%%PPP1+446%01" SourceParamRefRef="%AID%_UP-%TT%%CC%%PPP2+370%_R-%TT%%CC%%PPP2+370%01" />
@@ -472,7 +508,7 @@
                             <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%%PPP1+446%_R-%TT%%CC%%PPP1+446%01" SourceParamRefRef="%AID%_UP-%TT%%CC%%PPP1+093%_R-%TT%%CC%%PPP1+093%01" />
                           </when>
                           <!-- soll immer true sein -->
-                          <when test="!=10">
+                          <when test=">=0">
                             <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP1+446%_R-%TT%%CC%%PPP1+446%01">
                               <when test="0">
                                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Das Wertintervall liefert EIN, wenn Eingang %En% zwischen Von-Wert und Bis-Wert liegt." />
@@ -509,7 +545,7 @@
                               </when>
                               <when test="7">
                                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Der Eingang triggert nur die Logik, egal welcher Wert anliegt, der Konverter macht immer ein EIN daraus." />
-                                <ParameterSeparator Id="%AID%_PS-nnn" Text="Formal: EIN bei Eingang %En% gleich 0 oder 1" />
+                                <ParameterSeparator Id="%AID%_PS-nnn" Text="Formal: EIN bei jedem Telegramm am Eingang %En%" />
                               </when>
                             </choose>
                           </when>
@@ -524,12 +560,14 @@
                           <when test="1">
                             <!-- DPT2 -->
                             <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP2+370%_R-%TT%%CC%%PPP2+370%01">
-                              <when test="4">
+                              <when test="4 7">
                                 <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP2+377%_R-%TT%%CC%%PPP2+377%01">
                                   <when test="0">
                                     <ComObjectRefRef RefId="%AID%_O-%TT%%CC%%KKK+0%_R-%TT%%CC%%KKK+0%02" />
                                   </when>
                                 </choose>
+                              </when>
+                              <when test="4">
                                 <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP20+010%_R-%TT%%CC%%PPP20+010%01" HelpContext="%DOC%" IndentLevel="1" />
                                 <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP-3+098%_R-%TT%%CC%%PPP-3+098%01" HelpContext="%DOC%" IndentLevel="1" />
                                 <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP-3+099%_R-%TT%%CC%%PPP-3+099%01" HelpContext="%DOC%" IndentLevel="1" />
@@ -540,10 +578,60 @@
                               </when>
                             </choose>
                           </when>
+                          <when test="17">
+                            <!-- DPT3 -->
+                            <ParameterBlock Id="%AID%_PB-xxx" Layout="Grid" Inline="true">
+                              <Rows>
+                                <Row Id="%AID%_PB-nnn_R-1" Name="Row1" CollapseIfEmpty="true" />
+                                <Row Id="%AID%_PB-nnn_R-2" Name="Row2" CollapseIfEmpty="true" />
+                                <Row Id="%AID%_PB-nnn_R-3" Name="Row3" CollapseIfEmpty="true" />
+                                <Row Id="%AID%_PB-nnn_R-4" Name="Row4" CollapseIfEmpty="true" />
+                              </Rows>
+                              <Columns>
+                                <Column Id="%AID%_PB-nnn_C-1" Name="Col1" Width="1%" />
+                                <Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="44%" />
+                                <Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="30%" />
+                                <Column Id="%AID%_PB-nnn_C-4" Name="Col4" Width="20%" />
+                                <Column Id="%AID%_PB-nnn_C-5" Name="Col5" Width="5%" />
+                              </Columns>
+                              <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP2+370%_R-%TT%%CC%%PPP2+370%01">
+                                <when test="4 7">
+                                  <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP2+377%_R-%TT%%CC%%PPP2+377%01">
+                                    <when test="0">
+                                      <ComObjectRefRef RefId="%AID%_O-%TT%%CC%%KKK+0%_R-%TT%%CC%%KKK+0%14" />
+                                    </when>
+                                  </choose>
+                                </when>
+                                <when test="4">
+                                  <ParameterSeparator Id="%AID%_PS-xxx" Text=" Eingang ist EIN, wenn Wert gleich" Cell="1,2" />
+                                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP1+491%_R-%TT%%CC%%PPP1+491%01" Cell="1,3" HelpContext="Empty" />
+                                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP1+493%_R-%TT%%CC%%PPP1+493%01" Cell="1,4" HelpContext="Empty" />
+                                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP44+281%_R-%TT%%CC%%PPP44+281%01" Cell="1,5" HelpContext="%DOC%" />
+                                  <ParameterSeparator Id="%AID%_PS-xxx" Text=" ... oder wenn Wert gleich" Cell="2,2" />
+                                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP1+495%_R-%TT%%CC%%PPP1+495%01" Cell="2,3" HelpContext="Empty" />
+                                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP1+497%_R-%TT%%CC%%PPP1+497%01" Cell="2,4" HelpContext="Empty" />
+                                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP44+282%_R-%TT%%CC%%PPP44+282%01" Cell="2,5" HelpContext="%DOC%" />
+                                  <ParameterSeparator Id="%AID%_PS-xxx" Text=" ... oder wenn Wert gleich" Cell="3,2" />
+                                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP1+499%_R-%TT%%CC%%PPP1+499%01" Cell="3,3" HelpContext="Empty" />
+                                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP1+501%_R-%TT%%CC%%PPP1+501%01" Cell="3,4" HelpContext="Empty" />
+                                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP44+283%_R-%TT%%CC%%PPP44+283%01" Cell="3,5" HelpContext="%DOC%" />
+                                  <ParameterSeparator Id="%AID%_PS-xxx" Text=" ... oder wenn Wert gleich" Cell="4,2" />
+                                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP1+503%_R-%TT%%CC%%PPP1+503%01" Cell="4,3" HelpContext="Empty" />
+                                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP1+505%_R-%TT%%CC%%PPP1+505%01" Cell="4,4" HelpContext="Empty" />
+                                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP44+284%_R-%TT%%CC%%PPP44+284%01" Cell="4,5" HelpContext="%DOC%" />
+                                </when>
+                                <when test="5">
+                                  <ParameterSeparator Id="%AID%_PS-xxx" Text=" Eingang ist konstant" Cell="1,2" />
+                                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP1+507%_R-%TT%%CC%%PPP1+507%01" Cell="1,3" HelpContext="Empty" />
+                                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP1+509%_R-%TT%%CC%%PPP1+509%01" Cell="1,4" HelpContext="Empty" />
+                                </when>
+                              </choose>
+                            </ParameterBlock>
+                          </when>
                           <when test="2">
                             <!-- DPT5 -->
                             <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP1+446%_R-%TT%%CC%%PPP1+446%01">
-                              <when test="0 1 2 3 4">
+                              <when test="0 1 2 3 4 7">
                                 <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP2+377%_R-%TT%%CC%%PPP2+377%01">
                                   <when test="0">
                                     <ComObjectRefRef RefId="%AID%_O-%TT%%CC%%KKK+0%_R-%TT%%CC%%KKK+0%03" />
@@ -613,7 +701,7 @@
                           <when test="3">
                             <!-- DPT5.001 -->
                             <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP1+446%_R-%TT%%CC%%PPP1+446%01">
-                              <when test="0 1 2 3 4">
+                              <when test="0 1 2 3 4 5 7">
                                 <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP2+377%_R-%TT%%CC%%PPP2+377%01">
                                   <when test="0">
                                     <ComObjectRefRef RefId="%AID%_O-%TT%%CC%%KKK+0%_R-%TT%%CC%%KKK+0%04" />
@@ -683,7 +771,7 @@
                           <when test="4">
                             <!-- DPT6 -->
                             <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP1+446%_R-%TT%%CC%%PPP1+446%01">
-                              <when test="0 1 2 3 4">
+                              <when test="0 1 2 3 4 7">
                                 <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP2+377%_R-%TT%%CC%%PPP2+377%01">
                                   <when test="0">
                                     <ComObjectRefRef RefId="%AID%_O-%TT%%CC%%KKK+0%_R-%TT%%CC%%KKK+0%05" />
@@ -753,7 +841,7 @@
                           <when test="5">
                             <!-- DPT7 -->
                             <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP1+446%_R-%TT%%CC%%PPP1+446%01">
-                              <when test="0 1 2 3 4">
+                              <when test="0 1 2 3 4 7">
                                 <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP2+377%_R-%TT%%CC%%PPP2+377%01">
                                   <when test="0">
                                     <ComObjectRefRef RefId="%AID%_O-%TT%%CC%%KKK+0%_R-%TT%%CC%%KKK+0%06" />
@@ -807,7 +895,7 @@
                           <when test="6">
                             <!-- DPT8 -->
                             <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP1+446%_R-%TT%%CC%%PPP1+446%01">
-                              <when test="0 1 2 3 4">
+                              <when test="0 1 2 3 4 7">
                                 <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP2+377%_R-%TT%%CC%%PPP2+377%01">
                                   <when test="0">
                                     <ComObjectRefRef RefId="%AID%_O-%TT%%CC%%KKK+0%_R-%TT%%CC%%KKK+0%07" />
@@ -861,7 +949,7 @@
                           <when test="7">
                             <!-- DPT9 -->
                             <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP1+446%_R-%TT%%CC%%PPP1+446%01">
-                              <when test="0 1 2 3">
+                              <when test="0 1 2 3 7">
                                 <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP2+377%_R-%TT%%CC%%PPP2+377%01">
                                   <when test="0">
                                     <ComObjectRefRef RefId="%AID%_O-%TT%%CC%%KKK+0%_R-%TT%%CC%%KKK+0%08" />
@@ -892,7 +980,7 @@
                           <when test="13">
                             <!-- DPT12 -->
                             <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP1+446%_R-%TT%%CC%%PPP1+446%01">
-                              <when test="0 1 2 3">
+                              <when test="0 1 2 3 7">
                                 <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP2+377%_R-%TT%%CC%%PPP2+377%01">
                                   <when test="0">
                                     <ComObjectRefRef RefId="%AID%_O-%TT%%CC%%KKK+0%_R-%TT%%CC%%KKK+0%11" />
@@ -923,7 +1011,7 @@
                           <when test="14">
                             <!-- DPT13 -->
                             <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP1+446%_R-%TT%%CC%%PPP1+446%01">
-                              <when test="0 1 2 3">
+                              <when test="0 1 2 3 7">
                                 <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP2+377%_R-%TT%%CC%%PPP2+377%01">
                                   <when test="0">
                                     <ComObjectRefRef RefId="%AID%_O-%TT%%CC%%KKK+0%_R-%TT%%CC%%KKK+0%12" />
@@ -954,7 +1042,7 @@
                           <when test="15">
                             <!-- DPT14 -->
                             <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP1+446%_R-%TT%%CC%%PPP1+446%01">
-                              <when test="0 1 2 3">
+                              <when test="0 1 2 3 7">
                                 <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP2+377%_R-%TT%%CC%%PPP2+377%01">
                                   <when test="0">
                                     <ComObjectRefRef RefId="%AID%_O-%TT%%CC%%KKK+0%_R-%TT%%CC%%KKK+0%13" />
@@ -985,7 +1073,7 @@
                           <when test="9">
                             <!-- DPT17 -->
                             <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP2+370%_R-%TT%%CC%%PPP2+370%01">
-                              <when test="4">
+                              <when test="4 7">
                                 <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP2+377%_R-%TT%%CC%%PPP2+377%01">
                                   <when test="0">
                                     <ComObjectRefRef RefId="%AID%_O-%TT%%CC%%KKK+0%_R-%TT%%CC%%KKK+0%09" />
@@ -1010,7 +1098,7 @@
                           <when test="10">
                             <!-- DPT232 -->
                             <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP1+446%_R-%TT%%CC%%PPP1+446%01">
-                              <when test="0 1 2 3">
+                              <when test="0 1 2 3 7">
                                 <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP2+377%_R-%TT%%CC%%PPP2+377%01">
                                   <when test="0">
                                     <ComObjectRefRef RefId="%AID%_O-%TT%%CC%%KKK+0%_R-%TT%%CC%%KKK+0%10" />
