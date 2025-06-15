@@ -12,9 +12,7 @@ Erscheint nur, wenn der Datum- bzw. Zeitempfang über ein kombiniertes Datum/Zei
 
 Wenn der Datum- bzw. Zeitempfang über ein kombiniertes Datum/Zeit-KO (DPT 19) gewählt worden ist, kann dieses Zeittelegramm auch die Information enthalten, ob gerade die Sommerzeit aktiv ist. Wenn der Zeitgeber im System diese Information mit dem DPT 19-Telegramm mitschicken kann, sollte diese Option gewählt werden.
 
-##### Interne Berechnung (nur für Deutschland)
+##### Interne Berechnung
 
-Erscheint nur, wenn die Zeitzone 'Berlin' gewählt worden ist.
-
-Diese Option kann nur für Deutschland genutzt werden. Sie ist nicht zu verwenden, falls man in der selben Zeitzone wie Deutschland ist, aber in einem anderen Land.
+Diese Option berechnet anhand der eingestellten Zeitzone die Sommerzeit.
 
