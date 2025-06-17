@@ -83,11 +83,17 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 
 Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer das Gesamtdokument lesen muss, um Neuerungen zu erfahren.
 
-09.04.2025: Firmware 3.7, Applikation 3.7:
+16.06.2025: Firmware 3.7, Applikation 3.7:
 
 * NEU: Eingangskonverter für DPT3 (Dimmen)
 * NEU: Ausgangskonverter für DPT3 (Dimmen)
 * NEU: Alle Eingangskonverter können auch als Trigger fungieren (jedes Telegramm triggert die Logik)
+* NEU: Die gleiche Applikation sowohl für TP- wie auch für IP-Geräte
+* NEU: Stark verbesserte KNX-TP-Kommunikation. Viele Telegramme in kurzer Zeit (nicht zu verwechseln mit hoher Buslast) werden jetzt sowohl sendeseitig wie auch empfangsseitig nahezu verlustfrei bewältigt.
+* NEU: Konfigurationstransfer wurde verbessert und vereinfacht
+* NEU: Zeitbehandlung für alle Zeitzonen möglich
+* FIX: Durch die Umgehung eines Bugs in der ETS wird partielles programmieren jetzt immer so schnell wie möglich durchgeführt
+
 
 25.02.2025: Firmware 3.6, Applikation 3.6
 
@@ -406,6 +412,15 @@ Weitere Features:
 ### **OpenKNX**
 
 Dies ist eine Seite mit allgemeinen Parametern, die unter [Applikationsbeschreibung-Common](https://github.com/OpenKNX/OGM-Common/blob/v1/doc/Applikationsbeschreibung-Common.md) beschrieben sind. 
+
+### **Netzwerk**
+
+Die Netzwerkkonfiguration erlaubt IP-Spezifische Einstellungen für KNX-IP-Geräte. Die Logikmodul-Applikation kann sowohl für KNX-TP- wie auch für KNX-IP-Geräte verwendet werden. 
+
+>Wichtig: Die Netzwerkeinstellungen sind zwar immer vorhanden, wirken sich aber nur bei IP-Geräte aus. Für KNX-TP-Geräte kann diese Seite komplett ignoriert werden.
+
+Die Funktionen vom Netzwerk-Modul sind unter [Applikationsbeschreibung-Netzwerk](https://github.com/OpenKNX/OFM-Network/blob/v1/doc/Applikationsbeschreibung-Netzwerk.md) beschrieben.
+
 
 ### **Konfigurationstransfer**
 
