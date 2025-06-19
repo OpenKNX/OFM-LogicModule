@@ -93,7 +93,14 @@ Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer d
 * NEU: Konfigurationstransfer wurde verbessert und vereinfacht
 * NEU: Zeitbehandlung für alle Zeitzonen möglich
 * FIX: Durch die Umgehung eines Bugs in der ETS wird partielles programmieren jetzt immer so schnell wie möglich durchgeführt
+* NEU: Kommunikationsobjekte des Logikmoduls wurden neu geordnet, um eine bessere Trennung von Common zu erreichen. Folgende KO sind betroffen (Umnummerierung passiert beim Update automatisch):
+  * KO 4 "Urlaub" -> KO 15
+  * KO 5 "Welcher Feiertag ist heute" -> KO 16
+  * KO 6 "Welcher Feiertag ist morgen" -> KO 17
+  * KO 8 "LED sperren" -> KO 18
+  * KO 9 "Buzzer sperren" -> KO 19
 
+  >Diese KO-Änderungen haben keinen Einfluss auf die Update-Fähigkeit des Logikmoduls. Sollten allerdings Logiken existieren, die eine interne KO-Verknüpfung mit den alten KO-Nummern hatten, müssen diese Verknüpfungen nun auf die neuen Nummern umgestellt werden. 
 
 25.02.2025: Firmware 3.6, Applikation 3.6
 
@@ -477,10 +484,10 @@ Für die Zeitschaltuhren wird vom Modul eine Berechnung der Feiertage vorgenomme
 
 Ein "Ja" bei dieser Einstellung schaltet 2 Kommunikationsobjekte frei. Über diese Kommunikationsobjekte wird die Nummer eines Feiertags gesendet. Jede gesendete Nummer entspricht genau einem Feiertag, die Nummern entsprechen denen in der Liste von Feiertagseinstellungen (siehe vorheriges Bild).
 
-* KO 5 (Welcher Feiertag ist heute?) sendet, wenn der aktuelle Tag ein Feiertag ist,
-* KO 6 (Welcher Feiertag ist morgen?) sendet, wenn der nächste Tag ein Feiertag ist.
+* KO 16 (Welcher Feiertag ist heute?) sendet, wenn der aktuelle Tag ein Feiertag ist,
+* KO 17 (Welcher Feiertag ist morgen?) sendet, wenn der nächste Tag ein Feiertag ist.
 
-Beide Kommunikationsobjekte (5 und 6) werden immer kurz nach Mitternacht (aber nicht exakt um Mitternacht) neu berechnet. Sie senden eine 0, wenn kein Feiertag ist und sich der Wert geändert hat.
+Beide Kommunikationsobjekte (16 und 17) werden immer kurz nach Mitternacht (aber nicht exakt um Mitternacht) neu berechnet. Sie senden eine 0, wenn kein Feiertag ist und sich der Wert geändert hat.
 
 <!-- DOC -->
 #### **Nach Neuberechnung Feiertagsinfo senden?**
@@ -2272,7 +2279,7 @@ Wird nur angeboten, wenn ein Buzzer vorhanden ist.
 
 Bei einem EIN-Signal wird kein Wert gesendet, sondern der interne Buzzer zur Tonwiedergabe angesprochen. In einem weiteren Feld wird angegeben, in welcher Lautstärke die Tonwiedergabe gestartet oder ob sie gestoppt wird.
 
-Falls der Buzzer gerade über das Kommunikationsobjekt 9 gesperrt ist, wird kein Ton ausgegeben und ein eventueller laufender Ton abgeschaltet.
+Falls der Buzzer gerade über das Kommunikationsobjekt 19 gesperrt ist, wird kein Ton ausgegeben und ein eventueller laufender Ton abgeschaltet.
 
 Falls dieser Kanal als Alarmkanal gekennzeichnet ist, wird ein Ton unabhängig von der Sperre ausgegeben.
 
@@ -2287,7 +2294,7 @@ Bei einem EIN-Signal wird kein Wert gesendet, sondern die interne RBG-LED angesp
 
 In einem weiteren Feld wird die Farbe eingestellt. Ist die Farbe Schwarz eingestellt, wir die LED ausgeschaltet.
 
-Falls die LED gerade über das Kommunikationsobjekt 8 gesperrt ist, wird die LED nicht eingeschaltet und falls sie an ist, wird sie abgeschaltet.
+Falls die LED gerade über das Kommunikationsobjekt 18 gesperrt ist, wird die LED nicht eingeschaltet und falls sie an ist, wird sie abgeschaltet.
 
 Falls dieser Kanal als Alarmkanal gekennzeichnet ist, wird die LED unabhängig von der Sperre eingeschaltet.
 
@@ -2408,7 +2415,7 @@ Wird nur angeboten, wenn ein Buzzer vorhanden ist.
 
 Bei einem AUS-Signal wird kein Wert gesendet, sondern der interne Buzzer zur Tonwiedergabe angesprochen. In einem weiteren Feld wird angegeben, ob die Tonwiedergabe gestartet oder gestoppt wird.
 
-Falls der Buzzer gerade über das Kommunikationsobjekt 9 gesperrt ist, wird kein Ton ausgegeben und ein eventueller laufender Ton abgeschaltet.
+Falls der Buzzer gerade über das Kommunikationsobjekt 19 gesperrt ist, wird kein Ton ausgegeben und ein eventueller laufender Ton abgeschaltet.
 
 Falls dieser Kanal als Alarmkanal gekennzeichnet ist, wird ein Ton unabhängig von der Sperre ausgegeben.
 
@@ -2420,7 +2427,7 @@ Bei einem AUS-Signal wird kein Wert gesendet, sondern die interne RBG-LED angesp
 
 In einem weiteren Feld wird die Farbe eingestellt. Ist die Farbe Schwarz eingestellt, wir die LED ausgeschaltet.
 
-Falls die LED gerade über das Kommunikationsobjekt 8 gesperrt ist, wird die LED nicht eingeschaltet und falls sie an ist, wird sie abgeschaltet.
+Falls die LED gerade über das Kommunikationsobjekt 18 gesperrt ist, wird die LED nicht eingeschaltet und falls sie an ist, wird sie abgeschaltet.
 
 Falls dieser Kanal als Alarmkanal gekennzeichnet ist, wird die LED unabhängig von der Sperre eingeschaltet.
 
@@ -3699,15 +3706,11 @@ Hier werden nur Kommunikationsobjekte (KO) des Logikmoduls beschrieben, die KO a
 
 KO | Name | DPT | Bedeutung
 :---:|:---|---:|:--
-1 | in Betrieb | 1.002 | Meldet zyklisch auf den Bus, dass das Gerät noch funktioniert. Das KO steht nicht zur Verfügung, wenn kein Sendezyklus eingestellt wurde.
-2 | Uhrzeit | 10.001 | Eingang zum empfangen der Uhrzeit
-3 | Datum | 11.001 | Eingang zum empfangen des Datums
-4 | Urlaub | 1.001 | Eingang: Information über Urlaub
-5 | Welcher Feiertag ist heute? | 5.010 | Ausgang: Nummer des Feiertages, falls der aktuelle Tag ein Feiertag ist, sonst 0
-6 | Welcher Feiertag ist morgen? | 5.010 | Ausgang: Nummer des Feiertages, falls der morgige Tag ein Feiertag ist, sonst 0
-7 | Diagnoseobjekt | 16.001 | Ein-/Ausgang für Diagnoseinformationen
-8 | LED sperren | 1.001 | Eingang: LED global sperren (kein Licht)
-9 | Buzzer sperren | 1.001 | Eingang: Buzzer global sperren (kein Ton)
+15 | Urlaub | 1.001 | Eingang: Information über Urlaub
+16 | Welcher Feiertag ist heute? | 5.010 | Ausgang: Nummer des Feiertages, falls der aktuelle Tag ein Feiertag ist, sonst 0
+17 | Welcher Feiertag ist morgen? | 5.010 | Ausgang: Nummer des Feiertages, falls der morgige Tag ein Feiertag ist, sonst 0
+18 | LED sperren | 1.001 | Eingang: LED global sperren (kein Licht)
+19 | Buzzer sperren | 1.001 | Eingang: Buzzer global sperren (kein Ton)
 n | Eingang 1 | *) | Eingang 1 für einen Logikkanal
 n+1 | Eingang 2 | *) | Eingang 2 für einen Logikkanal
 n+2 | Ausgang | **) | Ausgang eines Logikkanals
