@@ -5,6 +5,7 @@
     <Manufacturer RefId="M-00FA">
       <ApplicationPrograms>
         <ApplicationProgram Id="%AID%" ProgramType="ApplicationProgram" MaskVersion="MV-07B0" Name="WP-Presence-Logic-Develop" LoadProcedureStyle="MergedProcedure" PeiType="0" DefaultLanguage="de" DynamicTableManagement="false" Linkable="true" MinEtsVersion="4.0" ApplicationNumber="0" ApplicationVersion="0" ReplacesVersions="0">
+          <!-- We use the following part here -->
           <op:part name="INPUT" href="Logikmodul.input-e1-e2.part.xml" instances="2">
             <op:param name="%En%" value="1" increment="1" />
             <op:param name="%OtherEn%" value="2" increment="-1" />
@@ -23,6 +24,12 @@
             <op:param name="%PPP20%" value="0" increment="20" digits="3" />
             <op:param name="%PPP27%" value="0" increment="27" digits="3" />
             <op:param name="%PPP44%" value="0" increment="44" digits="3" />
+          </op:part>
+          <op:part name="INTERNAL" href="Logikmodul.input-i3-i4.part.xml" instances="2">
+            <op:param name="%In%" value="1" increment="1" />
+            <op:param name="%ParamOffset%" value="36" increment="2" />
+            <op:param name="%PPP1%" value="0" increment="1" digits="3" />
+            <op:param name="%PPP2%" value="0" increment="2" digits="3" />
           </op:part>
           <Static>
             <Parameters>
@@ -207,23 +214,7 @@
                 <Parameter Id="%AID%_UP-%TT%%CC%271" Name="f%C%Ty4Month" ParameterType="%AID%_PT-Month" Offset="7" BitOffset="0" Text="Monat" Value="0" />
               </Union>
               <!-- Internal Inputs -->
-              <Parameter Id="%AID%_P-%TT%%CC%162" Name="f%C%I1Name" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung interner Eingang" Value="" />
-              <Parameter Id="%AID%_P-%TT%%CC%163" Name="f%C%I2Name" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung interner Eingang" Value="" />
-              <Union SizeInBit="32">
-                <Memory CodeSegment="%AID%_RS-04-00000" Offset="36" BitOffset="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%048" Name="f%C%I1" ParameterType="%AID%_PT-InputEnable" Offset="0" BitOffset="0" Text="Interner Eingang 3" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%050" Name="f%C%I2" ParameterType="%AID%_PT-InputEnable" Offset="0" BitOffset="2" Text="Interner Eingang 4" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%473" Name="f%C%I1Kind" ParameterType="%AID%_PT-InputKind" Offset="0" BitOffset="4" Text="Art der Verknüpfung" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%474" Name="f%C%I2Kind" ParameterType="%AID%_PT-InputKind" Offset="0" BitOffset="6" Text="Art der Verknüpfung" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%049" Name="f%C%I1Function" ParameterType="%AID%_PT-InputFunction" Offset="1" BitOffset="0" Text="Internen Eingang verbinden mit Kanal Nr." Value="%C%" />
-                <Parameter Id="%AID%_UP-%TT%%CC%051" Name="f%C%I2Function" ParameterType="%AID%_PT-InputFunction" Offset="2" BitOffset="0" Text="Internen Eingang verbinden mit Kanal Nr." Value="%C%" />
-                <Parameter Id="%AID%_UP-%TT%%CC%475" Name="f%C%I1FunctionRel" ParameterType="%AID%_PT-InputFunctionRel" Offset="1" BitOffset="0" Text="Internen Eingang verbinden mit Kanal Nr." Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%476" Name="f%C%I2FunctionRel" ParameterType="%AID%_PT-InputFunctionRel" Offset="2" BitOffset="0" Text="Internen Eingang verbinden mit Kanal Nr." Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%480" Name="f%C%I1AsTrigger" ParameterType="%AID%_PT-CheckBox" Offset="3" BitOffset="0" Text="Internen Eingang als Trigger nutzen&#10;(ist immer logisch EIN)" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%481" Name="f%C%I2AsTrigger" ParameterType="%AID%_PT-CheckBox" Offset="3" BitOffset="1" Text="Internen Eingang als Trigger nutzen&#10;(ist immer logisch EIN)" Value="0" />
-              </Union>
-              <Parameter Id="%AID%_P-%TT%%CC%477" Name="f%C%I1FunctionRead" ParameterType="%AID%_PT-InputFunction" Text="Internen Eingang verbinden mit Kanal Nr." Value="%C%" Access="Read" />
-              <Parameter Id="%AID%_P-%TT%%CC%478" Name="f%C%I2FunctionRead" ParameterType="%AID%_PT-InputFunction" Text="Internen Eingang verbinden mit Kanal Nr." Value="%C%" Access="Read" />
+              <op:usePart name="INTERNAL" xpath="//Parameters/*" />
               <!-- Output definition -->
               <Parameter Id="%AID%_P-%TT%%CC%132" Name="f%C%NameOutput" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung Ausgang" Value="" />
               <Union SizeInBit="96">
@@ -349,6 +340,7 @@
             </Parameters>
             <ParameterRefs>
               <op:usePart name="INPUT" xpath="//ParameterRefs/*" />
+              <op:usePart name="INTERNAL" xpath="//ParameterRefs/*" />
               <ParameterRef Id="%AID%_P-%TT%%CC%001_R-%TT%%CC%00101" RefId="%AID%_P-%TT%%CC%001" />
               <!-- <ParameterRef Id="%AID%_P-%TT%%CC%002_R-%TT%%CC%00201" RefId="%AID%_P-%TT%%CC%002" /> -->
               <ParameterRef Id="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" RefId="%AID%_UP-%TT%%CC%003" />
@@ -358,10 +350,12 @@
               <ParameterRef Id="%AID%_UP-%TT%%CC%007_R-%TT%%CC%00701" RefId="%AID%_UP-%TT%%CC%007" />
               <!-- <ParameterRef Id="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701" RefId="%AID%_UP-%TT%%CC%027" /> -->
               <!-- <ParameterRef Id="%AID%_UP-%TT%%CC%047_R-%TT%%CC%04701" RefId="%AID%_UP-%TT%%CC%047" /> -->
-              <ParameterRef Id="%AID%_UP-%TT%%CC%048_R-%TT%%CC%04801" RefId="%AID%_UP-%TT%%CC%048" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%049_R-%TT%%CC%04901" RefId="%AID%_UP-%TT%%CC%049" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%050_R-%TT%%CC%05001" RefId="%AID%_UP-%TT%%CC%050" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%051_R-%TT%%CC%05101" RefId="%AID%_UP-%TT%%CC%051" />
+
+              <!-- <ParameterRef Id="%AID%_UP-%TT%%CC%048_R-%TT%%CC%04801" RefId="%AID%_UP-%TT%%CC%048" /> -->
+              <!-- <ParameterRef Id="%AID%_UP-%TT%%CC%049_R-%TT%%CC%04901" RefId="%AID%_UP-%TT%%CC%049" /> -->
+              <!-- <ParameterRef Id="%AID%_UP-%TT%%CC%050_R-%TT%%CC%05001" RefId="%AID%_UP-%TT%%CC%050" /> -->
+              <!-- <ParameterRef Id="%AID%_UP-%TT%%CC%051_R-%TT%%CC%05101" RefId="%AID%_UP-%TT%%CC%051" /> -->
+
               <ParameterRef Id="%AID%_UP-%TT%%CC%052_R-%TT%%CC%05201" RefId="%AID%_UP-%TT%%CC%052" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%053_R-%TT%%CC%05301" RefId="%AID%_UP-%TT%%CC%053" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%054_R-%TT%%CC%05401" RefId="%AID%_UP-%TT%%CC%054" />
@@ -426,8 +420,10 @@
               <ParameterRef Id="%AID%_UP-%TT%%CC%139_R-%TT%%CC%13901" RefId="%AID%_UP-%TT%%CC%139" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%140_R-%TT%%CC%14001" RefId="%AID%_UP-%TT%%CC%140" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%141_R-%TT%%CC%14101" RefId="%AID%_UP-%TT%%CC%141" />
-              <ParameterRef Id="%AID%_P-%TT%%CC%162_R-%TT%%CC%16201" RefId="%AID%_P-%TT%%CC%162" />
-              <ParameterRef Id="%AID%_P-%TT%%CC%163_R-%TT%%CC%16301" RefId="%AID%_P-%TT%%CC%163" />
+
+              <!-- <ParameterRef Id="%AID%_P-%TT%%CC%162_R-%TT%%CC%16201" RefId="%AID%_P-%TT%%CC%162" /> -->
+              <!-- <ParameterRef Id="%AID%_P-%TT%%CC%163_R-%TT%%CC%16301" RefId="%AID%_P-%TT%%CC%163" /> -->
+
               <ParameterRef Id="%AID%_UP-%TT%%CC%166_R-%TT%%CC%16601" RefId="%AID%_UP-%TT%%CC%166" />
 
               <ParameterRef Id="%AID%_UP-%TT%%CC%167_R-%TT%%CC%16701" RefId="%AID%_UP-%TT%%CC%167" />
@@ -593,15 +589,17 @@
               <ParameterRef Id="%AID%_P-%TT%%CC%470_R-%TT%%CC%47001" RefId="%AID%_P-%TT%%CC%470" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%471_R-%TT%%CC%47101" RefId="%AID%_UP-%TT%%CC%471" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%472_R-%TT%%CC%47201" RefId="%AID%_UP-%TT%%CC%472" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%473_R-%TT%%CC%47301" RefId="%AID%_UP-%TT%%CC%473" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%474_R-%TT%%CC%47401" RefId="%AID%_UP-%TT%%CC%474" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%475_R-%TT%%CC%47501" RefId="%AID%_UP-%TT%%CC%475" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%476_R-%TT%%CC%47601" RefId="%AID%_UP-%TT%%CC%476" />
-              <ParameterRef Id="%AID%_P-%TT%%CC%477_R-%TT%%CC%47701" RefId="%AID%_P-%TT%%CC%477" />
-              <ParameterRef Id="%AID%_P-%TT%%CC%478_R-%TT%%CC%47801" RefId="%AID%_P-%TT%%CC%478" />
+
+              <!-- <ParameterRef Id="%AID%_UP-%TT%%CC%473_R-%TT%%CC%47301" RefId="%AID%_UP-%TT%%CC%473" /> -->
+              <!-- <ParameterRef Id="%AID%_UP-%TT%%CC%474_R-%TT%%CC%47401" RefId="%AID%_UP-%TT%%CC%474" /> -->
+              <!-- <ParameterRef Id="%AID%_UP-%TT%%CC%475_R-%TT%%CC%47501" RefId="%AID%_UP-%TT%%CC%475" /> -->
+              <!-- <ParameterRef Id="%AID%_UP-%TT%%CC%476_R-%TT%%CC%47601" RefId="%AID%_UP-%TT%%CC%476" /> -->
+              <!-- <ParameterRef Id="%AID%_P-%TT%%CC%477_R-%TT%%CC%47701" RefId="%AID%_P-%TT%%CC%477" /> -->
+              <!-- <ParameterRef Id="%AID%_P-%TT%%CC%478_R-%TT%%CC%47801" RefId="%AID%_P-%TT%%CC%478" /> -->
+
               <ParameterRef Id="%AID%_UP-%TT%%CC%479_R-%TT%%CC%47901" RefId="%AID%_UP-%TT%%CC%479" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%480_R-%TT%%CC%48001" RefId="%AID%_UP-%TT%%CC%480" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%481_R-%TT%%CC%48101" RefId="%AID%_UP-%TT%%CC%481" />
+              <!-- <ParameterRef Id="%AID%_UP-%TT%%CC%480_R-%TT%%CC%48001" RefId="%AID%_UP-%TT%%CC%480" /> -->
+              <!-- <ParameterRef Id="%AID%_UP-%TT%%CC%481_R-%TT%%CC%48101" RefId="%AID%_UP-%TT%%CC%481" /> -->
               <ParameterRef Id="%AID%_UP-%TT%%CC%482_R-%TT%%CC%48201" RefId="%AID%_UP-%TT%%CC%482" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%483_R-%TT%%CC%48301" RefId="%AID%_UP-%TT%%CC%483" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%484_R-%TT%%CC%48401" RefId="%AID%_UP-%TT%%CC%484" />
@@ -619,6 +617,7 @@
             </ParameterRefs>
             <ParameterCalculations>
               <op:usePart name="INPUT" xpath="//ParameterCalculations/*" />
+              <op:usePart name="INTERNAL" xpath="//ParameterCalculations/*" />
               <ParameterCalculation Id="%AID%_PC-%TT%%CC%0101" Language="JavaScript" Name="CalcRelAbs%CC%Oa" RLTransformationFunc="LOG_CalcAbsFromRel" RLTransformationParameters="{&quot;OwnKO&quot;: %K2%}" LRTransformationFunc="LOG_CalcRelFromAbs" LRTransformationParameters="{&quot;OwnKO&quot;: %K2%}">
                 <LParameters>
                   <!-- Absolute Address -->
@@ -665,28 +664,6 @@
                 </RParameters>
               </ParameterCalculation>
 
-              <ParameterCalculation Id="%AID%_PC-%TT%%CC%0105" Language="JavaScript" Name="CalcRelAbs%CC%Oe" RLTransformationFunc="LOG_CalcAbsFromRel" RLTransformationParameters="{&quot;OwnKO&quot;: %C%}" LRTransformationFunc="LOG_CalcRelFromAbs" LRTransformationParameters="{&quot;OwnKO&quot;: %C%}">
-                <LParameters>
-                  <!-- Absolute Address -->
-                  <ParameterRefRef RefId="%AID%_P-%TT%%CC%477_R-%TT%%CC%47701" AliasName="AbsReadKO" />
-                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%049_R-%TT%%CC%04901" AliasName="AbsWriteKO" />
-                </LParameters>
-                <RParameters>
-                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%475_R-%TT%%CC%47501" AliasName="RelWriteKO" />
-                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%473_R-%TT%%CC%47301" AliasName="AbsRel" />
-                </RParameters>
-              </ParameterCalculation>
-              <ParameterCalculation Id="%AID%_PC-%TT%%CC%0106" Language="JavaScript" Name="CalcRelAbs%CC%Of" RLTransformationFunc="LOG_CalcAbsFromRel" RLTransformationParameters="{&quot;OwnKO&quot;: %C%}" LRTransformationFunc="LOG_CalcRelFromAbs" LRTransformationParameters="{&quot;OwnKO&quot;: %C%}">
-                <LParameters>
-                  <!-- Absolute Address -->
-                  <ParameterRefRef RefId="%AID%_P-%TT%%CC%478_R-%TT%%CC%47801" AliasName="AbsReadKO" />
-                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%051_R-%TT%%CC%05101" AliasName="AbsWriteKO" />
-                </LParameters>
-                <RParameters>
-                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%476_R-%TT%%CC%47601" AliasName="RelWriteKO" />
-                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%474_R-%TT%%CC%47401" AliasName="AbsRel" />
-                </RParameters>
-              </ParameterCalculation>
             </ParameterCalculations>
             <ComObjectTable>
               <op:usePart name="INPUT" xpath="//ComObjectTable/*" />
@@ -831,157 +808,8 @@
                         <op:usePart name="INPUT" xpath="//Dynamic/ChannelIndependentBlock/*" instance="1" />
                         <!-- Input 2 -->
                         <op:usePart name="INPUT" xpath="//Dynamic/ChannelIndependentBlock/*" instance="2" />
-                        <!-- Int Input 1 -->
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%048_R-%TT%%CC%04801">
-                          <when test="!=0">
-                            <ParameterBlock Id="%AID%_PB-%C%15" Name="f%C%IntInput" Text="Interne Eingänge" Icon="chevron-right-circle-outline" HelpContext="Empty">
-                              <choose ParamRefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301">
-                                <when test="4">
-                                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Bei TOR gilt: Dateneingang ist Eingang 1 (ODER interner Eingang 3), Toreingang ist Eingang 2 (ODER interner Eingang 4)" />
-                                  <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
-                                </when>
-                                <when test="6">
-                                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Bei SCHALTER gilt: EINgeschaltet wird mit Eingang 1 bzw. Interner Eingang 3, AUSgeschaltet wird mit Eingang 2 bzw. Interner Eingang 4. Dabei wird das Einschalttelegramm ausgewertet, wie bei 2 hörenden GA auf einem KO." UIHint="Information" />
-                                  <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
-                                </when>
-                              </choose>
-                              <ParameterSeparator Id="%AID%_PS-nnn" Text="Definition interner Eingang 3" UIHint="Headline" />
-                              <ParameterRefRef RefId="%AID%_P-%TT%%CC%162_R-%TT%%CC%16201" HelpContext="%DOC%" IndentLevel="1" />
-                              <ParameterBlock Id="%AID%_PB-nnn" Inline="true" Layout="Grid">
-                                <Rows>
-                                  <Row Id="%AID%_PB-nnn_R-1" />
-                                </Rows>
-                                <Columns>
-                                  <Column Id="%AID%_PB-nnn_C-1" Width="1%" />
-                                  <Column Id="%AID%_PB-nnn_C-2" Width="44%" />
-                                  <Column Id="%AID%_PB-nnn_C-3" Width="21%" />
-                                  <Column Id="%AID%_PB-nnn_C-4" Width="12%" />
-                                  <Column Id="%AID%_PB-nnn_C-5" Width="12%" />
-                                </Columns>
-                                <ParameterSeparator Id="%AID%_PS-nnn" Text=" Internen Eingang verbinden&#10; mit Kanal Nr." Cell="1,2" />
-                                <ParameterRefRef RefId="%AID%_UP-%TT%%CC%473_R-%TT%%CC%47301" Cell="1,3" HelpContext="%DOC%" />
-                                <choose ParamRefId="%AID%_UP-%TT%%CC%473_R-%TT%%CC%47301">
-                                  <when test="1">
-                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%049_R-%TT%%CC%04901" Cell="1,5" HelpContext="%DOC%" />
-                                  </when>
-                                  <when test="2">
-                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%475_R-%TT%%CC%47501" Cell="1,4" HelpContext="%DOC%" />
-                                    <ParameterRefRef RefId="%AID%_P-%TT%%CC%477_R-%TT%%CC%47701" Cell="1,5" HelpContext="%DOC%" />
-                                  </when>
-                                </choose>
-                              </ParameterBlock>
-                              <ParameterRefRef RefId="%AID%_UP-%TT%%CC%480_R-%TT%%CC%48001" HelpContext="%DOC%" IndentLevel="1" />
-                              <choose ParamRefId="%AID%_UP-%TT%%CC%049_R-%TT%%CC%04901">
-                                <when test="%C%">
-                                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Warnung: In den meisten Fällen führt eine Rückkopplung vom Ausgang einer Funktion auf den eigenen Eingang zu unerwarteten Ergebnissen!" UIHint="Information" />
-                                </when>
-                              </choose>
-                              <choose ParamRefId="%AID%_UP-%TT%%CC%475_R-%TT%%CC%47501">
-                                <when test="0">
-                                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Warnung: In den meisten Fällen führt eine Rückkopplung vom Ausgang einer Funktion auf den eigenen Eingang zu unerwarteten Ergebnissen!" UIHint="Information" />
-                                </when>
-                              </choose>
-                              <choose ParamRefId="%AID%_UP-%TT%%CC%050_R-%TT%%CC%05001">
-                                <when test="!=0">
-                                  <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
-                                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Definition interner Eingang 4" UIHint="Headline" />
-                                  <ParameterRefRef RefId="%AID%_P-%TT%%CC%163_R-%TT%%CC%16301" HelpContext="%DOC%" IndentLevel="1" />
-                                  <ParameterBlock Id="%AID%_PB-nnn" Inline="true" Layout="Grid">
-                                    <Rows>
-                                      <Row Id="%AID%_PB-nnn_R-1" />
-                                    </Rows>
-                                    <Columns>
-                                      <Column Id="%AID%_PB-nnn_C-1" Width="1%" />
-                                      <Column Id="%AID%_PB-nnn_C-2" Width="44%" />
-                                      <Column Id="%AID%_PB-nnn_C-3" Width="21%" />
-                                      <Column Id="%AID%_PB-nnn_C-4" Width="12%" />
-                                      <Column Id="%AID%_PB-nnn_C-5" Width="12%" />
-                                    </Columns>
-                                    <ParameterSeparator Id="%AID%_PS-nnn" Text=" Internen Eingang verbinden&#10; mit Kanal Nr." Cell="1,2" />
-                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%474_R-%TT%%CC%47401" Cell="1,3" HelpContext="%DOC%" />
-                                    <choose ParamRefId="%AID%_UP-%TT%%CC%474_R-%TT%%CC%47401">
-                                      <when test="1">
-                                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%051_R-%TT%%CC%05101" Cell="1,5" HelpContext="%DOC%" />
-                                      </when>
-                                      <when test="2">
-                                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%476_R-%TT%%CC%47601" Cell="1,4" HelpContext="%DOC%" />
-                                        <ParameterRefRef RefId="%AID%_P-%TT%%CC%478_R-%TT%%CC%47801" Cell="1,5" HelpContext="%DOC%" />
-                                      </when>
-                                    </choose>
-                                  </ParameterBlock>
-                                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%481_R-%TT%%CC%48101" HelpContext="%DOC%" IndentLevel="1" />
-                                  <choose ParamRefId="%AID%_UP-%TT%%CC%051_R-%TT%%CC%05101">
-                                    <when test="%C%">
-                                      <ParameterSeparator Id="%AID%_PS-nnn" Text="Warnung: In den meisten Fällen führt eine Rückkopplung vom Ausgang einer Funktion auf den eigenen Eingang zu unerwarteten Ergebnissen!" UIHint="Information" />
-                                    </when>
-                                  </choose>
-                                  <choose ParamRefId="%AID%_UP-%TT%%CC%476_R-%TT%%CC%47601">
-                                    <when test="0">
-                                      <ParameterSeparator Id="%AID%_PS-nnn" Text="Warnung: In den meisten Fällen führt eine Rückkopplung vom Ausgang einer Funktion auf den eigenen Eingang zu unerwarteten Ergebnissen!" UIHint="Information" />
-                                    </when>
-                                  </choose>
-                                </when>
-                              </choose>
-                            </ParameterBlock>
-                          </when>
-                        </choose>
-                        <!-- Int Input 2 -->
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%048_R-%TT%%CC%04801">
-                          <when test="=0">
-                            <choose ParamRefId="%AID%_UP-%TT%%CC%050_R-%TT%%CC%05001">
-                              <when test="!=0">
-                                <ParameterBlock Id="%AID%_PB-%C%16" Name="f%C%IntInput2" Text="Interne Eingänge" Icon="chevron-right-circle-outline" HelpContext="Empty">
-                                  <choose ParamRefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301">
-                                    <when test="4">
-                                      <ParameterSeparator Id="%AID%_PS-nnn" Text="Bei TOR gilt: Dateneingang ist Eingang 1 (ODER interner Eingang 3), Toreingang ist Eingang 2 (ODER interner Eingang 4)" />
-                                      <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
-                                    </when>
-                                    <when test="6">
-                                      <ParameterSeparator Id="%AID%_PS-nnn" Text="Bei SCHALTER gilt: EINgeschaltet wird mit Eingang 1 bzw. internem Eingang 3, AUSgeschaltet wird mit Eingang 2 bzw. internem Eingang 4. Dabei wird das Einschalttelegramm ausgewertet, wie bei 2 hörenden GA auf einem KO." UIHint="Information" />
-                                      <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
-                                    </when>
-                                  </choose>
-                                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Definition interner Eingang 4" UIHint="Headline" />
-                                  <ParameterRefRef RefId="%AID%_P-%TT%%CC%163_R-%TT%%CC%16301" HelpContext="%DOC%" IndentLevel="1" />
-                                  <ParameterBlock Id="%AID%_PB-nnn" Inline="true" Layout="Grid">
-                                    <Rows>
-                                      <Row Id="%AID%_PB-nnn_R-1" />
-                                    </Rows>
-                                    <Columns>
-                                      <Column Id="%AID%_PB-nnn_C-1" Width="1%" />
-                                      <Column Id="%AID%_PB-nnn_C-2" Width="44%" />
-                                      <Column Id="%AID%_PB-nnn_C-3" Width="21%" />
-                                      <Column Id="%AID%_PB-nnn_C-4" Width="12%" />
-                                      <Column Id="%AID%_PB-nnn_C-5" Width="12%" />
-                                    </Columns>
-                                    <ParameterSeparator Id="%AID%_PS-nnn" Text=" Internen Eingang verbinden&#10; mit Kanal Nr." Cell="1,2" />
-                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%474_R-%TT%%CC%47401" Cell="1,3" HelpContext="%DOC%" />
-                                    <choose ParamRefId="%AID%_UP-%TT%%CC%474_R-%TT%%CC%47401">
-                                      <when test="1">
-                                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%051_R-%TT%%CC%05101" Cell="1,5" HelpContext="%DOC%" />
-                                      </when>
-                                      <when test="2">
-                                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%476_R-%TT%%CC%47601" Cell="1,4" HelpContext="%DOC%" />
-                                        <ParameterRefRef RefId="%AID%_P-%TT%%CC%478_R-%TT%%CC%47801" Cell="1,5" HelpContext="%DOC%" />
-                                      </when>
-                                    </choose>
-                                  </ParameterBlock>
-                                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%481_R-%TT%%CC%48101" HelpContext="%DOC%" IndentLevel="1" />
-                                  <choose ParamRefId="%AID%_UP-%TT%%CC%051_R-%TT%%CC%05101">
-                                    <when test="%C%">
-                                      <ParameterSeparator Id="%AID%_PS-nnn" Text="Warnung: In den meisten Fällen führt eine Rückkopplung vom Ausgang einer Funktion auf den eigenen Eingang zu unerwarteten Ergebnissen!" UIHint="Information" />
-                                    </when>
-                                  </choose>
-                                  <choose ParamRefId="%AID%_UP-%TT%%CC%476_R-%TT%%CC%47601">
-                                    <when test="0">
-                                      <ParameterSeparator Id="%AID%_PS-nnn" Text="Warnung: In den meisten Fällen führt eine Rückkopplung vom Ausgang einer Funktion auf den eigenen Eingang zu unerwarteten Ergebnissen!" UIHint="Information" />
-                                    </when>
-                                  </choose>
-                                </ParameterBlock>
-                              </when>
-                            </choose>
-                          </when>
-                        </choose>
+                        <!-- Int Input 3 and 4 -->
+                        <op:usePart name="INTERNAL" xpath="//Dynamic/ChannelIndependentBlock/*" />
                       </when>
                       <!-- Timer -->
                       <when test="5">
