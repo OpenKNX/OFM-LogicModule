@@ -7,8 +7,8 @@
         <ApplicationProgram Id="%AID%" ApplicationNumber="102" ApplicationVersion="10" ProgramType="ApplicationProgram" MaskVersion="MV-07B0" Name="WP-Logic" LoadProcedureStyle="MergedProcedure" PeiType="0" DefaultLanguage="de" DynamicTableManagement="false" Linkable="true" MinEtsVersion="4.0">
           <!-- We use the following part here -->
           <op:part name="CHOOSE-KO" href="Logikmodul.input-intko.part.xml" />
-          <op:partParams name="INPUT">
-            <!-- this ist just for documentation reasons, as an example for the caller -->
+          <!-- this ist just for documentation reasons, as an example for the caller -->
+          <!-- <op:partParams name="INPUT">
             <op:param name="%En%" value="1" increment="1" />
             <op:param name="%OtherEn%" value="2" increment="-1" />
             <op:param name="%ParamOffset%" value="0" increment="15" />
@@ -26,7 +26,7 @@
             <op:param name="%PPP20%" value="0" increment="20" digits="3" />
             <op:param name="%PPP27%" value="0" increment="27" digits="3" />
             <op:param name="%PPP44%" value="0" increment="44" digits="3" />
-          </op:partParams>
+          </op:partParams> -->
           <Static>
             <Parameters>
               <!-- Input E1 -->

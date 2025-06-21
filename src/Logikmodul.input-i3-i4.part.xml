@@ -5,13 +5,13 @@
     <Manufacturer RefId="M-00FA">
       <ApplicationPrograms>
         <ApplicationProgram Id="%AID%" ApplicationNumber="102" ApplicationVersion="10" ProgramType="ApplicationProgram" MaskVersion="MV-07B0" Name="WP-Logic" LoadProcedureStyle="MergedProcedure" PeiType="0" DefaultLanguage="de" DynamicTableManagement="false" Linkable="true" MinEtsVersion="4.0">
-          <op:partParams name="INTERNAL" instances="2">
-            <!-- this ist just for documentation reasons, as an example for the caller -->
+          <!-- this ist just for documentation reasons, as an example for the caller -->
+          <!-- <op:partParams name="INTERNAL" instances="2">
             <op:param name="%In%" value="1" increment="1" />
             <op:param name="%ParamOffset%" value="36" increment="2" />
             <op:param name="%PPP1%" value="0" increment="1" digits="3" />
             <op:param name="%PPP2%" value="0" increment="2" digits="3" />
-          </op:partParams>
+          </op:partParams> -->
           <Static>
             <Parameters>
               <!-- Internal Inputs -->
