@@ -5,7 +5,28 @@
     <Manufacturer RefId="M-00FA">
       <ApplicationPrograms>
         <ApplicationProgram Id="%AID%" ApplicationNumber="102" ApplicationVersion="10" ProgramType="ApplicationProgram" MaskVersion="MV-07B0" Name="WP-Logic" LoadProcedureStyle="MergedProcedure" PeiType="0" DefaultLanguage="de" DynamicTableManagement="false" Linkable="true" MinEtsVersion="4.0">
+          <!-- We use the following part here -->
           <op:part name="CHOOSE-KO" href="Logikmodul.input-intko.part.xml" />
+          <!-- this ist just for documentation reasons, as an example for the caller -->
+          <!-- <op:partParams name="INPUT">
+            <op:param name="%En%" value="1" increment="1" />
+            <op:param name="%OtherEn%" value="2" increment="-1" />
+            <op:param name="%ParamOffset%" value="0" increment="15" />
+            <op:param name="%TorText%" list=" " values="Dateneingang Toreingang" />
+            <op:param name="%EinAusText%" list=" " values="EIN AUS" />
+
+            <op:param name="%KKK%" value="0" increment="1" digits="3" />
+            <op:param name="%PPP1%" value="0" increment="1" digits="3" />
+            <op:param name="%PPP-1%" value="1" increment="-1" digits="3" />
+            <op:param name="%PPP2%" value="0" increment="2" digits="3" />
+            <op:param name="%PPP-3%" value="0" increment="-3" digits="3" />
+            <op:param name="%PPP7%" value="0" increment="7" digits="3" />
+            <op:param name="%PPP8%" value="0" increment="8" digits="3" />
+            <op:param name="%PPP9%" value="0" increment="9" digits="3" />
+            <op:param name="%PPP20%" value="0" increment="20" digits="3" />
+            <op:param name="%PPP27%" value="0" increment="27" digits="3" />
+            <op:param name="%PPP44%" value="0" increment="44" digits="3" />
+          </op:partParams> -->
           <Static>
             <Parameters>
               <!-- Input E1 -->
@@ -456,7 +477,7 @@
                 </when>
                 <when test="!=0">
                   <!-- Full ext Input -->
-                  <ParameterBlock Id="%AID%_PB-%C%12" Name="f%C%ExtInput%En%" Text="Eingang %En%: {{0:Wert}}" TextParameterRefId="%AID%_P-%TT%%CC%%PPP1+128%_R-%TT%%CC%%PPP1+128%01" Icon="chevron-right-circle-outline" HelpContext="Empty">
+                  <ParameterBlock Id="%AID%_PB-%C%12" Name="f%C%ExtInput%En%" Text="Eingang %En%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%%PPP1+128%_R-%TT%%CC%%PPP1+128%01" Icon="chevron-right-circle-outline" HelpContext="Empty">
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Definition Eingang %En%" UIHint="Headline" />
                     <choose ParamRefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301">
                       <when test="4">
