@@ -1336,11 +1336,11 @@ void LogicChannel::processLogic()
     // first deactivate execution in pipeline
     pCurrentPipeline &= ~PIP_LOGIC_EXECUTE;
 
+    uint8_t lLogic = ParamLOG_fDisable ? 0 : ParamLOG_fLogic;
     // we have to delete all trigger if output pipeline is not started
     if (ParamLOG_fCalculate == 0 || lValidInputs == lActiveInputs)
     {
         // we process only if all inputs are valid or the user requested invalid evaluation
-        uint8_t lLogic = ParamLOG_fDisable ? 0 : ParamLOG_fLogic;
         uint8_t lOnes = 0;
         switch (lLogic)
         {
@@ -1538,7 +1538,28 @@ void LogicChannel::processLogic()
             }
 #endif
         }
+    } // if we have no valid inputs, we do not execute the logic
+    else if (lLogic == VAL_Logic_Gate)
+    {
+        // special case for a GATE which reacts only on both inputs valid
+        // we Open/Close the gate
+        if (lValidInputs & (BIT_EXT_INPUT_2 | BIT_INT_INPUT_2))
+        {
+            // mark gate as used
+            pCurrentIn &= ~BIT_INITIAL_GATE;
+            pCurrentIn &= ~BIT_PREVIOUS_GATE; // gate is closed
+            // get the current gate state
+            bool lGate = (lCurrentInputs & (BIT_EXT_INPUT_2 | BIT_INT_INPUT_2));
+            // in case gate is closed again immediately we do not store the open state for next roundtrip...
+            bool lIsTriggeredGate = ParamLOG_fTGate;
+            if (lGate && !lIsTriggeredGate)
+                pCurrentIn |= BIT_PREVIOUS_GATE;
+            // ... and we delete the gate input
+            if (lIsTriggeredGate)
+                pCurrentIn &= ~(BIT_EXT_INPUT_2 | BIT_INT_INPUT_2);
+        }
     }
+    
 #if LOGIC_TRACE
     if (!lDebugValid && debugFilter())
     {

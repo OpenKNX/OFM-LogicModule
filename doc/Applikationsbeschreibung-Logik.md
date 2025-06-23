@@ -54,10 +54,10 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
     * [Logikauswertung](#logikauswertung)
     * [Tordefinition](#tordefinition)
     * [Logik-Trigger](#logik-trigger)
-    * [**Eingang 1/2: Wert**](#eingang-1-unbenannt--eingang-2-unbenannt)
+    * [**Eingang 1/2: ...**](#eingang-1---eingang-2-)
       * [Eingangskonverter](#eingangskonverter)
       * [Eingangswert vorbelegen](#eingangswert-vorbelegen)
-    * [**Interne Eingänge**](#interne-eingänge)
+    * [**Intern 3/4: ...**](#intern-n)
     * [**Schaltzeiten: ...** (Zeitschaltuhr)](#schaltzeiten-unbenannt)
       * [Tagesschaltuhr](#schaltzeitpunkte-tagesschaltuhr)
       * [Jahresschaltuhr](#schaltzeitpunkte-jahresschaltuhr)
@@ -85,6 +85,7 @@ Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer d
 
 16.06.2025: Firmware 3.7, Applikation 3.7:
 
+* NEU: Jeder interne Eingang hat jetzt eine eigene Seite
 * NEU: Eingangskonverter für DPT3 (Dimmen)
 * NEU: Ausgangskonverter für DPT3 (Dimmen)
 * NEU: Alle Eingangskonverter können auch als Trigger fungieren (jedes Telegramm triggert die Logik)
@@ -1143,7 +1144,7 @@ Allerdings wird das erste Telegramm nach einem Neustart unterdrückt. Damit kann
 
 
 
-## **Eingang 1: unbenannt / Eingang 2: unbenannt**
+## **Eingang 1: ... / Eingang 2: ...**
 
 Sobald für einen Logikkanal ein externer Eingang aktiviert wurde, erscheint für jeden Eingang eine Seite.
 
@@ -1588,13 +1589,13 @@ Dies erlaubt es, eine KNX-Anlage nach einem Neustart relativ schnell in einen Zu
 
 > **Tipp:** Auch wenn die Logik selbst den gelesenen Wert nicht braucht, kann man mit der Funktion andere Geräte unterstützen, die selbst nicht nach einem Neustart lesen können. Denn auf das Antworttelegramm kann nicht nur das lesende Gerät reagieren, sondern alle Geräte am Bus.
 
-## **Interne Eingänge**
+## **Intern 3: ... / Intern 4: ...**
 
-Wird für eine logische Operation "Interner Eingang 3" oder "Interner Eingang 4" als "normal aktiv" oder "invertiert aktiv" freigeschaltet, erscheint diese Seite.
+Wird für eine logische Operation "Interner Eingang 3" oder "Interner Eingang 4" als "normal aktiv" oder "invertiert aktiv" freigeschaltet, erscheint für diesen Eingang eine Seite.
 
 Ausgänge von anderen Kanälen können dazu genutzt werden, große Logikblöcke zu bauen, ohne für jede Teillogik (jeden Logikkanal) eine eigene GA zur Verbindung von Eingang und Ausgang zu benötigen.
 
-<kbd>![Interne Eingänge](pics/InternerEingang.PNG)</kbd>
+<kbd>![Intern 3](pics/InternerEingang.PNG)</kbd>
 Solange der Ausgang eines anderen Kanals nicht zugeordnet worden ist, wird der interne Eingang von der logischen Operation als undefiniert betrachtet.
 
 ## Definition Interner Eingang 3/4
