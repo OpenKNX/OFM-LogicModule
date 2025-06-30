@@ -85,7 +85,12 @@ Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer d
 
 16.06.2025: Firmware 3.7, Applikation 3.7:
 
-* NEU: Jeder interne Eingang hat jetzt eine eigene Seite
+* NEU: Ausgangs-KO eines Logikkanals kann jetzt manuell ausgeblendet werden. Der automatische Ein-/Ausblendalgorithmus wurde entfernt, weil er nicht alle gewünschten Fälle abdecken konnte. Nach einem Update müssen unerwünschte KO, die früher automatisch ausgeblendet worden sind, manuell ausgeblendet  werden.
+* NEU: Überarbeitung der Einstellungs-Seiten:
+  * Jeder interne Eingang hat jetzt eine eigene Einstellungs-Seite
+  * Die Ausgangsseite wurde in eine Signalverarbeitungs- und eine Ausgangs-Seite aufgeteilt
+  * Die Signalverarbeitungs-Seite beinhaltet jetzt die eher selten genutzten Funktionen zur Beeinflussung des Ausgangssignals
+  * Die Ausgangs-Seite ist dadurch kompakte und übersichtlicher
 * NEU: Eingangskonverter für DPT3 (Dimmen)
 * NEU: Ausgangskonverter für DPT3 (Dimmen)
 * NEU: Alle Eingangskonverter können auch als Trigger fungieren (jedes Telegramm triggert die Logik)
@@ -1939,28 +1944,11 @@ In dieser Spalte wird der Monat eingestellt, an dem geschaltet werden soll.
 
 Wird hier der Wert "jeder" ausgewählt, wird der Schaltpunkt jeden Monat ausgeführt, natürlich unter Berücksichtigung des angegebenen Tages. So kann man Monatlich wiederkehrende Aktionen definieren.
 
-## **Ausgang**
+## **Signalverarbeitung**
 
 Zwischen dem Ausgang der Logik-Operation und dem physikalischen Ausgang des Logikkanals (als Kommunikationsobjekt, um KNX-Telegramme zu verschicken) können Funktionsblöcke aktiviert werden (dargestellt im Kapitel Logikblöcke), die das Ausgangssignal beeinflussen.
 
 In der Grundeinstellung sind alle Funktionsblöcke deaktiviert und die Signale der logischen Operation gelangen direkt zum physikalischen Ausgang.
-
-## Definition Ausgang
-
-Im folgenden Werden alle Funktionsblöcke, deren Einstellungen und deren Beeinflussungsmöglichkeiten beschrieben.
-
-<kbd>![Ausgang](pics/Ausgang.PNG)</kbd>
-
-<!-- DOC -->
-### **Beschreibung Ausgang**
-
-Diese Einstellung hat keine funktionale Auswirkung, erlaubt es aber, dem Ausgang einen Text zu geben, um ihn einfacher zu finden.
-
-Der eingegebene Text erscheint auf dem Ausgang-Tag des Logikkanals und als Name des Kommunikationsobjekts, das diesem Ausgang zugeordnet ist.
-
-### **Kommunikationsobjekt für Ausgang**
-
-Hier wird die Nummer des Kommunikationsobjektes für diesen Ausgang angezeigt. Dies dient nur zur Information und hat keine funktionale Auswirkung.
 
 ## Treppenlicht
 
@@ -2177,12 +2165,20 @@ Wird dieses Auswahlfeld gewählt, wird ein für diesen Ausgang ermitteltes EIN-S
 Wird dieses Auswahlfeld gewählt, wird ein für diesen Ausgang ermitteltes AUS-Signal an alle internen Eingänge weitergeleitet, die mit diesem Ausgang verbunden sind.
 
 
-## Wert für Ausgang
+## **Ausgang**
 
-<kbd>![Ausgangskonverter](pics/Ausgangskonverter.PNG)</kbd>
+## Definition Ausgang
 
-Das letzte Funktionsmodul auf dem Ausgangsbild ist ein Konverter, der das bis hierher ermittelte EIN- oder AUS-Signal in einen bestimmten DPT konvertiert und den resultierenden Wert in ein KO schreibt, damit es auf den KNX-Bus gesendet werden kann.
+Im folgenden Werden alle Funktionsblöcke, deren Einstellungen und deren Beeinflussungsmöglichkeiten beschrieben.
 
+<kbd>![Ausgang](pics/Ausgang.PNG)</kbd>
+
+<!-- DOC -->
+### **Beschreibung Ausgang**
+
+Diese Einstellung hat keine funktionale Auswirkung, erlaubt es aber, dem Ausgang einen Text zu geben, um ihn einfacher zu finden.
+
+Der eingegebene Text erscheint auf dem Ausgang-Tag des Logikkanals und als Name des Kommunikationsobjekts, das diesem Ausgang zugeordnet ist.
 
 <!-- DOC -->
 ### **DPT für Ausgang**
@@ -2228,6 +2224,26 @@ Jeder Wert wird auf den Bus gesendet. Das ist das Standardverhalten.
 #### **Nur geänderte Werte senden**
 
 Der neu zu sendende Wert wird passend zum DPT des KO gewandelt und mit dem bisherigen KO-Wert vergleichen. Nur wenn sich die Werte unterscheiden, wird der neue Wert gesendet.
+
+
+<!-- DOC -->
+### **Eigenes KO anzeigen?**
+
+Dieses Auswahlfeld ist standardmäßig vorausgewählt und führt dazu, dass das zu diesem Ausgang zugehörige Kommunikationsobjekt in der Liste der Kommunikationsobjekte angezeigt wird. Wird die Auswahl entfernt, wird auch das KO nicht mehr angezeigt. War bereits vorher eine GA diesem KO zugewiesen, fragt die ETS, ob man diese Gruppenadresse auch entfernen möchte. In der gleichen Zeile wird die Nummer des eigenen KO angezeigt und eine Zusatzinformation, falls es nicht in der KO-Liste erscheint.
+
+In früheren Versionen vom Logikmodul wurde die Anzeige vom eigenen KO intern berechnet. Es gibt aber Fälle, in denen das KO als "angezeigt" berechnet wird, obwohl man es verstecken möchte (z.B. bei internen KO-Verknüpfungen). Um dieses zu erlauben, wurde die automatische Berechnung der Sichtbarkeit entfernt und eine manuelle Auswahl erlaubt.
+
+Nach einem Update von einer älteren Version sind alle KO sichtbar, auch wenn sie vor dem Update unsichtbar waren. Hier ist eine manuelle Aktion notwendig, um die nicht benötigten KO auszublenden.
+
+Für Spezialfunktionen wie "Gerät zurücksetzen", "Tonwiedergabe (Buzzer)" oder "RGB-LED schalten" wird kein KO benötigt und kann über diese Auswahlbox ausgeblendet werden.
+
+## Wert für EIN
+
+<kbd>![Ausgang EIN-Signal](pics/AusgangEIN.png)</kbd>
+
+Das letzte Funktionsmodul auf dem Ausgangsbild ist ein Konverter, der das bis hierher ermittelte EIN- oder AUS-Signal in einen bestimmten DPT konvertiert und den resultierenden Wert in ein KO schreibt, damit es auf den KNX-Bus gesendet werden kann.
+
+
 
 <!-- DOC -->
 ### **Wert für EIN senden?**
@@ -2365,10 +2381,31 @@ Ein Ausgang kann seinen EIN-Wert nicht nur über das ihm zugewiesene KO senden, 
 
 > Wichtig: Der DPT des Ziel-KO muss der gleiche sein wie der DPT des Ausgangs. Falls nicht, sind die Ergebnisse nicht abschätzbar.
 
-<!-- DOC -->
-#### **Nummer des zusätzlichen KO**
 
-Hier wird die Nummer des Kommunikationsobjekts angegeben, über die der Wert zusätzlich gesendet werden soll. Das kann ein beliebiges KO (Eingang oder Ausgang) des Gerätes sein.
+#### **Eigenes KO**
+
+Das ist der Standardwert und bedeutet, dass der Wert des Ausgangs an das KO, dass für diesen 
+Ausgang vorgesehen ist, gesendet wird.
+
+Zu Informationszwecken wird die Nummer des KO angegeben, das diesem Ausgang zugeordnet ist.
+
+#### **Absolutes KO**
+
+Wird absolutes KO ausgewählt, kann man die Nummer des KO angeben, an das der Wert des Ausgangs gesendet wird. Das kann ein beliebiges KO des Gerätes sein, auf dem das Logikmodul läuft. Es können auch KO anderer Module angegeben werden.
+
+Ist eine GA mit dem eigenen KO des Ausgangs verknüpft, wird der Wert des Ausgangs auch an diese GA gesendet.
+
+#### **Relatives KO**
+
+Wie bei "Absolutes KO" wird der Wert des Ausgangs an ein anderes KO gesendet. Man gibt aber einen relativen Wert (Offset) ein und die Nummer des Ziel-KO wird ausgerechnet. Den berechneten Wert sieht man zur Information direkt hinter dem Eingabefeld.
+
+Relative KO sind von Vorteil, wenn man häufiger mit Logiken arbeitet, die aus mehreren Logikkanälen bestehen (Logikblock). Verbindet man die Logiken eines Logikblocks über relative KO-Verknüpfungen, können diese Logikblöcke innerhalb des Logikmoduls verschoben werden oder auf ein anderes Logikmodul kopiert werden (mittels Konfigurationstransfer), ohne dass die KO-Verknüpfungen invalidiert werden.
+
+Ist eine GA mit dem eigenen KO des Ausgangs verknüpft, wird der Wert des Ausgangs auch an diese GA gesendet.
+
+## Wert für AUS
+
+<kbd>![Ausgang AUS-Signal](pics/AusgangAUS.png)</kbd>
 
 <!-- DOC -->
 ### **Wert für AUS senden?**
@@ -2483,10 +2520,27 @@ Ein Ausgang kann seinen AUS-Wert nicht nur über das ihm zugewiesene KO senden, 
 
 > Wichtig: Der DPT des Ziel-KO muss der gleiche sein wie der DPT des Ausgangs. Falls nicht, sind die Ergebnisse nicht abschätzbar.
 
-<!-- DOC -->
-#### **Nummer des zusätzlichen KO**
 
-Hier wird die Nummer des Kommunikationsobjekts angegeben, über die der Wert zusätzlich gesendet werden soll. Das kann ein beliebiges KO (Eingang oder Ausgang) des Gerätes sein.
+#### **Eigenes KO**
+
+Das ist der Standardwert und bedeutet, dass der Wert des Ausgangs an das KO, dass für diesen 
+Ausgang vorgesehen ist, gesendet wird.
+
+Zu Informationszwecken wird die Nummer des KO angegeben, das diesem Ausgang zugeordnet ist.
+
+#### **Absolutes KO**
+
+Wird absolutes KO ausgewählt, kann man die Nummer des KO angeben, an das der Wert des Ausgangs gesendet wird. Das kann ein beliebiges KO des Gerätes sein, auf dem das Logikmodul läuft. Es können auch KO anderer Module angegeben werden.
+
+Ist eine GA mit dem eigenen KO des Ausgangs verknüpft, wird der Wert des Ausgangs auch an diese GA gesendet.
+
+#### **Relatives KO**
+
+Wie bei "Absolutes KO" wird der Wert des Ausgangs an ein anderes KO gesendet. Man gibt aber einen relativen Wert (Offset) ein und die Nummer des Ziel-KO wird ausgerechnet. Den berechneten Wert sieht man zur Information direkt hinter dem Eingabefeld.
+
+Relative KO sind von Vorteil, wenn man häufiger mit Logiken arbeitet, die aus mehreren Logikkanälen bestehen (Logikblock). Verbindet man die Logiken eines Logikblocks über relative KO-Verknüpfungen, können diese Logikblöcke innerhalb des Logikmoduls verschoben werden oder auf ein anderes Logikmodul kopiert werden (mittels Konfigurationstransfer), ohne dass die KO-Verknüpfungen invalidiert werden.
+
+Ist eine GA mit dem eigenen KO des Ausgangs verknüpft, wird der Wert des Ausgangs auch an diese GA gesendet.
 
 <!-- DOC -->
 ### **Alarmausgabe (Buzzer oder LED trotz Sperre schalten)?**

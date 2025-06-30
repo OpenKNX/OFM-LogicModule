@@ -15,3 +15,4 @@ Jeder Wert wird auf den Bus gesendet. Das ist das Standardverhalten.
 
 Der neu zu sendende Wert wird passend zum DPT des KO gewandelt und mit dem bisherigen KO-Wert vergleichen. Nur wenn sich die Werte unterscheiden, wird der neue Wert gesendet.
 
+
