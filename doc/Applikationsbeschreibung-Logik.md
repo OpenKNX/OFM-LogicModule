@@ -85,12 +85,12 @@ Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer d
 
 16.06.2025: Firmware 3.7, Applikation 3.7:
 
-* NEU: Ausgangs-KO eines Logikkanals kann jetzt manuell ausgeblendet werden. Der automatische Ein-/Ausblendalgorithmus wurde entfernt, weil er nicht alle gewünschten Fälle abdecken konnte. Nach einem Update müssen unerwünschte KO, die früher automatisch ausgeblendet worden sind, manuell ausgeblendet  werden.
+* NEU: Ausgangs-KO eines Logikkanals kann jetzt manuell ausgeblendet werden. Der automatische Ein-/Ausblendalgorithmus wurde entfernt, weil er nicht alle gewünschten Fälle abdecken konnte. Nach einem Update müssen unerwünschte KO, die früher automatisch ausgeblendet worden sind, manuell ausgeblendet  werden. Dies ändert nicht an der Funktionalität der Logik, es geht nur um die Übersichtlichkeit in der ETS.
 * NEU: Überarbeitung der Einstellungs-Seiten:
   * Jeder interne Eingang hat jetzt eine eigene Einstellungs-Seite
   * Die Ausgangsseite wurde in eine Signalverarbeitungs- und eine Ausgangs-Seite aufgeteilt
   * Die Signalverarbeitungs-Seite beinhaltet jetzt die eher selten genutzten Funktionen zur Beeinflussung des Ausgangssignals
-  * Die Ausgangs-Seite ist dadurch kompakte und übersichtlicher
+  * Die Ausgangs-Seite ist jetzt kompakter und übersichtlicher
 * NEU: Eingangskonverter für DPT3 (Dimmen)
 * NEU: Ausgangskonverter für DPT3 (Dimmen)
 * NEU: Alle Eingangskonverter können auch als Trigger fungieren (jedes Telegramm triggert die Logik)
@@ -2169,7 +2169,7 @@ Wird dieses Auswahlfeld gewählt, wird ein für diesen Ausgang ermitteltes AUS-S
 
 ## Definition Ausgang
 
-Im folgenden Werden alle Funktionsblöcke, deren Einstellungen und deren Beeinflussungsmöglichkeiten beschrieben.
+Im folgenden Werden die Ausgangskonverter und deren Einstellungsmöglichkeiten beschrieben.
 
 <kbd>![Ausgang](pics/Ausgang.PNG)</kbd>
 
@@ -2201,7 +2201,7 @@ Dieses Auswahlfeld legt den DPT für den Ausgang fest. Unterstützt werden:
 * DPT 17: Szenen Nummer (1-64)
 * DPT 232: RGB-Wert (3*8 Bit Rot-, Grün-, Blauwert)
 
-Je nach gewähltem DPT unterscheiden sich die folgenden Felder leicht. Es werden erst mal die Parameter für alle DPT beschrieben und anschließend die DPT-spezifischen.
+Je nach gewähltem DPT unterscheiden sich die folgenden Felder leicht. Es werden erst mal die Parameter beschrieben, die für alle DPT passen und anschließend die DPT-spezifischen.
 
 <!-- DOC -->
 ### **Sendeverhalten für Ausgang**
@@ -2219,7 +2219,7 @@ Der Ausgangskonverter übersetzt den logischen Wert z.B. in das Ergebnis einer F
 
 #### **Alle Werte senden**
 
-Jeder Wert wird auf den Bus gesendet. Das ist das Standardverhalten.
+Jeder Wert wird auf den Bus gesendet, auch wenn er gleich dem zuletzt gesendetem Wert ist. Das ist das Standardverhalten.
 
 #### **Nur geänderte Werte senden**
 
@@ -2241,9 +2241,7 @@ Für Spezialfunktionen wie "Gerät zurücksetzen", "Tonwiedergabe (Buzzer)" oder
 
 <kbd>![Ausgang EIN-Signal](pics/AusgangEIN.png)</kbd>
 
-Das letzte Funktionsmodul auf dem Ausgangsbild ist ein Konverter, der das bis hierher ermittelte EIN- oder AUS-Signal in einen bestimmten DPT konvertiert und den resultierenden Wert in ein KO schreibt, damit es auf den KNX-Bus gesendet werden kann.
-
-
+Dieser Ausgangskonverter bestimmt, was bei einem logischen EIN-Signal auf den Bus gesendet werden soll.
 
 <!-- DOC -->
 ### **Wert für EIN senden?**
@@ -2406,6 +2404,9 @@ Ist eine GA mit dem eigenen KO des Ausgangs verknüpft, wird der Wert des Ausgan
 ## Wert für AUS
 
 <kbd>![Ausgang AUS-Signal](pics/AusgangAUS.png)</kbd>
+
+Dieser Ausgangskonverter bestimmt, was bei einem logischen AUS-Signal auf den Bus gesendet werden soll.
+
 
 <!-- DOC -->
 ### **Wert für AUS senden?**
