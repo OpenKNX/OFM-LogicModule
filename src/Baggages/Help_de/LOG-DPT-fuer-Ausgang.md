@@ -18,5 +18,5 @@ Dieses Auswahlfeld legt den DPT für den Ausgang fest. Unterstützt werden:
 * DPT 17: Szenen Nummer (1-64)
 * DPT 232: RGB-Wert (3*8 Bit Rot-, Grün-, Blauwert)
 
-Je nach gewähltem DPT unterscheiden sich die folgenden Felder leicht. Es werden erst mal die Parameter für alle DPT beschrieben und anschließend die DPT-spezifischen.
+Je nach gewähltem DPT unterscheiden sich die folgenden Felder leicht. Es werden erst mal die Parameter beschrieben, die für alle DPT passen und anschließend die DPT-spezifischen.
 

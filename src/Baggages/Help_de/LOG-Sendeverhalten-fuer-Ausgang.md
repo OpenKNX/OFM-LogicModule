@@ -9,7 +9,7 @@ Der Ausgangskonverter übersetzt den logischen Wert z.B. in das Ergebnis einer F
 
 #### Alle Werte senden
 
-Jeder Wert wird auf den Bus gesendet. Das ist das Standardverhalten.
+Jeder Wert wird auf den Bus gesendet, auch wenn er gleich dem zuletzt gesendetem Wert ist. Das ist das Standardverhalten.
 
 #### Nur geänderte Werte senden
 
