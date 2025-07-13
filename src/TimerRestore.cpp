@@ -28,9 +28,6 @@ void TimerRestore::setup(Timer &iTimer)
     mNow = iTimer.mNow;
     mLongitude = iTimer.mLongitude;
     mLatitude = iTimer.mLatitude;
-    mTimezone = iTimer.mTimezone;
-    mUseSummertime = iTimer.UseSummertime();
-    mIsSummertime = iTimer.IsSummertime();
     mTimeValid = tmValid;
     holiday.updateDate(mNow, false);
     doDayCalculations();

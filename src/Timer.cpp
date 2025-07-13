@@ -43,12 +43,6 @@ void Timer::setup()
     holiday.setup();
 }
 
-// TODO Common Time: Remove
-bool Timer::UseSummertime()
-{
-    return mUseSummertime;
-}
-
 /**
  * Update the internal timer.
  * @return if time was changed and depending updates should be triggered
@@ -81,8 +75,6 @@ bool Timer::loop()
         {
             // TODO Common Time: Replace mTimeValid
             mTimeValid = tmValid;
-
-            // TODO set IsSummertime(lSummertime);
         }
         if (mTimeValid == tmValid)
         {
@@ -134,23 +126,27 @@ bool Timer::loop()
                 mMinuteTick = mNow.tm_min;
 
                 // TZ and DST handled in Common Time only
-                /*
-                if (mUseSummertime && (getMonth() == 3 || getMonth() == 10) && getHour() == 3 && getMinute() == 1)
-                    calculateSummertime();
-                */
             }
-            // TODO Common Time: set mUseSummertime, mIsSummertime, mTimezone
         }
     }
     return lMinuteChanged;
 }
 
-// TODO Common Time: Remove
+// TODO: Check Migration to Common Time / SunCalculation
 void Timer::convertToLocalTime(double iTime, sTime *eTime)
 {
-    eTime->hour = (int)floor(iTime);
-    eTime->minute = (int)(60 * (iTime - floor(iTime)));
-    eTime->hour += mTimezone + ((mIsSummertime) ? 1 : 0);
+    OpenKNX::TimeOnly localTime = OpenKNX::DateTime(
+        getYear(),
+        getMonth(),
+        getDay(), 
+        (int)floor(iTime), 
+        (int)(60 * (iTime - floor(iTime))), 
+        0, 
+        OpenKNX::DateTimeTypeUTC
+    ).toLocalTime();
+
+    eTime->hour = localTime.hour;
+    eTime->minute = localTime.minute;
 }
 
 void Timer::calculateSunriseSunset()
@@ -248,90 +244,6 @@ eTimeValid Timer::isTimerValid()
 {
     return mTimeValid;
 }
-
-#pragma region LOG_TIME_DST
-
-bool Timer::IsSummertime()
-{
-    return mIsSummertime;
-}
-
-void Timer::IsSummertime(bool iValue)
-{
-    if (iValue != mIsSummertime)
-    {
-        mIsSummertime = iValue;
-        calculateSunriseSunset();
-    }
-}
-
-uint8_t Timer::calculateLastSundayInMonth(uint8_t iMonth)
-{
-    mTimeHelper.tm_year = mNow.tm_year;
-    mTimeHelper.tm_mon = iMonth - 1;
-    mTimeHelper.tm_mday = 31;
-    mktime(&mTimeHelper);
-    return mTimeHelper.tm_mday - mTimeHelper.tm_wday;
-}
-
-// TODO Common Time: Remove => Replace 
-// should be called only at 03:01 o'clock
-bool Timer::calculateSummertime()
-{
-    // first we do easy win
-    bool lResult = false;
-    if (mUseSummertime)
-    {
-        bool lIsSummertime = false;
-        if (getMonth() == 3)
-        {
-            // find last Sunday in March
-            uint8_t lLastSunday = calculateLastSundayInMonth(3);
-            if (lLastSunday == mNow.tm_mday)
-            {
-                // we have to take time into account
-                lIsSummertime = (mNow.tm_hour > 3);
-            }
-            else
-            {
-                lIsSummertime = (lLastSunday < mNow.tm_mday);
-            }
-        }
-        else if (getMonth() == 10)
-        {
-            // find last Sunday in October
-            uint8_t lLastSunday = calculateLastSundayInMonth(10);
-            if (lLastSunday == mNow.tm_mday)
-            {
-                // we have to take time into account
-                // here might be a problem if called between
-                // 2 and 3, because these times exist in both
-                // summer and wintertime. This is currently
-                // mitigated with the fact, that this routine
-                // is called only once at 03:01. Currently just used
-                // for sunrise/sunset calculation, so calling
-                // time is no problem.
-                lIsSummertime = (mNow.tm_hour < 3);
-            }
-            else
-            {
-                lIsSummertime = (lLastSunday > mNow.tm_mday);
-            }
-        }
-        else
-        {
-            lIsSummertime = (getMonth() > 3 && getMonth() < 10);
-        }
-        if (lIsSummertime != mIsSummertime)
-        {
-            IsSummertime(lIsSummertime);
-            lResult = true;
-        }
-    }
-    return lResult;
-}
-
-#pragma endregion
 
 void Timer::debug()
 {

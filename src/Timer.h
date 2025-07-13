@@ -74,8 +74,6 @@ class Timer
     int8_t mMonthTick = -1;  // sunrise/sunset calculation happens each time the month changes
     int16_t mYearTick = -1;  // easter calculation happens each time year changes
 
-    bool calculateSummertime();
-    uint8_t calculateLastSundayInMonth(uint8_t iMonth);
     void calculateSunriseSunset();
     void convertToLocalTime(double iTime, sTime *eTime);
 
@@ -90,13 +88,9 @@ class Timer
     struct tm mNow;
     float mLongitude;
     float mLatitude;
-    int8_t mTimezone;
 
     void setup();
     bool loop();
-    /*
-    void busTime_processInputKo(GroupObject &iKo);
-    */
     void debug();
 
     uint8_t getDay();
@@ -113,8 +107,5 @@ class Timer
     uint8_t holidayToday();
     uint8_t holidayTomorrow();
     eTimeValid isTimerValid();
-    bool IsSummertime();
-    void IsSummertime(bool iValue);
-    bool UseSummertime();
 };
 
