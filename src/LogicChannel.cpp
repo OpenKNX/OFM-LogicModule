@@ -1257,6 +1257,9 @@ void LogicChannel::processConvertInput(uint8_t iIOIndex)
 // This method checks if the input specified by iIOIndex is inverted.
 // The BIT_INPUT_MASK value is used to determine the inversion status of the input.
 bool LogicChannel::isInputInverted(uint8_t iIOIndex) {
+    // timer input is never inverted
+    if (ParamLOG_fLogic == VAL_Logic_Timer)
+        return false;
     uint8_t lInput = 0;
     switch (iIOIndex) {
     case BIT_EXT_INPUT_1:
