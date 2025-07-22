@@ -85,7 +85,7 @@ Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer d
 
 16.06.2025: Firmware 3.7, Applikation 3.7:
 
-* NEU: Ausgangs-KO eines Logikkanals kann jetzt manuell ausgeblendet werden. Der automatische Ein-/Ausblendalgorithmus wurde entfernt, weil er nicht alle gewünschten Fälle abdecken konnte. Nach einem Update müssen unerwünschte KO, die früher automatisch ausgeblendet worden sind, manuell ausgeblendet  werden. Dies ändert nicht an der Funktionalität der Logik, es geht nur um die Übersichtlichkeit in der ETS.
+* NEU: Ausgangs-KO eines Logikkanals kann jetzt manuell ausgeblendet werden. Der automatische Ein-/Ausblendalgorithmus wurde entfernt, weil er nicht alle gewünschten Fälle abdecken konnte. Nach einem Update müssen unerwünschte KO, die früher automatisch ausgeblendet worden sind, manuell ausgeblendet  werden. Dies ändert nichts an der Funktionalität der Logik, es geht nur um die Übersichtlichkeit in der ETS.
 * NEU: Überarbeitung der Einstellungs-Seiten:
   * Jeder interne Eingang hat jetzt eine eigene Einstellungs-Seite
   * Die Ausgangsseite wurde in eine Signalverarbeitungs- und eine Ausgangs-Seite aufgeteilt
