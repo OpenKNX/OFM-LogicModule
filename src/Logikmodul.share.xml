@@ -1236,7 +1236,7 @@
                 <ParameterRefRef RefId="%AID%_UP-%TT%00164_R-%TT%0016401" HelpContext="BASE-Verfuegbare-Kanaele" IndentLevel="1" />
                 <ParameterSeparator Id="%AID%_PS-52" Text="" UIHint="HorizontalRuler" />
                 <ParameterSeparator Id="%AID%_PS-50" Text="Urlaub" UIHint="Headline" />
-                <ParameterSeparator Id="%AID%_PS-51" Text="Zeitschaltuhren können auch Urlaubszeiten berücksichtigen. Damit das funktioniert, muss eine Urlaubszeit über das KO 4 dem Gerät mitgeteilt werden." />
+                <ParameterSeparator Id="%AID%_PS-51" Text="Zeitschaltuhren können auch Urlaubszeiten berücksichtigen. Damit das funktioniert, muss eine Urlaubszeit über das KO 15 dem Gerät mitgeteilt werden." />
                 <ParameterRefRef RefId="%AID%_UP-%TT%00138_R-%TT%0013801" HelpContext="%DOC%" IndentLevel="1" />
                 <choose ParamRefId="%AID%_UP-%TT%00138_R-%TT%0013801">
                   <when test="1">
@@ -1246,7 +1246,7 @@
                 </choose>
                 <ParameterSeparator Id="%AID%_PS-52" Text="" UIHint="HorizontalRuler" />
                 <ParameterSeparator Id="%AID%_PS-53" Text="Feiertage" UIHint="Headline" />
-                <ParameterSeparator Id="%AID%_PS-54" Text="Das Gerät kann die berechneten Feiertage auch auf den Bus senden. Über das KO 5 wird mitgeteilt, welcher Feiertag 'Heute' ist, über KO 6 welcher Feiertag 'Morgen' ist. 0 bedeutet 'kein Feiertag'." />
+                <ParameterSeparator Id="%AID%_PS-54" Text="Das Gerät kann die berechneten Feiertage auch auf den Bus senden. Über das KO 16 wird mitgeteilt, welcher Feiertag 'Heute' ist, über KO 17 welcher Feiertag 'Morgen' ist. 0 bedeutet 'kein Feiertag'." />
                 <ParameterRefRef RefId="%AID%_UP-%TT%00139_R-%TT%0013901" HelpContext="%DOC%" IndentLevel="1" />
                 <choose ParamRefId="%AID%_UP-%TT%00139_R-%TT%0013901">
                   <when test="1">
