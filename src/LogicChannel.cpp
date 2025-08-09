@@ -2861,7 +2861,7 @@ void LogicChannel::processTimerRestoreState(TimerRestore &iTimer)
     if (lIterationIndicator)
         pCurrentPipeline |= PIP_TIMER_RESTORE_STEP;
 
-    logInfoP("Processing TimerRestore on Channel %d for Day %02d.%02d.%02d", channelIndex() + 1, iTimer.getDay(), iTimer.getMonth(), iTimer.getYear());
+    logInfoP("Processing TimerRestore for Day %04d-%02d-%02d", iTimer.getYear(), iTimer.getMonth(), iTimer.getDay());
     // first we process settings valid for whole timer
     // vacation is not processed (always skipped)
 
