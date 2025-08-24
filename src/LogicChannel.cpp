@@ -255,7 +255,7 @@ GroupObject *LogicChannel::getKo(uint8_t iIOIndex)
     return lKo;
 }
 
-Dpt &LogicChannel::getKoDPT(uint8_t iIOIndex)
+Dpt &LogicChannel::getKoDPT(uint8_t iIOIndex, bool iHandleDpt2asByte /* = false */)
 {
     uint8_t lDpt;
     switch (iIOIndex)
@@ -273,6 +273,8 @@ Dpt &LogicChannel::getKoDPT(uint8_t iIOIndex)
             lDpt = 0;
             break;
     }
+    if (iHandleDpt2asByte && lDpt == VAL_DPT_2) // DPT2
+        lDpt = VAL_DPT_5; // handle DPT2 as DPT5 for internal processing
     return getDPT(lDpt);
 }
 
@@ -322,10 +324,11 @@ void LogicChannel::knxWrite(uint8_t iIOIndex, KNXValue &iValue, bool iOn, bool i
     bool lSendOnChanged = ParamLOG_fOSendOnChange;
     GroupObject *lKo = getKo(iIOIndex);
     bool lChanged = false;
+    Dpt &lDpt = getKoDPT(iIOIndex, true);
     if (lSendOnChanged)
-        lChanged = lKo->valueNoSendCompare(iValue, getKoDPT(iIOIndex));
+        lChanged = lKo->valueNoSendCompare(iValue, lDpt);
     else
-        lKo->value(iValue, getKoDPT(iIOIndex));
+        lKo->value(iValue, lDpt);
     if (lChanged)
         lKo->objectWritten();
     if (iAdditional)
@@ -336,9 +339,9 @@ void LogicChannel::knxWrite(uint8_t iIOIndex, KNXValue &iValue, bool iOn, bool i
             lKo = &knx.getGroupObject(lKoNumber);
             lChanged = false;
             if (lSendOnChanged)
-                lChanged = lKo->valueNoSendCompare(iValue, getKoDPT(iIOIndex));
+                lChanged = lKo->valueNoSendCompare(iValue, lDpt);
             else
-                lKo->value(iValue, getKoDPT(iIOIndex));
+                lKo->value(iValue, lDpt);
             if (lChanged)
                 lKo->objectWritten();
         }

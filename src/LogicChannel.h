@@ -233,7 +233,7 @@ class LogicChannel : public OpenKNX::Channel
     uint8_t *getStringParam(uint16_t iParamIndex);
     uint32_t getTimeDelayParam(uint16_t iParamIndex, bool iAsSeconds = false);
     GroupObject *getKo(uint8_t iIOIndex);
-    Dpt &getKoDPT(uint8_t iIOIndex);
+    Dpt &getKoDPT(uint8_t iIOIndex, bool iHandleDpt2asByte = false);
     uint16_t checkAdditionalWrite(bool iOn);
     void knxWrite(uint8_t iIOIndex, KNXValue &iValue, bool iOn, bool iAdditional = true);
     void knxWriteBool(uint8_t iIOIndex, bool iValue, bool iOn);

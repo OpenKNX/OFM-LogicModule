@@ -1,6 +1,6 @@
 {
     "name": "OFM-LogicModule",
-    "version": "3.7.1",
+    "version": "3.7.2",
     "description": "Logic module for the knx stack, can be embedded in an ETS application",
     "homepage": "https://openknx.de",
     "authors": {

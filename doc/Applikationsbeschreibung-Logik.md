@@ -83,6 +83,10 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 
 Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer das Gesamtdokument lesen muss, um Neuerungen zu erfahren.
 
+24.08.2025: Firmware 3.7.2, Applikation 3.7:
+
+* FIX: DPT2 am Ausgang sendet wieder korrekte Werte, ist wohl in der Vergangenheit durch eine Änderung am KNX-Stack kaputt gegangen und wurde erst jetzt gemerkt.
+
 16.06.2025: Firmware 3.7, Applikation 3.7:
 
 * NEU: Ausgangs-KO eines Logikkanals kann jetzt manuell ausgeblendet werden. Der automatische Ein-/Ausblendalgorithmus wurde entfernt, weil er nicht alle gewünschten Fälle abdecken konnte. Nach einem Update müssen unerwünschte KO, die früher automatisch ausgeblendet worden sind, manuell ausgeblendet  werden. Dies ändert nichts an der Funktionalität der Logik, es geht nur um die Übersichtlichkeit in der ETS.
