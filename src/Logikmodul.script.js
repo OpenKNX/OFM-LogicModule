@@ -83,3 +83,30 @@ function LOG_CalcRelFromAbs(input, output, context) {
     }
 }
 
+function LOG_SyncOutToAll(input, output, context) {
+    Log.info("OpenKNX ConfigTransfer: LOG_SyncOutToAll");
+    output.All = input.SubSet;
+}
+
+function LOG_SyncOutToNone(input, output, context) {
+    Log.info("OpenKNX ConfigTransfer: LOG_SyncOutToNone");
+    var allValue = input.All;
+    var isBuzzer = (allValue == 6);
+    var isLed = (allValue == 7);
+    output.SubSet = (isBuzzer || isLed) ? 0 : allValue;
+}
+
+function LOG_SyncOutToBuzzer(input, output, context) {
+    Log.info("OpenKNX ConfigTransfer: LOG_SyncOutToBuzzer");
+    var allValue = input.All;
+    var isLed = (allValue == 7);
+    output.SubSet = isLed ? 0 : allValue;
+}
+
+function LOG_SyncOutToLed(input, output, context) {
+    Log.info("OpenKNX ConfigTransfer: LOG_SyncOutToLed");
+    var allValue = input.All;
+    var isBuzzer = (allValue == 6);
+    output.SubSet = isBuzzer ? 0 : allValue;
+}
+

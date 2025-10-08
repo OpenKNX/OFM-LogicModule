@@ -665,6 +665,34 @@
                 </RParameters>
               </ParameterCalculation>
 
+              <!-- Sync Output-ON-Values -->
+              <ParameterCalculation Id="%AID%_PC-%TT%%CC%0107" Language="JavaScript" Name="SyncOut%CC%OnNone" LRTransformationFunc="LOG_SyncOutToAll" RLTransformationFunc="LOG_SyncOutToNone">
+                <LParameters><ParameterRefRef RefId="%AID%_UP-%TT%%CC%065_R-%TT%%CC%06501" AliasName="SubSet" /></LParameters>
+                <RParameters><ParameterRefRef RefId="%AID%_UP-%TT%%CC%136_R-%TT%%CC%13601" AliasName="All" /></RParameters>
+              </ParameterCalculation>
+              <ParameterCalculation Id="%AID%_PC-%TT%%CC%0108" Language="JavaScript" Name="SyncOut%CC%OnBuzzer" LRTransformationFunc="LOG_SyncOutToAll" RLTransformationFunc="LOG_SyncOutToBuzzer">
+                <LParameters><ParameterRefRef RefId="%AID%_UP-%TT%%CC%135_R-%TT%%CC%13501" AliasName="SubSet" /></LParameters>
+                <RParameters><ParameterRefRef RefId="%AID%_UP-%TT%%CC%136_R-%TT%%CC%13601" AliasName="All" /></RParameters>
+              </ParameterCalculation>
+              <ParameterCalculation Id="%AID%_PC-%TT%%CC%0109" Language="JavaScript" Name="SyncOut%CC%OnLed" LRTransformationFunc="LOG_SyncOutToAll" RLTransformationFunc="LOG_SyncOutToLed">
+                <LParameters><ParameterRefRef RefId="%AID%_UP-%TT%%CC%136_R-%TT%%CC%13601" AliasName="SubSet" /></LParameters>
+                <RParameters><ParameterRefRef RefId="%AID%_UP-%TT%%CC%136_R-%TT%%CC%13601" AliasName="All" /></RParameters>
+              </ParameterCalculation>
+
+              <!-- Sync Output-OFF-Values -->
+              <ParameterCalculation Id="%AID%_PC-%TT%%CC%0110" Language="JavaScript" Name="SyncOut%CC%OffNone" LRTransformationFunc="LOG_SyncOutToAll" RLTransformationFunc="LOG_SyncOutToNone">
+                <LParameters><ParameterRefRef RefId="%AID%_UP-%TT%%CC%077_R-%TT%%CC%07701" AliasName="SubSet" /></LParameters>
+                <RParameters><ParameterRefRef RefId="%AID%_UP-%TT%%CC%137_R-%TT%%CC%13701" AliasName="All" /></RParameters>
+              </ParameterCalculation>
+              <ParameterCalculation Id="%AID%_PC-%TT%%CC%0111" Language="JavaScript" Name="SyncOut%CC%OffBuzzer" LRTransformationFunc="LOG_SyncOutToAll" RLTransformationFunc="LOG_SyncOutToBuzzer">
+                <LParameters><ParameterRefRef RefId="%AID%_UP-%TT%%CC%138_R-%TT%%CC%13801" AliasName="SubSet" /></LParameters>
+                <RParameters><ParameterRefRef RefId="%AID%_UP-%TT%%CC%137_R-%TT%%CC%13701" AliasName="All" /></RParameters>
+              </ParameterCalculation>
+              <ParameterCalculation Id="%AID%_PC-%TT%%CC%0112" Language="JavaScript" Name="SyncOut%CC%OffLed" LRTransformationFunc="LOG_SyncOutToAll" RLTransformationFunc="LOG_SyncOutToLed">
+                <LParameters><ParameterRefRef RefId="%AID%_UP-%TT%%CC%139_R-%TT%%CC%13901" AliasName="SubSet" /></LParameters>
+                <RParameters><ParameterRefRef RefId="%AID%_UP-%TT%%CC%137_R-%TT%%CC%13701" AliasName="All" /></RParameters>
+              </ParameterCalculation>
+
             </ParameterCalculations>
             <ComObjectTable>
               <op:usePart name="INPUT" xpath="//ComObjectTable/*" />
@@ -1460,12 +1488,10 @@
                                 <when test="0">
                                   <!-- No Buzzer, no Led -->
                                   <ParameterRefRef RefId="%AID%_UP-%TT%%CC%065_R-%TT%%CC%06501" HelpContext="%DOC%" IndentLevel="1" />
-                                  <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%136_R-%TT%%CC%13601" SourceParamRefRef="%AID%_UP-%TT%%CC%065_R-%TT%%CC%06501" />
                                 </when>
                                 <when test="1">
                                   <!-- No Buzzer, only Led -->
                                   <ParameterRefRef RefId="%AID%_UP-%TT%%CC%135_R-%TT%%CC%13501" HelpContext="%DOC%" IndentLevel="1" />
-                                  <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%136_R-%TT%%CC%13601" SourceParamRefRef="%AID%_UP-%TT%%CC%135_R-%TT%%CC%13501" />
                                 </when>
                               </choose>
                             </when>
@@ -1474,7 +1500,6 @@
                                 <when test="0">
                                   <!-- Only Buzzer, no Led -->
                                   <ParameterRefRef RefId="%AID%_UP-%TT%%CC%134_R-%TT%%CC%13401" HelpContext="%DOC%" IndentLevel="1" />
-                                  <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%136_R-%TT%%CC%13601" SourceParamRefRef="%AID%_UP-%TT%%CC%134_R-%TT%%CC%13401" />
                                 </when>
                                 <when test="1">
                                   <!-- Both Buzzer and Led -->
@@ -1650,12 +1675,10 @@
                                 <when test="0">
                                   <!-- No Buzzer, no Led -->
                                   <ParameterRefRef RefId="%AID%_UP-%TT%%CC%077_R-%TT%%CC%07701" HelpContext="%DOC%" IndentLevel="1" />
-                                  <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%139_R-%TT%%CC%13901" SourceParamRefRef="%AID%_UP-%TT%%CC%077_R-%TT%%CC%07701" />
                                 </when>
                                 <when test="1">
                                   <!-- No Buzzer, only Led -->
                                   <ParameterRefRef RefId="%AID%_UP-%TT%%CC%138_R-%TT%%CC%13801" HelpContext="%DOC%" IndentLevel="1" />
-                                  <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%139_R-%TT%%CC%13901" SourceParamRefRef="%AID%_UP-%TT%%CC%138_R-%TT%%CC%13801" />
                                 </when>
                               </choose>
                             </when>
@@ -1664,7 +1687,6 @@
                                 <when test="0">
                                   <!-- Only Buzzer, no Led -->
                                   <ParameterRefRef RefId="%AID%_UP-%TT%%CC%137_R-%TT%%CC%13701" HelpContext="%DOC%" IndentLevel="1" />
-                                  <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%139_R-%TT%%CC%13901" SourceParamRefRef="%AID%_UP-%TT%%CC%137_R-%TT%%CC%13701" />
                                 </when>
                                 <when test="1">
                                   <!-- Both Buzzer and Led -->
