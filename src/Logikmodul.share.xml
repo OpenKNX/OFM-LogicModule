@@ -455,6 +455,8 @@
                   <Enumeration Text="Ja - Wert einer Funktion" Value="8" Id="%ENID%" />
                   <Enumeration Text="Ja - Read Request senden" Value="4" Id="%ENID%" />
                   <Enumeration Text="Ja - 'Gerät zurücksetzen' senden" Value="5" Id="%ENID%" />
+                  <!-- Enum... Text="Ja - Tonwiedegabe (Buzzer)" Value="6" Id="%ENID%" / -->
+                  <!-- Enum... Text="Ja - RGB-LED schalten" Value="7" Id="%ENID%" / -->
                 </TypeRestriction>
               </ParameterType>
               <ParameterType Id="%AID%_PT-OutputSendBuzzer" Name="OutputSendBuzzer">
@@ -468,6 +470,7 @@
                   <Enumeration Text="Ja - Read Request senden" Value="4" Id="%ENID%" />
                   <Enumeration Text="Ja - 'Gerät zurücksetzen' senden" Value="5" Id="%ENID%" />
                   <Enumeration Text="Ja - Tonwiedegabe (Buzzer)" Value="6" Id="%ENID%" />
+                  <!-- Enum... Text="Ja - RGB-LED schalten" Value="7" Id="%ENID%" / -->
                 </TypeRestriction>
               </ParameterType>
               <ParameterType Id="%AID%_PT-OutputSendLed" Name="OutputSendLed">
@@ -480,6 +483,7 @@
                   <Enumeration Text="Ja - Wert einer Funktion" Value="8" Id="%ENID%" />
                   <Enumeration Text="Ja - Read Request senden" Value="4" Id="%ENID%" />
                   <Enumeration Text="Ja - 'Gerät zurücksetzen' senden" Value="5" Id="%ENID%" />
+                  <!-- Enum... Text="Ja - Tonwiedegabe (Buzzer)" Value="6" Id="%ENID%" / -->
                   <Enumeration Text="Ja - RGB-LED schalten" Value="7" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
