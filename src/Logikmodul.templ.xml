@@ -617,8 +617,10 @@
               <ParameterRef Id="%AID%_P-%TT%%CC%515_R-%TT%%CC%51501" RefId="%AID%_P-%TT%%CC%515" />
             </ParameterRefs>
             <ParameterCalculations>
+              <!-- Ids 0105 + 0106 -->
               <op:usePart name="INPUT" xpath="//ParameterCalculations/*" />
               <op:usePart name="INTERNAL" xpath="//ParameterCalculations/*" />
+              
               <ParameterCalculation Id="%AID%_PC-%TT%%CC%0101" Language="JavaScript" Name="CalcRelAbs%CC%Oa" RLTransformationFunc="LOG_CalcAbsFromRel" RLTransformationParameters="{&quot;OwnKO&quot;: %K2%}" LRTransformationFunc="LOG_CalcRelFromAbs" LRTransformationParameters="{&quot;OwnKO&quot;: %K2%}">
                 <LParameters>
                   <!-- Absolute Address -->
