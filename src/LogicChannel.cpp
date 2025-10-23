@@ -1705,7 +1705,7 @@ void LogicChannel::startOnDelay()
     if ((pCurrentPipeline & PIP_ON_DELAY) == 0)
     {
         // on delay is not running, we start it
-        pOnDelay = delayTimerInit();
+        pOnDelay = ParamLOG_fODelay ? delayTimerInit() : 0;
         pCurrentPipeline |= PIP_ON_DELAY;
 #if LOGIC_TRACE
         if (debugFilter())
@@ -1784,7 +1784,7 @@ void LogicChannel::startOffDelay()
     uint8_t lOffDelayRepeat = ParamLOG_fODelayOffRepeat;
     if ((pCurrentPipeline & PIP_OFF_DELAY) == 0)
     {
-        pOffDelay = delayTimerInit();
+        pOffDelay = ParamLOG_fODelay ? delayTimerInit() : 0;
         pCurrentPipeline |= PIP_OFF_DELAY;
 #if LOGIC_TRACE
         if (debugFilter())
@@ -1905,7 +1905,7 @@ void LogicChannel::startOnOffRepeat(bool iOutput)
             pRepeatOnOffDelay = millis();
             pCurrentPipeline &= ~PIP_OFF_REPEAT;
             processOutput(iOutput);
-            if (ParamLOG_fORepeatOnTimeMS > 0)
+            if (ParamLOG_fORepeat && ParamLOG_fORepeatOnTimeMS > 0)
             {
                 pCurrentPipeline |= PIP_ON_REPEAT;
 #if LOGIC_TRACE
@@ -1922,7 +1922,7 @@ void LogicChannel::startOnOffRepeat(bool iOutput)
             pRepeatOnOffDelay = millis();
             pCurrentPipeline &= ~PIP_ON_REPEAT;
             processOutput(iOutput);
-            if (ParamLOG_fORepeatOffTimeMS > 0)
+            if (ParamLOG_fORepeat && ParamLOG_fORepeatOffTimeMS > 0)
             {
                 pCurrentPipeline |= PIP_OFF_REPEAT;
 #if LOGIC_TRACE
