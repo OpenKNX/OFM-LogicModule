@@ -2355,7 +2355,13 @@ Hier wird eine physikalische Adresse in der üblichen Punkt-Notation erwartet. D
 
 Dies entspricht genau der Funktion "Gerät zurücksetzen" in der ETS.
 
-### **LED-Farbe festlegen (Schwarz=aus)**
+<!-- DOC -->
+### **Status-LED Kanal**
+
+Hier wird angegeben, über welchen Logikstatus-Kanal die LED angesprochen wird.
+
+<!-- DOC -->
+#### **Status-LED Farbe**
 
 <kbd>![Led Farbe festlegen](pics/LedColor.PNG)</kbd>
 
@@ -2364,6 +2370,16 @@ Das Feld erscheint nur, wenn für "Wert für EIN senden" ein "Ja - RGB-LED schal
 Hier wird die Farbe der LED bestimmt, in der sie leuchten soll. Wird die Farbe Schwarz gewählt (#000000), geht die LED aus. Für die Auswahl der Farbe kann auch ein Farbauswahldialog verwendet werden.
 
 Diese Option kann nur funktionieren, wenn das Gerät, auf dem die Applikation Logik läuft, auch eine RGB-LED verbaut hat.
+
+<!-- DOC -->
+#### **Status-LED Effekt**
+
+Wähle den Effekt.
+
+<!-- DOC -->
+#### **Status-LED Effektdauer**
+
+Dauer des Effekts in ms.
 
 <!-- DOC -->
 ### **Wert für EIN senden (als 3 Byte RGB)**

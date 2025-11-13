@@ -545,3 +545,4 @@ bool Logic::processFunctionProperty(uint8_t objectIndex, uint8_t propertyId, uin
             return false;
     }
 }
+

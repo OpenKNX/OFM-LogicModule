@@ -256,6 +256,7 @@ class LogicChannel : public OpenKNX::Channel
     void writeValue(LogicValue iValue, bool iOn);
     void setRGBColor(uint16_t iParamIndex);
     void setBuzzer(uint16_t iParamIndex);
+    void setStatusLed(uint16_t iParamIndex);
 
     bool isInputActive(uint8_t iIOIndex);
     bool isInputValid(uint8_t iIOIndex);

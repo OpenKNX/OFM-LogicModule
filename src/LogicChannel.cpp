@@ -435,16 +435,58 @@ void LogicChannel::knxResetDevice(uint16_t iParamIndex)
         knx.restart(lAddress);
 }
 
+void LogicChannel::setStatusLed(uint16_t iParamIndex)
+{
+    uint8_t lStatusChannel = getByteParam(iParamIndex + 4) & LOG_fOOnLedProviderMask;
+    OpenKNX::Led::FunctionGroup *lLed = openknx.ledFunctions.getActive(100 + lStatusChannel);
+    if (lLed == nullptr) return;
+
+    if ((getByteParam(LOG_fAlarm) & LOG_fAlarmMask) || !knx.getGroupObject(LOG_KoLedLock).value(getDPT(VAL_DPT_1)))
+    {
+
+        uint32_t lRGBColor = getIntParam(iParamIndex) >> 8;
+        uint8_t lEffect = getByteParam(iParamIndex + 5) & LOG_fOOnLedEffectMask;
+        uint16_t lDuration = getWordParam(iParamIndex + 6);
+        switch (lEffect)
+        {
+            case 1: 
+                lLed->setColor(lRGBColor);
+                lLed->on();
+                break;
+            
+            case 2: 
+                lLed->setColor(lRGBColor);
+                lLed->blinking(lDuration);
+                break;
+
+            case 3: 
+                lLed->setColor(lRGBColor);
+                lLed->pulsing(lDuration);
+                break;
+            
+            case 4: 
+                lLed->setColor(lRGBColor);
+                lLed->flash(lDuration);
+                break;
+                    
+            default:
+                lLed->off();
+                break;
+        }
+    }
+    else
+    {
+        // in case of lock we turn off led
+        lLed->off();
+    }
+}
+
 // turn on/off RGBLed
 void LogicChannel::setRGBColor(uint16_t iParamIndex)
 {
 #ifdef I2C_RGBLED_DEVICE_ADDRESS
     if ((getByteParam(LOG_fAlarm) & LOG_fAlarmMask) || !knx.getGroupObject(LOG_KoLedLock).value(getDPT(VAL_DPT_1)))
     {
-        uint32_t lRGBColor = getIntParam(iParamIndex);
-        uint8_t lRed = lRGBColor >> 24;
-        uint8_t lGreen = lRGBColor >> 16;
-        uint8_t lBlue = lRGBColor >> 8;
         // we have to map colors to correct pins
         switch (ParamLOG_LedMapping)
         {
@@ -2141,6 +2183,7 @@ void LogicChannel::processOutput(bool iValue)
                 setBuzzer(LOG_fOOnDpt1);
                 break;
             case VAL_Out_RGBLed:
+                setStatusLed(LOG_fOOnDpt1);
                 setRGBColor(LOG_fOOnDpt1);
                 break;
             default:
@@ -2178,6 +2221,7 @@ void LogicChannel::processOutput(bool iValue)
                 setBuzzer(LOG_fOOffDpt1);
                 break;
             case VAL_Out_RGBLed:
+                setStatusLed(LOG_fOOffDpt1);
                 setRGBColor(LOG_fOOffDpt1);
                 break;
             default:

@@ -480,7 +480,7 @@
                   <Enumeration Text="Ja - Wert einer Funktion" Value="8" Id="%ENID%" />
                   <Enumeration Text="Ja - Read Request senden" Value="4" Id="%ENID%" />
                   <Enumeration Text="Ja - 'Gerät zurücksetzen' senden" Value="5" Id="%ENID%" />
-                  <Enumeration Text="Ja - RGB-LED schalten" Value="7" Id="%ENID%" />
+                  <Enumeration Text="Ja - LED schalten" Value="7" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
               <ParameterType Id="%AID%_PT-OutputSendAll" Name="OutputSendAll">
@@ -1017,6 +1017,42 @@
                   <Enumeration Text="Mit Logikbeschriftungen" Value="0" Id="%ENID%" />
                   <Enumeration Text="Ohne Logikbeschriftungen" Value="1" Id="%ENID%" />
                 </TypeRestriction>
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-SLEDFunc" Name="SLEDFunc">
+                <TypeRestriction Base="Value" SizeInBit="32" UIHint="DropDown">
+                  <Enumeration Text="Logikstatus 1" Value="100" Id="%ENID%" DisplayOrder="0"/>
+                  <Enumeration Text="Logikstatus 2" Value="101" Id="%ENID%" DisplayOrder="0"/>
+                  <Enumeration Text="Logikstatus 3" Value="102" Id="%ENID%" DisplayOrder="0"/>
+                  <Enumeration Text="Logikstatus 4" Value="103" Id="%ENID%" DisplayOrder="0"/>
+                  <Enumeration Text="Logikstatus 5" Value="104" Id="%ENID%" DisplayOrder="0"/>
+                  <Enumeration Text="Logikstatus 6" Value="105" Id="%ENID%" DisplayOrder="0"/>
+                  <Enumeration Text="Logikstatus 7" Value="106" Id="%ENID%" DisplayOrder="0"/>
+                  <Enumeration Text="Logikstatus 8" Value="107" Id="%ENID%" DisplayOrder="0"/>
+                </TypeRestriction>
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-StatusLedProvider" Name="StatusLedProvider">
+                <TypeRestriction Base="Value" SizeInBit="3" UIHint="DropDown">
+                  <Enumeration Text="Logikstatus 1" Value="0" Id="%ENID%" />
+                  <Enumeration Text="Logikstatus 2" Value="1" Id="%ENID%" />
+                  <Enumeration Text="Logikstatus 3" Value="2" Id="%ENID%" />
+                  <Enumeration Text="Logikstatus 4" Value="3" Id="%ENID%" />
+                  <Enumeration Text="Logikstatus 5" Value="4" Id="%ENID%" />
+                  <Enumeration Text="Logikstatus 6" Value="5" Id="%ENID%" />
+                  <Enumeration Text="Logikstatus 7" Value="6" Id="%ENID%" />
+                  <Enumeration Text="Logikstatus 8" Value="7" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-StatusLedEffect" Name="StatusLedEffect">
+                <TypeRestriction Base="Value" SizeInBit="3" UIHint="DropDown">
+                  <Enumeration Text="Aus" Value="0" Id="%ENID%" />
+                  <Enumeration Text="Ein" Value="1" Id="%ENID%" />
+                  <Enumeration Text="Blinken" Value="2" Id="%ENID%" />
+                  <Enumeration Text="Pulsieren" Value="3" Id="%ENID%" />
+                  <Enumeration Text="Aufblitzen" Value="4" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-StatusLedEffectDuration" Name="StatusLedEffectDuration">
+                <TypeNumber SizeInBit="16" Type="unsignedInt" minInclusive="5" maxInclusive="60000" />
               </ParameterType>
             </ParameterTypes>
             <Parameters>

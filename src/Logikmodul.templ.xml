@@ -277,6 +277,10 @@
                 <Parameter Id="%AID%_UP-%TT%%CC%074" Name="f%C%OOnDpt16" ParameterType="%AID%_PT-ValueText" Offset="1" BitOffset="0" Text="    Wert für EIN senden als " Value="Ein" />
                 <Parameter Id="%AID%_UP-%TT%%CC%075" Name="f%C%OOnDpt17" ParameterType="%AID%_PT-ValueSceneOut" Offset="1" BitOffset="0" Text="    Wert für EIN senden als " Value="2" />
                 <Parameter Id="%AID%_UP-%TT%%CC%076" Name="f%C%OOnRGB" ParameterType="%AID%_PT-ValueColor" Offset="1" BitOffset="0" Text="    Wert für EIN senden als (3-Byte-RGB)" Value="#FFFFFF" />
+                <Parameter Id="%AID%_UP-%TT%%CC%516" Name="f%C%OOnLedProvider" ParameterType="%AID%_PT-StatusLedProvider" Offset="5" BitOffset="5" Text="    Status-LED Kanal" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%518" Name="f%C%OOnLedEffect" ParameterType="%AID%_PT-StatusLedEffect" Offset="6" BitOffset="5" Text="    Status-LED Effekt" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%520" Name="f%C%OOnLedDuration" ParameterType="%AID%_PT-StatusLedEffectDuration" Offset="7" BitOffset="0" Text="    Status-LED Effektdauer" Value="1000" />
+
                 <Parameter Id="%AID%_UP-%TT%%CC%121" Name="f%C%OOnPAArea" ParameterType="%AID%_PT-PALine" Offset="1" BitOffset="0" Text="" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%122" Name="f%C%OOnPALine" ParameterType="%AID%_PT-PALine" Offset="1" BitOffset="4" Text="" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%123" Name="f%C%OOnPADevice" ParameterType="%AID%_PT-PADevice" Offset="2" BitOffset="0" Text="" Value="1" />
@@ -312,6 +316,10 @@
                 <Parameter Id="%AID%_UP-%TT%%CC%086" Name="f%C%OOffDpt16" ParameterType="%AID%_PT-ValueText" Offset="1" BitOffset="0" Text="    Wert für AUS senden als" Value="Aus" />
                 <Parameter Id="%AID%_UP-%TT%%CC%087" Name="f%C%OOffDpt17" ParameterType="%AID%_PT-ValueSceneOut" Offset="1" BitOffset="0" Text="    Wert für AUS senden als " Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%088" Name="f%C%OOffRGB" ParameterType="%AID%_PT-ValueColor" Offset="1" BitOffset="0" Text="    Wert für AUS senden als (3-Byte-RGB)" Value="#000000" />
+                <Parameter Id="%AID%_UP-%TT%%CC%517" Name="f%C%OOffLedProvider" ParameterType="%AID%_PT-StatusLedProvider" Offset="5" BitOffset="5" Text="    Status-LED-Kanal" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%519" Name="f%C%OOffLedEffect" ParameterType="%AID%_PT-StatusLedEffect" Offset="6" BitOffset="5" Text="    Status-LED Effekt" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%521" Name="f%C%OOffLedDuration" ParameterType="%AID%_PT-StatusLedEffectDuration" Offset="7" BitOffset="0" Text="    Status-LED Effektdauer" Value="1000" />
+
                 <Parameter Id="%AID%_UP-%TT%%CC%124" Name="f%C%OOffPAArea" ParameterType="%AID%_PT-PALine" Offset="1" BitOffset="0" Text="" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%125" Name="f%C%OOffPALine" ParameterType="%AID%_PT-PALine" Offset="1" BitOffset="4" Text="" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%126" Name="f%C%OOffPADevice" ParameterType="%AID%_PT-PADevice" Offset="2" BitOffset="0" Text="" Value="1" />
@@ -381,7 +389,7 @@
               <ParameterRef Id="%AID%_UP-%TT%%CC%074_R-%TT%%CC%07401" RefId="%AID%_UP-%TT%%CC%074" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%075_R-%TT%%CC%07501" RefId="%AID%_UP-%TT%%CC%075" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%076_R-%TT%%CC%07601" RefId="%AID%_UP-%TT%%CC%076" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%076_R-%TT%%CC%07602" RefId="%AID%_UP-%TT%%CC%076" Text="    LED-Farbe festlegen (Schwarz=aus)" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%076_R-%TT%%CC%07602" RefId="%AID%_UP-%TT%%CC%076" Text="    Status-LED Farbe" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%077_R-%TT%%CC%07701" RefId="%AID%_UP-%TT%%CC%077" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%078_R-%TT%%CC%07801" RefId="%AID%_UP-%TT%%CC%078" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%079_R-%TT%%CC%07901" RefId="%AID%_UP-%TT%%CC%079" />
@@ -615,6 +623,12 @@
               <ParameterRef Id="%AID%_UP-%TT%%CC%513_R-%TT%%CC%51301" RefId="%AID%_UP-%TT%%CC%513" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%514_R-%TT%%CC%51401" RefId="%AID%_UP-%TT%%CC%514" />
               <ParameterRef Id="%AID%_P-%TT%%CC%515_R-%TT%%CC%51501" RefId="%AID%_P-%TT%%CC%515" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%516_R-%TT%%CC%51601" RefId="%AID%_UP-%TT%%CC%516" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%517_R-%TT%%CC%51701" RefId="%AID%_UP-%TT%%CC%517" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%518_R-%TT%%CC%51801" RefId="%AID%_UP-%TT%%CC%518" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%519_R-%TT%%CC%51901" RefId="%AID%_UP-%TT%%CC%519" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%520_R-%TT%%CC%52001" RefId="%AID%_UP-%TT%%CC%520" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%521_R-%TT%%CC%52101" RefId="%AID%_UP-%TT%%CC%521" />
             </ParameterRefs>
             <ParameterCalculations>
               <op:usePart name="INPUT" xpath="//ParameterCalculations/*" />
@@ -1574,14 +1588,37 @@
                               <Assign TargetParamRefRef="%AID%_P-%TT%%CC%278_R-%TT%%CC%27801" Value="1" />
                             </when>
                             <when test="7">
-                              <ParameterRefRef RefId="%AID%_UP-%TT%%CC%076_R-%TT%%CC%07602" HelpContext="%DOC%" IndentLevel="1" />
+                              <ParameterRefRef RefId="%AID%_UP-%TT%%CC%516_R-%TT%%CC%51601" HelpContext="%DOC%" IndentLevel="1" />
+                              <ParameterBlock Id="%AID%_PB-nnn" Inline="true" Layout="Grid" HelpContext="Empty">
+                                <Rows>
+                                  <Row Id="%AID%_PB-%C%001_R-1" Name="Row1" />
+                                </Rows>
+                                <Columns>
+                                  <Column Id="%AID%_PB-%C%001_C-1" Name="Col1" Width="4%" />
+                                  <Column Id="%AID%_PB-%C%001_C-2" Name="Col2" Width="41%" />
+                                  <Column Id="%AID%_PB-%C%001_C-3" Name="Col3" Width="18%" />
+                                  <Column Id="%AID%_PB-%C%001_C-4" Name="Col4" Width="18%" />
+                                  <Column Id="%AID%_PB-%C%001_C-5" Name="Col5" Width="19%" />
+                                </Columns>
+                                <ParameterSeparator Id="%AID%_PS-nnn" Text="LED-Effekt" Cell="1,2" />
+                                <ParameterRefRef RefId="%AID%_UP-%TT%%CC%518_R-%TT%%CC%51801" Cell="1,3" HelpContext="%DOC%" />
+                                <choose ParamRefId="%AID%_UP-%TT%%CC%518_R-%TT%%CC%51801">
+                                  <when test=">1">
+                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%520_R-%TT%%CC%52001" Cell="1,4" HelpContext="%DOC%" />
+                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%076_R-%TT%%CC%07602" Cell="1,5" HelpContext="%DOC%" />
+                                  </when>
+                                  <when test="1">
+                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%076_R-%TT%%CC%07602" Cell="1,4" HelpContext="%DOC%" />
+                                  </when>
+                                </choose>
+                              </ParameterBlock>
                               <Assign TargetParamRefRef="%AID%_P-%TT%%CC%278_R-%TT%%CC%27801" Value="1" />
                             </when>
                             <when test="8">
                               <ParameterRefRef RefId="%AID%_UP-%TT%%CC%279_R-%TT%%CC%27901" HelpContext="%DOC%" IndentLevel="1" />
                             </when>
                             <when test="9">
-                              <ParameterBlock Id="%AID%_PB-%C%003" Inline="true" Layout="Grid" HelpContext="LOG-Nummer-des-Kommunikationsobjekts">
+                              <ParameterBlock Id="%AID%_PB-nnn" Inline="true" Layout="Grid" HelpContext="LOG-Nummer-des-Kommunikationsobjekts">
                                 <Rows>
                                   <Row Id="%AID%_PB-%C%001_R-1" Name="Row1" />
                                 </Rows>
@@ -1764,7 +1801,30 @@
                               <Assign TargetParamRefRef="%AID%_P-%TT%%CC%278_R-%TT%%CC%27801" Value="1" />
                             </when>
                             <when test="7">
-                              <ParameterRefRef RefId="%AID%_UP-%TT%%CC%088_R-%TT%%CC%08802" HelpContext="%DOC%" IndentLevel="1" />
+                              <ParameterRefRef RefId="%AID%_UP-%TT%%CC%517_R-%TT%%CC%51701" HelpContext="%DOC%" IndentLevel="1" />
+                              <ParameterBlock Id="%AID%_PB-nnn" Inline="true" Layout="Grid" HelpContext="Empty">
+                                <Rows>
+                                  <Row Id="%AID%_PB-%C%001_R-1" Name="Row1" />
+                                </Rows>
+                                <Columns>
+                                  <Column Id="%AID%_PB-%C%001_C-1" Name="Col1" Width="4%" />
+                                  <Column Id="%AID%_PB-%C%001_C-2" Name="Col2" Width="41%" />
+                                  <Column Id="%AID%_PB-%C%001_C-3" Name="Col3" Width="18%" />
+                                  <Column Id="%AID%_PB-%C%001_C-4" Name="Col4" Width="18%" />
+                                  <Column Id="%AID%_PB-%C%001_C-5" Name="Col5" Width="19%" />
+                                </Columns>
+                                <ParameterSeparator Id="%AID%_PS-nnn" Text="LED-Effekt" Cell="1,2" />
+                                <ParameterRefRef RefId="%AID%_UP-%TT%%CC%519_R-%TT%%CC%51901" Cell="1,3" HelpContext="%DOC%" />
+                                <choose ParamRefId="%AID%_UP-%TT%%CC%519_R-%TT%%CC%51901">
+                                  <when test=">1">
+                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%521_R-%TT%%CC%52101" Cell="1,4" HelpContext="%DOC%" />
+                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%088_R-%TT%%CC%08802" Cell="1,5" HelpContext="%DOC%" />
+                                  </when>
+                                  <when test="1">
+                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%088_R-%TT%%CC%08802" Cell="1,4" HelpContext="%DOC%" />
+                                  </when>
+                                </choose>
+                              </ParameterBlock>
                               <Assign TargetParamRefRef="%AID%_P-%TT%%CC%278_R-%TT%%CC%27801" Value="1" />
                             </when>
                             <when test="8">
