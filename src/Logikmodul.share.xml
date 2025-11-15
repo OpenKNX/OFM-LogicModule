@@ -1019,7 +1019,7 @@
                 </TypeRestriction>
               </ParameterType>
               <ParameterType Id="%AID%_PT-SLEDFunc" Name="SLEDFunc">
-                <TypeRestriction Base="Value" SizeInBit="32" UIHint="DropDown">
+                <TypeRestriction Base="Value" SizeInBit="16" UIHint="DropDown">
                   <Enumeration Text="Logikstatus 1" Value="100" Id="%ENID%" />
                   <Enumeration Text="Logikstatus 2" Value="101" Id="%ENID%" />
                   <Enumeration Text="Logikstatus 3" Value="102" Id="%ENID%" />
