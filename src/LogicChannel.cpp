@@ -1389,7 +1389,7 @@ void LogicChannel::processLogic()
     if (ParamLOG_fCalculate == 0 || lValidInputs == lActiveInputs)
     {
         // we process only if all inputs are valid or the user requested invalid evaluation
-        uint8_t lOnes = 0;
+        // uint8_t lOnes = 0;
         switch (lLogic)
         {
             case VAL_Logic_And:
@@ -1411,11 +1411,15 @@ void LogicChannel::processLogic()
                 break;
             case VAL_Logic_ExOr:
                 // EXOR handles invalid inputs as non existing
-                // count valid bits in input mask
-                for (size_t lBit = 1; lBit < BIT_INPUT_MASK; lBit <<= 1)
-                    lOnes += (lCurrentInputs & lBit) > 0;
-                // Check if we have an odd number of bits -> logical EXOR of all input bits
-                lNewOutput = (lOnes % 2 == 1);
+                // // count valid bits in input mask
+                // for (size_t lBit = 1; lBit < BIT_INPUT_MASK; lBit <<= 1)
+                //     lOnes += (lCurrentInputs & lBit) > 0;
+                // // Check if we have an odd number of bits -> logical EXOR of all input bits
+                // lNewOutput = (lOnes % 2 == 1);
+                // new faster EXOR algorithm (relevant vor future Matrix module)
+                lCurrentInputs ^= lCurrentInputs >> 2;
+                lCurrentInputs ^= lCurrentInputs >> 1;
+                lNewOutput = (lCurrentInputs & 1) == 1;
                 lValidOutput = true;
 #if LOGIC_TRACE
                 lDebugLogic = "EXOR";
@@ -2012,30 +2016,34 @@ void LogicChannel::processOnOffRepeat()
     }
 }
 
+// we trigger according internal input with led state value
+void LogicChannel::processInternalInput(uint8_t iIOIndex, bool iValue)
+{
+    uint16_t lParamIndex = (iIOIndex == BIT_INT_INPUT_1) ? LOG_fI1 : LOG_fI2;
+    bool lAsTrigger = getByteParam(lParamIndex) & LOG_fI1AsTriggerMask;
+    bool lValue = lAsTrigger ? true : iValue;
+    startLogic(iIOIndex, lValue);
+    // we also add that this input was used and is now valid
+    pValidActiveIO |= BIT_INT_INPUT_1;   
+}
+
 // we trigger all associated internal inputs with the new value
-void LogicChannel::processInternalInputs(uint8_t iChannelId, bool iValue)
+void LogicChannel::processInternalInputs(uint8_t iChannelIndex, bool iValue)
 {
     uint8_t lInput1 = ParamLOG_fI1;
-    bool lValue;
     if (lInput1 > 0)
     {
         uint8_t lIsRelative = ParamLOG_fI1Kind - 1;
         int8_t lFunction1 = ParamLOG_fI1Function;
         if (lIsRelative)
             lFunction1 += _channelIndex + 1;
-        if (lFunction1 == (iChannelId + 1))
+        if (lFunction1 == (iChannelIndex + 1))
         {
 #if LOGIC_TRACE
             if (debugFilter())
                 logChannel("processInternalInputs: Input I1, Value %i", iValue);
 #endif
-            if (ParamLOG_fI1AsTrigger)
-                lValue = true;
-            else
-                lValue = iValue;
-            startLogic(BIT_INT_INPUT_1, lValue);
-            // we also add that this input was used and is now valid
-            pValidActiveIO |= BIT_INT_INPUT_1;
+            processInternalInput(BIT_INT_INPUT_1, iValue);
         }
     }
     uint8_t lInput2 = ParamLOG_fI2;
@@ -2045,19 +2053,13 @@ void LogicChannel::processInternalInputs(uint8_t iChannelId, bool iValue)
         int8_t lFunction2 = ParamLOG_fI2Function;
         if (lIsRelative)
             lFunction2 += _channelIndex + 1;
-        if (lFunction2 == (iChannelId + 1))
+        if (lFunction2 == (iChannelIndex + 1))
         {
 #if LOGIC_TRACE
             if (debugFilter())
                 logChannel("processInternalInputs: Input I2, Value %i", iValue);
 #endif
-            if (ParamLOG_fI2AsTrigger)
-                lValue = true;
-            else
-                lValue = iValue;
-            startLogic(BIT_INT_INPUT_2, lValue);
-            // we also add that this input was used and is now valid
-            pValidActiveIO |= BIT_INT_INPUT_2;
+            processInternalInput(BIT_INT_INPUT_2, iValue);
         }
     }
 }
@@ -2343,7 +2345,7 @@ void LogicChannel::saveKoValue(uint8_t iIOIndex)
 
 // returns true, if any DPT from Flash does not fit to according input DPT.
 // in such a case the DPTs have to be written to Flash again
-void LogicChannel::prepareChannel()
+void LogicChannel::prepareChannel(StatusLedFunctions *iStatusLedFunctions)
 {
     // bool lResult = false;
     bool lInput1Flash = false;
@@ -2351,7 +2353,7 @@ void LogicChannel::prepareChannel()
     uint8_t lLogicFunction = ParamLOG_fDisable ? 0 : ParamLOG_fLogic;
 
     // logDebugP("prepareChannel %i", _channelIndex);
-    if (lLogicFunction == 5)
+    if (lLogicFunction == VAL_Logic_Timer)
     {
         if (ParamLOG_fTYearDay >= VAL_Tim_Timer_Daily_Linked)
         {
@@ -2374,7 +2376,7 @@ void LogicChannel::prepareChannel()
             startStartup();
         }
     }
-    else if (lLogicFunction > 0)
+    else if (lLogicFunction > VAL_Logic_None)
     {
         // function is active, we process input presets
         // external input 1
@@ -2508,20 +2510,12 @@ void LogicChannel::prepareChannel()
         }
         // internal input 1
         // first check, if input is active
-        uint8_t lIsActive = ParamLOG_fI1;
-        if (lIsActive > 0)
-        {
-            // input is active, we set according flag
-            pValidActiveIO |= BIT_INT_INPUT_1 << 4;
-        }
+        if (ParamLOG_fI1 > 0)
+            prepareInternalInput(BIT_INT_INPUT_1, LOG_fI1, iStatusLedFunctions);
         // internal input 2
         // first check, if input is active
-        lIsActive = ParamLOG_fI2;
-        if (lIsActive > 0)
-        {
-            // input is active, we set according flag
-            pValidActiveIO |= BIT_INT_INPUT_2 << 4;
-        }
+        if (ParamLOG_fI2 > 0)
+            prepareInternalInput(BIT_INT_INPUT_2, LOG_fI2, iStatusLedFunctions);
         // we set the startup delay
         startStartup();
         // we trigger input processing, if there are values from Flash
@@ -2531,6 +2525,21 @@ void LogicChannel::prepareChannel()
             processInput(IO_Input2);
     }
     // return lResult;
+}
+
+void LogicChannel::prepareInternalInput(uint8_t iIOindex, uint16_t iParamIndex, StatusLedFunctions *iStatusLedFunctions)
+{
+    // input is active, we set according flag
+    pValidActiveIO |= iIOindex << 4;
+    // check if internal input is bound to a state channel
+    uint8_t lInputType = (getByteParam(iParamIndex) & LOG_fI1InternalInputTypeMask) >> LOG_fI1InternalInputTypeShift; 
+    if (lInputType == VAL_IntInput_LedState)
+    {
+        uint16_t lFunctionGroup = getWordParam(iParamIndex+(LOG_fI1StatusLed-LOG_fI1));
+        OpenKNX::Led::FunctionGroup *lLed = openknx.ledFunctions.getActive(lFunctionGroup);
+        if (lLed)
+            iStatusLedFunctions->push_back({lLed, channelIndex(), iIOindex});
+    }
 }
 
 void LogicChannel::loop()

@@ -38,6 +38,7 @@ class Logic : public OpenKNX::Module
     bool getKoLookup(uint16_t iKoNumber, sKoLookup **iKoLookup = nullptr);
     LogicChannel *getChannel(uint8_t iChannelId);
 
+    void processPull();
     void processAllInternalInputs(LogicChannel *iChannel, bool iValue);
     void processAfterStartupDelay();
     void processInputKo(GroupObject &iKo);
@@ -64,6 +65,7 @@ class Logic : public OpenKNX::Module
 
   private:
     static const uint8_t helpCommandCount = 10;
+    StatusLedFunctions statusLedFunctions;
 
     static uint8_t sMagicWord[];
     static Timer &sTimer;
@@ -79,11 +81,10 @@ class Logic : public OpenKNX::Module
     sKoLookup mKoLookup[cCountKoLookups]; // max 3*4*100 = 1200 Byte, too much?
     uint16_t mNumKoLookups = 0;
     uint32_t readRequestDelay = 0;
+    uint32_t pullDelay = 0;
 
     uint8_t getChannelId(LogicChannel *iChannel);
     void prepareChannels();
-
-    void processDiagnoseCommand(GroupObject &iKo);
 
     void processTimerRestore();
 };

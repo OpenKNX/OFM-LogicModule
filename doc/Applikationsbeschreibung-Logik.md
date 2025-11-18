@@ -1604,6 +1604,8 @@ Wird für eine logische Operation "Interner Eingang 3" oder "Interner Eingang 4"
 
 Ausgänge von anderen Kanälen können dazu genutzt werden, große Logikblöcke zu bauen, ohne für jede Teillogik (jeden Logikkanal) eine eigene GA zur Verbindung von Eingang und Ausgang zu benötigen.
 
+Eine weitere Möglichkeit, einen internen Eingang zu nutzen, ist die Auswertung eines Status des aktuellen Gerätes. So kann man einen Status (meist signalisiert durch einen LED-Zustand) auch als Quelle für Logikfunktionen heranziehen.
+
 <kbd>![Intern 3](pics/InternerEingang.PNG)</kbd>
 Solange der Ausgang eines anderen Kanals nicht zugeordnet worden ist, wird der interne Eingang von der logischen Operation als undefiniert betrachtet.
 
@@ -1619,20 +1621,34 @@ Erscheint nur, wenn bei der logischen Operation "Interner Eingang 3" oder "Inter
 Diese Feld erlaubt eine kurze Beschreibung, wozu dieser Eingang verwendet wird. Es hat keinen Einfluss auf die Funktion des Eingangs und dient rein zu Dokumentationszwecken.
 
 <!-- DOC -->
-### **Art der Verknüpfung**
+### **Interner Eingang wird versorgt vom**
+
+Zuerst muss man die Quelle für den internen Eingang wählen. 
+
+* **Anderen Logikkanal** - Der Ausgang eines Logikkanals kann einem internen Eingang zugewiesen werden.
+* **Statuskanal** - Der interne Status (üblicherweise signalisiert durch eine LED) kann als Eingang genutzt werden.
+
+<!-- DOC -->
+#### **Art der Verknüpfung**
+
+<!-- DOC Skip="1" -->
+Erscheint nur, wenn der interne Eingnag vom anderen Logikkanal versorgt wird.
 
 Hier wird ausgewählt, wie die Verknüpfung erfolgen soll.
 
-#### **absolut**
+##### **absolut**
 
 Wenn absolut ausgewählt wird, muss die Nummer des Kanals, dessen Ausgang mit diesem Eingang verknüpft werden soll, angegeben werden.
 
-#### **relativ**
+##### **relativ**
 
 Wenn relativ ausgewählt wird, muss angegeben werden, wie viele Kanäle vor (positive Zahl) oder zurück (negative Zahl) der Kanal liegt, dessen Ausgang mit diesem Eingang verknüpft werden soll. In einem weiteren Feld wird die Nummer des Zielkanals ausgerechnet und ausgegeben.
 
 <!-- DOC -->
-### **Internen Eingang verbinden mit Kanal Nr.**
+#### **Internen Eingang verbinden mit Kanal Nr.**
+
+<!-- DOC Skip="1" -->
+Erscheint nur, wenn der interne Eingnag vom anderen Logikkanal versorgt wird.
 
 Als Eingabe wird hier die Nummer der Logik erwartet, deren Ausgang als interner Eingang genutzt werden soll. Solange der Eingang nicht verbunden ist (Wert im Eingabefeld ist 0) erscheint eine Warnmeldung, dass der Eingang inaktiv (undefiniert) ist.
 
@@ -1640,6 +1656,15 @@ Es kann auch der Ausgang des aktuellen Kanals als interner Eingang verwendet wer
 
 <!-- DOC Skip="1" -->
 <kbd>![Warnung Rückkopplung](pics/Rueckkopplung.PNG)</kbd>
+
+<!-- DOC -->
+#### **Statuskanal**
+
+<!-- DOC Skip="1" -->
+Erscheint nur, wenn der interne Eingang vom anderen Statuskanal versorgt wird.
+
+Hier kann der Statuskanal gewählt werden, dessen Wert als Eingang genutzt werden soll. Der Wert ist EIN, wenn die zugehörige LED eingeschaltet ist (sei es dauer-an, blinkend, pulsierend etc.). Er ist AUS, wenn die zugehörige LED aus ist (wobei ein aus beim Blinken z.B. nicht als AUS zählt).
+
 
 <!-- DOC -->
 ### **Internen Eingang als Trigger nutzen (ist immer logisch EIN)**
@@ -3313,7 +3338,7 @@ Der Zählerwert zum öffnen vom Tor wird über den externen Eingang 2 geschickt.
 
 <kbd>![Tor-Eingang2](examples/bsp01/bsp01e-schalten-alle-3-tage-tor-e2.png)</kbd>
 
-Der aktuelle Schaltzustand der Zeitschaltuhr wird als Interner Eingang 1 mit dem Kanalausgang 26 verbunden. Auch die 26 (gelb markiert) muss bei einer Übernahme des Beispiels angepasst werden (Kanalnummer der Zeitschaltuhr mit den Schaltzeiten).
+Der aktuelle Schaltzustand der Zeitschaltuhr wird als Interner Eingang 3 mit dem Kanalausgang 26 verbunden. Auch die 26 (gelb markiert) muss bei einer Übernahme des Beispiels angepasst werden (Kanalnummer der Zeitschaltuhr mit den Schaltzeiten).
 
 <kbd>![Tor-Intern](examples/bsp01/bsp01e-schalten-alle-3-tage-tor-i.png)</kbd>
 

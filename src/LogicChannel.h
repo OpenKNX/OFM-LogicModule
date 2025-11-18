@@ -33,6 +33,7 @@
 #define VAL_InputConvert_Trigger 7
 
 // enum logical function
+#define VAL_Logic_None 0
 #define VAL_Logic_And 1
 #define VAL_Logic_Or 2
 #define VAL_Logic_ExOr 3
@@ -203,9 +204,28 @@
 #define VAL_Tim_YearTimerCount 4
 #define VAL_Tim_DayTimerCount 8
 
+#define VAL_IntInput_Channel 0
+#define VAL_IntInput_LedState 1
+
 // extern KnxFacade<LinuxPlatform, Bau57B0> knx;
 
 // const uint32_t cTimeFactors[] = {100, 1000, 60000, 3600000};
+
+#pragma pack(push, 1)
+struct StatusLedFunction   {
+    OpenKNX::Led::FunctionGroup *functionGroup;      // 32 Bit
+    uint8_t channelIndex;                           // 8 Bit
+    uint8_t previousValue : 1;                      // 1 Bit
+    uint8_t initialValue : 1;                       // 1 Bit
+    uint8_t unused : 2;                             // 2 Bit
+    uint8_t ioInput: 4;                             // 4 Bit
+
+    StatusLedFunction(OpenKNX::Led::FunctionGroup *iFunctionGroup, uint8_t iChannelIndex, uint8_t iIOInput)
+    : functionGroup(iFunctionGroup), channelIndex(iChannelIndex), previousValue(0), initialValue(1), unused(0), ioInput(iIOInput) {}
+};
+#pragma pack(pop)
+
+typedef std::vector<struct StatusLedFunction> StatusLedFunctions;
 
 class Logic;
 
@@ -332,7 +352,7 @@ class LogicChannel : public OpenKNX::Channel
     char pLogPrefix[4];
     virtual const std::string logPrefix() override;
     /* Runtime information per channel */
-    uint8_t pTriggerIO;        // Bitfield: Which input (0-3) triggered processing, Bit 4-7 are not used
+    uint8_t pTriggerIO;        // Bitfield: Which input (0-3) triggered processing, Bit 4-7 are previous input (currently just internal inputs evaluated)
     uint8_t pValidActiveIO;    // Bitfield: validity flags for input (0-3) values and active inputs (4-7)
     uint8_t pCurrentIn;        // Bitfield: current input (0-3), free (4), first processing (5), previous gate (6) and initial gate (7) values
     uint8_t pCurrentOut;       // Bitfield: logic output (0), blink output (1), previous output (2), initial output (3), debug output (4)
@@ -367,6 +387,7 @@ class LogicChannel : public OpenKNX::Channel
     uint8_t pLoadCounter = 0;
     bool checkDpt(uint8_t iIOIndex, uint8_t iDpt);
     void processInput(uint8_t iIOIndex);
+    void processInternalInput(uint8_t iIOIndex, bool iValue);
     void processInternalInputs(uint8_t iChannelId, bool iValue);
     bool processCommand(const std::string iCmd, bool iDebugKo);
     void startTimerInput();
@@ -378,6 +399,7 @@ class LogicChannel : public OpenKNX::Channel
     void saveKoDpt(uint8_t iIOIndex);
     void saveKoValue(uint8_t iIOIndex);
 
-    void prepareChannel();
+    void prepareChannel(StatusLedFunctions *iStatusLedFunctions);
+    void prepareInternalInput(uint8_t iIOindex, uint16_t iParamIndex, StatusLedFunctions *iStatusLedFunctions);
     void loop();
 };

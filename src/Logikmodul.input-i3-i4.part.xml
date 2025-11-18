@@ -17,14 +17,16 @@
               <!-- Internal Inputs -->
               <Parameter Id="%AID%_P-%TT%%CC%%PPP1+162%" Name="f%C%I%In%Name" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung interner Eingang" Value="" />
               <Parameter Id="%AID%_P-%TT%%CC%%PPP1+477%" Name="f%C%I%In%FunctionRead" ParameterType="%AID%_PT-InputFunction" Text="Internen Eingang verbinden mit Kanal Nr." Value="%C%" Access="Read" />
-              <Union SizeInBit="16">
+              <Union SizeInBit="24">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="%ParamOffset%" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP2+048%" Name="f%C%I%In%" ParameterType="%AID%_PT-InputEnable" Offset="0" BitOffset="0" Text="Interner Eingang %In+2%" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+473%" Name="f%C%I%In%Kind" ParameterType="%AID%_PT-InputKind" Offset="0" BitOffset="2" Text="Art der Verknüpfung" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+480%" Name="f%C%I%In%AsTrigger" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="4" Text="Internen Eingang als Trigger nutzen&#10;(ist immer logisch EIN)" Value="0" />
-                <!-- 3 Bit frei -->
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+522%" Name="f%C%I%In%InternalInputType" ParameterType="%AID%_PT-InternalInputType" Offset="0" BitOffset="5" Text="Interner Eingang wird versorgt vom" Value="0" />
+                <!-- 2 Bit frei -->
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP2+049%" Name="f%C%I%In%Function" ParameterType="%AID%_PT-InputFunction" Offset="1" BitOffset="0" Text="Internen Eingang verbinden mit Kanal Nr." Value="%C%" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+475%" Name="f%C%I%In%FunctionRel" ParameterType="%AID%_PT-InputFunctionRel" Offset="1" BitOffset="0" Text="Internen Eingang verbinden mit Kanal Nr." Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+524%" Name="f%C%I%In%StatusLed" ParameterType="%AID%_PT-SLEDFunc" Offset="1" BitOffset="0" Text="Statuskanal" Value="0" />
               </Union>
             </Parameters>
             <ParameterRefs>
@@ -35,6 +37,8 @@
               <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP1+475%_R-%TT%%CC%%PPP1+475%01" RefId="%AID%_UP-%TT%%CC%%PPP1+475%" />
               <ParameterRef Id="%AID%_P-%TT%%CC%%PPP1+477%_R-%TT%%CC%%PPP1+477%01" RefId="%AID%_P-%TT%%CC%%PPP1+477%" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP1+480%_R-%TT%%CC%%PPP1+480%01" RefId="%AID%_UP-%TT%%CC%%PPP1+480%" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP1+522%_R-%TT%%CC%%PPP1+522%01" RefId="%AID%_UP-%TT%%CC%%PPP1+522%" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP1+524%_R-%TT%%CC%%PPP1+524%01" RefId="%AID%_UP-%TT%%CC%%PPP1+524%" />
             </ParameterRefs>
             <ParameterCalculations>
               <ParameterCalculation Id="%AID%_PC-%TT%%CC%0%PPP1+105%" Language="JavaScript" Name="CalcRelAbs%CC%Oe" RLTransformationFunc="LOG_CalcAbsFromRel" RLTransformationParameters="{&quot;OwnKO&quot;: %C%}" LRTransformationFunc="LOG_CalcRelFromAbs" LRTransformationParameters="{&quot;OwnKO&quot;: %C%}">
@@ -67,29 +71,37 @@
                     </choose>
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Definition interner Eingang %In+2%" UIHint="Headline" />
                     <ParameterRefRef RefId="%AID%_P-%TT%%CC%%PPP1+162%_R-%TT%%CC%%PPP1+162%01" HelpContext="%DOC%" IndentLevel="1" />
-                    <ParameterBlock Id="%AID%_PB-nnn" Inline="true" Layout="Grid">
-                      <Rows>
-                        <Row Id="%AID%_PB-nnn_R-1" />
-                      </Rows>
-                      <Columns>
-                        <Column Id="%AID%_PB-nnn_C-1" Width="1%" />
-                        <Column Id="%AID%_PB-nnn_C-2" Width="44%" />
-                        <Column Id="%AID%_PB-nnn_C-3" Width="21%" />
-                        <Column Id="%AID%_PB-nnn_C-4" Width="12%" />
-                        <Column Id="%AID%_PB-nnn_C-5" Width="12%" />
-                      </Columns>
-                      <ParameterSeparator Id="%AID%_PS-nnn" Text=" Internen Eingang verbinden&#10; mit Kanal Nr." Cell="1,2" />
-                      <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP1+473%_R-%TT%%CC%%PPP1+473%01" Cell="1,3" HelpContext="%DOC%" />
-                      <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP1+473%_R-%TT%%CC%%PPP1+473%01">
-                        <when test="1">
-                          <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP2+049%_R-%TT%%CC%%PPP2+049%01" Cell="1,5" HelpContext="%DOC%" />
-                        </when>
-                        <when test="2">
-                          <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP1+475%_R-%TT%%CC%%PPP1+475%01" Cell="1,4" HelpContext="%DOC%" />
-                          <ParameterRefRef RefId="%AID%_P-%TT%%CC%%PPP1+477%_R-%TT%%CC%%PPP1+477%01" Cell="1,5" HelpContext="%DOC%" />
-                        </when>
-                      </choose>
-                    </ParameterBlock>
+                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP1+522%_R-%TT%%CC%%PPP1+522%01" HelpContext="%DOC%" IndentLevel="1" />
+                    <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP1+522%_R-%TT%%CC%%PPP1+522%01">
+                      <when test="0">
+                        <ParameterBlock Id="%AID%_PB-nnn" Inline="true" Layout="Grid">
+                          <Rows>
+                            <Row Id="%AID%_PB-nnn_R-1" />
+                          </Rows>
+                          <Columns>
+                            <Column Id="%AID%_PB-nnn_C-1" Width="4%" />
+                            <Column Id="%AID%_PB-nnn_C-2" Width="41%" />
+                            <Column Id="%AID%_PB-nnn_C-3" Width="21%" />
+                            <Column Id="%AID%_PB-nnn_C-4" Width="12%" />
+                            <Column Id="%AID%_PB-nnn_C-5" Width="12%" />
+                          </Columns>
+                          <ParameterSeparator Id="%AID%_PS-nnn" Text="Internen Eingang verbinden&#10; mit Kanal Nr." Cell="1,2" />
+                          <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP1+473%_R-%TT%%CC%%PPP1+473%01" Cell="1,3" HelpContext="%DOC%" />
+                          <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP1+473%_R-%TT%%CC%%PPP1+473%01">
+                            <when test="1">
+                              <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP2+049%_R-%TT%%CC%%PPP2+049%01" Cell="1,5" HelpContext="%DOC%" />
+                            </when>
+                            <when test="2">
+                              <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP1+475%_R-%TT%%CC%%PPP1+475%01" Cell="1,4" HelpContext="%DOC%" />
+                              <ParameterRefRef RefId="%AID%_P-%TT%%CC%%PPP1+477%_R-%TT%%CC%%PPP1+477%01" Cell="1,5" HelpContext="%DOC%" />
+                            </when>
+                          </choose>
+                        </ParameterBlock>
+                      </when>
+                      <when test="1">
+                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP1+524%_R-%TT%%CC%%PPP1+524%01" HelpContext="%DOC%" IndentLevel="2" />
+                      </when>
+                    </choose>
                     <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP1+480%_R-%TT%%CC%%PPP1+480%01" HelpContext="%DOC%" IndentLevel="1" />
                     <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP2+049%_R-%TT%%CC%%PPP2+049%01">
                       <when test="%C%">

@@ -27,7 +27,7 @@
           </op:part>
           <op:part name="INTERNAL" href="Logikmodul.input-i3-i4.part.xml" instances="2">
             <op:param name="%In%" value="1" increment="1" />
-            <op:param name="%ParamOffset%" value="36" increment="2" />
+            <op:param name="%ParamOffset%" value="36" increment="3" />
             <op:param name="%PPP1%" value="0" increment="1" digits="3" />
             <op:param name="%PPP2%" value="0" increment="2" digits="3" />
           </op:part>
@@ -218,7 +218,7 @@
               <!-- Output definition -->
               <Parameter Id="%AID%_P-%TT%%CC%132" Name="f%C%NameOutput" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung Ausgang" Value="" />
               <Union SizeInBit="96">
-                <Memory CodeSegment="%AID%_RS-04-00000" Offset="40" BitOffset="0" />
+                <Memory CodeSegment="%AID%_RS-04-00000" Offset="42" BitOffset="0" />
                 <!-- Stair delay pattern-->
                 <Parameter Id="%AID%_UP-%TT%%CC%053" Name="f%C%OStairtimeBase" ParameterType="%AID%_PT-DelayBase10" Offset="0" BitOffset="0" Text="Zeit für Treppenlicht" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%054" Name="f%C%OStairtimeTime" ParameterType="%AID%_PT-DelayTime" Offset="0" BitOffset="2" Text="Zeit für Treppenlicht" Value="30" />
@@ -239,7 +239,7 @@
                 <Parameter Id="%AID%_UP-%TT%%CC%392" Name="f%C%ORepeatOffTime" ParameterType="%AID%_PT-DelayTime" Offset="10" BitOffset="2" Text="AUS-Telegramm wird wiederholt alle" Value="0" />
               </Union>
               <Union SizeInBit="24">
-                <Memory CodeSegment="%AID%_RS-04-00000" Offset="52" BitOffset="0" />
+                <Memory CodeSegment="%AID%_RS-04-00000" Offset="54" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%058" Name="f%C%ODelay" ParameterType="%AID%_PT-OnOffYesNo" Offset="0" BitOffset="0" Text="Ausgang schaltet zeitverzögert" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%117" Name="f%C%ODelayOnRepeat" ParameterType="%AID%_PT-OnOffRepeat" Offset="0" BitOffset="1" Text="Erneutes EIN führt zu" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%118" Name="f%C%ODelayOnReset" ParameterType="%AID%_PT-OnOffReset" Offset="0" BitOffset="3" Text="Darauffolgendes AUS führt zu" Value="1" />
@@ -255,7 +255,7 @@
                 <Parameter Id="%AID%_UP-%TT%%CC%064" Name="f%C%ODpt" ParameterType="%AID%_PT-OutputDpt" Offset="2" BitOffset="0" Text="DPT für Ausgang" Value="0" />
               </Union>
               <Union SizeInBit="120">
-                <Memory CodeSegment="%AID%_RS-04-00000" Offset="55" BitOffset="0" />
+                <Memory CodeSegment="%AID%_RS-04-00000" Offset="57" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%065" Name="f%C%OOn" ParameterType="%AID%_PT-OutputSend" Offset="0" BitOffset="0" Text="Wert für EIN senden?" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%134" Name="f%C%OOnBuzzer" ParameterType="%AID%_PT-OutputSendBuzzer" Offset="0" BitOffset="0" Text="Wert für EIN senden?" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%135" Name="f%C%OOnLed" ParameterType="%AID%_PT-OutputSendLed" Offset="0" BitOffset="0" Text="Wert für EIN senden?" Value="1" />
@@ -294,7 +294,7 @@
                 <Parameter Id="%AID%_UP-%TT%%CC%463" Name="f%C%OOnKOSendNumberRel" ParameterType="%AID%_PT-KORelNumber" Offset="7" BitOffset="0" Text="        Nummer des zusätzlichen KO" Value="0" />
               </Union>
               <Union SizeInBit="120">
-                <Memory CodeSegment="%AID%_RS-04-00000" Offset="70" BitOffset="0" />
+                <Memory CodeSegment="%AID%_RS-04-00000" Offset="72" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%077" Name="f%C%OOff" ParameterType="%AID%_PT-OutputSend" Offset="0" BitOffset="0" Text="Wert für AUS senden?" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%137" Name="f%C%OOffBuzzer" ParameterType="%AID%_PT-OutputSendBuzzer" Offset="0" BitOffset="0" Text="Wert für AUS senden?" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%138" Name="f%C%OOffLed" ParameterType="%AID%_PT-OutputSendLed" Offset="0" BitOffset="0" Text="Wert für AUS senden?" Value="1" />
@@ -629,6 +629,7 @@
               <ParameterRef Id="%AID%_UP-%TT%%CC%519_R-%TT%%CC%51901" RefId="%AID%_UP-%TT%%CC%519" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%520_R-%TT%%CC%52001" RefId="%AID%_UP-%TT%%CC%520" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%521_R-%TT%%CC%52101" RefId="%AID%_UP-%TT%%CC%521" />
+              <!-- input.i1.i2 uses 522-525 -->
             </ParameterRefs>
             <ParameterCalculations>
               <op:usePart name="INPUT" xpath="//ParameterCalculations/*" />

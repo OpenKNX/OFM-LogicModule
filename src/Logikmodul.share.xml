@@ -1054,6 +1054,12 @@
               <ParameterType Id="%AID%_PT-StatusLedEffectDuration" Name="StatusLedEffectDuration">
                 <TypeNumber SizeInBit="16" Type="unsignedInt" minInclusive="5" maxInclusive="60000" />
               </ParameterType>
+              <ParameterType Id="%AID%_PT-InternalInputType" Name="InternalInputType">
+                <TypeRestriction Base="Value" SizeInBit="1" UIHint="DropDown">
+                  <Enumeration Text="Anderen Logikkanal" Value="0" Id="%ENID%" />
+                  <Enumeration Text="Statuskanal" Value="1" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
             </ParameterTypes>
             <Parameters>
               <Parameter Id="%AID%_P-%TT%00163" Name="EnableHardware" ParameterType="%AID%_PT-OnOffYesNo" Text="Enable Hardware" Value="1" Access="None" />
