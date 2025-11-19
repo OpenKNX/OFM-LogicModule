@@ -1,6 +1,7 @@
 #include "LogicChannel.h"
 #include "Logic.h"
 #include "LogicFunction.h"
+#include "LogicLed.h"
 #include "OpenKNX.h"
 #include "PCA9632.h"
 
@@ -1141,53 +1142,51 @@ void LogicChannel::processConvertInput(uint8_t iIOIndex)
         pValidActiveIO |= iIOIndex;
     }
     uint8_t lUpperBound = 0;
-    bool lDoDefault = false;
-    switch (lDpt)
-    {
-        case VAL_DPT_1:
-            if (lConvert == VAL_InputConvert_Trigger)
-                lValueOut = 1;
-            else
+    bool lDoDefault = lConvert == VAL_InputConvert_Trigger;
+    if (!lDoDefault)
+        switch (lDpt)
+        {
+            case VAL_DPT_1:
                 lValueOut = lValue1In;
-#if LOGIC_TRACE
-            if (debugFilter())
-            {
-                logChannel("processConvertInput E%i DPT1: In=%i, Out=%i", iIOIndex, lValue1In, lValueOut);
-            }
-#endif
-            break;
-        case VAL_DPT_17:
-            // there might be 8 possible scenes to check
-            lUpperBound = 8; // we start with 2
-            lValue1In = (uint8_t)((uint8_t)lValue1In + 1);
-        case VAL_DPT_2:
-            // there might be 4 possible "Zwangsführung" values to check
-            if (lUpperBound == 0)
-                lUpperBound = 4; // we start with 2
-            // scenes or Zwangsführung have no intervals, but multiple single values
-            for (size_t lScene = 0; lScene < lUpperBound && lValueOut == 0; lScene++)
-            {
-                uint8_t lValue = getByteParam(lParamLow + lScene);
-                lValueOut = ((uint8_t)lValue1In == lValue);
-            }
-            break;
-#if LOGIC_TRACE
-            if (debugFilter())
-            {
-                if (lDpt == VAL_DPT_17)
+                #if LOGIC_TRACE
+                if (debugFilter())
                 {
-                    logChannel("processConvertInput E%i DPT17: In=%i, Out=%i", iIOIndex, lValue1In, lValueOut);
+                    logChannel("processConvertInput E%i DPT1: In=%i, Out=%i", iIOIndex, lValue1In, lValueOut);
                 }
-                else
+                #endif
+                break;
+            case VAL_DPT_17:
+                // there might be 8 possible scenes to check
+                lUpperBound = 8; // we start with 2
+                lValue1In = (uint8_t)((uint8_t)lValue1In + 1);
+            case VAL_DPT_2:
+                // there might be 4 possible "Zwangsführung" values to check
+                if (lUpperBound == 0)
+                    lUpperBound = 4; // we start with 2
+                // scenes or Zwangsführung have no intervals, but multiple single values
+                for (size_t lScene = 0; lScene < lUpperBound && lValueOut == 0; lScene++)
                 {
-                    logChannel("processConvertInput E%i DPT2: In=%i, Out=%i", iIOIndex, lValue1In, lValueOut);
+                    uint8_t lValue = getByteParam(lParamLow + lScene);
+                    lValueOut = ((uint8_t)lValue1In == lValue);
                 }
-            }
-#endif
-        default:
-            lDoDefault = true;
-            break;
-    }
+                break;
+                #if LOGIC_TRACE
+                if (debugFilter())
+                {
+                    if (lDpt == VAL_DPT_17)
+                    {
+                        logChannel("processConvertInput E%i DPT17: In=%i, Out=%i", iIOIndex, lValue1In, lValueOut);
+                    }
+                    else
+                    {
+                        logChannel("processConvertInput E%i DPT2: In=%i, Out=%i", iIOIndex, lValue1In, lValueOut);
+                    }
+                }
+                #endif
+            default:
+                lDoDefault = true;
+                break;
+        }
     if (lDoDefault)
     {
         // for all remaining DPT we determine the input value by an converter module
@@ -1197,12 +1196,12 @@ void LogicChannel::processConvertInput(uint8_t iIOIndex)
                 lValueOut = (lValue1In >= getParamByDpt(lDpt, lParamLow + 0)) && (lValue1In <= getParamByDpt(lDpt, lParamLow + 4));
                 // lValueOut = uValueGreaterThanOrEquals(lValue1In, getParamByDpt(lDpt, lParamLow + 0), lDpt, lDpt) &&
                 //             uValueLessThanOrEquals(lValue1In, getParamByDpt(lDpt, lParamLow + 4), lDpt, lDpt);
-#if LOGIC_TRACE
+                #if LOGIC_TRACE
                 if (debugFilter())
                 {
                     logChannel("processConvertInput E%i Interval: In=%i, Out=%i", iIOIndex, lValue1In, lValueOut);
                 }
-#endif
+                #endif
                 break;
             case VAL_InputConvert_DeltaInterval:
                 lDiff = lValue1In - lValue2In;
@@ -1213,12 +1212,12 @@ void LogicChannel::processConvertInput(uint8_t iIOIndex)
                 lValueOut = (lDiff >= getParamByDpt(lDpt, lParamLow + 0)) && (lDiff <= getParamByDpt(lDpt, lParamLow + 4));
                 // lValueOut = uValueGreaterThanOrEquals(lDiff, getParamByDpt(lDpt, lParamLow + 0), lDptResult, lDpt) &&
                 //             uValueLessThanOrEquals(lDiff, getParamByDpt(lDpt, lParamLow + 4), lDptResult, lDpt);
-#if LOGIC_TRACE
+                #if LOGIC_TRACE
                 if (debugFilter())
                 {
                     logChannel("processConvertInput E%i DeltaInterval: In1=%i, In2=%i, Delta=%i, Out=%i", iIOIndex, lValue1In, lValue2In, lValue1In - lValue2In, lValueOut);
                 }
-#endif
+                #endif
                 break;
             case VAL_InputConvert_Hysterese:
                 lValueOut = pCurrentIn & iIOIndex; // retrieve old result, will be send if current value is in Hysterese interval
@@ -1232,12 +1231,12 @@ void LogicChannel::processConvertInput(uint8_t iIOIndex)
                     //     lValueOut = false;
                     // if (uValueGreaterThanOrEquals(lValue1In, getParamByDpt(lDpt, lParamLow + 4), lDpt, lDpt))
                     //     lValueOut = true;
-#if LOGIC_TRACE
+                #if LOGIC_TRACE
                 if (debugFilter())
                 {
                     logChannel("processConvertInput E%i Hysterese: In=%i, Out=%i", iIOIndex, lValue1In, lValueOut);
                 }
-#endif
+                #endif
                 break;
             case VAL_InputConvert_DeltaHysterese:
                 lValueOut = pCurrentIn & iIOIndex; // retrieve old result, will be send if current value is in Hysterese interval
@@ -1256,40 +1255,40 @@ void LogicChannel::processConvertInput(uint8_t iIOIndex)
                     //     lValueOut = false;
                     // if (uValueGreaterThanOrEquals(lDiff, getParamByDpt(lDpt, lParamLow + 4), lDptResult, lDpt))
                     //     lValueOut = true;
-#if LOGIC_TRACE
+                #if LOGIC_TRACE
                 if (debugFilter())
                 {
                     logChannel("processConvertInput E%i DeltaHysterese: In1=%i, In2=%i, Delta=%i, Out=%i", iIOIndex, lValue1In, lValue2In, lValue1In - lValue2In, lValueOut);
                 }
-#endif
+                #endif
                 break;
             case VAL_InputConvert_Values:
                 lValueOut = checkConvertValues(lParamLow, lDpt, lValue1In);
-#if LOGIC_TRACE
+                #if LOGIC_TRACE
                 if (debugFilter())
                 {
                     logChannel("processConvertInput E%i SingleValues: In=%i, Out=%i", iIOIndex, lValue1In, lValueOut);
                 }
-#endif
+                #endif
                 break;
             case VAL_InputConvert_Constant:
             case VAL_InputConvert_Trigger:
                 lValueOut = true;
-#if LOGIC_TRACE
+                #if LOGIC_TRACE
                 if (debugFilter())
                 {
                     logChannel("processConvertInput E%i Constant (%i): Out=%i", iIOIndex, lValue1In, lValueOut);
                 }
-#endif
+                #endif
                 break;
             default:
                 // do nothing, wrong converter id
-#if LOGIC_TRACE
+                #if LOGIC_TRACE
                 if (debugFilter())
                 {
                     logChannel("processConvertInput E%i: no Execution, wrong convert id", iIOIndex);
                 }
-#endif
+                #endif
                 break;
         }
     }
@@ -2024,7 +2023,7 @@ void LogicChannel::processInternalInput(uint8_t iIOIndex, bool iValue)
     bool lValue = lAsTrigger ? true : iValue;
     startLogic(iIOIndex, lValue);
     // we also add that this input was used and is now valid
-    pValidActiveIO |= BIT_INT_INPUT_1;   
+    pValidActiveIO |= iIOIndex;   
 }
 
 // we trigger all associated internal inputs with the new value
@@ -2345,7 +2344,7 @@ void LogicChannel::saveKoValue(uint8_t iIOIndex)
 
 // returns true, if any DPT from Flash does not fit to according input DPT.
 // in such a case the DPTs have to be written to Flash again
-void LogicChannel::prepareChannel(StatusLedFunctions *iStatusLedFunctions)
+void LogicChannel::prepareChannel()
 {
     // bool lResult = false;
     bool lInput1Flash = false;
@@ -2508,14 +2507,11 @@ void LogicChannel::prepareChannel(StatusLedFunctions *iStatusLedFunctions)
                     break;
             }
         }
-        // internal input 1
-        // first check, if input is active
-        if (ParamLOG_fI1 > 0)
-            prepareInternalInput(BIT_INT_INPUT_1, LOG_fI1, iStatusLedFunctions);
-        // internal input 2
-        // first check, if input is active
-        if (ParamLOG_fI2 > 0)
-            prepareInternalInput(BIT_INT_INPUT_2, LOG_fI2, iStatusLedFunctions);
+        // Internal inputs are prepared during setup() of Logic 
+        // // internal input 1
+        // prepareInternalInput(BIT_INT_INPUT_1, LOG_fI1);
+        // // internal input 2
+        // prepareInternalInput(BIT_INT_INPUT_2, LOG_fI2);
         // we set the startup delay
         startStartup();
         // we trigger input processing, if there are values from Flash
@@ -2527,18 +2523,26 @@ void LogicChannel::prepareChannel(StatusLedFunctions *iStatusLedFunctions)
     // return lResult;
 }
 
-void LogicChannel::prepareInternalInput(uint8_t iIOindex, uint16_t iParamIndex, StatusLedFunctions *iStatusLedFunctions)
-{
-    // input is active, we set according flag
-    pValidActiveIO |= iIOindex << 4;
-    // check if internal input is bound to a state channel
+void LogicChannel::prepareInternalInput(uint8_t iIOindex, uint16_t iParamIndex)
+{  
+
+    // first check, if channel is active
+    if (ParamLOG_fLogic == 0 || ParamLOG_fDisable)
+        return;
+    // now check, if input is active
     uint8_t lInputType = (getByteParam(iParamIndex) & LOG_fI1InternalInputTypeMask) >> LOG_fI1InternalInputTypeShift; 
-    if (lInputType == VAL_IntInput_LedState)
+    if (lInputType > 0)
     {
-        uint16_t lFunctionGroup = getWordParam(iParamIndex+(LOG_fI1StatusLed-LOG_fI1));
-        OpenKNX::Led::FunctionGroup *lLed = openknx.ledFunctions.getActive(lFunctionGroup);
-        if (lLed)
-            iStatusLedFunctions->push_back({lLed, channelIndex(), iIOindex});
+        // input is active, we set according flag
+        pValidActiveIO |= iIOindex << 4;
+        // check if internal input is bound to a state channel
+        if (lInputType == VAL_IntInput_LedState)
+        {
+            uint16_t lFunctionId = getWordParam(iParamIndex+(LOG_fI1StatusLed-LOG_fI1));
+            LogicLed *lLed = new LogicLed(this, iIOindex);
+            openknx.ledFunctions.assignLed2Function(lLed, lFunctionId);
+        }
+
     }
 }
 

@@ -211,22 +211,6 @@
 
 // const uint32_t cTimeFactors[] = {100, 1000, 60000, 3600000};
 
-#pragma pack(push, 1)
-struct StatusLedFunction   {
-    OpenKNX::Led::FunctionGroup *functionGroup;      // 32 Bit
-    uint8_t channelIndex;                           // 8 Bit
-    uint8_t previousValue : 1;                      // 1 Bit
-    uint8_t initialValue : 1;                       // 1 Bit
-    uint8_t unused : 2;                             // 2 Bit
-    uint8_t ioInput: 4;                             // 4 Bit
-
-    StatusLedFunction(OpenKNX::Led::FunctionGroup *iFunctionGroup, uint8_t iChannelIndex, uint8_t iIOInput)
-    : functionGroup(iFunctionGroup), channelIndex(iChannelIndex), previousValue(0), initialValue(1), unused(0), ioInput(iIOInput) {}
-};
-#pragma pack(pop)
-
-typedef std::vector<struct StatusLedFunction> StatusLedFunctions;
-
 class Logic;
 
 class LogicChannel : public OpenKNX::Channel
@@ -399,7 +383,7 @@ class LogicChannel : public OpenKNX::Channel
     void saveKoDpt(uint8_t iIOIndex);
     void saveKoValue(uint8_t iIOIndex);
 
-    void prepareChannel(StatusLedFunctions *iStatusLedFunctions);
-    void prepareInternalInput(uint8_t iIOindex, uint16_t iParamIndex, StatusLedFunctions *iStatusLedFunctions);
+    void prepareChannel();
+    void prepareInternalInput(uint8_t iIOindex, uint16_t iParamIndex);
     void loop();
 };

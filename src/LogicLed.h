@@ -30,7 +30,7 @@ class LogicLed : public OpenKNX::Led::Abstract
 
         void flash(uint16_t frequency = OPENKNX_LEDEFFECT_FLASH_DURATION) override { on(); }
 
-        void activity(uint32_t &lastActivity, bool inverted = false) override { on(!inverted); };
+        void activity(uint32_t &lastActivity, bool inverted = false) override { on(inverted); };
 
         std::string logPrefix() override { return "LogicLed"; }
 

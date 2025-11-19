@@ -38,7 +38,6 @@ Logic::Logic()
     // init KoLookup (robustness)
     addKoLookup(0, 0, 0);
     mNumKoLookups = 0;
-    statusLedFunctions.reserve(100);
 }
 
 Logic::~Logic()
@@ -84,23 +83,11 @@ bool Logic::getKoLookup(uint16_t iKoNumber, sKoLookup **iKoLookup)
     return false;
 }
 
-// REVIEW
-// bool Logic::prepareChannels()
 void Logic::prepareChannels()
 {
-    // bool lResult = false;
     logDebugP("prepareChannels");
     for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
-    {
-        // Important: lResult has to be the last argument in this OR,
-        // otherwise prepareChannel might be not called
-        // lResult = mChannel[lIndex]->prepareChannel() || lResult;
-        mChannel[lIndex]->prepareChannel(&statusLedFunctions);
-    }
-    statusLedFunctions.shrink_to_fit();
-    std::sort(statusLedFunctions.begin(), statusLedFunctions.end(), [](const StatusLedFunction& a, const StatusLedFunction& b) {
-        return a.functionGroup < b.functionGroup;
-    });
+        mChannel[lIndex]->prepareChannel();
 }
 
 // we trigger all associated internal inputs with the new value
@@ -115,25 +102,25 @@ void Logic::processAllInternalInputs(LogicChannel *iChannel, bool iValue)
 }
 
 void Logic::processPull() {
-    if (delayCheck(pullDelay, 50)) 
-    {
-        pullDelay = millis();
-        OpenKNX::Led::FunctionGroup *lLastFunctionGroup = nullptr;
-        bool lPreviousValue = false;
-        for (auto &lStatusLedFunction : statusLedFunctions)
-        {
-            if (lStatusLedFunction.functionGroup != lLastFunctionGroup)
-                lPreviousValue = lStatusLedFunction.functionGroup->getState(); 
-            bool lTriggerInput = lStatusLedFunction.initialValue || lStatusLedFunction.previousValue != lPreviousValue;
-            lStatusLedFunction.initialValue = false;
-            lStatusLedFunction.previousValue = lPreviousValue;
-            if (lTriggerInput)
-            {
-                LogicChannel *lChannel = mChannel[lStatusLedFunction.channelIndex];
-                lChannel->processInternalInput(lStatusLedFunction.ioInput, lPreviousValue);
-            }
-        }
-    }
+    // if (delayCheck(pullDelay, 50)) 
+    // {
+    //     pullDelay = millis();
+    //     OpenKNX::Led::FunctionGroup *lLastFunctionGroup = nullptr;
+    //     bool lPreviousValue = false;
+    //     for (auto &lStatusLedFunction : statusLedFunctions)
+    //     {
+    //         if (lStatusLedFunction.functionGroup != lLastFunctionGroup)
+    //             lPreviousValue = lStatusLedFunction.functionGroup->getState(); 
+    //         bool lTriggerInput = lStatusLedFunction.initialValue || lStatusLedFunction.previousValue != lPreviousValue;
+    //         lStatusLedFunction.initialValue = false;
+    //         lStatusLedFunction.previousValue = lPreviousValue;
+    //         if (lTriggerInput)
+    //         {
+    //             LogicChannel *lChannel = mChannel[lStatusLedFunction.channelIndex];
+    //             lChannel->processInternalInput(lStatusLedFunction.ioInput, lPreviousValue);
+    //         }
+    //     }
+    // }
 }
 
 
@@ -446,8 +433,10 @@ void Logic::setup()
     for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
     {
         LogicChannel *lChannel = new LogicChannel(lIndex);
-        lChannel->startTimerRestoreState();
         mChannel[lIndex] = lChannel;
+        lChannel->startTimerRestoreState();
+        lChannel->prepareInternalInput(BIT_INT_INPUT_1, LOG_fI1);
+        lChannel->prepareInternalInput(BIT_INT_INPUT_2, LOG_fI2);
     }
 }
 

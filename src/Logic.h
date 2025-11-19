@@ -65,7 +65,6 @@ class Logic : public OpenKNX::Module
 
   private:
     static const uint8_t helpCommandCount = 10;
-    StatusLedFunctions statusLedFunctions;
 
     static uint8_t sMagicWord[];
     static Timer &sTimer;
