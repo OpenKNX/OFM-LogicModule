@@ -439,8 +439,8 @@ void LogicChannel::knxResetDevice(uint16_t iParamIndex)
 void LogicChannel::setStatusLed(uint16_t iParamIndex)
 {
     uint8_t lStatusChannel = getByteParam(iParamIndex + 4) & LOG_fOOnLedProviderMask;
-    OpenKNX::Led::FunctionGroup *lLed = openknx.ledFunctions.getActive(100 + lStatusChannel);
-    if (lLed == nullptr) return;
+    OpenKNX::Led::FunctionGroup *lLed = openknx.ledFunctions.get(100 + lStatusChannel);
+    if (!lLed->active()) return;
 
     if ((getByteParam(LOG_fAlarm) & LOG_fAlarmMask) || !knx.getGroupObject(LOG_KoLedLock).value(getDPT(VAL_DPT_1)))
     {
@@ -488,6 +488,10 @@ void LogicChannel::setRGBColor(uint16_t iParamIndex)
 #ifdef I2C_RGBLED_DEVICE_ADDRESS
     if ((getByteParam(LOG_fAlarm) & LOG_fAlarmMask) || !knx.getGroupObject(LOG_KoLedLock).value(getDPT(VAL_DPT_1)))
     {
+        uint32_t lRGBColor = getIntParam(iParamIndex);
+        uint8_t lRed = lRGBColor >> 24;
+        uint8_t lGreen = lRGBColor >> 16;
+        uint8_t lBlue = lRGBColor >> 8;
         // we have to map colors to correct pins
         switch (ParamLOG_LedMapping)
         {
