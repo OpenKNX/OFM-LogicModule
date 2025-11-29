@@ -2,7 +2,7 @@
 #include "OpenKNX/Led/Base.h"
 #include "Logic.h"
 
-class LogicLed : public OpenKNX::Led::Abstract
+class LogicLed : public OpenKNX::Led::Base
 {
     private:
         LogicChannel* mLogicChannel = nullptr;
@@ -14,6 +14,8 @@ class LogicLed : public OpenKNX::Led::Abstract
     public:
         LogicLed(LogicChannel *iChannel, uint8_t iIOIndex);
         
+        void loop() override {};
+
         void init() override {};
  
         void powerSave(bool active = true) override {}
