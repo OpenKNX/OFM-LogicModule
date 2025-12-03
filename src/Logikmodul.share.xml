@@ -20,11 +20,16 @@
             <op:param name="%PPP%" value="200" digits="3" increment="3" />
             <op:param name="%Fn%" value="1" increment="1" />
           </op:part>
+          <!-- <op:part name="UPDATE" href="Logikmodul.update.part.xml" instances="1">
+          </op:part> -->
           <Static>
             <ParameterTypes>
               <!-- Number of channels (module specific) -->
               <ParameterType Id="%AID%_PT-LOGNumChannels" Name="LOGNumChannels">
                 <TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="1" maxInclusive="%N%" />
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-Text80Byte" Name="Text80Byte">
+                <TypeText SizeInBit="640" />
               </ParameterType>
               <ParameterType Id="%AID%_PT-OffsetTemp" Name="OffsetTemp">
                 <TypeNumber SizeInBit="8" Type="signedInt" minInclusive="-100" maxInclusive="100" />
@@ -186,17 +191,17 @@
                   <Enumeration Text="DPT 1.xxx (Schalten)" Value="0" Id="%ENID%" />
                   <Enumeration Text="DPT 2.xxx (Zwangsführung)" Value="1" Id="%ENID%" />
                   <Enumeration Text="DPT 3.xxx (Dimmen)" Value="17" Id="%ENID%" />
-                  <Enumeration Text="DPT 5.xxx (1-Byte-Wert)" Value="2" Id="%ENID%" />
+                  <Enumeration Text="DPT 5.xxx (1-Byte)" Value="2" Id="%ENID%" />
                   <Enumeration Text="DPT 5.001 (Prozent)" Value="3" Id="%ENID%" />
-                  <Enumeration Text="DPT 6.xxx (1-Byte-Wert-Vorzeichen)" Value="4" Id="%ENID%" />
-                  <Enumeration Text="DPT 7.xxx (2-Byte-Wert)" Value="5" Id="%ENID%" />
-                  <Enumeration Text="DPT 8.xxx (2-Byte-Wert-Vorzeichen)" Value="6" Id="%ENID%" />
-                  <Enumeration Text="DPT 9.xxx (2-Byte-Fließkomma)" Value="7" Id="%ENID%" />
-                  <Enumeration Text="DPT 12.xxx (4-Byte-Wert)" Value="13" Id="%ENID%" />
-                  <Enumeration Text="DPT 13.xxx (4-Byte-Wert-Vorzeichen)" Value="14" Id="%ENID%" />
-                  <Enumeration Text="DPT 14.xxx (4-Byte-Fließkomma)" Value="15" Id="%ENID%" />
+                  <Enumeration Text="DPT 6.xxx (1-Byte-Vorzeichen)" Value="4" Id="%ENID%" />
+                  <Enumeration Text="DPT 7.xxx (2-Byte)" Value="5" Id="%ENID%" />
+                  <Enumeration Text="DPT 8.xxx (2-Byte-Vorzeichen)" Value="6" Id="%ENID%" />
+                  <Enumeration Text="DPT 9.xxx (2-Byte-Gleitkomma)" Value="7" Id="%ENID%" />
+                  <Enumeration Text="DPT 12.xxx (4-Byte)" Value="13" Id="%ENID%" />
+                  <Enumeration Text="DPT 13.xxx (4-Byte-Vorzeichen)" Value="14" Id="%ENID%" />
+                  <Enumeration Text="DPT 14.xxx (4-Byte-Gleitkomma)" Value="15" Id="%ENID%" />
                   <Enumeration Text="DPT 17.001 (Szene)" Value="9" Id="%ENID%" />
-                  <Enumeration Text="DPT 232.xxx (3-Byte-Wert)" Value="10" Id="%ENID%" />
+                  <Enumeration Text="DPT 232.xxx (3-Byte-RGB)" Value="10" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
               <ParameterType Id="%AID%_PT-OutputDpt" Name="OutputDpt">
@@ -204,18 +209,18 @@
                   <Enumeration Text="DPT 1.xxx (Schalten)" Value="0" Id="%ENID%" />
                   <Enumeration Text="DPT 2.xxx (Zwangsführung)" Value="1" Id="%ENID%" />
                   <Enumeration Text="DPT 3.xxx (Dimmen)" Value="17" Id="%ENID%" />
-                  <Enumeration Text="DPT 5.xxx (1-Byte-Wert)" Value="2" Id="%ENID%" />
-                  <Enumeration Text="DPT 5.001 (Prozentwert)" Value="3" Id="%ENID%" />
-                  <Enumeration Text="DPT 6.xxx (1-Byte-Wert-Vorzeichen)" Value="4" Id="%ENID%" />
-                  <Enumeration Text="DPT 7.xxx (2-Byte-Wert)" Value="5" Id="%ENID%" />
-                  <Enumeration Text="DPT 8.xxx (2-Byte-Wert-Vorzeichen)" Value="6" Id="%ENID%" />
-                  <Enumeration Text="DPT 9.xxx (2-Byte-Fließkomma)" Value="7" Id="%ENID%" />
-                  <Enumeration Text="DPT 12.xxx (4-Byte-Wert)" Value="13" Id="%ENID%" />
-                  <Enumeration Text="DPT 13.xxx (4-Byte-Wert-Vorzeichen)" Value="14" Id="%ENID%" />
-                  <Enumeration Text="DPT 14.xxx (4-Byte-Fließkomma)" Value="15" Id="%ENID%" />
+                  <Enumeration Text="DPT 5.xxx (1-Byte)" Value="2" Id="%ENID%" />
+                  <Enumeration Text="DPT 5.001 (Prozent)" Value="3" Id="%ENID%" />
+                  <Enumeration Text="DPT 6.xxx (1-Byte-Vorzeichen)" Value="4" Id="%ENID%" />
+                  <Enumeration Text="DPT 7.xxx (2-Byte)" Value="5" Id="%ENID%" />
+                  <Enumeration Text="DPT 8.xxx (2-Byte-Vorzeichen)" Value="6" Id="%ENID%" />
+                  <Enumeration Text="DPT 9.xxx (2-Byte-Gleitkomma)" Value="7" Id="%ENID%" />
+                  <Enumeration Text="DPT 12.xxx (4-Byte)" Value="13" Id="%ENID%" />
+                  <Enumeration Text="DPT 13.xxx (4-Byte-Vorzeichen)" Value="14" Id="%ENID%" />
+                  <Enumeration Text="DPT 14.xxx (4-Byte-Gleitkomma)" Value="15" Id="%ENID%" />
                   <Enumeration Text="DPT 16.001 (14-Byte-Text)" Value="8" Id="%ENID%" />
                   <Enumeration Text="DPT 17.001 (Szene)" Value="9" Id="%ENID%" />
-                  <Enumeration Text="DPT 232.xxx (3-Byte-Wert)" Value="10" Id="%ENID%" />
+                  <Enumeration Text="DPT 232.xxx (3-Byte-RGB)" Value="10" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
               <ParameterType Id="%AID%_PT-ValueBuzzer" Name="ValueBuzzer">
@@ -455,6 +460,7 @@
                   <Enumeration Text="Ja - Wert einer Funktion" Value="8" Id="%ENID%" />
                   <Enumeration Text="Ja - Read Request senden" Value="4" Id="%ENID%" />
                   <Enumeration Text="Ja - 'Gerät zurücksetzen' senden" Value="5" Id="%ENID%" />
+                  <!-- <Enumeration Text="Ja - LED schalten" Value="7" Id="%ENID%" /> -->
                 </TypeRestriction>
               </ParameterType>
               <ParameterType Id="%AID%_PT-OutputSendBuzzer" Name="OutputSendBuzzer">
@@ -468,6 +474,7 @@
                   <Enumeration Text="Ja - Read Request senden" Value="4" Id="%ENID%" />
                   <Enumeration Text="Ja - 'Gerät zurücksetzen' senden" Value="5" Id="%ENID%" />
                   <Enumeration Text="Ja - Tonwiedegabe (Buzzer)" Value="6" Id="%ENID%" />
+                  <!-- <Enumeration Text="Ja - LED schalten" Value="7" Id="%ENID%" /> -->
                 </TypeRestriction>
               </ParameterType>
               <ParameterType Id="%AID%_PT-OutputSendLed" Name="OutputSendLed">
@@ -1070,7 +1077,7 @@
                 <Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
                 <!-- <Parameter Id="%AID%_UP-%TT%00034" Name="ReadTimeDate" ParameterType="%AID%_PT-OnOffYesNo" Offset="0" BitOffset="0" Text="Uhrzeit und Datum nach einem Neustart vom Bus lesen" Value="1" /> -->
                 <Parameter Id="%AID%_UP-%TT%00035" Name="BuzzerInstalled" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="0" Text="Akustischer Signalgeber vorhanden (Buzzer)?" Value="%LOG_BuzzerDefault%" />
-                <Parameter Id="%AID%_UP-%TT%00036" Name="LedInstalled" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="1" Text="Optischer Signalgeber vorhanden (RGB-LED)?" Value="%LOG_LedDefault%" />
+                <Parameter Id="%AID%_UP-%TT%00036" Name="LedInstalled" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="1" Text="Optischer Signalgeber vorhanden (RGB-LED)?" Value="1" />
                 <!-- <Parameter Id="%AID%_UP-%TT%00156" Name="CombinedTimeDate" ParameterType="%AID%_PT-TimeKoType" Offset="0" BitOffset="3" Text="Uhrzeit und Datum empfangen über" Value="0" /> -->
                 <!-- <Parameter Id="%AID%_UP-%TT%00145" Name="UseSummertime" ParameterType="%AID%_PT-OnOffYesNo" Offset="0" BitOffset="4" Text="Sommerzeit intern berechnen?&#10;(nur für Deutschland möglich)" Value="1" /> -->
                 <Parameter Id="%AID%_UP-%TT%00138" Name="VacationKo" ParameterType="%AID%_PT-OnOffYesNo" Offset="0" BitOffset="2" Text="Urlaubsbehandlung aktivieren?" Value="0" />
@@ -1230,11 +1237,11 @@
             </ParameterCalculations>
             <ComObjectTable>
               <!-- Be careful, KO-Numbers are reordered and not anymore aligned with ID's -->
-              <ComObject Id="%AID%_O-%TT%00004" Name="Vacation" Text="Urlaub" Number="15" FunctionText="Eingang" ObjectSize="1 Bit" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" DatapointType="DPST-1-1" />
-              <ComObject Id="%AID%_O-%TT%00005" Name="Holiday1" Text="Welcher Feiertag ist heute?" Number="16" FunctionText="Ausgang" ObjectSize="1 Byte" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" DatapointType="DPST-5-5" />
-              <ComObject Id="%AID%_O-%TT%00006" Name="Holiday2" Text="Welcher Feiertag ist morgen?" Number="17" FunctionText="Ausgang" ObjectSize="1 Byte" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" DatapointType="DPST-5-5" />
-              <ComObject Id="%AID%_O-%TT%00008" Name="LedLock"      Text="LED sperren" Number="18" FunctionText="Eingang" ObjectSize="1 Bit" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" DatapointType="DPST-1-1" />
-              <ComObject Id="%AID%_O-%TT%00009" Name="BuzzerLock"   Text="Buzzer sperren" Number="19" FunctionText="Eingang" ObjectSize="1 Bit" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" DatapointType="DPST-1-1" />
+              <ComObject Id="%AID%_O-%TT%00004" Name="Vacation" Text="Urlaub" Number="15" FunctionText="Logik: Eingang" ObjectSize="1 Bit" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" DatapointType="DPST-1-1" />
+              <ComObject Id="%AID%_O-%TT%00005" Name="Holiday1" Text="Welcher Feiertag ist heute?" Number="16" FunctionText="Logik: Ausgang" ObjectSize="1 Byte" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" DatapointType="DPST-5-5" />
+              <ComObject Id="%AID%_O-%TT%00006" Name="Holiday2" Text="Welcher Feiertag ist morgen?" Number="17" FunctionText="Logik: Ausgang" ObjectSize="1 Byte" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" DatapointType="DPST-5-5" />
+              <ComObject Id="%AID%_O-%TT%00008" Name="LedLock"      Text="Einschalten der LEDs verhindern" Number="18" FunctionText="Logik: Eingang" ObjectSize="1 Bit" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" DatapointType="DPST-1-1" />
+              <ComObject Id="%AID%_O-%TT%00009" Name="BuzzerLock"   Text="Einschalten des Buzzers verhindern" Number="19" FunctionText="Logik: Eingang" ObjectSize="1 Bit" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" DatapointType="DPST-1-1" />
             </ComObjectTable>
             <ComObjectRefs>
               <!-- <ComObjectRef Id="%AID%_O-%TT%00001_R-%TT%0000101" RefId="%AID%_O-%TT%00001" /> -->
@@ -1257,6 +1264,7 @@
             </Script>
           </Static>
           <Dynamic>
+            <!-- <op:usePart name="UPDATE" xpath="//Dynamic/*" /> -->
             <Channel Id="%AID%_CH-%PREFIX%" Number="%PREFIX%" Name="Logic" Text="Logiken" Icon="blur" HelpContext="LOG-Dokumentation">
               <!-- Inline ParameterBlock in Channel is invisible, so also all its contents -->
               <ParameterBlock Id="%AID%_PB-nnn" Name="InitInvisible" Inline="true">
@@ -1344,18 +1352,18 @@
                     <!-- Buzzer installed? -->
                     <ParameterRefRef RefId="%AID%_UP-%TT%00035_R-%TT%0003501" HelpContext="%DOC%" IndentLevel="1" />
                     <!-- We implement here also led/buzzer lock KO -->
-                    <choose ParamRefId="%AID%_UP-%TT%00036_R-%TT%0003601">
-                      <when test="1">
+                    <!-- <choose ParamRefId="%AID%_UP-%TT%00036_R-%TT%0003601"> -->
+                      <!-- <when test="1"> -->
                         <!-- show lock KO for LED -->
-                        <ComObjectRefRef RefId="%AID%_O-%TT%00008_R-%TT%0000801" />
+                        <!-- <ComObjectRefRef RefId="%AID%_O-%TT%00008_R-%TT%0000801" /> -->
                         <!-- show extra settings for LED-->
-                        <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
-                        <ParameterSeparator Id="%AID%_PS-nnn" Text="RGB-LED" UIHint="Headline" />
-                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Damit die LED in korrekten Farben leuchtet, muss hier angegeben werden, welcher Treiberausgang mit welchem LED-Beinchen verbunden ist." />
-                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Die Platine liegt so, dass von den 4 Lötpads für die LED das ganz linke +5V ist. Die folgenden 3 Lötpads sind A, B und C." />
-                        <ParameterRefRef RefId="%AID%_UP-%TT%00151_R-%TT%0015101" HelpContext="%DOC%" IndentLevel="1" />
-                      </when>
-                    </choose>
+                        <!-- <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" /> -->
+                        <!-- <ParameterSeparator Id="%AID%_PS-nnn" Text="RGB-LED" UIHint="Headline" /> -->
+                        <!-- <ParameterSeparator Id="%AID%_PS-nnn" Text="Damit die LED in korrekten Farben leuchtet, muss hier angegeben werden, welcher Treiberausgang mit welchem LED-Beinchen verbunden ist." /> -->
+                        <!-- <ParameterSeparator Id="%AID%_PS-nnn" Text="Die Platine liegt so, dass von den 4 Lötpads für die LED das ganz linke +5V ist. Die folgenden 3 Lötpads sind A, B und C." /> -->
+                        <!-- <ParameterRefRef RefId="%AID%_UP-%TT%00151_R-%TT%0015101" HelpContext="%DOC%" IndentLevel="1" /> -->
+                      <!-- </when> -->
+                    <!-- </choose> -->
                     <choose ParamRefId="%AID%_UP-%TT%00035_R-%TT%0003501">
                       <when test="1">
                         <!-- show lock KO for Buzzer -->

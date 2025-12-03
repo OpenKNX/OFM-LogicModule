@@ -3,7 +3,6 @@
 #include "LogicFunction.h"
 #include "LogicLed.h"
 #include "OpenKNX.h"
-#include "PCA9632.h"
 
 #ifndef abs
     #define abs(x) ((x) > 0 ? (x) : -(x))
@@ -480,48 +479,6 @@ void LogicChannel::setStatusLed(uint16_t iParamIndex)
         // in case of lock we turn off led
         lLed->off();
     }
-}
-
-// turn on/off RGBLed
-void LogicChannel::setRGBColor(uint16_t iParamIndex)
-{
-#ifdef I2C_RGBLED_DEVICE_ADDRESS
-    if ((getByteParam(LOG_fAlarm) & LOG_fAlarmMask) || !knx.getGroupObject(LOG_KoLedLock).value(getDPT(VAL_DPT_1)))
-    {
-        uint32_t lRGBColor = getIntParam(iParamIndex);
-        uint8_t lRed = lRGBColor >> 24;
-        uint8_t lGreen = lRGBColor >> 16;
-        uint8_t lBlue = lRGBColor >> 8;
-        // we have to map colors to correct pins
-        switch (ParamLOG_LedMapping)
-        {
-            case 2: // R, B, G
-                PCA9632_SetColor(lRed, lBlue, lGreen);
-                break;
-            case 3: // G, R, B
-                PCA9632_SetColor(lGreen, lRed, lBlue);
-                break;
-            case 4: // G, B, R
-                PCA9632_SetColor(lGreen, lBlue, lRed);
-                break;
-            case 5: // B, G, R
-                PCA9632_SetColor(lBlue, lGreen, lRed);
-                break;
-            case 6: // B, R, G
-                PCA9632_SetColor(lBlue, lRed, lGreen);
-                break;
-
-            default: // R, G, B
-                PCA9632_SetColor(lRed, lGreen, lBlue);
-                break;
-        }
-    }
-    else
-    {
-        // in case of lock we turn off led
-        PCA9632_SetColor(0, 0, 0);
-    }
-#endif
 }
 
 // turn on/off Buzzer
@@ -2189,7 +2146,6 @@ void LogicChannel::processOutput(bool iValue)
                 break;
             case VAL_Out_RGBLed:
                 setStatusLed(LOG_fOOnDpt1);
-                setRGBColor(LOG_fOOnDpt1);
                 break;
             default:
                 // there is no output parametrized
@@ -2227,7 +2183,6 @@ void LogicChannel::processOutput(bool iValue)
                 break;
             case VAL_Out_RGBLed:
                 setStatusLed(LOG_fOOffDpt1);
-                setRGBColor(LOG_fOOffDpt1);
                 break;
             default:
                 // there is no output parametrized

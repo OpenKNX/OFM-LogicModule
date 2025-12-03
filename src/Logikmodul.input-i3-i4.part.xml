@@ -15,7 +15,7 @@
           <Static>
             <Parameters>
               <!-- Internal Inputs -->
-              <Parameter Id="%AID%_P-%TT%%CC%%PPP1+162%" Name="f%C%I%In%Name" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung interner Eingang" Value="" />
+              <Parameter Id="%AID%_P-%TT%%CC%%PPP1+162%" Name="f%C%I%In%Name" ParameterType="%AID%_PT-Text80Byte" Text="Beschreibung interner Eingang" Value="" />
               <Parameter Id="%AID%_P-%TT%%CC%%PPP1+477%" Name="f%C%I%In%FunctionRead" ParameterType="%AID%_PT-InputFunction" Text="Internen Eingang verbinden mit Kanal Nr." Value="%C%" Access="Read" />
               <Union SizeInBit="24">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="%ParamOffset%" BitOffset="0" />

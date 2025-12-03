@@ -2,7 +2,6 @@
 #include "Logic.h"
 #include "LogicFunction.h"
 #include "OpenKNX.h"
-#include "PCA9632.h"
 #include "Timer.h"
 #include "TimerRestore.h"
 
@@ -101,29 +100,6 @@ void Logic::processAllInternalInputs(LogicChannel *iChannel, bool iValue)
     }
 }
 
-void Logic::processPull() {
-    // if (delayCheck(pullDelay, 50)) 
-    // {
-    //     pullDelay = millis();
-    //     OpenKNX::Led::FunctionGroup *lLastFunctionGroup = nullptr;
-    //     bool lPreviousValue = false;
-    //     for (auto &lStatusLedFunction : statusLedFunctions)
-    //     {
-    //         if (lStatusLedFunction.functionGroup != lLastFunctionGroup)
-    //             lPreviousValue = lStatusLedFunction.functionGroup->getState(); 
-    //         bool lTriggerInput = lStatusLedFunction.initialValue || lStatusLedFunction.previousValue != lPreviousValue;
-    //         lStatusLedFunction.initialValue = false;
-    //         lStatusLedFunction.previousValue = lPreviousValue;
-    //         if (lTriggerInput)
-    //         {
-    //             LogicChannel *lChannel = mChannel[lStatusLedFunction.channelIndex];
-    //             lChannel->processInternalInput(lStatusLedFunction.ioInput, lPreviousValue);
-    //         }
-    //     }
-    // }
-}
-
-
 void Logic::processAfterStartupDelay()
 {
     logDebugP("afterStartupDelay");
@@ -209,14 +185,6 @@ void Logic::processInputKo(GroupObject &iKo)
         // turn off buzzer in case of lock
         if (iKo.value(getDPT(VAL_DPT_1)))
             noTone(BUZZER_PIN);
-    }
-#endif
-#ifdef I2C_RGBLED_DEVICE_ADDRESS
-    else if (iKo.asap() == LOG_KoLedLock)
-    {
-        // turn off LED in case of lock
-        if (iKo.value(getDPT(VAL_DPT_1)))
-            PCA9632_SetColor(0, 0, 0);
     }
 #endif
 }
@@ -458,7 +426,6 @@ void Logic::loop()
         }
     }
 
-    processPull();
 
     // we loop on all channels and execute pipeline
     uint8_t lChannelsProcessed = 0;

@@ -258,7 +258,6 @@ class LogicChannel : public OpenKNX::Channel
     void writeFunctionValue(uint16_t iParamIndex, bool iOn);
     void writeOtherKoValue(uint16_t iParamIndex, bool iIsRelative, uint16_t iDptIndex, bool iOn);
     void writeValue(LogicValue iValue, bool iOn);
-    void setRGBColor(uint16_t iParamIndex);
     void setBuzzer(uint16_t iParamIndex);
     void setStatusLed(uint16_t iParamIndex);
 

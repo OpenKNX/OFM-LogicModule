@@ -73,7 +73,7 @@
               <op:usePart name="INPUT" xpath="//Parameters/*" />
               <!-- Timer setup -->
               <!-- Timer name -->
-              <Parameter Id="%AID%_P-%TT%%CC%275" Name="f%C%TimerName" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung der Zeitschaltuhr" Value="" />
+              <Parameter Id="%AID%_P-%TT%%CC%275" Name="f%C%TimerName" ParameterType="%AID%_PT-Text80Byte" Text="Beschreibung der Zeitschaltuhr" Value="" />
               <Union SizeInBit="40">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="6" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%171" Name="f%C%Td1DuskDawn" ParameterType="%AID%_PT-DuskDawn" Offset="0" BitOffset="0" Text="Zeitbezug" Value="0" />
@@ -216,7 +216,7 @@
               <!-- Internal Inputs -->
               <op:usePart name="INTERNAL" xpath="//Parameters/*" />
               <!-- Output definition -->
-              <Parameter Id="%AID%_P-%TT%%CC%132" Name="f%C%NameOutput" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung Ausgang" Value="" />
+              <Parameter Id="%AID%_P-%TT%%CC%132" Name="f%C%NameOutput" ParameterType="%AID%_PT-Text80Byte" Text="Beschreibung Ausgang" Value="" />
               <Union SizeInBit="96">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="42" BitOffset="0" />
                 <!-- Stair delay pattern-->
@@ -679,28 +679,64 @@
                   <ParameterRefRef RefId="%AID%_UP-%TT%%CC%472_R-%TT%%CC%47201" AliasName="AbsRel" />
                 </RParameters>
               </ParameterCalculation>
+              <!-- <ParameterCalculation Id="%AID%_PC-%TT%%CC%0107" Language="JavaScript" Name="CalcOutputSend%CC%" RLTransformationFunc="LOG_Nop" LRTransformationFunc="LOG_CalcOutputSend">
+                <LParameters>
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%065_R-%TT%%CC%06501" AliasName="In" />
+                </LParameters>
+                <RParameters>
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%134_R-%TT%%CC%13401" AliasName="Out1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%135_R-%TT%%CC%13501" AliasName="Out2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%136_R-%TT%%CC%13601" AliasName="Out3" />
+                </RParameters>
+              </ParameterCalculation> -->
+              <!-- <ParameterCalculation Id="%AID%_PC-%TT%%CC%0108" Language="JavaScript" Name="CalcOutputSend" RLTransformationFunc="LOG_Nop" LRTransformationFunc="LOG_CalcOutputSend" LRTransformationParameters="{&quot;Text&quot;: &quot;OutputSendAll&quot;}">
+                <LParameters>
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%134_R-%TT%%CC%13401" AliasName="In" />
+                </LParameters>
+                <RParameters>
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%136_R-%TT%%CC%13601" AliasName="Out" />
+                </RParameters>
+              </ParameterCalculation>
+              <ParameterCalculation Id="%AID%_PC-%TT%%CC%0109" Language="JavaScript" Name="CalcOutputSend" RLTransformationFunc="LOG_Nop" LRTransformationFunc="LOG_CalcOutputSend" LRTransformationParameters="{&quot;Text&quot;: &quot;OutputSend&quot;}">
+                <LParameters>
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%135_R-%TT%%CC%13501" AliasName="In" />
+                </LParameters>
+                <RParameters>
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%065_R-%TT%%CC%06501" AliasName="Out" />
+                </RParameters>
+              </ParameterCalculation> -->
+              <!-- <ParameterCalculation Id="%AID%_PC-%TT%%CC%0110" Language="JavaScript" Name="CalcOutputSend" RLTransformationFunc="LOG_Nop" LRTransformationFunc="LOG_CalcOutputSend">
+                <LParameters>
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%136_R-%TT%%CC%13601" AliasName="In" />
+                </LParameters>
+                <RParameters>
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%134_R-%TT%%CC%13401" AliasName="Out1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%065_R-%TT%%CC%06501" AliasName="Out2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%136_R-%TT%%CC%13601" AliasName="Out3" />
+                </RParameters>
+              </ParameterCalculation> -->
 
             </ParameterCalculations>
             <ComObjectTable>
               <op:usePart name="INPUT" xpath="//ComObjectTable/*" />
-              <ComObject Id="%AID%_O-%TT%%CC%002" Name="KOf%C%O" Text="Ausgang" Number="%K2%" FunctionText="Logik %C%, Ausgang" ObjectSize="14 Bytes" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%002" Name="KOf%C%O" Text="Ausgang" Number="%K2%" FunctionText="Logik %C%: Ausgang" ObjectSize="14 Bytes" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
             </ComObjectTable>
             <ComObjectRefs>
-              <ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00201" RefId="%AID%_O-%TT%%CC%002" Text="{{0:Ausgang}}" ObjectSize="1 Bit" DatapointType="DPST-1-1" TextParameterRefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" />
-              <ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00202" RefId="%AID%_O-%TT%%CC%002" Text="{{0:Ausgang}}" ObjectSize="2 Bit" DatapointType="DPST-2-1" TextParameterRefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" />
-              <ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00215" RefId="%AID%_O-%TT%%CC%002" Text="{{0:Ausgang}}" ObjectSize="4 Bit" DatapointType="DPST-3-7" TextParameterRefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" />
-              <ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00203" RefId="%AID%_O-%TT%%CC%002" Text="{{0:Ausgang}}" ObjectSize="1 Byte" DatapointType="DPST-5-5" TextParameterRefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" />
-              <ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00204" RefId="%AID%_O-%TT%%CC%002" Text="{{0:Ausgang}}" ObjectSize="1 Byte" DatapointType="DPST-5-1" TextParameterRefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" />
-              <ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00205" RefId="%AID%_O-%TT%%CC%002" Text="{{0:Ausgang}}" ObjectSize="1 Byte" DatapointType="DPST-6-10" TextParameterRefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" />
-              <ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00206" RefId="%AID%_O-%TT%%CC%002" Text="{{0:Ausgang}}" ObjectSize="2 Bytes" DatapointType="DPST-7-1" TextParameterRefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" />
-              <ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00207" RefId="%AID%_O-%TT%%CC%002" Text="{{0:Ausgang}}" ObjectSize="2 Bytes" DatapointType="DPST-8-1" TextParameterRefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" />
-              <ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00208" RefId="%AID%_O-%TT%%CC%002" Text="{{0:Ausgang}}" ObjectSize="2 Bytes" DatapointType="DPST-9-2" TextParameterRefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" />
-              <ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00212" RefId="%AID%_O-%TT%%CC%002" Text="{{0:Ausgang}}" ObjectSize="4 Bytes" DatapointType="DPST-12-1" TextParameterRefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" />
-              <ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00213" RefId="%AID%_O-%TT%%CC%002" Text="{{0:Ausgang}}" ObjectSize="4 Bytes" DatapointType="DPST-13-1" TextParameterRefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" />
-              <ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00214" RefId="%AID%_O-%TT%%CC%002" Text="{{0:Ausgang}}" ObjectSize="4 Bytes" DatapointType="DPST-14-68" TextParameterRefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" />
-              <ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00209" RefId="%AID%_O-%TT%%CC%002" Text="{{0:Ausgang}}" ObjectSize="14 Bytes" DatapointType="DPST-16-1" TextParameterRefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" />
-              <ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00210" RefId="%AID%_O-%TT%%CC%002" Text="{{0:Ausgang}}" ObjectSize="1 Byte" DatapointType="DPST-17-1" TextParameterRefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" />
-              <ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00211" RefId="%AID%_O-%TT%%CC%002" Text="{{0:Ausgang}}" ObjectSize="3 Bytes" DatapointType="DPST-232-600" TextParameterRefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" />
+              <ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00201" RefId="%AID%_O-%TT%%CC%002" Text="{{0:Logik %C%: Ausgang}}" FunctionText="Logik %C%: Ausgang, Schalten"          ObjectSize="1 Bit"    DatapointType="DPST-1-1"     TextParameterRefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" />
+              <ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00202" RefId="%AID%_O-%TT%%CC%002" Text="{{0:Logik %C%: Ausgang}}" FunctionText="Logik %C%: Ausgang, Zwangsführung"     ObjectSize="2 Bit"    DatapointType="DPST-2-1"     TextParameterRefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" />
+              <ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00215" RefId="%AID%_O-%TT%%CC%002" Text="{{0:Logik %C%: Ausgang}}" FunctionText="Logik %C%: Ausgang, Dimmen"            ObjectSize="4 Bit"    DatapointType="DPST-3-7"     TextParameterRefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" />
+              <ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00203" RefId="%AID%_O-%TT%%CC%002" Text="{{0:Logik %C%: Ausgang}}" FunctionText="Logik %C%: Ausgang, 1-Byte"            ObjectSize="1 Byte"   DatapointType="DPST-5-5"     TextParameterRefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" />
+              <ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00204" RefId="%AID%_O-%TT%%CC%002" Text="{{0:Logik %C%: Ausgang}}" FunctionText="Logik %C%: Ausgang, Prozent"           ObjectSize="1 Byte"   DatapointType="DPST-5-1"     TextParameterRefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" />
+              <ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00205" RefId="%AID%_O-%TT%%CC%002" Text="{{0:Logik %C%: Ausgang}}" FunctionText="Logik %C%: Ausgang, 1-Byte-Vorzeichen" ObjectSize="1 Byte"   DatapointType="DPST-6-10"    TextParameterRefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" />
+              <ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00206" RefId="%AID%_O-%TT%%CC%002" Text="{{0:Logik %C%: Ausgang}}" FunctionText="Logik %C%: Ausgang, 2-Byte"            ObjectSize="2 Bytes"  DatapointType="DPST-7-1"     TextParameterRefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" />
+              <ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00207" RefId="%AID%_O-%TT%%CC%002" Text="{{0:Logik %C%: Ausgang}}" FunctionText="Logik %C%: Ausgang, 2-Byte-Vorzeichen" ObjectSize="2 Bytes"  DatapointType="DPST-8-1"     TextParameterRefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" />
+              <ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00208" RefId="%AID%_O-%TT%%CC%002" Text="{{0:Logik %C%: Ausgang}}" FunctionText="Logik %C%: Ausgang, 2-Byte-Gleitkomma" ObjectSize="2 Bytes"  DatapointType="DPST-9-1"     TextParameterRefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" />
+              <ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00212" RefId="%AID%_O-%TT%%CC%002" Text="{{0:Logik %C%: Ausgang}}" FunctionText="Logik %C%: Ausgang, 4-Byte"            ObjectSize="4 Bytes"  DatapointType="DPST-12-1"    TextParameterRefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" />
+              <ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00213" RefId="%AID%_O-%TT%%CC%002" Text="{{0:Logik %C%: Ausgang}}" FunctionText="Logik %C%: Ausgang, 4-Byte-Vorzeichen" ObjectSize="4 Bytes"  DatapointType="DPST-13-1"    TextParameterRefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" />
+              <ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00214" RefId="%AID%_O-%TT%%CC%002" Text="{{0:Logik %C%: Ausgang}}" FunctionText="Logik %C%: Ausgang, 4-Byte-Gleitkomma" ObjectSize="4 Bytes"  DatapointType="DPST-14-68"   TextParameterRefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" />
+              <ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00209" RefId="%AID%_O-%TT%%CC%002" Text="{{0:Logik %C%: Ausgang}}" FunctionText="Logik %C%: Ausgang, 14-Byte-Text"      ObjectSize="14 Bytes" DatapointType="DPST-16-1"    TextParameterRefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" />
+              <ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00210" RefId="%AID%_O-%TT%%CC%002" Text="{{0:Logik %C%: Ausgang}}" FunctionText="Logik %C%: Ausgang, Szene"             ObjectSize="1 Byte"   DatapointType="DPST-17-1"    TextParameterRefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" />
+              <ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00211" RefId="%AID%_O-%TT%%CC%002" Text="{{0:Logik %C%: Ausgang}}" FunctionText="Logik %C%: Ausgang, 3-Byte-RGB"        ObjectSize="3 Bytes"  DatapointType="DPST-232-600" TextParameterRefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" />
               <op:usePart name="INPUT" xpath="//ComObjectRefs/*" />
             </ComObjectRefs>
           </Static>
