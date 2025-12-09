@@ -260,7 +260,7 @@
                 <Parameter Id="%AID%_UP-%TT%%CC%134" Name="f%C%OOnBuzzer" ParameterType="%AID%_PT-OutputSendBuzzer" Offset="0" BitOffset="0" Text="Wert für EIN senden?" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%135" Name="f%C%OOnLed" ParameterType="%AID%_PT-OutputSendLed" Offset="0" BitOffset="0" Text="Wert für EIN senden?" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%136" Name="f%C%OOnAll" ParameterType="%AID%_PT-OutputSendAll" Offset="0" BitOffset="0" Text="Wert für EIN senden?" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%140" Name="f%C%OOnTone" ParameterType="%AID%_PT-ValueBuzzer" Offset="1" BitOffset="0" Text="    Wert für EIN senden als" Value="1" />
+                <!-- <Parameter Id="%AID%_UP-%TT%%CC%140" Name="f%C%OOnTone" ParameterType="%AID%_PT-ValueBuzzer" Offset="1" BitOffset="0" Text="    Wert für EIN senden als" Value="1" /> -->
                 <Parameter Id="%AID%_UP-%TT%%CC%066" Name="f%C%OOnDpt1" ParameterType="%AID%_PT-ValueDpt1" Offset="1" BitOffset="0" Text="    Wert für EIN senden als" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%067" Name="f%C%OOnDpt2" ParameterType="%AID%_PT-ValueDpt2Out" Offset="1" BitOffset="0" Text="    Wert für EIN senden als" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%511" Name="f%C%OOnDpt3Dir" ParameterType="%AID%_PT-ValueDpt3Dir" Offset="1" BitOffset="0" Text="    Wert für EIN senden als" Value="0" />
@@ -299,7 +299,7 @@
                 <Parameter Id="%AID%_UP-%TT%%CC%137" Name="f%C%OOffBuzzer" ParameterType="%AID%_PT-OutputSendBuzzer" Offset="0" BitOffset="0" Text="Wert für AUS senden?" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%138" Name="f%C%OOffLed" ParameterType="%AID%_PT-OutputSendLed" Offset="0" BitOffset="0" Text="Wert für AUS senden?" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%139" Name="f%C%OOffAll" ParameterType="%AID%_PT-OutputSendAll" Offset="0" BitOffset="0" Text="Wert für AUS senden?" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%141" Name="f%C%OOffTone" ParameterType="%AID%_PT-ValueBuzzer" Offset="1" BitOffset="0" Text="    Wert für AUS senden als" Value="0" />
+                <!-- <Parameter Id="%AID%_UP-%TT%%CC%141" Name="f%C%OOffTone" ParameterType="%AID%_PT-ValueBuzzer" Offset="1" BitOffset="0" Text="    Wert für AUS senden als" Value="0" /> -->
                 <Parameter Id="%AID%_UP-%TT%%CC%078" Name="f%C%OOffDpt1" ParameterType="%AID%_PT-ValueDpt1" Offset="1" BitOffset="0" Text="    Wert für AUS senden als" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%079" Name="f%C%OOffDpt2" ParameterType="%AID%_PT-ValueDpt2Out" Offset="1" BitOffset="0" Text="    Wert für AUS senden als" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%513" Name="f%C%OOffDpt3Dir" ParameterType="%AID%_PT-ValueDpt3Dir" Offset="1" BitOffset="0" Text="    Wert für AUS senden als" Value="0" />
@@ -426,8 +426,8 @@
               <ParameterRef Id="%AID%_UP-%TT%%CC%137_R-%TT%%CC%13701" RefId="%AID%_UP-%TT%%CC%137" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%138_R-%TT%%CC%13801" RefId="%AID%_UP-%TT%%CC%138" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%139_R-%TT%%CC%13901" RefId="%AID%_UP-%TT%%CC%139" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%140_R-%TT%%CC%14001" RefId="%AID%_UP-%TT%%CC%140" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%141_R-%TT%%CC%14101" RefId="%AID%_UP-%TT%%CC%141" />
+              <!-- <ParameterRef Id="%AID%_UP-%TT%%CC%140_R-%TT%%CC%14001" RefId="%AID%_UP-%TT%%CC%140" /> -->
+              <!-- <ParameterRef Id="%AID%_UP-%TT%%CC%141_R-%TT%%CC%14101" RefId="%AID%_UP-%TT%%CC%141" /> -->
 
               <!-- <ParameterRef Id="%AID%_P-%TT%%CC%162_R-%TT%%CC%16201" RefId="%AID%_P-%TT%%CC%162" /> -->
               <!-- <ParameterRef Id="%AID%_P-%TT%%CC%163_R-%TT%%CC%16301" RefId="%AID%_P-%TT%%CC%163" /> -->
@@ -1620,10 +1620,10 @@
                                 <ParameterRefRef RefId="%AID%_UP-%TT%%CC%123_R-%TT%%CC%12301" Cell="1,7" />
                               </ParameterBlock>
                             </when>
-                            <when test="6">
-                              <ParameterRefRef RefId="%AID%_UP-%TT%%CC%140_R-%TT%%CC%14001" HelpContext="%DOC%" IndentLevel="1" />
-                              <Assign TargetParamRefRef="%AID%_P-%TT%%CC%278_R-%TT%%CC%27801" Value="1" />
-                            </when>
+                            <!-- <when test="6"> -->
+                              <!-- <ParameterRefRef RefId="%AID%_UP-%TT%%CC%140_R-%TT%%CC%14001" HelpContext="%DOC%" IndentLevel="1" /> -->
+                              <!-- <Assign TargetParamRefRef="%AID%_P-%TT%%CC%278_R-%TT%%CC%27801" Value="1" /> -->
+                            <!-- </when> -->
                             <when test="7">
                               <ParameterRefRef RefId="%AID%_UP-%TT%%CC%516_R-%TT%%CC%51601" HelpContext="%DOC%" IndentLevel="1" />
                               <ParameterBlock Id="%AID%_PB-nnn" Inline="true" Layout="Grid" HelpContext="Empty">
@@ -1833,10 +1833,10 @@
                                 <ParameterRefRef RefId="%AID%_UP-%TT%%CC%126_R-%TT%%CC%12601" Cell="1,7" />
                               </ParameterBlock>
                             </when>
-                            <when test="6">
-                              <ParameterRefRef RefId="%AID%_UP-%TT%%CC%141_R-%TT%%CC%14101" HelpContext="%DOC%" IndentLevel="1" />
-                              <Assign TargetParamRefRef="%AID%_P-%TT%%CC%278_R-%TT%%CC%27801" Value="1" />
-                            </when>
+                            <!-- <when test="6"> -->
+                              <!-- <ParameterRefRef RefId="%AID%_UP-%TT%%CC%141_R-%TT%%CC%14101" HelpContext="%DOC%" IndentLevel="1" /> -->
+                              <!-- <Assign TargetParamRefRef="%AID%_P-%TT%%CC%278_R-%TT%%CC%27801" Value="1" /> -->
+                            <!-- </when> -->
                             <when test="7">
                               <ParameterRefRef RefId="%AID%_UP-%TT%%CC%517_R-%TT%%CC%51701" HelpContext="%DOC%" IndentLevel="1" />
                               <ParameterBlock Id="%AID%_PB-nnn" Inline="true" Layout="Grid" HelpContext="Empty">

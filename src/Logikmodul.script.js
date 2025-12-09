@@ -83,3 +83,30 @@ function LOG_CalcRelFromAbs(input, output, context) {
     }
 }
 
+function LOG_Update(device, online, progress, context) {
+    // progress.setText("Logik: Update durchführen...");
+    var parLedInstalled = device.getParameterByName("LOG_LedInstalled");
+    if (parLedInstalled.value == 0) {
+        for (var channel = 1; channel <= uctChannelParams["LOG"].channels; channel++) {
+            var nameOn = "LOG_f" + channel + "OOn";
+            var nameOff = "LOG_f" + channel + "OOff";
+            info("Logik: Update Kanal " + channel);
+            info("Logik: Prüfe Parameter " + nameOn);
+            var parSendValueOn = device.getParameterByName(nameOn);
+            var parSendValueLedOn = device.getParameterByName(nameOn + "Led");
+            var parSendValueBuzzerOn = device.getParameterByName(nameOn + "Buzzer");
+            var parSendValueAllOn = device.getParameterByName(nameOn + "All");
+            var parSendValueOff = device.getParameterByName(nameOff);
+            var parSendValueLedOff = device.getParameterByName(nameOff + "Led");
+            var parSendValueBuzzerOff = device.getParameterByName(nameOff + "Buzzer");
+            var parSendValueAllOff = device.getParameterByName(nameOff + "All");
+            parSendValueLedOn.value = parSendValueOn.value;
+            parSendValueLedOff.value = parSendValueOff.value;
+            parSendValueAllOn.value = parSendValueBuzzerOn.value;
+            parSendValueAllOff.value = parSendValueBuzzerOff.value;
+        }
+        parLedInstalled.value = 1;
+    }
+    // progress.setProgress(100);
+    // progress.setText("Logik: Update abgeschlossen...");
+}

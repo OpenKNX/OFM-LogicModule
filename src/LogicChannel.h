@@ -82,12 +82,6 @@
 #define VAL_AllowRepeat_Off 2
 #define VAL_AllowRepeat_None 3
 
-// enum for buzzer volume
-#define VAL_Buzzer_Off 0
-#define VAL_Buzzer_Silent 2
-#define VAL_Buzzer_Normal 3
-#define VAL_Buzzer_Loud 1
-
 // enum for Abs-Rel-connections
 #define VAL_AbsRel_None 0
 #define VAL_AbsRel_Absolute 1

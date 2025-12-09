@@ -179,14 +179,6 @@ void Logic::processInputKo(GroupObject &iKo)
         LogicChannel *lChannel = mChannel[lChannelId];
         lChannel->processInput(lIOIndex);
     }
-#ifdef BUZZER_PIN
-    else if (iKo.asap() == LOG_KoBuzzerLock)
-    {
-        // turn off buzzer in case of lock
-        if (iKo.value(getDPT(VAL_DPT_1)))
-            noTone(BUZZER_PIN);
-    }
-#endif
 }
 
 const char* Logic::helpCommands[Logic::helpCommandCount] = {"logic help", "logic time", "logic easter", "logic sun", "logic sun+DDMM", "logic lim", "logic lim res", "logic chNN", "logic chNN lim", "logic chNN res"};
@@ -384,12 +376,7 @@ void Logic::debug()
 void Logic::setup()
 {
     // check for hidden parameters
-    logInfoP("Setting: Buzzer available: %d", ParamLOG_BuzzerInstalled);
     logInfoP("Setting: RGBLed available: %d", ParamLOG_LedInstalled);
-    // setup buzzer
-#ifdef BUZZER_PIN
-    pinMode(BUZZER_PIN, OUTPUT);
-#endif
 
     sTimer.setup();
 

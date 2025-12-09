@@ -481,39 +481,6 @@ void LogicChannel::setStatusLed(uint16_t iParamIndex)
     }
 }
 
-// turn on/off Buzzer
-void LogicChannel::setBuzzer(uint16_t iParamIndex)
-{
-#ifdef BUZZER_PIN
-    // check for global lock and alarm
-    if (ParamLOG_fAlarm || !KoLOG_BuzzerLock.value(getDPT(VAL_DPT_1)))
-    {
-        switch (getByteParam(iParamIndex))
-        {
-            case VAL_Buzzer_Off:
-                noTone(BUZZER_PIN);
-                break;
-            case VAL_Buzzer_Loud:
-                tone(BUZZER_PIN, ParamLOG_BuzzerLoud);
-                break;
-            case VAL_Buzzer_Silent:
-                tone(BUZZER_PIN, ParamLOG_BuzzerSilent);
-                break;
-            case VAL_Buzzer_Normal:
-                tone(BUZZER_PIN, ParamLOG_BuzzerNormal);
-                break;
-            default:
-                break;
-        }
-    }
-    else
-    {
-        // in case of lock we turn off buzzer
-        noTone(BUZZER_PIN);
-    }
-#endif
-}
-
 /********************************
  * Logic helper functions
  * *****************************/
@@ -2141,9 +2108,6 @@ void LogicChannel::processOutput(bool iValue)
             case VAL_Out_ResetDevice:
                 knxResetDevice(LOG_fOOnDpt1);
                 break;
-            case VAL_Out_Buzzer:
-                setBuzzer(LOG_fOOnDpt1);
-                break;
             case VAL_Out_RGBLed:
                 setStatusLed(LOG_fOOnDpt1);
                 break;
@@ -2177,9 +2141,6 @@ void LogicChannel::processOutput(bool iValue)
                 break;
             case VAL_Out_ResetDevice:
                 knxResetDevice(LOG_fOOffDpt1);
-                break;
-            case VAL_Out_Buzzer:
-                setBuzzer(LOG_fOOffDpt1);
                 break;
             case VAL_Out_RGBLed:
                 setStatusLed(LOG_fOOffDpt1);

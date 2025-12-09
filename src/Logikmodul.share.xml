@@ -48,9 +48,9 @@
                 <TypeNumber SizeInBit="1" Type="unsignedInt" minInclusive="0" maxInclusive="1" />
               </ParameterType>
               <!-- buzzer frequencies in Hz -->
-              <ParameterType Id="%AID%_PT-BuzzerFrequency" Name="BuzzerFrequency">
+              <!-- <ParameterType Id="%AID%_PT-BuzzerFrequency" Name="BuzzerFrequency">
                 <TypeNumber SizeInBit="16" Type="unsignedInt" minInclusive="1500" maxInclusive="6000" />
-              </ParameterType>
+              </ParameterType> -->
               <!-- UserFormula support, 99 chars per formula -->
                <ParameterType Id="%AID%_PT-UserFormula" Name="UserFormula">
                 <TypeText SizeInBit="792" />
@@ -223,14 +223,14 @@
                   <Enumeration Text="DPT 232.xxx (3-Byte-RGB)" Value="10" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-ValueBuzzer" Name="ValueBuzzer">
+              <!-- <ParameterType Id="%AID%_PT-ValueBuzzer" Name="ValueBuzzer">
                 <TypeRestriction Base="Value" SizeInBit="8">
                   <Enumeration Text="Ton ausschalten" Value="0" Id="%ENID%" />
                   <Enumeration Text="Ton leise einschalten" Value="2" Id="%ENID%" />
                   <Enumeration Text="Ton normal einschalten" Value="3" Id="%ENID%" />
                   <Enumeration Text="Ton laut einschalten" Value="1" Id="%ENID%" />
                 </TypeRestriction>
-              </ParameterType>
+              </ParameterType> -->
               <ParameterType Id="%AID%_PT-InputDefault" Name="InputDefault">
                 <TypeRestriction Base="Value" SizeInBit="2">
                   <Enumeration Text="Nichts (undefiniert)" Value="0" Id="%ENID%" />
@@ -1125,12 +1125,12 @@
                 <Parameter Id="%AID%_UP-%TT%00174" Name="Weltkindertag" ParameterType="%AID%_PT-CheckBox" Offset="4" BitOffset="2" Text="35. Weltkindertag" SuffixText="20. September" Value="0" />
                 <!-- 6 Bit free -->
               </Union>
-              <Union SizeInBit="48">
+              <!-- <Union SizeInBit="48">
                 <Memory CodeSegment="%MID%" Offset="6" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%00148" Name="BuzzerSilent" ParameterType="%AID%_PT-BuzzerFrequency" Offset="0" BitOffset="0" Text="Frequenz für Buzzer (leise)" SuffixText="Hz" Value="1800" />
                 <Parameter Id="%AID%_UP-%TT%00149" Name="BuzzerNormal" ParameterType="%AID%_PT-BuzzerFrequency" Offset="2" BitOffset="0" Text="Frequenz für Buzzer (normal)" SuffixText="Hz" Value="3200" />
                 <Parameter Id="%AID%_UP-%TT%00150" Name="BuzzerLoud" ParameterType="%AID%_PT-BuzzerFrequency" Offset="4" BitOffset="0" Text="Frequenz für Buzzer (laut)" SuffixText="Hz" Value="2400" />
-              </Union>
+              </Union> -->
               <Union SizeInBit="16">
                 <Memory CodeSegment="%MID%" Offset="12" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%00164" Name="VisibleChannels" ParameterType="%AID%_PT-LOGNumChannels" Offset="0" BitOffset="0" Text="Verfügbare Kanäle" Value="%LOG_NumChannelsDefault%" SuffixText=" von %N%" />
@@ -1194,9 +1194,9 @@
               <!-- <ParameterRef Id="%AID%_UP-%TT%00145_R-%TT%0014501" RefId="%AID%_UP-%TT%00145" /> -->
               <!-- <ParameterRef Id="%AID%_UP-%TT%00146_R-%TT%0014601" RefId="%AID%_UP-%TT%00146" /> -->
               <!-- <ParameterRef Id="%AID%_UP-%TT%00147_R-%TT%0014701" RefId="%AID%_UP-%TT%00147" /> -->
-              <ParameterRef Id="%AID%_UP-%TT%00148_R-%TT%0014801" RefId="%AID%_UP-%TT%00148" />
+              <!-- <ParameterRef Id="%AID%_UP-%TT%00148_R-%TT%0014801" RefId="%AID%_UP-%TT%00148" />
               <ParameterRef Id="%AID%_UP-%TT%00149_R-%TT%0014901" RefId="%AID%_UP-%TT%00149" />
-              <ParameterRef Id="%AID%_UP-%TT%00150_R-%TT%0015001" RefId="%AID%_UP-%TT%00150" />
+              <ParameterRef Id="%AID%_UP-%TT%00150_R-%TT%0015001" RefId="%AID%_UP-%TT%00150" /> -->
               <ParameterRef Id="%AID%_UP-%TT%00151_R-%TT%0015101" RefId="%AID%_UP-%TT%00151" />
               <ParameterRef Id="%AID%_UP-%TT%00152_R-%TT%0015201" RefId="%AID%_UP-%TT%00152" />
               <ParameterRef Id="%AID%_UP-%TT%00153_R-%TT%0015301" RefId="%AID%_UP-%TT%00153" />
@@ -1341,12 +1341,12 @@
                 <ParameterRefRef RefId="%AID%_UP-%TT%00135_R-%TT%0013501" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
                 <ParameterRefRef RefId="%AID%_UP-%TT%00136_R-%TT%0013601" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
                 <ParameterRefRef RefId="%AID%_UP-%TT%00137_R-%TT%0013701" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-                <choose ParamRefId="%AID%_P-%TT%00163_R-%TT%0016301">
-                  <when test="%LOG_EnableHardware%">
-                    <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
-                    <ParameterSeparator Id="%AID%_PS-nnn" Text="Installierte Hardware" UIHint="Headline" />
-                    <ParameterSeparator Id="%AID%_PS-11" Text="Im folgenden wird die verwendete bzw. installierte Hardware angegeben." />
-                    <ParameterSeparator Id="%AID%_PS-12" Text="Die hier getroffenen Angaben beeinflussen das Verhalten der Applikation und der Firmware und müssen zur vorhandenen Hardware passen!" />
+                <!-- <choose ParamRefId="%AID%_P-%TT%00163_R-%TT%0016301"> -->
+                  <!-- <when test="%LOG_EnableHardware%"> -->
+                    <!-- <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" /> -->
+                    <!-- <ParameterSeparator Id="%AID%_PS-nnn" Text="Installierte Hardware" UIHint="Headline" /> -->
+                    <!-- <ParameterSeparator Id="%AID%_PS-11" Text="Im folgenden wird die verwendete bzw. installierte Hardware angegeben." /> -->
+                    <!-- <ParameterSeparator Id="%AID%_PS-12" Text="Die hier getroffenen Angaben beeinflussen das Verhalten der Applikation und der Firmware und müssen zur vorhandenen Hardware passen!" /> -->
                     <!-- RGB-LED installed? -->
                     <ParameterRefRef RefId="%AID%_UP-%TT%00036_R-%TT%0003601" HelpContext="%DOC%" IndentLevel="1" />
                     <!-- Buzzer installed? -->
@@ -1364,22 +1364,22 @@
                         <!-- <ParameterRefRef RefId="%AID%_UP-%TT%00151_R-%TT%0015101" HelpContext="%DOC%" IndentLevel="1" /> -->
                       <!-- </when> -->
                     <!-- </choose> -->
-                    <choose ParamRefId="%AID%_UP-%TT%00035_R-%TT%0003501">
-                      <when test="1">
+                    <!-- <choose ParamRefId="%AID%_UP-%TT%00035_R-%TT%0003501"> -->
+                      <!-- <when test="1"> -->
                         <!-- show lock KO for Buzzer -->
-                        <ComObjectRefRef RefId="%AID%_O-%TT%00009_R-%TT%0000901" />
+                        <!-- <ComObjectRefRef RefId="%AID%_O-%TT%00009_R-%TT%0000901" /> -->
                         <!-- show extra settings for Buzzer-->
-                        <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
-                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Buzzer" UIHint="Headline" />
-                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Die beim Buzzer verwendeten Frequenzen für leise, normal und laut können hier eingestellt werden" />
-                        <ParameterRefRef RefId="%AID%_UP-%TT%00148_R-%TT%0014801" HelpContext="LOG-Buzzer" IndentLevel="1" />
-                        <ParameterRefRef RefId="%AID%_UP-%TT%00149_R-%TT%0014901" HelpContext="LOG-Buzzer" IndentLevel="1" />
-                        <ParameterRefRef RefId="%AID%_UP-%TT%00150_R-%TT%0015001" HelpContext="LOG-Buzzer" IndentLevel="1" />
-                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Der Buzzer kann nur 'AN' oder 'AUS'. Die Lautstärke wird durch Frequenz wählt, die niicht im optimalen Arbeitsbereich liegt. Die Standardwerte meinen also 'leise und tief', 'normal und hoch', 'laut und mittel'." />
-                      </when>
-                    </choose>
-                  </when>
-                </choose>
+                        <!-- <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" /> -->
+                        <!-- <ParameterSeparator Id="%AID%_PS-nnn" Text="Buzzer" UIHint="Headline" /> -->
+                        <!-- <ParameterSeparator Id="%AID%_PS-nnn" Text="Die beim Buzzer verwendeten Frequenzen für leise, normal und laut können hier eingestellt werden" /> -->
+                        <!-- <ParameterRefRef RefId="%AID%_UP-%TT%00148_R-%TT%0014801" HelpContext="LOG-Buzzer" IndentLevel="1" /> -->
+                        <!-- <ParameterRefRef RefId="%AID%_UP-%TT%00149_R-%TT%0014901" HelpContext="LOG-Buzzer" IndentLevel="1" /> -->
+                        <!-- <ParameterRefRef RefId="%AID%_UP-%TT%00150_R-%TT%0015001" HelpContext="LOG-Buzzer" IndentLevel="1" /> -->
+                        <!-- <ParameterSeparator Id="%AID%_PS-nnn" Text="Der Buzzer kann nur 'AN' oder 'AUS'. Die Lautstärke wird durch Frequenz wählt, die niicht im optimalen Arbeitsbereich liegt. Die Standardwerte meinen also 'leise und tief', 'normal und hoch', 'laut und mittel'." /> -->
+                      <!-- </when> -->
+                    <!-- </choose> -->
+                  <!-- </when> -->
+                <!-- </choose> -->
               </ParameterBlock>
               <ParameterBlock Name="UserFormulas" Text="Benutzerformeln" Id="%AID%_PB-nnn" Icon="calculator-variant-outline" HelpContext="LOG-Benutzerformeln">
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Benutzerformeln" UIHint="Headline" />
