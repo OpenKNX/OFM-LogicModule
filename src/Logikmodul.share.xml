@@ -1027,14 +1027,14 @@
               </ParameterType>
               <ParameterType Id="%AID%_PT-SLEDFunc" Name="SLEDFunc">
                 <TypeRestriction Base="Value" SizeInBit="16" UIHint="DropDown">
-                  <Enumeration Text="Logikstatus 1" Value="100" Id="%ENID%" />
-                  <Enumeration Text="Logikstatus 2" Value="101" Id="%ENID%" />
-                  <Enumeration Text="Logikstatus 3" Value="102" Id="%ENID%" />
-                  <Enumeration Text="Logikstatus 4" Value="103" Id="%ENID%" />
-                  <Enumeration Text="Logikstatus 5" Value="104" Id="%ENID%" />
-                  <Enumeration Text="Logikstatus 6" Value="105" Id="%ENID%" />
-                  <Enumeration Text="Logikstatus 7" Value="106" Id="%ENID%" />
-                  <Enumeration Text="Logikstatus 8" Value="107" Id="%ENID%" />
+                  <Enumeration Text="Logikstatus 1" Value="90" Id="%ENID%" />
+                  <Enumeration Text="Logikstatus 2" Value="91" Id="%ENID%" />
+                  <Enumeration Text="Logikstatus 3" Value="92" Id="%ENID%" />
+                  <Enumeration Text="Logikstatus 4" Value="93" Id="%ENID%" />
+                  <Enumeration Text="Logikstatus 5" Value="94" Id="%ENID%" />
+                  <Enumeration Text="Logikstatus 6" Value="95" Id="%ENID%" />
+                  <Enumeration Text="Logikstatus 7" Value="96" Id="%ENID%" />
+                  <Enumeration Text="Logikstatus 8" Value="97" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
               <ParameterType Id="%AID%_PT-StatusLedProvider" Name="StatusLedProvider">

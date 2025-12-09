@@ -438,7 +438,7 @@ void LogicChannel::knxResetDevice(uint16_t iParamIndex)
 void LogicChannel::setStatusLed(uint16_t iParamIndex)
 {
     uint8_t lStatusChannel = getByteParam(iParamIndex + 4) & LOG_fOOnLedProviderMask;
-    OpenKNX::Led::FunctionGroup *lLed = openknx.ledFunctions.get(100 + lStatusChannel);
+    OpenKNX::Led::FunctionGroup *lLed = openknx.ledFunctions.get(90 + lStatusChannel);
     if (!lLed->active()) return;
 
     if ((getByteParam(LOG_fAlarm) & LOG_fAlarmMask) || !knx.getGroupObject(LOG_KoLedLock).value(getDPT(VAL_DPT_1)))
@@ -450,22 +450,22 @@ void LogicChannel::setStatusLed(uint16_t iParamIndex)
         switch (lEffect)
         {
             case 1: 
-                lLed->setColor(lRGBColor);
+                lLed->color(lRGBColor);
                 lLed->on();
                 break;
             
             case 2: 
-                lLed->setColor(lRGBColor);
+                lLed->color(lRGBColor);
                 lLed->blinking(lDuration);
                 break;
 
             case 3: 
-                lLed->setColor(lRGBColor);
+                lLed->color(lRGBColor);
                 lLed->pulsing(lDuration);
                 break;
             
             case 4: 
-                lLed->setColor(lRGBColor);
+                lLed->color(lRGBColor);
                 lLed->flash(lDuration);
                 break;
                     
