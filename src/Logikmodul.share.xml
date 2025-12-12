@@ -1,11 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <?xml-model href="../../../../Organization/knxprod-support/knx_project_20/knx-editor.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <KNX xmlns:op="http://github.com/OpenKNX/OpenKNXproducer" xmlns="http://knx.org/xml/project/20" CreatedBy="KNX MT" ToolVersion="5.1.255.16695">
-  <op:config name="%LOG_EnableHardware%" value="0" />
-  <op:config name="%LOG_LedAccess%" value="None" />
-  <op:config name="%LOG_LedDefault%" value="0" />
-  <op:config name="%LOG_BuzzerAccess%" value="None" />
-  <op:config name="%LOG_BuzzerDefault%" value="0" />
   <op:config name="%LOG_EnableSave%" value="1" />
   <op:config name="%LOG_NumChannelsDefault%" value="%N%" />
   
@@ -16,12 +11,11 @@
       <ApplicationPrograms>
         <ApplicationProgram Id="%AID%" ApplicationNumber="102" ApplicationVersion="21" ProgramType="ApplicationProgram" MaskVersion="MV-07B0" Name="WP-Logic" LoadProcedureStyle="MergedProcedure" PeiType="0" DefaultLanguage="de" DynamicTableManagement="false" Linkable="true" MinEtsVersion="4.0">
           <op:part name="FORMULA" href="Logikmodul.userformula.part.xml" instances="30">
-            <op:param name="%ParamOffset%" value="14" increment="100" />
+            <op:param name="%ParamOffset%" value="7" increment="100" />
             <op:param name="%PPP%" value="200" digits="3" increment="3" />
             <op:param name="%Fn%" value="1" increment="1" />
           </op:part>
-          <!-- <op:part name="UPDATE" href="Logikmodul.update.part.xml" instances="1">
-          </op:part> -->
+          <op:part name="UPDATE" href="Logikmodul.update.part.xml" instances="1" />
           <Static>
             <ParameterTypes>
               <!-- Number of channels (module specific) -->
@@ -47,30 +41,10 @@
               <ParameterType Id="%AID%_PT-EnableSave" Name="EnableSave">
                 <TypeNumber SizeInBit="1" Type="unsignedInt" minInclusive="0" maxInclusive="1" />
               </ParameterType>
-              <!-- buzzer frequencies in Hz -->
-              <!-- <ParameterType Id="%AID%_PT-BuzzerFrequency" Name="BuzzerFrequency">
-                <TypeNumber SizeInBit="16" Type="unsignedInt" minInclusive="1500" maxInclusive="6000" />
-              </ParameterType> -->
               <!-- UserFormula support, 99 chars per formula -->
                <ParameterType Id="%AID%_PT-UserFormula" Name="UserFormula">
                 <TypeText SizeInBit="792" />
                </ParameterType>
-              <!-- Test MERGE vom Producer -->
-              <!-- LED color mapping -->
-              <ParameterType Id="%AID%_PT-RGBMapping" Name="RGBMapping">
-                <TypeRestriction Base="Value" SizeInBit="3">
-                  <Enumeration Text="Rot / Grün / Blau" Value="1" Id="%ENID%" />
-                  <Enumeration Text="Rot / Blau / Grün" Value="2" Id="%ENID%" />
-                  <Enumeration Text="Grün / Rot / Blau" Value="3" Id="%ENID%" />
-                <!-- </TypeRestriction>
-              </ParameterType>
-              <ParameterType Id="%AID%_PT-RGBMapping" Name="RGBMapping">
-                <TypeRestriction Base="Value" SizeInBit="3"> -->
-                  <Enumeration Text="Grün / Blau / Rot" Value="4" Id="%ENID%" />
-                  <Enumeration Text="Blau / Grün / Rot" Value="5" Id="%ENID%" />
-                  <Enumeration Text="Blau / Rot / Grün" Value="6" Id="%ENID%" />
-                </TypeRestriction>
-              </ParameterType>
               <!-- parameter types for logic module -->
               <ParameterType Id="%AID%_PT-Logic" Name="Logic">
                 <TypeRestriction Base="Value" SizeInBit="8">
@@ -460,9 +434,10 @@
                   <Enumeration Text="Ja - Wert einer Funktion" Value="8" Id="%ENID%" />
                   <Enumeration Text="Ja - Read Request senden" Value="4" Id="%ENID%" />
                   <Enumeration Text="Ja - 'Gerät zurücksetzen' senden" Value="5" Id="%ENID%" />
-                  <!-- <Enumeration Text="Ja - LED schalten" Value="7" Id="%ENID%" /> -->
+                  <Enumeration Text="Ja - Status-LED schalten" Value="7" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
+              <!-- TO BE REMOVED: Old Buzzer and LED handling -->
               <ParameterType Id="%AID%_PT-OutputSendBuzzer" Name="OutputSendBuzzer">
                 <TypeRestriction Base="Value" SizeInBit="8">
                   <Enumeration Text="Nein" Value="0" Id="%ENID%" />
@@ -474,9 +449,9 @@
                   <Enumeration Text="Ja - Read Request senden" Value="4" Id="%ENID%" />
                   <Enumeration Text="Ja - 'Gerät zurücksetzen' senden" Value="5" Id="%ENID%" />
                   <Enumeration Text="Ja - Tonwiedegabe (Buzzer)" Value="6" Id="%ENID%" />
-                  <!-- <Enumeration Text="Ja - LED schalten" Value="7" Id="%ENID%" /> -->
                 </TypeRestriction>
               </ParameterType>
+              <!-- TO BE REMOVED: Old Buzzer and LED handling -->
               <ParameterType Id="%AID%_PT-OutputSendLed" Name="OutputSendLed">
                 <TypeRestriction Base="Value" SizeInBit="8">
                   <Enumeration Text="Nein" Value="0" Id="%ENID%" />
@@ -490,6 +465,7 @@
                   <Enumeration Text="Ja - LED schalten" Value="7" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
+              <!-- TO BE REMOVED: Old Buzzer and LED handling -->
               <ParameterType Id="%AID%_PT-OutputSendAll" Name="OutputSendAll">
                 <TypeRestriction Base="Value" SizeInBit="8">
                   <Enumeration Text="Nein" Value="0" Id="%ENID%" />
@@ -1069,25 +1045,23 @@
               </ParameterType>
             </ParameterTypes>
             <Parameters>
-              <Parameter Id="%AID%_P-%TT%00163" Name="EnableHardware" ParameterType="%AID%_PT-OnOffYesNo" Text="Enable Hardware" Value="1" Access="None" />
               <Parameter Id="%AID%_P-%TT%00166" Name="OverviewFilter" ParameterType="%AID%_PT-OverviewFilter" Text="Nur Kanäle mit internen Verknüpfungen anzeigen" Value="1" />
               <Parameter Id="%AID%_P-%TT%00168" Name="CompactDisplay" ParameterType="%AID%_PT-OverviewDisplay" Text="Übersicht ohne Logikbeschriftung anzeigen (kompakter)" Value="0" />
               <Parameter Id="%AID%_P-%TT%00167" Name="EnableSave" ParameterType="%AID%_PT-EnableSave" Text="Speichern von Werten in Hardware möglich?" Value="0" Access="None" />
-              <Union SizeInBit="8">
+              <Union SizeInBit="16">
                 <Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
-                <!-- <Parameter Id="%AID%_UP-%TT%00034" Name="ReadTimeDate" ParameterType="%AID%_PT-OnOffYesNo" Offset="0" BitOffset="0" Text="Uhrzeit und Datum nach einem Neustart vom Bus lesen" Value="1" /> -->
-                <Parameter Id="%AID%_UP-%TT%00035" Name="BuzzerInstalled" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="0" Text="Akustischer Signalgeber vorhanden (Buzzer)?" Value="%LOG_BuzzerDefault%" />
-                <Parameter Id="%AID%_UP-%TT%00036" Name="LedInstalled" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="1" Text="Optischer Signalgeber vorhanden (RGB-LED)?" Value="1" />
-                <!-- <Parameter Id="%AID%_UP-%TT%00156" Name="CombinedTimeDate" ParameterType="%AID%_PT-TimeKoType" Offset="0" BitOffset="3" Text="Uhrzeit und Datum empfangen über" Value="0" /> -->
-                <!-- <Parameter Id="%AID%_UP-%TT%00145" Name="UseSummertime" ParameterType="%AID%_PT-OnOffYesNo" Offset="0" BitOffset="4" Text="Sommerzeit intern berechnen?&#10;(nur für Deutschland möglich)" Value="1" /> -->
-                <Parameter Id="%AID%_UP-%TT%00138" Name="VacationKo" ParameterType="%AID%_PT-OnOffYesNo" Offset="0" BitOffset="2" Text="Urlaubsbehandlung aktivieren?" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%00139" Name="HolidayKo" ParameterType="%AID%_PT-OnOffYesNo" Offset="0" BitOffset="3" Text="Feiertage auf dem Bus verfügbar machen?" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%00140" Name="VacationRead" ParameterType="%AID%_PT-OnOffYesNo" Offset="0" BitOffset="4" Text="Nach Neustart Urlaubsinfo lesen?" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%00141" Name="HolidaySend" ParameterType="%AID%_PT-OnOffYesNo" Offset="0" BitOffset="5" Text="Nach Neuberechnung Feiertagsinfo senden?" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00164" Name="VisibleChannels" ParameterType="%AID%_PT-LOGNumChannels" Offset="0" BitOffset="0" Text="Verfügbare Kanäle" Value="%LOG_NumChannelsDefault%" SuffixText=" von %N%" />
+                <Parameter Id="%AID%_UP-%TT%00138" Name="VacationKo" ParameterType="%AID%_PT-OnOffYesNo" Offset="1" BitOffset="0" Text="Urlaubsbehandlung aktivieren?" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00139" Name="HolidayKo" ParameterType="%AID%_PT-OnOffYesNo" Offset="1" BitOffset="1" Text="Feiertage auf dem Bus verfügbar machen?" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00140" Name="VacationRead" ParameterType="%AID%_PT-OnOffYesNo" Offset="1" BitOffset="2" Text="Nach Neustart Urlaubsinfo lesen?" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00141" Name="HolidaySend" ParameterType="%AID%_PT-OnOffYesNo" Offset="1" BitOffset="3" Text="Nach Neuberechnung Feiertagsinfo senden?" Value="0" />
+                <!-- TO BE REMOVED: Old Buzzer and LED handling -->
+                <Parameter Id="%AID%_UP-%TT%00035" Name="BuzzerInstalled" ParameterType="%AID%_PT-CheckBox" Offset="1" BitOffset="4" Text="Akustischer Signalgeber vorhanden (Buzzer)?" Value="0" Access="None" />
+                <Parameter Id="%AID%_UP-%TT%00036" Name="LedInstalled" ParameterType="%AID%_PT-CheckBox" Offset="1" BitOffset="5" Text="Optischer Signalgeber vorhanden (RGB-LED)?" Value="0" Access="None" />
                 <!-- 2 Bit free -->
               </Union>
               <Union SizeInBit="40">
-                <Memory CodeSegment="%MID%" Offset="1" BitOffset="0" />
+                <Memory CodeSegment="%MID%" Offset="2" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%00152" Name="Neujahr" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="0" Text="1. Neujahr" SuffixText="1. Januar" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%00110" Name="DreiKoenige" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="1" Text="2. Heilige Drei Könige" SuffixText="6. Januar" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%00111" Name="Weiberfastnacht" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="2" Text="3. Weiberfastnacht" SuffixText="52 Tage vor Ostern" Value="0" />
@@ -1125,25 +1099,10 @@
                 <Parameter Id="%AID%_UP-%TT%00174" Name="Weltkindertag" ParameterType="%AID%_PT-CheckBox" Offset="4" BitOffset="2" Text="35. Weltkindertag" SuffixText="20. September" Value="0" />
                 <!-- 6 Bit free -->
               </Union>
-              <!-- <Union SizeInBit="48">
-                <Memory CodeSegment="%MID%" Offset="6" BitOffset="0" />
-                <Parameter Id="%AID%_UP-%TT%00148" Name="BuzzerSilent" ParameterType="%AID%_PT-BuzzerFrequency" Offset="0" BitOffset="0" Text="Frequenz für Buzzer (leise)" SuffixText="Hz" Value="1800" />
-                <Parameter Id="%AID%_UP-%TT%00149" Name="BuzzerNormal" ParameterType="%AID%_PT-BuzzerFrequency" Offset="2" BitOffset="0" Text="Frequenz für Buzzer (normal)" SuffixText="Hz" Value="3200" />
-                <Parameter Id="%AID%_UP-%TT%00150" Name="BuzzerLoud" ParameterType="%AID%_PT-BuzzerFrequency" Offset="4" BitOffset="0" Text="Frequenz für Buzzer (laut)" SuffixText="Hz" Value="2400" />
-              </Union> -->
-              <Union SizeInBit="16">
-                <Memory CodeSegment="%MID%" Offset="12" BitOffset="0" />
-                <Parameter Id="%AID%_UP-%TT%00164" Name="VisibleChannels" ParameterType="%AID%_PT-LOGNumChannels" Offset="0" BitOffset="0" Text="Verfügbare Kanäle" Value="%LOG_NumChannelsDefault%" SuffixText=" von %N%" />
-                <Parameter Id="%AID%_UP-%TT%00151" Name="LedMapping" ParameterType="%AID%_PT-RGBMapping" Offset="1" BitOffset="0" Text="Lötpad A / B / C entspricht" Value="1" />
-                <!-- <Parameter Id="%AID%_UP-%TT%00144" Name="Timezone" ParameterType="%AID%_PT-Timezone" Offset="0" BitOffset="3" Text="Zeitzone" Value="1" /> -->
-                <!-- <Parameter Id="%AID%_UP-%TT%00157" Name="TimezoneSign" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="3" Text="Zeitzone-Vorzeichen" Value="0" /> -->
-                <!-- <Parameter Id="%AID%_UP-%TT%00158" Name="TimezoneValue" ParameterType="%AID%_PT-TimezoneValue" Offset="0" BitOffset="4" Text="Zeitzone-Wert" Value="0" /> -->
-                <!-- 5 Bit free -->
-              </Union>
               <Parameter Id="%AID%_P-%TT%00169" Name="TestFormulaResult" ParameterType="%AID%_PT-Text40Byte" Text="Ergebnis des Formeltests" Value="" Access="None" />
               <Parameter Id="%AID%_P-%TT%00170" Name="TestFormulaActive" ParameterType="%AID%_PT-CheckBox" Text="Formeltest aktiv" Value="0" />
               <Parameter Id="%AID%_P-%TT%00171" Name="TestFormula" ParameterType="%AID%_PT-UserFormula" Text="Testformel" Value="" />
-              <!-- The following starts at Offset=14 !!! -->
+              <!-- The following starts at Offset=7 !!! -->
               <op:usePart name="FORMULA" xpath="//Static/Parameters/*" />
             </Parameters>
             <ParameterRefs>
@@ -1154,8 +1113,8 @@
               <ParameterRef Id="%AID%_UP-%TT%00005_R-%TT%0000501" RefId="%AID%_UP-%TT%00005" /> -->
               <!-- <ParameterRef Id="%AID%_UP-%TT%00034_R-%TT%0003401" RefId="%AID%_UP-%TT%00034" /> -->
               <!-- Parameter 3501 - 3601 - are enabled on generic page of target application -->
-              <ParameterRef Id="%AID%_UP-%TT%00035_R-%TT%0003501" RefId="%AID%_UP-%TT%00035" Access="%LOG_BuzzerAccess%" />
-              <ParameterRef Id="%AID%_UP-%TT%00036_R-%TT%0003601" RefId="%AID%_UP-%TT%00036" Access="%LOG_LedAccess%" />
+              <ParameterRef Id="%AID%_UP-%TT%00035_R-%TT%0003501" RefId="%AID%_UP-%TT%00035" />
+              <ParameterRef Id="%AID%_UP-%TT%00036_R-%TT%0003601" RefId="%AID%_UP-%TT%00036" />
               <ParameterRef Id="%AID%_UP-%TT%00110_R-%TT%0011001" RefId="%AID%_UP-%TT%00110" />
               <ParameterRef Id="%AID%_UP-%TT%00111_R-%TT%0011101" RefId="%AID%_UP-%TT%00111" />
               <ParameterRef Id="%AID%_UP-%TT%00112_R-%TT%0011201" RefId="%AID%_UP-%TT%00112" />
@@ -1194,10 +1153,10 @@
               <!-- <ParameterRef Id="%AID%_UP-%TT%00145_R-%TT%0014501" RefId="%AID%_UP-%TT%00145" /> -->
               <!-- <ParameterRef Id="%AID%_UP-%TT%00146_R-%TT%0014601" RefId="%AID%_UP-%TT%00146" /> -->
               <!-- <ParameterRef Id="%AID%_UP-%TT%00147_R-%TT%0014701" RefId="%AID%_UP-%TT%00147" /> -->
-              <!-- <ParameterRef Id="%AID%_UP-%TT%00148_R-%TT%0014801" RefId="%AID%_UP-%TT%00148" />
-              <ParameterRef Id="%AID%_UP-%TT%00149_R-%TT%0014901" RefId="%AID%_UP-%TT%00149" />
-              <ParameterRef Id="%AID%_UP-%TT%00150_R-%TT%0015001" RefId="%AID%_UP-%TT%00150" /> -->
-              <ParameterRef Id="%AID%_UP-%TT%00151_R-%TT%0015101" RefId="%AID%_UP-%TT%00151" />
+              <!-- <ParameterRef Id="%AID%_UP-%TT%00148_R-%TT%0014801" RefId="%AID%_UP-%TT%00148" /> -->
+              <!-- <ParameterRef Id="%AID%_UP-%TT%00149_R-%TT%0014901" RefId="%AID%_UP-%TT%00149" /> -->
+              <!-- <ParameterRef Id="%AID%_UP-%TT%00150_R-%TT%0015001" RefId="%AID%_UP-%TT%00150" /> -->
+              <!-- <ParameterRef Id="%AID%_UP-%TT%00151_R-%TT%0015101" RefId="%AID%_UP-%TT%00151" /> -->
               <ParameterRef Id="%AID%_UP-%TT%00152_R-%TT%0015201" RefId="%AID%_UP-%TT%00152" />
               <ParameterRef Id="%AID%_UP-%TT%00153_R-%TT%0015301" RefId="%AID%_UP-%TT%00153" />
               <ParameterRef Id="%AID%_UP-%TT%00154_R-%TT%0015401" RefId="%AID%_UP-%TT%00154" />
@@ -1209,7 +1168,7 @@
               <!-- <ParameterRef Id="%AID%_UP-%TT%00160_R-%TT%0016001" RefId="%AID%_UP-%TT%00160" /> -->
               <!-- <ParameterRef Id="%AID%_UP-%TT%00161_R-%TT%0016101" RefId="%AID%_UP-%TT%00161" /> -->
               <!-- <ParameterRef Id="%AID%_UP-%TT%00162_R-%TT%0016201" RefId="%AID%_UP-%TT%00162" /> -->
-              <ParameterRef Id="%AID%_P-%TT%00163_R-%TT%0016301" RefId="%AID%_P-%TT%00163" />
+              <!-- <ParameterRef Id="%AID%_P-%TT%00163_R-%TT%0016301" RefId="%AID%_P-%TT%00163" /> -->
               <ParameterRef Id="%AID%_UP-%TT%00164_R-%TT%0016401" RefId="%AID%_UP-%TT%00164" />
               <!-- <ParameterRef Id="%AID%_UP-%TT%00165_R-%TT%0016501" RefId="%AID%_UP-%TT%00165" /> -->
               <ParameterRef Id="%AID%_P-%TT%00166_R-%TT%0016601" RefId="%AID%_P-%TT%00166" />
@@ -1240,23 +1199,16 @@
               <ComObject Id="%AID%_O-%TT%00004" Name="Vacation" Text="Urlaub" Number="15" FunctionText="Logik: Eingang" ObjectSize="1 Bit" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" DatapointType="DPST-1-1" />
               <ComObject Id="%AID%_O-%TT%00005" Name="Holiday1" Text="Welcher Feiertag ist heute?" Number="16" FunctionText="Logik: Ausgang" ObjectSize="1 Byte" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" DatapointType="DPST-5-5" />
               <ComObject Id="%AID%_O-%TT%00006" Name="Holiday2" Text="Welcher Feiertag ist morgen?" Number="17" FunctionText="Logik: Ausgang" ObjectSize="1 Byte" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" DatapointType="DPST-5-5" />
-              <ComObject Id="%AID%_O-%TT%00008" Name="LedLock"      Text="Einschalten der LEDs verhindern" Number="18" FunctionText="Logik: Eingang" ObjectSize="1 Bit" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" DatapointType="DPST-1-1" />
-              <ComObject Id="%AID%_O-%TT%00009" Name="BuzzerLock"   Text="Einschalten des Buzzers verhindern" Number="19" FunctionText="Logik: Eingang" ObjectSize="1 Bit" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" DatapointType="DPST-1-1" />
+              <!-- <ComObject Id="%AID%_O-%TT%00008" Name="LedLock"      Text="Einschalten der LEDs verhindern" Number="18" FunctionText="Logik: Eingang" ObjectSize="1 Bit" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" DatapointType="DPST-1-1" /> -->
+              <!-- <ComObject Id="%AID%_O-%TT%00009" Name="BuzzerLock"   Text="Einschalten des Buzzers verhindern" Number="19" FunctionText="Logik: Eingang" ObjectSize="1 Bit" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" DatapointType="DPST-1-1" /> -->
             </ComObjectTable>
             <ComObjectRefs>
-              <!-- <ComObjectRef Id="%AID%_O-%TT%00001_R-%TT%0000101" RefId="%AID%_O-%TT%00001" /> -->
-              <!-- Time -->
-              <!-- <ComObjectRef Id="%AID%_O-%TT%00002_R-%TT%0000201" RefId="%AID%_O-%TT%00002" Text="Uhrzeit" ObjectSize="3 Bytes" DatapointType="DPST-10-1" /> -->
-              <!-- DateTime -->
-              <!-- <ComObjectRef Id="%AID%_O-%TT%00002_R-%TT%0000202" RefId="%AID%_O-%TT%00002" /> -->
-              <!-- Date -->
-              <!-- <ComObjectRef Id="%AID%_O-%TT%00003_R-%TT%0000301" RefId="%AID%_O-%TT%00003" /> -->
               <ComObjectRef Id="%AID%_O-%TT%00004_R-%TT%0000401" RefId="%AID%_O-%TT%00004" />
               <ComObjectRef Id="%AID%_O-%TT%00005_R-%TT%0000501" RefId="%AID%_O-%TT%00005" />
               <ComObjectRef Id="%AID%_O-%TT%00006_R-%TT%0000601" RefId="%AID%_O-%TT%00006" />
               <!-- <ComObjectRef Id="%AID%_O-%TT%00007_R-%TT%0000701" RefId="%AID%_O-%TT%00007" /> -->
-              <ComObjectRef Id="%AID%_O-%TT%00008_R-%TT%0000801" RefId="%AID%_O-%TT%00008" />
-              <ComObjectRef Id="%AID%_O-%TT%00009_R-%TT%0000901" RefId="%AID%_O-%TT%00009" />
+              <!-- <ComObjectRef Id="%AID%_O-%TT%00008_R-%TT%0000801" RefId="%AID%_O-%TT%00008" /> -->
+              <!-- <ComObjectRef Id="%AID%_O-%TT%00009_R-%TT%0000901" RefId="%AID%_O-%TT%00009" /> -->
               <!-- <ComObjectRef Id="%AID%_O-%TT%00010_R-%TT%0001001" RefId="%AID%_O-%TT%00010" /> -->
             </ComObjectRefs>
             <Script>
@@ -1264,12 +1216,12 @@
             </Script>
           </Static>
           <Dynamic>
-            <!-- <op:usePart name="UPDATE" xpath="//Dynamic/*" /> -->
+            <op:usePart name="UPDATE" xpath="//Dynamic/*" />
             <Channel Id="%AID%_CH-%PREFIX%" Number="%PREFIX%" Name="Logic" Text="Logiken" Icon="blur" HelpContext="LOG-Dokumentation">
               <!-- Inline ParameterBlock in Channel is invisible, so also all its contents -->
               <ParameterBlock Id="%AID%_PB-nnn" Name="InitInvisible" Inline="true">
                 <!-- Hope this is enough for activating the following parameter -->
-                <ParameterRefRef RefId="%AID%_P-%TT%00163_R-%TT%0016301" />
+                <!-- TO BE REMOVED: Old Buzzer and LED handling  -->
                 <!-- Buzzer installed? -->
                 <ParameterRefRef RefId="%AID%_UP-%TT%00035_R-%TT%0003501" />
                 <!-- RGB-LED installed? -->
@@ -1278,7 +1230,6 @@
                 <ParameterRefRef RefId="%AID%_P-%TT%00167_R-%TT%0016701" />
               </ParameterBlock>
               <ParameterBlock Id="%AID%_PB-nnn" Name="Settings" Text="Allgemein" ShowInComObjectTree="true" Icon="cog-outline" HelpContext="LOG-Dokumentation">
-                <ParameterRefRef RefId="%AID%_P-%TT%00163_R-%TT%0016301" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Logikmodul" UIHint="Headline" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Version: %ModuleVersion%" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
@@ -1341,45 +1292,12 @@
                 <ParameterRefRef RefId="%AID%_UP-%TT%00135_R-%TT%0013501" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
                 <ParameterRefRef RefId="%AID%_UP-%TT%00136_R-%TT%0013601" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
                 <ParameterRefRef RefId="%AID%_UP-%TT%00137_R-%TT%0013701" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-                <!-- <choose ParamRefId="%AID%_P-%TT%00163_R-%TT%0016301"> -->
-                  <!-- <when test="%LOG_EnableHardware%"> -->
-                    <!-- <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" /> -->
-                    <!-- <ParameterSeparator Id="%AID%_PS-nnn" Text="Installierte Hardware" UIHint="Headline" /> -->
-                    <!-- <ParameterSeparator Id="%AID%_PS-11" Text="Im folgenden wird die verwendete bzw. installierte Hardware angegeben." /> -->
-                    <!-- <ParameterSeparator Id="%AID%_PS-12" Text="Die hier getroffenen Angaben beeinflussen das Verhalten der Applikation und der Firmware und müssen zur vorhandenen Hardware passen!" /> -->
-                    <!-- RGB-LED installed? -->
-                    <ParameterRefRef RefId="%AID%_UP-%TT%00036_R-%TT%0003601" HelpContext="%DOC%" IndentLevel="1" />
-                    <!-- Buzzer installed? -->
-                    <ParameterRefRef RefId="%AID%_UP-%TT%00035_R-%TT%0003501" HelpContext="%DOC%" IndentLevel="1" />
-                    <!-- We implement here also led/buzzer lock KO -->
-                    <!-- <choose ParamRefId="%AID%_UP-%TT%00036_R-%TT%0003601"> -->
-                      <!-- <when test="1"> -->
-                        <!-- show lock KO for LED -->
-                        <!-- <ComObjectRefRef RefId="%AID%_O-%TT%00008_R-%TT%0000801" /> -->
-                        <!-- show extra settings for LED-->
-                        <!-- <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" /> -->
-                        <!-- <ParameterSeparator Id="%AID%_PS-nnn" Text="RGB-LED" UIHint="Headline" /> -->
-                        <!-- <ParameterSeparator Id="%AID%_PS-nnn" Text="Damit die LED in korrekten Farben leuchtet, muss hier angegeben werden, welcher Treiberausgang mit welchem LED-Beinchen verbunden ist." /> -->
-                        <!-- <ParameterSeparator Id="%AID%_PS-nnn" Text="Die Platine liegt so, dass von den 4 Lötpads für die LED das ganz linke +5V ist. Die folgenden 3 Lötpads sind A, B und C." /> -->
-                        <!-- <ParameterRefRef RefId="%AID%_UP-%TT%00151_R-%TT%0015101" HelpContext="%DOC%" IndentLevel="1" /> -->
-                      <!-- </when> -->
-                    <!-- </choose> -->
-                    <!-- <choose ParamRefId="%AID%_UP-%TT%00035_R-%TT%0003501"> -->
-                      <!-- <when test="1"> -->
-                        <!-- show lock KO for Buzzer -->
-                        <!-- <ComObjectRefRef RefId="%AID%_O-%TT%00009_R-%TT%0000901" /> -->
-                        <!-- show extra settings for Buzzer-->
-                        <!-- <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" /> -->
-                        <!-- <ParameterSeparator Id="%AID%_PS-nnn" Text="Buzzer" UIHint="Headline" /> -->
-                        <!-- <ParameterSeparator Id="%AID%_PS-nnn" Text="Die beim Buzzer verwendeten Frequenzen für leise, normal und laut können hier eingestellt werden" /> -->
-                        <!-- <ParameterRefRef RefId="%AID%_UP-%TT%00148_R-%TT%0014801" HelpContext="LOG-Buzzer" IndentLevel="1" /> -->
-                        <!-- <ParameterRefRef RefId="%AID%_UP-%TT%00149_R-%TT%0014901" HelpContext="LOG-Buzzer" IndentLevel="1" /> -->
-                        <!-- <ParameterRefRef RefId="%AID%_UP-%TT%00150_R-%TT%0015001" HelpContext="LOG-Buzzer" IndentLevel="1" /> -->
-                        <!-- <ParameterSeparator Id="%AID%_PS-nnn" Text="Der Buzzer kann nur 'AN' oder 'AUS'. Die Lautstärke wird durch Frequenz wählt, die niicht im optimalen Arbeitsbereich liegt. Die Standardwerte meinen also 'leise und tief', 'normal und hoch', 'laut und mittel'." /> -->
-                      <!-- </when> -->
-                    <!-- </choose> -->
-                  <!-- </when> -->
-                <!-- </choose> -->
+
+                <!-- TO BE REMOVED: Old Buzzer and LED handling -->
+                <!-- RGB-LED installed? -->
+                <ParameterRefRef RefId="%AID%_UP-%TT%00036_R-%TT%0003601" />
+                <!-- Buzzer installed? -->
+                <ParameterRefRef RefId="%AID%_UP-%TT%00035_R-%TT%0003501" />
               </ParameterBlock>
               <ParameterBlock Name="UserFormulas" Text="Benutzerformeln" Id="%AID%_PB-nnn" Icon="calculator-variant-outline" HelpContext="LOG-Benutzerformeln">
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Benutzerformeln" UIHint="Headline" />

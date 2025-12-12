@@ -86,7 +86,8 @@ function LOG_CalcRelFromAbs(input, output, context) {
 function LOG_Update(device, online, progress, context) {
     // progress.setText("Logik: Update durchführen...");
     var parLedInstalled = device.getParameterByName("LOG_LedInstalled");
-    if (parLedInstalled.value == 0) {
+    var parBuzzerInstalled = device.getParameterByName("LOG_BuzzerInstalled");
+    if (parLedInstalled.value == 1 || parBuzzerInstalled.value == 1) {
         for (var channel = 1; channel <= uctChannelParams["LOG"].channels; channel++) {
             var nameOn = "LOG_f" + channel + "OOn";
             var nameOff = "LOG_f" + channel + "OOff";
@@ -100,12 +101,27 @@ function LOG_Update(device, online, progress, context) {
             var parSendValueLedOff = device.getParameterByName(nameOff + "Led");
             var parSendValueBuzzerOff = device.getParameterByName(nameOff + "Buzzer");
             var parSendValueAllOff = device.getParameterByName(nameOff + "All");
-            parSendValueLedOn.value = parSendValueOn.value;
-            parSendValueLedOff.value = parSendValueOff.value;
-            parSendValueAllOn.value = parSendValueBuzzerOn.value;
-            parSendValueAllOff.value = parSendValueBuzzerOff.value;
+
+            if (parLedInstalled.value == 1) {
+                if (parBuzzerInstalled.value == 1) {
+                    // both installed
+                    parSendValueOn.value = parSendValueAllOn.value == 6 ? 1 : parSendValueAllOn.value;
+                    parSendValueOff.value = parSendValueAllOff.value == 6 ? 1 : parSendValueAllOff.value;
+                } else {
+                    // only LED installed
+                    parSendValueOn.value = parSendValueLedOn.value;
+                    parSendValueOff.value = parSendValueLedOff.value;
+                }
+            } else {
+                if (parBuzzerInstalled.value == 1) {
+                    // only Buzzer installed
+                    parSendValueOn.value = parSendValueBuzzerOn.value == 6 ? 1 : parSendValueBuzzerOn.value;
+                    parSendValueOff.value = parSendValueBuzzerOff.value == 6 ? 1 : parSendValueBuzzerOff.value;
+                }
+            }
         }
-        parLedInstalled.value = 1;
+        parLedInstalled.value = 0;
+        parBuzzerInstalled.value = 0;
     }
     // progress.setProgress(100);
     // progress.setText("Logik: Update abgeschlossen...");

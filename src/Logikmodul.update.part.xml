@@ -11,9 +11,9 @@
           </Static>
           <Dynamic>
             <choose ParamRefId="%AID%_UP-%TT%00036_R-%TT%0003601">
-              <when test="0">
-                <Channel Id="%AID%_CH-Update" Name="Update" Number="%UPDATE%" Text="Update" Icon="alert-red">
-                  <ParameterBlock Id="%AID%_PB-nnn" Name="Update-Button" Text="Update durchführen" Icon="alert-outline-red" >
+              <when test="1">
+                <Channel Id="%AID%_CH-Update1" Name="Update1" Number="%UPDATE%" Text="Update" Icon="alert-red">
+                  <ParameterBlock Id="%AID%_PB-nnn" Name="UpdateButton" Text="Update durchführen" Icon="alert-outline-red" >
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Das Logikmodul benötigt bei diesem Update Anpassungen, die vom User initiiert werden müssen und danach automatisch durchgeführt werden. Bitte unbedingt den Update-Button drücken." UIHint="Information" />
                     <ParameterBlock Id="%AID%_PB-nnn" Inline="true" Layout="Grid" >
                       <Rows>
@@ -29,6 +29,29 @@
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Wenn das Update erfolgreich war, verschwindet der gesamte Update-Dialog, die ETS bietet keine Möglichkeit einer Erfolgsmeldung. Bei einem Fehler kommt eine entsprechende Fehlermeldung." />
                   </ParameterBlock>
                 </Channel>            
+              </when>
+              <when test="0">
+                <choose ParamRefId="%AID%_UP-%TT%00035_R-%TT%0003501">
+                  <when test="1">
+                    <Channel Id="%AID%_CH-Update2" Name="Update2" Number="%UPDATE%" Text="Update" Icon="alert-red">
+                      <ParameterBlock Id="%AID%_PB-nnn" Name="UpdateButton" Text="Update durchführen" Icon="alert-outline-red" >
+                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Das Logikmodul benötigt bei diesem Update Anpassungen, die vom User initiiert werden müssen und danach automatisch durchgeführt werden. Bitte unbedingt den Update-Button drücken." UIHint="Information" />
+                        <ParameterBlock Id="%AID%_PB-nnn" Inline="true" Layout="Grid" >
+                          <Rows>
+                            <Row Id="%AID%_PB-nnn_R-1" />
+                          </Rows>
+                          <Columns>
+                            <Column Id="%AID%_PB-nnn_C-1" Width="33%" />
+                            <Column Id="%AID%_PB-nnn_C-2" Width="33%" />
+                            <Column Id="%AID%_PB-nnn_C-3" Width="33%" />
+                          </Columns>
+                          <Button Id="%AID%_B-19999002" Text="Update" Cell="1,2" EventHandler="LOG_Update" />
+                        </ParameterBlock> 
+                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Wenn das Update erfolgreich war, verschwindet der gesamte Update-Dialog, die ETS bietet keine Möglichkeit einer Erfolgsmeldung. Bei einem Fehler kommt eine entsprechende Fehlermeldung." />
+                      </ParameterBlock>
+                    </Channel>            
+                  </when>
+                </choose>
               </when>
             </choose>
           </Dynamic>
