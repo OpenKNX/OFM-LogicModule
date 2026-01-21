@@ -441,7 +441,7 @@ void LogicChannel::setStatusLed(uint16_t iParamIndex)
     OpenKNX::Led::FunctionGroup *lLed = openknx.ledFunctions.get(90 + lStatusChannel);
     if (!lLed->active()) return;
 
-    if ((getByteParam(LOG_fAlarm) & LOG_fAlarmMask) || !knx.getGroupObject(LOG_KoLedLock).value(getDPT(VAL_DPT_1)))
+    if (getByteParam(LOG_fAlarm) & LOG_fAlarmMask)
     {
 
         uint32_t lRGBColor = getIntParam(iParamIndex) >> 8;
@@ -450,22 +450,22 @@ void LogicChannel::setStatusLed(uint16_t iParamIndex)
         switch (lEffect)
         {
             case 1: 
-                lLed->color(lRGBColor);
+                lLed->setColor(lRGBColor);
                 lLed->on();
                 break;
             
             case 2: 
-                lLed->color(lRGBColor);
+                lLed->setColor(lRGBColor);
                 lLed->blinking(lDuration);
                 break;
 
             case 3: 
-                lLed->color(lRGBColor);
+                lLed->setColor(lRGBColor);
                 lLed->pulsing(lDuration);
                 break;
             
             case 4: 
-                lLed->color(lRGBColor);
+                lLed->setColor(lRGBColor);
                 lLed->flash(lDuration);
                 break;
                     
