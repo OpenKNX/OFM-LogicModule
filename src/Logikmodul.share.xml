@@ -1297,12 +1297,6 @@
                 <ParameterRefRef RefId="%AID%_UP-%TT%00135_R-%TT%0013501" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
                 <ParameterRefRef RefId="%AID%_UP-%TT%00136_R-%TT%0013601" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
                 <ParameterRefRef RefId="%AID%_UP-%TT%00137_R-%TT%0013701" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-
-                <!-- TO BE REMOVED: Old Buzzer and LED handling -->
-                <!-- RGB-LED installed? -->
-                <ParameterRefRef RefId="%AID%_P-%TT%00036_R-%TT%0003601" />
-                <!-- Buzzer installed? -->
-                <ParameterRefRef RefId="%AID%_P-%TT%00035_R-%TT%0003501" />
               </ParameterBlock>
               <ParameterBlock Name="UserFormulas" Text="Benutzerformeln" Id="%AID%_PB-nnn" Icon="calculator-variant-outline" HelpContext="LOG-Benutzerformeln">
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Benutzerformeln" UIHint="Headline" />
