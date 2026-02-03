@@ -40,7 +40,7 @@
               <Parameter Id="%AID%_P-%TT%%CC%%PPP8+152%" Name="f%C%E%En%Low6Dpt17Input" ParameterType="%AID%_PT-ValueSceneIn" Text="... oder bei Szene" Value="0" />
               <Parameter Id="%AID%_P-%TT%%CC%%PPP8+153%" Name="f%C%E%En%Low7Dpt17Input" ParameterType="%AID%_PT-ValueSceneIn" Text="... oder bei Szene" Value="0" /> -->
               <Parameter Id="%AID%_P-%TT%%CC%%PPP1+461%" Name="f%C%E%En%OtherKORead" ParameterType="%AID%_PT-KOAbsNumber" Text="    Nummer des Kommunikationsobjekts" Value="%K%En-1%%" Access="Read" />
-              <Union SizeInBit="56">
+              <Union SizeInBit="56" op:nowarn="true" >
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="%ParamOffset+6%" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+093%" Name="f%C%E%En%ConvertInt" ParameterType="%AID%_PT-InputConvInt" Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+446%" Name="f%C%E%En%Convert" ParameterType="%AID%_PT-InputConv" Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="0" Access="None" />
@@ -66,7 +66,7 @@
                 <!-- 2 Bit frei -->
               </Union>
               <!-- Parameter for input E1 -->
-              <Union SizeInBit="64">
+              <Union SizeInBit="64" op:nowarn="true" >
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="%ParamOffset+13%" BitOffset="0" />
                 <!-- Delta values -->
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP27+115%" Name="f%C%E%En%LowDelta" ParameterType="%AID%_PT-Delta" Offset="0" BitOffset="0" Text="Von-Wert" Value="-10" />

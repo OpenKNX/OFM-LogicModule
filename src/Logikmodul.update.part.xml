@@ -7,11 +7,20 @@
         <ApplicationProgram Id="%AID%" ApplicationNumber="102" ApplicationVersion="10" ProgramType="ApplicationProgram" MaskVersion="MV-07B0" Name="WP-Logic" LoadProcedureStyle="MergedProcedure" PeiType="0" DefaultLanguage="de" DynamicTableManagement="false" Linkable="true" MinEtsVersion="4.0">
           <!-- <op:part name="UPDATE" href="Logikmodul.update.part.xml" > -->
           <!-- </op:part> -->
+          <!-- 
+            Wichtige Hinweise zum Update-Mechanismus:
+            - Man braucht einen Parameter aus der existierenden Applikation, in der man sich die "Updated"-Information speichert.
+              Dieser Parameter muss in der neuen Applikation als default auf "updated" stehen, damit bei Applikationsnutzung ohne Update 
+              der Status korrekt ist. In der alten Applikation steht der Parameter natürlich auf "nicht updated".
+            - Der Parameter darf in der neuen Applikation nicht vom User änderbar sein, wird nur vom Update-Mechanismus auf "updated" gesetzt.
+            - Der Parameter muss in der neuen Applikation umbenannt werden (aber unbedingt die ID behalten), damit er durch den Config
+              Transfer nicht überschrieben wird, aber durch die ETS normal aktualisiert werden kann.
+          -->
           <Static>
           </Static>
           <Dynamic>
-            <choose ParamRefId="%AID%_UP-%TT%00036_R-%TT%0003601">
-              <when test="1">
+            <choose ParamRefId="%AID%_P-%TT%00036_R-%TT%0003601">
+              <when test="&lt;2">
                 <Channel Id="%AID%_CH-Update1" Name="Update1" Number="%UPDATE%" Text="Update" Icon="alert-red">
                   <ParameterBlock Id="%AID%_PB-nnn" Name="UpdateButton" Text="Update durchführen" Icon="alert-outline-red" >
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Das Logikmodul benötigt bei diesem Update Anpassungen, die vom User initiiert werden müssen und danach automatisch durchgeführt werden. Bitte unbedingt den Update-Button drücken." UIHint="Information" />
@@ -29,29 +38,6 @@
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Wenn das Update erfolgreich war, verschwindet der gesamte Update-Dialog, die ETS bietet keine Möglichkeit einer Erfolgsmeldung. Bei einem Fehler kommt eine entsprechende Fehlermeldung." />
                   </ParameterBlock>
                 </Channel>            
-              </when>
-              <when test="0">
-                <choose ParamRefId="%AID%_UP-%TT%00035_R-%TT%0003501">
-                  <when test="1">
-                    <Channel Id="%AID%_CH-Update2" Name="Update2" Number="%UPDATE%" Text="Update" Icon="alert-red">
-                      <ParameterBlock Id="%AID%_PB-nnn" Name="UpdateButton" Text="Update durchführen" Icon="alert-outline-red" >
-                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Das Logikmodul benötigt bei diesem Update Anpassungen, die vom User initiiert werden müssen und danach automatisch durchgeführt werden. Bitte unbedingt den Update-Button drücken." UIHint="Information" />
-                        <ParameterBlock Id="%AID%_PB-nnn" Inline="true" Layout="Grid" >
-                          <Rows>
-                            <Row Id="%AID%_PB-nnn_R-1" />
-                          </Rows>
-                          <Columns>
-                            <Column Id="%AID%_PB-nnn_C-1" Width="33%" />
-                            <Column Id="%AID%_PB-nnn_C-2" Width="33%" />
-                            <Column Id="%AID%_PB-nnn_C-3" Width="33%" />
-                          </Columns>
-                          <Button Id="%AID%_B-19999002" Text="Update" Cell="1,2" EventHandler="LOG_Update" />
-                        </ParameterBlock> 
-                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Wenn das Update erfolgreich war, verschwindet der gesamte Update-Dialog, die ETS bietet keine Möglichkeit einer Erfolgsmeldung. Bei einem Fehler kommt eine entsprechende Fehlermeldung." />
-                      </ParameterBlock>
-                    </Channel>            
-                  </when>
-                </choose>
               </when>
             </choose>
           </Dynamic>

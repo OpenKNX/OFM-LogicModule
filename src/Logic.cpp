@@ -375,9 +375,6 @@ void Logic::debug()
 
 void Logic::setup()
 {
-    // check for hidden parameters
-    logInfoP("Setting: RGBLed available: %d", ParamLOG_LedInstalled);
-
     sTimer.setup();
 
     // Number of available channels is the minimum of configured and available channels

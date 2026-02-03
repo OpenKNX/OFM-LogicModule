@@ -85,14 +85,14 @@ function LOG_CalcRelFromAbs(input, output, context) {
 
 function LOG_Update(device, online, progress, context) {
     // progress.setText("Logik: Update durchführen...");
-    var parLedInstalled = device.getParameterByName("LOG_LedInstalled");
+    var parUpdateForLedStatus = device.getParameterByName("LOG_UpdateForLedStatus");
     var parBuzzerInstalled = device.getParameterByName("LOG_BuzzerInstalled");
-    if (parLedInstalled.value == 1 || parBuzzerInstalled.value == 1) {
+    // we update all dropdowns to the "All" dropdown, except it is already in use
+    if (parUpdateForLedStatus.value < 2) {
         for (var channel = 1; channel <= uctChannelParams["LOG"].channels; channel++) {
             var nameOn = "LOG_f" + channel + "OOn";
             var nameOff = "LOG_f" + channel + "OOff";
-            info("Logik: Update Kanal " + channel);
-            info("Logik: Prüfe Parameter " + nameOn);
+            // info("Logik: Update Kanal " + channel);
             var parSendValueOn = device.getParameterByName(nameOn);
             var parSendValueLedOn = device.getParameterByName(nameOn + "Led");
             var parSendValueBuzzerOn = device.getParameterByName(nameOn + "Buzzer");
@@ -102,26 +102,39 @@ function LOG_Update(device, online, progress, context) {
             var parSendValueBuzzerOff = device.getParameterByName(nameOff + "Buzzer");
             var parSendValueAllOff = device.getParameterByName(nameOff + "All");
 
-            if (parLedInstalled.value == 1) {
-                if (parBuzzerInstalled.value == 1) {
-                    // both installed
-                    parSendValueOn.value = parSendValueAllOn.value == 6 ? 1 : parSendValueAllOn.value;
-                    parSendValueOff.value = parSendValueAllOff.value == 6 ? 1 : parSendValueAllOff.value;
+            if (parUpdateForLedStatus.value == 0) {
+                if (parBuzzerInstalled.value == 0) {
+                    // none installed
+                    parSendValueAllOn.value = parSendValueOn.value;
+                    parSendValueAllOff.value = parSendValueOff.value;
                 } else {
-                    // only LED installed
-                    parSendValueOn.value = parSendValueLedOn.value;
-                    parSendValueOff.value = parSendValueLedOff.value;
+                    // only Buzzer installed
+                    parSendValueAllOn.value = parSendValueBuzzerOn.value == 6 ? 1 : parSendValueBuzzerOn.value;
+                    parSendValueAllOff.value = parSendValueBuzzerOff.value == 6 ? 1 : parSendValueBuzzerOff.value;
                 }
             } else {
-                if (parBuzzerInstalled.value == 1) {
-                    // only Buzzer installed
-                    parSendValueOn.value = parSendValueBuzzerOn.value == 6 ? 1 : parSendValueBuzzerOn.value;
-                    parSendValueOff.value = parSendValueBuzzerOff.value == 6 ? 1 : parSendValueBuzzerOff.value;
+                if (parBuzzerInstalled.value == 0) {
+                    // only Led installed
+                    parSendValueAllOn.value = parSendValueLedOn.value;
+                    parSendValueAllOff.value = parSendValueLedOff.value;
+                } 
+                // info("  - SendValueAllOn Wert ist " + parSendValueAllOn.value);
+                if (parSendValueAllOn.value == 7) {
+                    var parSendValueOnRGB = device.getParameterByName(nameOn + "RGB");
+                    // info("  - RGBOn Wert ist " + parSendValueOnRGB.value);
+                    var parSendValueOnLedEffect = device.getParameterByName(nameOn + "LedEffect");
+                    parSendValueOnLedEffect.value = (parSendValueOnRGB.value != 0) ? 1 : 0;
+                }
+                // info("  - SendValueAllOff Wert ist " + parSendValueAllOff.value);
+                if (parSendValueAllOff.value == 7) {
+                    var parSendValueOffRGB = device.getParameterByName(nameOff + "RGB");
+                    // info("  - RGBOff Wert ist " + parSendValueOffRGB.value);
+                    var parSendValueOffLedEffect = device.getParameterByName(nameOff + "LedEffect");
+                    parSendValueOffLedEffect.value = (parSendValueOffRGB.value != 0) ? 1 : 0;
                 }
             }
         }
-        parLedInstalled.value = 0;
-        parBuzzerInstalled.value = 0;
+        parUpdateForLedStatus.value = 2;
     }
     // progress.setProgress(100);
     // progress.setText("Logik: Update abgeschlossen...");

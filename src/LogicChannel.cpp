@@ -441,43 +441,34 @@ void LogicChannel::setStatusLed(uint16_t iParamIndex)
     OpenKNX::Led::FunctionGroup *lLed = openknx.ledFunctions.get(90 + lStatusChannel);
     if (!lLed->active()) return;
 
-    if (getByteParam(LOG_fAlarm) & LOG_fAlarmMask)
+    uint32_t lRGBColor = getIntParam(iParamIndex) >> 8;
+    uint8_t lEffect = getByteParam(iParamIndex + 5) & LOG_fOOnLedEffectMask;
+    uint16_t lDuration = getWordParam(iParamIndex + 6);
+    switch (lEffect)
     {
+        case 1: 
+            lLed->color(lRGBColor);
+            lLed->on();
+            break;
+        
+        case 2: 
+            lLed->color(lRGBColor);
+            lLed->blinking(lDuration);
+            break;
 
-        uint32_t lRGBColor = getIntParam(iParamIndex) >> 8;
-        uint8_t lEffect = getByteParam(iParamIndex + 5) & LOG_fOOnLedEffectMask;
-        uint16_t lDuration = getWordParam(iParamIndex + 6);
-        switch (lEffect)
-        {
-            case 1: 
-                lLed->setColor(lRGBColor);
-                lLed->on();
-                break;
-            
-            case 2: 
-                lLed->setColor(lRGBColor);
-                lLed->blinking(lDuration);
-                break;
-
-            case 3: 
-                lLed->setColor(lRGBColor);
-                lLed->pulsing(lDuration);
-                break;
-            
-            case 4: 
-                lLed->setColor(lRGBColor);
-                lLed->flash(lDuration);
-                break;
-                    
-            default:
-                lLed->off();
-                break;
-        }
-    }
-    else
-    {
-        // in case of lock we turn off led
-        lLed->off();
+        case 3: 
+            lLed->color(lRGBColor);
+            lLed->pulsing(lDuration);
+            break;
+        
+        case 4: 
+            lLed->color(lRGBColor);
+            lLed->flash(lDuration);
+            break;
+                
+        default:
+            lLed->off();
+            break;
     }
 }
 
@@ -2084,7 +2075,7 @@ void LogicChannel::processOutput(bool iValue)
 #endif
     if (iValue)
     {
-        uint8_t lOn = ParamLOG_fOOn;
+        uint8_t lOn = ParamLOG_fOOnAll;
         switch (lOn)
         {
             case VAL_Out_Constant:
@@ -2118,7 +2109,7 @@ void LogicChannel::processOutput(bool iValue)
     }
     else
     {
-        uint8_t lOff = ParamLOG_fOOff;
+        uint8_t lOff = ParamLOG_fOOffAll;
         switch (lOff)
         {
             case VAL_Out_Constant:

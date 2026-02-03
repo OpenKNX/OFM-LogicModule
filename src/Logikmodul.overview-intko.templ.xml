@@ -80,12 +80,12 @@
                             <Assign TargetParamRefRef="%AID%_P-%TT%%CC%458_R-%TT%%CC%45801" Value="1" />
                           </when>
                         </choose>
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%065_R-%TT%%CC%06501">
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%136_R-%TT%%CC%13601">
                           <when test="9">
                             <Assign TargetParamRefRef="%AID%_P-%TT%%CC%458_R-%TT%%CC%45801" Value="1" />
                           </when>
                         </choose>
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%077_R-%TT%%CC%07701">
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%139_R-%TT%%CC%13901">
                           <when test="9">
                             <Assign TargetParamRefRef="%AID%_P-%TT%%CC%458_R-%TT%%CC%45801" Value="1" />
                           </when>
@@ -244,7 +244,7 @@
                               <choose ParamRefId="%AID%_UP-%TT%%CC%064_R-%TT%%CC%06401">
                                 <when test="0 1 2 3 4 5 6 7 9 10 13 14 15">
                                   <!-- Send additional KO -->
-                                  <choose ParamRefId="%AID%_UP-%TT%%CC%065_R-%TT%%CC%06501">
+                                  <choose ParamRefId="%AID%_UP-%TT%%CC%136_R-%TT%%CC%13601">
                                     <when test="1 2 3 8 9">
                                       <ParameterSeparator Id="%AID%_PS-nnn" Text="Zusatz-EIN" Cell="2,8" UIHint="Headline" />
                                       <ParameterRefRef RefId="%AID%_UP-%TT%%CC%440_R-%TT%%CC%44001" Cell="2,9" HelpContext="%DOC%" />
@@ -262,7 +262,7 @@
                                       </choose>
                                     </when>
                                   </choose>
-                                  <choose ParamRefId="%AID%_UP-%TT%%CC%077_R-%TT%%CC%07701">
+                                  <choose ParamRefId="%AID%_UP-%TT%%CC%139_R-%TT%%CC%13901">
                                     <when test="1 2 3 8 9">
                                       <ParameterSeparator Id="%AID%_PS-nnn" Text="Zusatz-AUS" Cell="3,8" UIHint="Headline" />
                                       <ParameterRefRef RefId="%AID%_UP-%TT%%CC%441_R-%TT%%CC%44101" Cell="3,9" HelpContext="%DOC%" />
@@ -281,7 +281,7 @@
                                     </when>
                                   </choose>
                                   <!-- Send value of other KO -->
-                                  <choose ParamRefId="%AID%_UP-%TT%%CC%065_R-%TT%%CC%06501">
+                                  <choose ParamRefId="%AID%_UP-%TT%%CC%136_R-%TT%%CC%13601">
                                     <when test="9">
                                       <ParameterSeparator Id="%AID%_PS-nnn" Text="Wert-EIN" Cell="4,8" UIHint="Headline" />
                                       <ParameterRefRef RefId="%AID%_UP-%TT%%CC%471_R-%TT%%CC%47101" HelpContext="%DOC%" Cell="4,9" />
@@ -296,7 +296,7 @@
                                       </choose>
                                     </when>
                                   </choose>
-                                  <choose ParamRefId="%AID%_UP-%TT%%CC%077_R-%TT%%CC%07701">
+                                  <choose ParamRefId="%AID%_UP-%TT%%CC%139_R-%TT%%CC%13901">
                                     <when test="9">
                                       <ParameterSeparator Id="%AID%_PS-nnn" Text="Wert-AUS" Cell="5,8" UIHint="Headline" />
                                       <ParameterRefRef RefId="%AID%_UP-%TT%%CC%472_R-%TT%%CC%47201" HelpContext="%DOC%" Cell="5,9" />

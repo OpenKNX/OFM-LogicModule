@@ -424,6 +424,7 @@
                   <Enumeration Text="Nur geänderte Werte senden" Value="1" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
+              <!-- TO BE REMOVED: Old Buzzer and LED handling -->
               <ParameterType Id="%AID%_PT-OutputSend" Name="OutputSend">
                 <TypeRestriction Base="Value" SizeInBit="8">
                   <Enumeration Text="Nein" Value="0" Id="%ENID%" />
@@ -434,7 +435,6 @@
                   <Enumeration Text="Ja - Wert einer Funktion" Value="8" Id="%ENID%" />
                   <Enumeration Text="Ja - Read Request senden" Value="4" Id="%ENID%" />
                   <Enumeration Text="Ja - 'Gerät zurücksetzen' senden" Value="5" Id="%ENID%" />
-                  <Enumeration Text="Ja - Status-LED schalten" Value="7" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
               <!-- TO BE REMOVED: Old Buzzer and LED handling -->
@@ -465,7 +465,6 @@
                   <Enumeration Text="Ja - LED schalten" Value="7" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <!-- TO BE REMOVED: Old Buzzer and LED handling -->
               <ParameterType Id="%AID%_PT-OutputSendAll" Name="OutputSendAll">
                 <TypeRestriction Base="Value" SizeInBit="8">
                   <Enumeration Text="Nein" Value="0" Id="%ENID%" />
@@ -476,8 +475,7 @@
                   <Enumeration Text="Ja - Wert einer Funktion" Value="8" Id="%ENID%" />
                   <Enumeration Text="Ja - Read Request senden" Value="4" Id="%ENID%" />
                   <Enumeration Text="Ja - 'Gerät zurücksetzen' senden" Value="5" Id="%ENID%" />
-                  <Enumeration Text="Ja - Tonwiedegabe (Buzzer)" Value="6" Id="%ENID%" />
-                  <Enumeration Text="Ja - RGB-LED schalten" Value="7" Id="%ENID%" />
+                  <Enumeration Text="Ja - Status-LED schalten" Value="7" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
               <ParameterType Id="%AID%_PT-ValueFunction" Name="ValueFunction">
@@ -1043,11 +1041,21 @@
                   <Enumeration Text="Statuskanal" Value="1" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
+              <ParameterType Id="%AID%_PT-UpdateMarker" Name="UpdateMarker">
+                <TypeRestriction Base="Value" SizeInBit="2" UIHint="DropDown">
+                  <Enumeration Text="Led nicht installiert" Value="0" Id="%ENID%" />
+                  <Enumeration Text="Led installiert" Value="1" Id="%ENID%" />
+                  <Enumeration Text="LedStatus updated " Value="2" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
             </ParameterTypes>
             <Parameters>
               <Parameter Id="%AID%_P-%TT%00166" Name="OverviewFilter" ParameterType="%AID%_PT-OverviewFilter" Text="Nur Kanäle mit internen Verknüpfungen anzeigen" Value="1" />
               <Parameter Id="%AID%_P-%TT%00168" Name="CompactDisplay" ParameterType="%AID%_PT-OverviewDisplay" Text="Übersicht ohne Logikbeschriftung anzeigen (kompakter)" Value="0" />
               <Parameter Id="%AID%_P-%TT%00167" Name="EnableSave" ParameterType="%AID%_PT-EnableSave" Text="Speichern von Werten in Hardware möglich?" Value="0" Access="None" />
+              <Parameter Id="%AID%_P-%TT%00036" Name="UpdateForLedStatus" ParameterType="%AID%_PT-UpdateMarker" Text="War früher LedInstalled" Value="2" Access="Read" op:configTransfer="never" />
+              <!-- TO BE REMOVED: Old Buzzer and LED handling -->
+              <Parameter Id="%AID%_P-%TT%00035" Name="BuzzerInstalled" ParameterType="%AID%_PT-CheckBox" Text="Akustischer Signalgeber vorhanden (Buzzer)?" Value="0" Access="Read" op:configTransfer="never" />
               <Union SizeInBit="16">
                 <Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%00164" Name="VisibleChannels" ParameterType="%AID%_PT-LOGNumChannels" Offset="0" BitOffset="0" Text="Verfügbare Kanäle" Value="%LOG_NumChannelsDefault%" SuffixText=" von %N%" />
@@ -1055,10 +1063,7 @@
                 <Parameter Id="%AID%_UP-%TT%00139" Name="HolidayKo" ParameterType="%AID%_PT-OnOffYesNo" Offset="1" BitOffset="1" Text="Feiertage auf dem Bus verfügbar machen?" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%00140" Name="VacationRead" ParameterType="%AID%_PT-OnOffYesNo" Offset="1" BitOffset="2" Text="Nach Neustart Urlaubsinfo lesen?" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%00141" Name="HolidaySend" ParameterType="%AID%_PT-OnOffYesNo" Offset="1" BitOffset="3" Text="Nach Neuberechnung Feiertagsinfo senden?" Value="0" />
-                <!-- TO BE REMOVED: Old Buzzer and LED handling -->
-                <Parameter Id="%AID%_UP-%TT%00035" Name="BuzzerInstalled" ParameterType="%AID%_PT-CheckBox" Offset="1" BitOffset="4" Text="Akustischer Signalgeber vorhanden (Buzzer)?" Value="0" Access="None" />
-                <Parameter Id="%AID%_UP-%TT%00036" Name="LedInstalled" ParameterType="%AID%_PT-CheckBox" Offset="1" BitOffset="5" Text="Optischer Signalgeber vorhanden (RGB-LED)?" Value="0" Access="None" />
-                <!-- 2 Bit free -->
+                <!-- 4 Bit free -->
               </Union>
               <Union SizeInBit="40">
                 <Memory CodeSegment="%MID%" Offset="2" BitOffset="0" />
@@ -1113,8 +1118,8 @@
               <ParameterRef Id="%AID%_UP-%TT%00005_R-%TT%0000501" RefId="%AID%_UP-%TT%00005" /> -->
               <!-- <ParameterRef Id="%AID%_UP-%TT%00034_R-%TT%0003401" RefId="%AID%_UP-%TT%00034" /> -->
               <!-- Parameter 3501 - 3601 - are enabled on generic page of target application -->
-              <ParameterRef Id="%AID%_UP-%TT%00035_R-%TT%0003501" RefId="%AID%_UP-%TT%00035" />
-              <ParameterRef Id="%AID%_UP-%TT%00036_R-%TT%0003601" RefId="%AID%_UP-%TT%00036" />
+              <ParameterRef Id="%AID%_P-%TT%00035_R-%TT%0003501" RefId="%AID%_P-%TT%00035" />
+              <ParameterRef Id="%AID%_P-%TT%00036_R-%TT%0003601" RefId="%AID%_P-%TT%00036" />
               <ParameterRef Id="%AID%_UP-%TT%00110_R-%TT%0011001" RefId="%AID%_UP-%TT%00110" />
               <ParameterRef Id="%AID%_UP-%TT%00111_R-%TT%0011101" RefId="%AID%_UP-%TT%00111" />
               <ParameterRef Id="%AID%_UP-%TT%00112_R-%TT%0011201" RefId="%AID%_UP-%TT%00112" />
@@ -1223,9 +1228,9 @@
                 <!-- Hope this is enough for activating the following parameter -->
                 <!-- TO BE REMOVED: Old Buzzer and LED handling  -->
                 <!-- Buzzer installed? -->
-                <ParameterRefRef RefId="%AID%_UP-%TT%00035_R-%TT%0003501" />
+                <ParameterRefRef RefId="%AID%_P-%TT%00035_R-%TT%0003501" />
                 <!-- RGB-LED installed? -->
-                <ParameterRefRef RefId="%AID%_UP-%TT%00036_R-%TT%0003601" />
+                <ParameterRefRef RefId="%AID%_P-%TT%00036_R-%TT%0003601" />
                 <!-- Enable Save? -->
                 <ParameterRefRef RefId="%AID%_P-%TT%00167_R-%TT%0016701" />
               </ParameterBlock>
@@ -1295,9 +1300,9 @@
 
                 <!-- TO BE REMOVED: Old Buzzer and LED handling -->
                 <!-- RGB-LED installed? -->
-                <ParameterRefRef RefId="%AID%_UP-%TT%00036_R-%TT%0003601" />
+                <ParameterRefRef RefId="%AID%_P-%TT%00036_R-%TT%0003601" />
                 <!-- Buzzer installed? -->
-                <ParameterRefRef RefId="%AID%_UP-%TT%00035_R-%TT%0003501" />
+                <ParameterRefRef RefId="%AID%_P-%TT%00035_R-%TT%0003501" />
               </ParameterBlock>
               <ParameterBlock Name="UserFormulas" Text="Benutzerformeln" Id="%AID%_PB-nnn" Icon="calculator-variant-outline" HelpContext="LOG-Benutzerformeln">
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Benutzerformeln" UIHint="Headline" />

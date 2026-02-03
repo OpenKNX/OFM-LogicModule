@@ -48,7 +48,7 @@
                 <Parameter Id="%AID%_UP-%TT%%CC%003" Name="f%C%Logic" ParameterType="%AID%_PT-Logic" Offset="0" BitOffset="0" Text="Logik-Operation" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%004" Name="f%C%Calculate" ParameterType="%AID%_PT-Calculate" Offset="1" BitOffset="6" Text="Logik auswerten" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%166" Name="f%C%Disable" ParameterType="%AID%_PT-CheckBox" Offset="1" BitOffset="5" Text="Kanal deaktivieren (zu Testzwecken)" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%277" Name="f%C%Alarm" ParameterType="%AID%_PT-CheckBox" Offset="1" BitOffset="4" Text="Alarmausgabe (Buzzer oder LED trotz Sperre schalten)?" Value="0" />
+                <!-- <Parameter Id="%AID%_UP-%TT%%CC%277" Name="f%C%Alarm" ParameterType="%AID%_PT-CheckBox" Offset="1" BitOffset="4" Text="Alarmausgabe (Buzzer oder LED trotz Sperre schalten)?" Value="0" /> -->
                 <Parameter Id="%AID%_UP-%TT%%CC%396" Name="f%C%TGate" ParameterType="%AID%_PT-CheckBox" Offset="1" BitOffset="3" Text="Tor geht sofort wieder zu" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%397" Name="f%C%OInternalOn" ParameterType="%AID%_PT-CheckBox" Offset="1" BitOffset="2" Text="Wert EIN intern weiterleiten" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%398" Name="f%C%OInternalOff" ParameterType="%AID%_PT-CheckBox" Offset="1" BitOffset="1" Text="Wert AUS intern weiterleiten" Value="1" />
@@ -102,7 +102,7 @@
               </Union>
               <!-- 1 Byte free (19) -->
               <!-- Parameter for timer daily -->
-              <Union SizeInBit="128">
+              <Union SizeInBit="128" op:nowarn="true" >
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="20" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%168" Name="f%C%Td1Value" ParameterType="%AID%_PT-OnOff" Offset="0" BitOffset="0" Text="Schaltwert" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%427" Name="f%C%Td1Degree" ParameterType="%AID%_PT-Degree" Offset="0" BitOffset="1" Text="Grad" Value="6" />
@@ -254,12 +254,12 @@
                 <!-- 2 Bit free -->
                 <Parameter Id="%AID%_UP-%TT%%CC%064" Name="f%C%ODpt" ParameterType="%AID%_PT-OutputDpt" Offset="2" BitOffset="0" Text="DPT für Ausgang" Value="0" />
               </Union>
-              <Parameter Id="%AID%_P-%TT%%CC%134" Name="f%C%OOnBuzzer" ParameterType="%AID%_PT-OutputSendBuzzer" Text="Wert für EIN senden?" Value="1" />
-              <Parameter Id="%AID%_P-%TT%%CC%135" Name="f%C%OOnLed" ParameterType="%AID%_PT-OutputSendLed"       Text="Wert für EIN senden?" Value="1" />
-              <Parameter Id="%AID%_P-%TT%%CC%136" Name="f%C%OOnAll" ParameterType="%AID%_PT-OutputSendAll"       Text="Wert für EIN senden?" Value="1" />
+              <Parameter Id="%AID%_P-%TT%%CC%065" Name="f%C%OOn" ParameterType="%AID%_PT-OutputSend"             Text="Wert für EIN senden?" Value="1" op:configTransfer="never" />
+              <Parameter Id="%AID%_P-%TT%%CC%134" Name="f%C%OOnBuzzer" ParameterType="%AID%_PT-OutputSendBuzzer" Text="Wert für EIN senden?" Value="1" op:configTransfer="never" />
+              <Parameter Id="%AID%_P-%TT%%CC%135" Name="f%C%OOnLed" ParameterType="%AID%_PT-OutputSendLed"       Text="Wert für EIN senden?" Value="1" op:configTransfer="never" />
               <Union SizeInBit="120">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="57" BitOffset="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%065" Name="f%C%OOn" ParameterType="%AID%_PT-OutputSend" Offset="0" BitOffset="0" Text="Wert für EIN senden?" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%136" Name="f%C%OOnAll" ParameterType="%AID%_PT-OutputSendAll" Offset="0" BitOffset="0" Text="Wert für EIN senden?" Value="1" />
                 <!-- <Parameter Id="%AID%_UP-%TT%%CC%140" Name="f%C%OOnTone" ParameterType="%AID%_PT-ValueBuzzer" Offset="1" BitOffset="0" Text="    Wert für EIN senden als" Value="1" /> -->
                 <Parameter Id="%AID%_UP-%TT%%CC%066" Name="f%C%OOnDpt1" ParameterType="%AID%_PT-ValueDpt1" Offset="1" BitOffset="0" Text="    Wert für EIN senden als" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%067" Name="f%C%OOnDpt2" ParameterType="%AID%_PT-ValueDpt2Out" Offset="1" BitOffset="0" Text="    Wert für EIN senden als" Value="1" />
@@ -293,12 +293,12 @@
                 <Parameter Id="%AID%_UP-%TT%%CC%442" Name="f%C%OOnKOSendNumber" ParameterType="%AID%_PT-KOAbsNumber" Offset="7" BitOffset="0" Text="        Nummer des zusätzlichen KO" Value="%K2%" />
                 <Parameter Id="%AID%_UP-%TT%%CC%463" Name="f%C%OOnKOSendNumberRel" ParameterType="%AID%_PT-KORelNumber" Offset="7" BitOffset="0" Text="        Nummer des zusätzlichen KO" Value="0" />
               </Union>
-              <Parameter Id="%AID%_P-%TT%%CC%137" Name="f%C%OOffBuzzer" ParameterType="%AID%_PT-OutputSendBuzzer" Text="Wert für AUS senden?" Value="1" />
-              <Parameter Id="%AID%_P-%TT%%CC%138" Name="f%C%OOffLed" ParameterType="%AID%_PT-OutputSendLed"       Text="Wert für AUS senden?" Value="1" />
-              <Parameter Id="%AID%_P-%TT%%CC%139" Name="f%C%OOffAll" ParameterType="%AID%_PT-OutputSendAll"       Text="Wert für AUS senden?" Value="1" />
+              <Parameter Id="%AID%_P-%TT%%CC%077" Name="f%C%OOff" ParameterType="%AID%_PT-OutputSend" Text="Wert für AUS senden?" Value="1" op:configTransfer="never" />
+              <Parameter Id="%AID%_P-%TT%%CC%137" Name="f%C%OOffBuzzer" ParameterType="%AID%_PT-OutputSendBuzzer" Text="Wert für AUS senden?" Value="1" op:configTransfer="never" />
+              <Parameter Id="%AID%_P-%TT%%CC%138" Name="f%C%OOffLed" ParameterType="%AID%_PT-OutputSendLed"       Text="Wert für AUS senden?" Value="1" op:configTransfer="never" />
               <Union SizeInBit="120">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="72" BitOffset="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%077" Name="f%C%OOff" ParameterType="%AID%_PT-OutputSend" Offset="0" BitOffset="0" Text="Wert für AUS senden?" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%139" Name="f%C%OOffAll" ParameterType="%AID%_PT-OutputSendAll" Offset="0" BitOffset="0" Text="Wert für AUS senden?" Value="1" />
                 <!-- <Parameter Id="%AID%_UP-%TT%%CC%141" Name="f%C%OOffTone" ParameterType="%AID%_PT-ValueBuzzer" Offset="1" BitOffset="0" Text="    Wert für AUS senden als" Value="0" /> -->
                 <Parameter Id="%AID%_UP-%TT%%CC%078" Name="f%C%OOffDpt1" ParameterType="%AID%_PT-ValueDpt1" Offset="1" BitOffset="0" Text="    Wert für AUS senden als" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%079" Name="f%C%OOffDpt2" ParameterType="%AID%_PT-ValueDpt2Out" Offset="1" BitOffset="0" Text="    Wert für AUS senden als" Value="0" />
@@ -339,7 +339,7 @@
               <Parameter Id="%AID%_P-%TT%%CC%515" Name="f%C%ODisplayOwnKO" ParameterType="%AID%_PT-OnOffYesNo" Text="Eigenes KO anzeigen?" Value="1" />
               <!-- <Parameter Id="%AID%_P-%TT%%CC%144" Name="f%C%E1AnySceneChosen" ParameterType="%AID%_PT-ValueDpt5" Text="Eingang1: Welches Szenenfeld wird benutzt (interner Wert)" Access="None" Value="0" /> -->
               <!-- <Parameter Id="%AID%_P-%TT%%CC%145" Name="f%C%E2AnySceneChosen" ParameterType="%AID%_PT-ValueDpt5" Text="Eingang2: Welches Szenenfeld wird benutzt (interner Wert)" Access="None" Value="0" /> -->
-              <Parameter Id="%AID%_P-%TT%%CC%278" Name="f%C%AskForAlarm" ParameterType="%AID%_PT-OnOffYesNo" Text="LED oder Buzzer aktiv (interner Wert)" Access="None" Value="0" />
+              <!-- <Parameter Id="%AID%_P-%TT%%CC%278" Name="f%C%AskForAlarm" ParameterType="%AID%_PT-OnOffYesNo" Text="LED oder Buzzer aktiv (interner Wert)" Access="None" Value="0" /> -->
               <!-- <Parameter Id="%AID%_P-%TT%%CC%395" Name="f%C%OKONumber" ParameterType="%AID%_PT-KONumber" Text="Kommunikationsobjekt für Ausgang" Access="Read" Value="%K2%" /> -->
               <Parameter Id="%AID%_P-%TT%%CC%456" Name="f%C%E1InputDeltaOrAll" ParameterType="%AID%_PT-OnOffYesNo" Text="E1 Delta oder Full (interner Wert)" Access="None" Value="0" />
               <Parameter Id="%AID%_P-%TT%%CC%457" Name="f%C%E2InputDeltaOrAll" ParameterType="%AID%_PT-OnOffYesNo" Text="E2 Delta oder Full (interner Wert)" Access="None" Value="0" />
@@ -377,7 +377,7 @@
               <ParameterRef Id="%AID%_UP-%TT%%CC%062_R-%TT%%CC%06201" RefId="%AID%_UP-%TT%%CC%062" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%063_R-%TT%%CC%06301" RefId="%AID%_UP-%TT%%CC%063" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%064_R-%TT%%CC%06401" RefId="%AID%_UP-%TT%%CC%064" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%065_R-%TT%%CC%06501" RefId="%AID%_UP-%TT%%CC%065" />
+              <ParameterRef Id="%AID%_P-%TT%%CC%065_R-%TT%%CC%06501" RefId="%AID%_P-%TT%%CC%065" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%066_R-%TT%%CC%06601" RefId="%AID%_UP-%TT%%CC%066" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%067_R-%TT%%CC%06701" RefId="%AID%_UP-%TT%%CC%067" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%068_R-%TT%%CC%06801" RefId="%AID%_UP-%TT%%CC%068" />
@@ -390,7 +390,7 @@
               <ParameterRef Id="%AID%_UP-%TT%%CC%075_R-%TT%%CC%07501" RefId="%AID%_UP-%TT%%CC%075" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%076_R-%TT%%CC%07601" RefId="%AID%_UP-%TT%%CC%076" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%076_R-%TT%%CC%07602" RefId="%AID%_UP-%TT%%CC%076" Text="    Status-LED Farbe" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%077_R-%TT%%CC%07701" RefId="%AID%_UP-%TT%%CC%077" />
+              <ParameterRef Id="%AID%_P-%TT%%CC%077_R-%TT%%CC%07701" RefId="%AID%_P-%TT%%CC%077" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%078_R-%TT%%CC%07801" RefId="%AID%_UP-%TT%%CC%078" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%079_R-%TT%%CC%07901" RefId="%AID%_UP-%TT%%CC%079" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%080_R-%TT%%CC%08001" RefId="%AID%_UP-%TT%%CC%080" />
@@ -422,10 +422,10 @@
               <!-- <ParameterRef Id="%AID%_P-%TT%%CC%133_R-%TT%%CC%13301" RefId="%AID%_P-%TT%%CC%133" /> -->
               <ParameterRef Id="%AID%_P-%TT%%CC%134_R-%TT%%CC%13401" RefId="%AID%_P-%TT%%CC%134" />
               <ParameterRef Id="%AID%_P-%TT%%CC%135_R-%TT%%CC%13501" RefId="%AID%_P-%TT%%CC%135" />
-              <ParameterRef Id="%AID%_P-%TT%%CC%136_R-%TT%%CC%13601" RefId="%AID%_P-%TT%%CC%136" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%136_R-%TT%%CC%13601" RefId="%AID%_UP-%TT%%CC%136" />
               <ParameterRef Id="%AID%_P-%TT%%CC%137_R-%TT%%CC%13701" RefId="%AID%_P-%TT%%CC%137" />
               <ParameterRef Id="%AID%_P-%TT%%CC%138_R-%TT%%CC%13801" RefId="%AID%_P-%TT%%CC%138" />
-              <ParameterRef Id="%AID%_P-%TT%%CC%139_R-%TT%%CC%13901" RefId="%AID%_P-%TT%%CC%139" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%139_R-%TT%%CC%13901" RefId="%AID%_UP-%TT%%CC%139" />
               <!-- <ParameterRef Id="%AID%_UP-%TT%%CC%140_R-%TT%%CC%14001" RefId="%AID%_UP-%TT%%CC%140" /> -->
               <!-- <ParameterRef Id="%AID%_UP-%TT%%CC%141_R-%TT%%CC%14101" RefId="%AID%_UP-%TT%%CC%141" /> -->
 
@@ -536,8 +536,8 @@
               <ParameterRef Id="%AID%_UP-%TT%%CC%274_R-%TT%%CC%27401" RefId="%AID%_UP-%TT%%CC%274" />
               <ParameterRef Id="%AID%_P-%TT%%CC%275_R-%TT%%CC%27501" RefId="%AID%_P-%TT%%CC%275" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%276_R-%TT%%CC%27601" RefId="%AID%_UP-%TT%%CC%276" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%277_R-%TT%%CC%27701" RefId="%AID%_UP-%TT%%CC%277" />
-              <ParameterRef Id="%AID%_P-%TT%%CC%278_R-%TT%%CC%27801" RefId="%AID%_P-%TT%%CC%278" />
+              <!-- <ParameterRef Id="%AID%_UP-%TT%%CC%277_R-%TT%%CC%27701" RefId="%AID%_UP-%TT%%CC%277" /> -->
+              <!-- <ParameterRef Id="%AID%_P-%TT%%CC%278_R-%TT%%CC%27801" RefId="%AID%_P-%TT%%CC%278" /> -->
               <ParameterRef Id="%AID%_UP-%TT%%CC%279_R-%TT%%CC%27901" RefId="%AID%_UP-%TT%%CC%279" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%280_R-%TT%%CC%28001" RefId="%AID%_UP-%TT%%CC%280" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%381_R-%TT%%CC%38101" RefId="%AID%_UP-%TT%%CC%381" />
@@ -1469,9 +1469,9 @@
                           <!-- Wert für EIN senden -->
                           <ParameterSeparator Id="%AID%_PS-nnn" Text="Wert für EIN" UIHint="Headline" />
                           <!-- OutputSend -->
-                          <ParameterRefRef RefId="%AID%_UP-%TT%%CC%065_R-%TT%%CC%06501" HelpContext="%DOC%" IndentLevel="1" />
+                          <ParameterRefRef RefId="%AID%_UP-%TT%%CC%136_R-%TT%%CC%13601" HelpContext="%DOC%" IndentLevel="1" />
                           <!-- Create constant values for On-Value -->
-                          <choose ParamRefId="%AID%_UP-%TT%%CC%065_R-%TT%%CC%06501">
+                          <choose ParamRefId="%AID%_UP-%TT%%CC%136_R-%TT%%CC%13601">
                             <when test="1">
                               <choose ParamRefId="%AID%_UP-%TT%%CC%064_R-%TT%%CC%06401">
                                 <when test="0">
@@ -1585,7 +1585,7 @@
                                   </when>
                                 </choose>
                               </ParameterBlock>
-                              <Assign TargetParamRefRef="%AID%_P-%TT%%CC%278_R-%TT%%CC%27801" Value="1" />
+                              <!-- <Assign TargetParamRefRef="%AID%_P-%TT%%CC%278_R-%TT%%CC%27801" Value="1" /> -->
                             </when>
                             <when test="8">
                               <ParameterRefRef RefId="%AID%_UP-%TT%%CC%279_R-%TT%%CC%27901" HelpContext="%DOC%" IndentLevel="1" />
@@ -1652,9 +1652,9 @@
                           <!-- Wert für AUS senden -->
                           <ParameterSeparator Id="%AID%_PS-nnn" Text="Wert für AUS" UIHint="Headline" />
                           <!-- OutputSend -->
-                          <ParameterRefRef RefId="%AID%_UP-%TT%%CC%077_R-%TT%%CC%07701" HelpContext="%DOC%" IndentLevel="1" />
+                          <ParameterRefRef RefId="%AID%_UP-%TT%%CC%139_R-%TT%%CC%13901" HelpContext="%DOC%" IndentLevel="1" />
                           <!-- Create constant values for Off-Value -->
-                          <choose ParamRefId="%AID%_UP-%TT%%CC%077_R-%TT%%CC%07701">
+                          <choose ParamRefId="%AID%_UP-%TT%%CC%139_R-%TT%%CC%13901">
                             <when test="1">
                               <choose ParamRefId="%AID%_UP-%TT%%CC%064_R-%TT%%CC%06401">
                                 <when test="0">
@@ -1768,7 +1768,7 @@
                                   </when>
                                 </choose>
                               </ParameterBlock>
-                              <Assign TargetParamRefRef="%AID%_P-%TT%%CC%278_R-%TT%%CC%27801" Value="1" />
+                              <!-- <Assign TargetParamRefRef="%AID%_P-%TT%%CC%278_R-%TT%%CC%27801" Value="1" /> -->
                             </when>
                             <when test="8">
                               <ParameterRefRef RefId="%AID%_UP-%TT%%CC%280_R-%TT%%CC%28001" HelpContext="%DOC%" IndentLevel="1" />
@@ -1834,12 +1834,12 @@
                           </choose>
                           <!-- Wert für AUS senden -->
                           <!-- Warning for "Send value of KO", just present once -->
-                          <choose ParamRefId="%AID%_UP-%TT%%CC%065_R-%TT%%CC%06501">
+                          <choose ParamRefId="%AID%_UP-%TT%%CC%136_R-%TT%%CC%13601">
                             <when test="9">
                               <ParameterSeparator Id="%AID%_PS-nnn" Text="Beim Senden vom 'Wert eines KO' ist der DPT des zu sendenden KO sehr wichtig. Er muss korrekt angegeben werden, da er nicht automatisch ermittelt werden kann." UIHint="Information" />
                             </when>
                             <when test="!=9">
-                              <choose ParamRefId="%AID%_UP-%TT%%CC%077_R-%TT%%CC%07701">
+                              <choose ParamRefId="%AID%_UP-%TT%%CC%139_R-%TT%%CC%13901">
                                 <when test="9">
                                   <ParameterSeparator Id="%AID%_PS-nnn" Text="Beim Senden vom 'Wert eines KO' ist der DPT des zu sendenden KO sehr wichtig. Er muss korrekt angegeben werden, da er nicht automatisch ermittelt werden kann." UIHint="Information" />
                                 </when>
@@ -1848,11 +1848,11 @@
                           </choose>
 
                           <!-- Ask for alarm output in case RGB or Buzzer is acive -->
-                          <choose ParamRefId="%AID%_P-%TT%%CC%278_R-%TT%%CC%27801">
-                            <when test="1">
-                              <ParameterRefRef RefId="%AID%_UP-%TT%%CC%277_R-%TT%%CC%27701" HelpContext="%DOC%" IndentLevel="1" />
-                            </when>
-                          </choose>
+                          <!-- <choose ParamRefId="%AID%_P-%TT%%CC%278_R-%TT%%CC%27801"> -->
+                            <!-- <when test="1"> -->
+                              <!-- <ParameterRefRef RefId="%AID%_UP-%TT%%CC%277_R-%TT%%CC%27701" HelpContext="%DOC%" IndentLevel="1" /> -->
+                            <!-- </when> -->
+                          <!-- </choose> -->
                           <!-- We present KO only if any input is active -->
                           <!-- Timer is also an active input -->
                           <!-- experimental or, true case -->
