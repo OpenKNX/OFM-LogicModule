@@ -18,7 +18,6 @@
             <op:param name="%PPP%" value="200" digits="3" increment="3" />
             <op:param name="%Fn%" value="1" increment="1" />
           </op:part>
-          <op:part name="UPDATE" href="Logikmodul.update.part.xml" instances="1" />
           <Static>
             <ParameterTypes>
               <!-- Number of channels (module specific) -->
@@ -1044,21 +1043,11 @@
                   <Enumeration Text="Statuskanal" Value="1" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-UpdateMarker" Name="UpdateMarker">
-                <TypeRestriction Base="Value" SizeInBit="2" UIHint="DropDown">
-                  <Enumeration Text="Led nicht installiert" Value="0" Id="%ENID%" />
-                  <Enumeration Text="Led installiert" Value="1" Id="%ENID%" />
-                  <Enumeration Text="LedStatus updated " Value="2" Id="%ENID%" />
-                </TypeRestriction>
-              </ParameterType>
             </ParameterTypes>
             <Parameters>
               <Parameter Id="%AID%_P-%TT%00166" Name="OverviewFilter" ParameterType="%AID%_PT-OverviewFilter" Text="Nur Kanäle mit internen Verknüpfungen anzeigen" Value="1" />
               <Parameter Id="%AID%_P-%TT%00168" Name="CompactDisplay" ParameterType="%AID%_PT-OverviewDisplay" Text="Übersicht ohne Logikbeschriftung anzeigen (kompakter)" Value="0" />
               <Parameter Id="%AID%_P-%TT%00167" Name="EnableSave" ParameterType="%AID%_PT-EnableSave" Text="Speichern von Werten in Hardware möglich?" Value="0" Access="None" />
-              <Parameter Id="%AID%_P-%TT%00036" Name="UpdateForLedStatus" ParameterType="%AID%_PT-UpdateMarker" Text="War früher LedInstalled" Value="2" Access="Read" op:configTransfer="never" />
-              <!-- TO BE REMOVED: Old Buzzer and LED handling -->
-              <Parameter Id="%AID%_P-%TT%00035" Name="BuzzerInstalled" ParameterType="%AID%_PT-CheckBox" Text="Akustischer Signalgeber vorhanden (Buzzer)?" Value="0" Access="Read" op:configTransfer="never" />
               <Union SizeInBit="16">
                 <Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%00164" Name="VisibleChannels" ParameterType="%AID%_PT-LOGNumChannels" Offset="0" BitOffset="0" Text="Verfügbare Kanäle" Value="%LOG_NumChannelsDefault%" SuffixText=" von %N%" />
@@ -1121,8 +1110,8 @@
               <ParameterRef Id="%AID%_UP-%TT%00005_R-%TT%0000501" RefId="%AID%_UP-%TT%00005" /> -->
               <!-- <ParameterRef Id="%AID%_UP-%TT%00034_R-%TT%0003401" RefId="%AID%_UP-%TT%00034" /> -->
               <!-- Parameter 3501 - 3601 - are enabled on generic page of target application -->
-              <ParameterRef Id="%AID%_P-%TT%00035_R-%TT%0003501" RefId="%AID%_P-%TT%00035" />
-              <ParameterRef Id="%AID%_P-%TT%00036_R-%TT%0003601" RefId="%AID%_P-%TT%00036" />
+              <!-- <ParameterRef Id="%AID%_P-%TT%00035_R-%TT%0003501" RefId="%AID%_P-%TT%00035" /> -->
+              <!-- <ParameterRef Id="%AID%_P-%TT%00036_R-%TT%0003601" RefId="%AID%_P-%TT%00036" /> -->
               <ParameterRef Id="%AID%_UP-%TT%00110_R-%TT%0011001" RefId="%AID%_UP-%TT%00110" />
               <ParameterRef Id="%AID%_UP-%TT%00111_R-%TT%0011101" RefId="%AID%_UP-%TT%00111" />
               <ParameterRef Id="%AID%_UP-%TT%00112_R-%TT%0011201" RefId="%AID%_UP-%TT%00112" />
@@ -1224,16 +1213,10 @@
             </Script>
           </Static>
           <Dynamic>
-            <op:usePart name="UPDATE" xpath="//Dynamic/*" />
             <Channel Id="%AID%_CH-%PREFIX%" Number="%PREFIX%" Name="Logic" Text="Logiken" Icon="blur" HelpContext="LOG-Dokumentation">
               <!-- Inline ParameterBlock in Channel is invisible, so also all its contents -->
               <ParameterBlock Id="%AID%_PB-nnn" Name="InitInvisible" Inline="true">
                 <!-- Hope this is enough for activating the following parameter -->
-                <!-- TO BE REMOVED: Old Buzzer and LED handling  -->
-                <!-- Buzzer installed? -->
-                <ParameterRefRef RefId="%AID%_P-%TT%00035_R-%TT%0003501" />
-                <!-- RGB-LED installed? -->
-                <ParameterRefRef RefId="%AID%_P-%TT%00036_R-%TT%0003601" />
                 <!-- Enable Save? -->
                 <ParameterRefRef RefId="%AID%_P-%TT%00167_R-%TT%0016701" />
               </ParameterBlock>
