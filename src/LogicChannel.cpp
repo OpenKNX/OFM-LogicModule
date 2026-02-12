@@ -2440,12 +2440,13 @@ void LogicChannel::prepareInternalInput(uint8_t iIOindex, uint16_t iParamIndex)
     // first check, if channel is active
     if (ParamLOG_fLogic == 0 || ParamLOG_fDisable)
         return;
+    uint8_t lInputEnabled = (getByteParam(iParamIndex) & LOG_fI1Mask) >> LOG_fI1Shift;
     // now check, if input is active
-    uint8_t lInputType = (getByteParam(iParamIndex) & LOG_fI1InternalInputTypeMask) >> LOG_fI1InternalInputTypeShift; 
-    if (lInputType > 0)
+    if (lInputEnabled > 0)
     {
         // input is active, we set according flag
         pValidActiveIO |= iIOindex << 4;
+        uint8_t lInputType = (getByteParam(iParamIndex) & LOG_fI1InternalInputTypeMask) >> LOG_fI1InternalInputTypeShift; 
         // check if internal input is bound to a state channel
         if (lInputType == VAL_IntInput_LedState)
         {
