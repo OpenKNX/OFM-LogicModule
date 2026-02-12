@@ -3,6 +3,8 @@
 <KNX xmlns:op="http://github.com/OpenKNX/OpenKNXproducer" xmlns="http://knx.org/xml/project/20" CreatedBy="KNX MT" ToolVersion="5.1.255.16695">
 
   <op:minOpenKNXproducerVersion value="3.13.0" />
+  <op:minModuleVersion prefix="UCT" dependency="onlyIfUsed" value="0.4" />
+
 
   <op:config name="%LOG_EnableSave%" value="1" />
   <op:config name="%LOG_NumChannelsDefault%" value="%N%" />
@@ -44,9 +46,9 @@
                 <TypeNumber SizeInBit="1" Type="unsignedInt" minInclusive="0" maxInclusive="1" />
               </ParameterType>
               <!-- UserFormula support, 99 chars per formula -->
-               <ParameterType Id="%AID%_PT-UserFormula" Name="UserFormula">
+              <ParameterType Id="%AID%_PT-UserFormula" Name="UserFormula">
                 <TypeText SizeInBit="792" />
-               </ParameterType>
+              </ParameterType>
               <!-- parameter types for logic module -->
               <ParameterType Id="%AID%_PT-Logic" Name="Logic">
                 <TypeRestriction Base="Value" SizeInBit="8">
