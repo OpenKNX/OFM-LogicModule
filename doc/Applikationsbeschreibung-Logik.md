@@ -83,6 +83,14 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 
 Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer das Gesamtdokument lesen muss, um Neuerungen zu erfahren.
 
+13.02.2026: Firmware 4.0.0, Applikation 4.0:
+
+* WICHTIG: Die frühere Steuerung von Buzzer und LED wurde aus dem Logikmodul entfernt - zugunsten der neuen Module LED-Status und Buzzer/Vibration. Dies kann zu manuellen Nacharbeiten nach einem Update des Gerätes notwendig machen (siehe [Besonderheiten ab der Version 4.0 bezüglich Update und Konfigurationstransfer](#besonderheiten-ab-der-version-40-bezüglich-update-und-konfigurationstransfer)).
+
+* NEU: Der Status von LEDs kann in der Logik als interner Eingang dienen
+* NEU: Das Logikmodul kann jetzt den Ausgang auf Statuskanäle legen und so LEDs steuern
+
+
 24.08.2025: Firmware 3.7.2, Applikation 3.7:
 
 * FIX: DPT2 am Ausgang sendet wieder korrekte Werte, ist wohl in der Vergangenheit durch eine Änderung am KNX-Stack kaputt gegangen und wurde erst jetzt gemerkt.
@@ -426,29 +434,45 @@ Weitere Features:
 * Speichern von Werten über einen Stromausfall hinweg 
 * Senden von gespeicherten Werten nach einem Neustart
 
-### **OpenKNX**
-
-Dies ist eine Seite mit allgemeinen Parametern, die unter [Applikationsbeschreibung-Common](https://github.com/OpenKNX/OGM-Common/blob/v1/doc/Applikationsbeschreibung-Common.md) beschrieben sind. 
-
-### **Netzwerk**
-
-Die Netzwerkkonfiguration erlaubt IP-Spezifische Einstellungen für KNX-IP-Geräte. Die Logikmodul-Applikation kann sowohl für KNX-TP- wie auch für KNX-IP-Geräte verwendet werden. 
-
->Wichtig: Die Netzwerkeinstellungen sind zwar immer vorhanden, wirken sich aber nur bei IP-Geräte aus. Für KNX-TP-Geräte kann diese Seite komplett ignoriert werden.
-
-Die Funktionen vom Netzwerk-Modul sind unter [Applikationsbeschreibung-Netzwerk](https://github.com/OpenKNX/OFM-Network/blob/v1/doc/Applikationsbeschreibung-Netzwerk.md) beschrieben.
 
 
-### **Konfigurationstransfer**
+## **Besonderheiten ab der Version 4.0 bezüglich Update und Konfigurationstransfer**
 
-Der Konfigurationstransfer erlaubt einen
+Die Version 4.0 des Logikmoduls enthält wenig neue Features - nur die Anpassung an die generische Behandlung von Status-LEDs bei unterschiedlicher Gerätehardware. In diesem Rahmen ist aber ein größerer Umbau von internen Strukturen passiert - vor allem im Ausgangskonverter. Es sind auch Teile weggefallen, die eigentlich nicht in das Logikmodul gehörten und die nur aus historischen Gründen noch im Logikmodul enthalten waren.
 
-* Export von Konfigurationen von OpenKNX-Modulen und deren Kanälen
-* Import von Konfigurationen von OpenKNX-Modulen und deren Kanälen
-* Kopieren der Konfiguration von einem OpenKNX-Modulkanal auf einen anderen
-* Zurücksetzen der Konfiguration eines OpenKNX-Modulkanals auf Standardwerte
+### **Weggefallene Funktionen**
 
-Die Funktionen vom Konfigurationstranfer-Modul sind unter [Applikationsbeschreibung-ConfigTransfer](https://github.com/OpenKNX/OFM-ConfigTransfer/blob/v1/doc/Applikationsbeschreibung-ConfigTransfer.md) beschrieben.
+Im klassischen Sensormodul von SmartMF konnte man über einen Logikkanal den Buzzer vom Sensormodul schalten. Ferner konnte man - sofern man die entsprechende Zusatzhardware bestellt hatte - auch eine RGB-LED mit dem Logikmodul schalten. Beide Optionen waren bei anderen Hardwarevarianten nicht vorhanden. Beim Sensormodul sind sie nun entfallen und wurden durch eine passende Info LED Implementierung und das Buzzer/Vibration Modul ersetzt.
+
+### **Einfluss auf das Update-Verhalten der ETS**
+
+Falls man ein Sensormodul mit einem Buzzer besitzt und über das Logikmodul den Buzzer genutzt hat, wird nach dem Update die Buzzer-Funktion nicht mehr zur Verfügung stehen. Der Ausgang eines Buzzer-Logikkanals wird beim Update zu einem normalen "Werte senden" - EIN/AUS Ausgang. Diesen Ausgang kann man als Nacharbeit mit dem Eingang des neuen Buzzer/Vibration Moduls (siehe [Applikationsbeschreibung Buzzer/Vibration](https://github.com/OpenKNX/OFM-Feedback/blob/v1/doc/Applikationsbeschreibung-Feedback.md)) verbinden und bekommt so die Buzzer-Funktionalität wieder.
+
+Das Logikmodul läuft als Teil von nahezu allen OpenKNX-Applikationen auf vielerlei Hardware, derzeit besitzt nur das Sensormodul von SmartMF einen Buzzer. Für das Sensormodul wird die RaumController-Applikation genutzt. Manuelle Nacharbeiten sind nur nötig, wenn der Buzzer auf dem Sensormodul wirklich genutzt wurde, das sollten weniger als 10% aller genutzten Logikmodul-Instanzen sein.
+
+Falls jemand die Sensormodul-Variante mit einer RGB-LED besitzt, so soll er mich bitte über eine PM im KNX-User-Forum kontaktieren, damit wir hier das Update besprechen können.
+
+### **Verhalten vom Konfigurationstransfer**
+
+Im neuen Logikmodul 4.0 (das in den letzten 6 Jahren mehr oder minder nur erweitert worden ist) wurde etwas "aufgeräumt", was dazu geführt hat, dass auch Parameter gelöscht wurden, die nicht mehr benötigt werden und teilweise früher zu Problemen geführt haben. Das führt aber dazu, dass der Konfigurationstransfer jetzt mit unerwarteten Meldungen reagiert.
+
+#### **Transfer von Logikkanälen Version kleiner 4.0 auf Versionen größer gleich 4.0 (alt auf neu)**
+
+Da die neue Logik weder LEDs noch Buzzer steuern kann, funktionieren Transfers von Kanälen, die als Quelle eine Buzzer- oder LED-Steuerung machen, nicht ohne hinterher einen manuellen Eingriff vorzunehmen. Man muss den Ausgang nach einem solchen Transfer auf jeden Fall anpassen.
+
+Alle anderen Logikkanäle funktionieren ohne weiteres, allerdings werden im Transfer-String mehr Parameter transportiert, als im Ziel vorhanden sind (im Ziel wurde ja aufgeräumt). Deswegen bringt der Konfigurationstransfer Warnungen. Es empfiehlt sich natürlich immer, solche Warnungen zu beachten und in diesem Fall die Ausgänge im Ziel nochmal mit den Ausgängen der Quelle zu verifizieren, aber bei allen Tests waren diese gleich.
+
+Der Transport von Basiseinstellungen kann auch Warnungen liefern, funktioniert aber ebenso problemlos.
+
+#### **Transfer von Logikkanälen Version größer gleich 4.0 auf Versionen kleiner 4.0 (neu auf alt)**
+
+Grundsätzlich funktionieren die Transfers in diese Richtung nicht mehr ohne manuelle Nacharbeiten. 
+
+> ACHTUNG: Den Transport von Basiseinstellungen sollte gar nicht versucht werden! Dies kann bei der alten Logikmodul-Version dazu führen, dass alle Einstellungen zu allen Ausgängen aller Logikkanäle zurückgesetzt werden. 
+
+Einzelne Logikkanäle können transferiert werden, allerdings kommen die Einstellungen vom Ausgang in 95% der Fälle nicht an. Diese müssen immer manuell mit der Quelle abgeglichen werden.
+Ironischerweise meldet der Konfigurationstransfer hier in allen getesteten Fällen ein OK ohne Warnungen oder Fehler.
+
 
 ## **Allgemein**
 
@@ -517,43 +541,6 @@ Durch Auswahlfelder kann bestimmt werden, ob dieser Feiertag bei der Feiertagsin
 Es ist nicht möglich, eigene Feiertage in diese Liste aufzunehmen. Deswegen enthält die Liste auch eher unübliche Feiertage wie Rosenmontag oder 1 Advent, da diese Tage beweglich sind und somit berechnet werden müssen.
 
 Man kann aber eine (oder mehrere) Jahresschaltuhren dafür verwenden, weitere Feiertage zu definieren und das Ergebnis dieser Zeitschaltuhr auf die Feiertags-GA zu senden.
-
-### **Installierte Hardware**
-
-Erscheint nur für das Logikmodul als eigenständige Applikation.
-
-Die Firmware im Logikmodul unterstützt eine Vielzahl an Hardwarevarianten. Um nicht für jede Hardwarekombination ein eigenes Applikationsprogramm zu benötigen, kann über die folgenden Felder die Hardwareausstattung des Logikmoduls bestimmt werden.
-
-Die Angaben in diesem Teil müssen der vorhandenen Hardware entsprechen, da sie das Verhalten der Applikation und auch der Firmware bestimmen. Das Applikationsprogramm hat keine Möglichkeit, die Korrektheit der Angaben zu überprüfen.
-
-Falsche Angaben können zu falschen Konfigurationen der Applikation und somit zum Fehlverhalten des Logikmoduls führen.
-
-<!-- DOC -->
-#### **Akustischer Signalgeber vorhanden (Buzzer)?**
-
-Das Logikmodul unterstützt auch die Ausgabe von Pieptönen mittels eines Buzzers. Mit einem Haken in diesem Feld wird angegeben, ob ein Buzzer installiert ist.
-
-Gleichzeitig wird ein Kommunikationsobjekt freigeschaltet, mit dem man die Soundausgabe sperren kann. Damit kann man verhindern, dass z.B. nachts Töne ausgegeben werden.
-
-<!-- DOC -->
-#### **Optischer Signalgeber vorhanden (RGB-LED)?**
-
-Das Logikmodul unterstützt auch die Ausgabe eines Lichtsignals mittels einer RGB-LED. Mit einem Haken in diesem Feld wird angegeben, ob eine RGB-LED installiert ist.
-
-Gleichzeitig wird ein Kommunikationsobjekt freigeschaltet, mit dem man die Lichtausgabe sperren kann. Damit kann man verhindern, dass z.B. nachts die LED leuchtet. Oder man schaltet die LED nur bei Präsenz ein und schont damit die Leuchtkraft der LED.
-
-<!-- DOC HelpContext="Loetpad-A--B--C-entspricht" -->
-### **RGB-LED**
-
-Da RGB-LED unterschiedliche Pin-Belegungen für die Farben Rot, Grün und Blau haben, kann es passieren, dass man nach dem anlöten der LED feststellt, dass man falsche Farben präsentiert bekommt.
-
-An dieser Stelle kann man die Pinbelegung für Rot/Grün/Blau in verschiedenen Permutationen einstellen und so softwareseitig mögliche Belegungsprobleme beseitigen.
-
-<!-- DOC -->
-### **Buzzer**
-
-Das Logikmodul unterstützt 3 verschiedene Töne bzw. Lautstärken für den Buzzer.
-In den Eingabefeldern kann man die Tonfrequenzen für die einzelnen Töne für Laut/Mittel und Leise angeben. Über die Tonhöhe werden indirekt auch die Lautstärken gesteuert.
 
 ## **Benutzerformeln**
 
@@ -861,7 +848,6 @@ Die hier für jeden Kanal zur Verfügung stehenden Möglichkeiten der Beeinfluss
 * Konvertiere ein DPT in einen anderen
 * Verzögere ein Signal
 * Zeitschaltuhr-Funktionen
-* tbc
 
 
 
@@ -2317,30 +2303,11 @@ Bei einem EIN-Signal wird kein Wert gesendet, sondern die ETS-Funktion "Gerät z
 
 In einem weiteren Feld kann die PA ausgegeben werden.
 
-#### **Ja - Tonwiedergabe (Buzzer)**
+#### **Ja - Status-LED schalten**
 
-Wird nur angeboten, wenn ein Buzzer vorhanden ist.
+Bei einem EIN-Signal wird kein Wert gesendet, sondern der angegebene Statuskanal angesprochen.
 
-Bei einem EIN-Signal wird kein Wert gesendet, sondern der interne Buzzer zur Tonwiedergabe angesprochen. In einem weiteren Feld wird angegeben, in welcher Lautstärke die Tonwiedergabe gestartet oder ob sie gestoppt wird.
-
-Falls der Buzzer gerade über das Kommunikationsobjekt 19 gesperrt ist, wird kein Ton ausgegeben und ein eventueller laufender Ton abgeschaltet.
-
-Falls dieser Kanal als Alarmkanal gekennzeichnet ist, wird ein Ton unabhängig von der Sperre ausgegeben.
-
-<!-- DOC Skip="1" -->
-<kbd>![Tonwiedergabe](pics/Tonwiedergabe.PNG)</kbd>
-
-#### **Ja - RGB-LED schalten**
-
-Wird nur angeboten, wenn eine RGB-LED vorhanden ist.
-
-Bei einem EIN-Signal wird kein Wert gesendet, sondern die interne RBG-LED angesprochen. So kann man eine optische Rückmeldung erreichen.
-
-In einem weiteren Feld wird die Farbe eingestellt. Ist die Farbe Schwarz eingestellt, wir die LED ausgeschaltet.
-
-Falls die LED gerade über das Kommunikationsobjekt 18 gesperrt ist, wird die LED nicht eingeschaltet und falls sie an ist, wird sie abgeschaltet.
-
-Falls dieser Kanal als Alarmkanal gekennzeichnet ist, wird die LED unabhängig von der Sperre eingeschaltet.
+In weiteren Feldern wird der Status-LED Kanal angegeben und der darauf auszugebende LED-Effekt.
 
 <!-- DOC -->
 ### **Wert für EIN senden als**
@@ -2390,16 +2357,20 @@ Hier wird angegeben, über welchen Logikstatus-Kanal die LED angesprochen wird.
 
 <kbd>![Led Farbe festlegen](pics/LedColor.PNG)</kbd>
 
-Das Feld erscheint nur, wenn für "Wert für EIN senden" ein "Ja - RGB-LED schalten" ausgewählt wurde.
+Das Feld erscheint nur, wenn für "Wert für EIN senden" ein "Ja - Status-LED schalten" ausgewählt wurde.
 
 Hier wird die Farbe der LED bestimmt, in der sie leuchten soll. Wird die Farbe Schwarz gewählt (#000000), geht die LED aus. Für die Auswahl der Farbe kann auch ein Farbauswahldialog verwendet werden.
-
-Diese Option kann nur funktionieren, wenn das Gerät, auf dem die Applikation Logik läuft, auch eine RGB-LED verbaut hat.
 
 <!-- DOC -->
 #### **Status-LED Effekt**
 
-Wähle den Effekt.
+Hier kann angegeben werden, wie sich die LED verhalten soll. 
+
+* **Aus** - Die LED wird ausgeschaltet
+* **Ein** - Die LED wird in der angegebenen Farbe eingeschaltet
+* **Blinken** - Die LED blinkt in der angegebenen Farbe und Dauer
+* **Pulsieren** - Die LED pulsiert in der angegebenen Farbe und Dauer
+* **Aufblitzen** - Die LED blitzt kurz in der angegebenen Farbe auf
 
 <!-- DOC -->
 #### **Status-LED Effektdauer**
@@ -2493,27 +2464,11 @@ Bei einem AUS-Signal wird kein Wert auf die GA am Ausgang gesendet sondern ein L
 
 Bei einem AUS-Signal wird kein Wert gesendet, sondern die ETS-Funktion "Gerät zurücksetzen" an eine bestimmte PA geschickt. So kann man bestimmte Geräte überwachen und bei Bedarf zurücksetzen, ohne die ETS starten zu müssen.
 
-#### **Ja - Tonwiedergabe (Buzzer)**
+#### **Ja - Status-LED schalten**
 
-Wird nur angeboten, wenn ein Buzzer vorhanden ist.
+Bei einem AUS-Signal wird kein Wert gesendet, sondern der angegebene Statuskanal angesprochen.
 
-Bei einem AUS-Signal wird kein Wert gesendet, sondern der interne Buzzer zur Tonwiedergabe angesprochen. In einem weiteren Feld wird angegeben, ob die Tonwiedergabe gestartet oder gestoppt wird.
-
-Falls der Buzzer gerade über das Kommunikationsobjekt 19 gesperrt ist, wird kein Ton ausgegeben und ein eventueller laufender Ton abgeschaltet.
-
-Falls dieser Kanal als Alarmkanal gekennzeichnet ist, wird ein Ton unabhängig von der Sperre ausgegeben.
-
-#### **Ja - RGB-LED schalten**
-
-Wird nur angeboten, wenn eine RGB-LED vorhanden ist.
-
-Bei einem AUS-Signal wird kein Wert gesendet, sondern die interne RBG-LED angesprochen. So kann man eine optische Rückmeldung erreichen.
-
-In einem weiteren Feld wird die Farbe eingestellt. Ist die Farbe Schwarz eingestellt, wir die LED ausgeschaltet.
-
-Falls die LED gerade über das Kommunikationsobjekt 18 gesperrt ist, wird die LED nicht eingeschaltet und falls sie an ist, wird sie abgeschaltet.
-
-Falls dieser Kanal als Alarmkanal gekennzeichnet ist, wird die LED unabhängig von der Sperre eingeschaltet.
+In weiteren Feldern wird der Status-LED Kanal angegeben und der darauf auszugebende LED-Effekt.
 
 <!-- DOC -->
 ### **Wert für AUS senden als**
@@ -2544,13 +2499,34 @@ Hier wird eine physikalische Adresse in der üblichen Punkt-Notation erwartet. D
 
 Dies entspricht genau der Funktion "Gerät zurücksetzen" in der ETS.
 
-### **LED-Farbe festlegen (Schwarz=aus)**
+### **Status-LED Kanal**
 
-Das Feld erscheint nur, wenn für "Wert für AUS senden" ein "Ja - RGB-LED schalten" ausgewählt wurde.
+Hier wird angegeben, über welchen Logikstatus-Kanal die LED angesprochen wird.
+
+<!-- DOC -->
+#### **Status-LED Farbe**
+
+<kbd>![Led Farbe festlegen](pics/LedColor.PNG)</kbd>
+
+Das Feld erscheint nur, wenn für "Wert für EIN senden" ein "Ja - Status-LED schalten" ausgewählt wurde.
 
 Hier wird die Farbe der LED bestimmt, in der sie leuchten soll. Wird die Farbe Schwarz gewählt (#000000), geht die LED aus. Für die Auswahl der Farbe kann auch ein Farbauswahldialog verwendet werden.
 
-Diese Option kann nur funktionieren, wenn das Gerät, auf dem die Applikation Logik läuft, auch eine RGB-LED verbaut hat.
+<!-- DOC -->
+#### **Status-LED Effekt**
+
+Hier kann angegeben werden, wie sich die LED verhalten soll. 
+
+* **Aus** - Die LED wird ausgeschaltet
+* **Ein** - Die LED wird in der angegebenen Farbe eingeschaltet
+* **Blinken** - Die LED blinkt in der angegebenen Farbe und Dauer
+* **Pulsieren** - Die LED pulsiert in der angegebenen Farbe und Dauer
+* **Aufblitzen** - Die LED blitzt kurz in der angegebenen Farbe auf
+
+<!-- DOC -->
+#### **Status-LED Effektdauer**
+
+Dauer des Effekts in ms.
 
 <!-- DOC -->
 ### **Wert für AUS senden (als 3 Byte RGB)**

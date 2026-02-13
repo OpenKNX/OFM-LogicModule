@@ -37,25 +37,9 @@ Bei einem AUS-Signal wird kein Wert auf die GA am Ausgang gesendet sondern ein L
 
 Bei einem AUS-Signal wird kein Wert gesendet, sondern die ETS-Funktion "Gerät zurücksetzen" an eine bestimmte PA geschickt. So kann man bestimmte Geräte überwachen und bei Bedarf zurücksetzen, ohne die ETS starten zu müssen.
 
-#### Ja - Tonwiedergabe (Buzzer)
+#### Ja - Status-LED schalten
 
-Wird nur angeboten, wenn ein Buzzer vorhanden ist.
+Bei einem AUS-Signal wird kein Wert gesendet, sondern der angegebene Statuskanal angesprochen.
 
-Bei einem AUS-Signal wird kein Wert gesendet, sondern der interne Buzzer zur Tonwiedergabe angesprochen. In einem weiteren Feld wird angegeben, ob die Tonwiedergabe gestartet oder gestoppt wird.
-
-Falls der Buzzer gerade über das Kommunikationsobjekt 19 gesperrt ist, wird kein Ton ausgegeben und ein eventueller laufender Ton abgeschaltet.
-
-Falls dieser Kanal als Alarmkanal gekennzeichnet ist, wird ein Ton unabhängig von der Sperre ausgegeben.
-
-#### Ja - RGB-LED schalten
-
-Wird nur angeboten, wenn eine RGB-LED vorhanden ist.
-
-Bei einem AUS-Signal wird kein Wert gesendet, sondern die interne RBG-LED angesprochen. So kann man eine optische Rückmeldung erreichen.
-
-In einem weiteren Feld wird die Farbe eingestellt. Ist die Farbe Schwarz eingestellt, wir die LED ausgeschaltet.
-
-Falls die LED gerade über das Kommunikationsobjekt 18 gesperrt ist, wird die LED nicht eingeschaltet und falls sie an ist, wird sie abgeschaltet.
-
-Falls dieser Kanal als Alarmkanal gekennzeichnet ist, wird die LED unabhängig von der Sperre eingeschaltet.
+In weiteren Feldern wird der Status-LED Kanal angegeben und der darauf auszugebende LED-Effekt.
 

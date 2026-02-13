@@ -104,3 +104,5 @@ Weitere Features:
 * Speichern von Werten über einen Stromausfall hinweg 
 * Senden von gespeicherten Werten nach einem Neustart
 
+
+
