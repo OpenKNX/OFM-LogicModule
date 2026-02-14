@@ -90,6 +90,9 @@ Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer d
 * NEU: Der Status von LEDs kann in der Logik als interner Eingang dienen
 * NEU: Das Logikmodul kann jetzt den Ausgang auf Statuskanäle legen und so LEDs steuern
 
+14.02.2026: Firmware 3.10, Applikation 3.10:
+
+* interne Version, nicht für ein Release vorgesehen. Falls (aus organisatorischen Gründen - bedingt durch den größeren Umbau) doch diese Version in ein Release gelangen sollte, gelten die Einschränkungen, die für Release 4.0 beschrieben wurden.
 
 24.08.2025: Firmware 3.7.2, Applikation 3.7:
 
