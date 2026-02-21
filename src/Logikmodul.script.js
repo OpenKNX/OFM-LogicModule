@@ -1,6 +1,9 @@
-function LOG_Nop(input, output, context) { }
+function LOG_Nop(input, output, context) {
+    Log.info("<<debug:LOG>> LOG_Nop(input, output, context)");
+}
 
 function LOG_ClearContent(input, output, context) {
+    Log.info("<<debug:LOG>> LOG_ClearContent(input, output, context)");
     output.ResultDisplay = "";
 }
 
@@ -71,15 +74,19 @@ function LOG_processUserFormula(command, parFormulaName, iFormulaIndex, device, 
 }
 
 function LOG_CalcAbsFromRel(input, output, context) {
+    Log.info("<<debug:LOG>> LOG_CalcAbsFromRel(input, output, context) ; input.AbsRel=" + input.AbsRel);
     if (input.AbsRel == 2) {
         output.AbsReadKO = context.OwnKO + input.RelWriteKO;
         output.AbsWriteKO = output.AbsReadKO;
+        Log.info("<<debug:LOG>>> output.AbsWriteKO=" + output.AbsWriteKO + " (input.RelWriteKO/output.AbsWriteKO=" + input.RelWriteKO + " + context.OwnKO=" + context.OwnKO + ")");
     }
 }
 
 function LOG_CalcRelFromAbs(input, output, context) {
+    Log.info("<<debug:LOG>> LOG_CalcRelFromAbs(input, output, context) ; output.AbsRel=" + output.AbsRel);
     if (output.AbsRel == 1) {
         output.RelWriteKO = input.AbsWriteKO - context.OwnKO;
+        Log.info("<<debug:LOG>>> output.RelWriteKO=" + output.RelWriteKO + " (input.AbsWriteKO=" + input.AbsWriteKO + " - context.OwnKO=" + context.OwnKO + ")");
     }
 }
 
