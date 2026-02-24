@@ -71,10 +71,7 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
         * [ReadRequest senden](#ja---readrequest-senden)
         * [Gerät zurücksetzen senden](#ja---ger%C3%A4t-zur%C3%BCcksetzen-senden)
           * [Physikalische Adresse](#physikalische-adresse)
-        * [Tonwiedergabe (Buzzer)](#ja---tonwiedergabe-buzzer)
-          * [Alarmausgabe (Buzzer oder Sperre trotz Sperre schalten)?](#alarmausgabe-buzzer-oder-led-trotz-sperre-schalten) 
-        * [RGB-LED schalten](#ja---rgb-led-schalten)
-          * [LED-Farbe festlegen (Schwarz=aus)](#led-farbe-festlegen-schwarzaus) 
+        * [Status-LED schalten](#ja---status-led-schalten)
         * [Formeln](#formeln)
 
 
@@ -445,7 +442,7 @@ Die Version 4.0 des Logikmoduls enthält wenig neue Features - nur die Anpassung
 
 ### **Weggefallene Funktionen**
 
-Im klassischen Sensormodul von SmartMF konnte man über einen Logikkanal den Buzzer vom Sensormodul schalten. Ferner konnte man - sofern man die entsprechende Zusatzhardware bestellt hatte - auch eine RGB-LED mit dem Logikmodul schalten. Beide Optionen waren bei anderen Hardwarevarianten nicht vorhanden. Beim Sensormodul sind sie nun entfallen und wurden durch eine passende Info LED Implementierung und das Buzzer/Vibration Modul ersetzt.
+Im klassischen Sensormodul von SmartMF konnte man über einen Logikkanal den Buzzer vom Sensormodul schalten. Ferner konnte man - sofern man die entsprechende Zusatzhardware bestellt hatte - auch eine RGB-LED mit dem Logikmodul schalten. Beide Optionen waren bei anderen Hardwarevarianten nicht vorhanden. Beim Logikmodul sind sie nun entfallen und wurden durch eine passende Info LED Implementierung und das Buzzer/Vibration Modul ersetzt.
 
 ### **Einfluss auf das Update-Verhalten der ETS**
 
@@ -457,25 +454,21 @@ Falls jemand die Sensormodul-Variante mit einer RGB-LED besitzt, so soll er mich
 
 ### **Verhalten vom Konfigurationstransfer**
 
-Im neuen Logikmodul 4.0 (das in den letzten 6 Jahren mehr oder minder nur erweitert worden ist) wurde etwas "aufgeräumt", was dazu geführt hat, dass auch Parameter gelöscht wurden, die nicht mehr benötigt werden und teilweise früher zu Problemen geführt haben. Das führt aber dazu, dass der Konfigurationstransfer jetzt mit unerwarteten Meldungen reagiert.
+Im neuen Logikmodul 4.0 (das in den letzten 6 Jahren mehr oder minder nur erweitert worden ist) wurde etwas "aufgeräumt", was dazu geführt hat, dass auch Parameter gelöscht wurden, die nicht mehr benötigt werden und teilweise früher zu Problemen geführt haben. Das führt aber dazu, dass der Konfigurationstransfer jetzt mit Meldungen reagiert.
 
 #### **Transfer von Logikkanälen Version kleiner 4.0 auf Versionen größer gleich 4.0 (alt auf neu)**
 
-Da die neue Logik weder LEDs noch Buzzer steuern kann, funktionieren Transfers von Kanälen, die als Quelle eine Buzzer- oder LED-Steuerung machen, nicht ohne hinterher einen manuellen Eingriff vorzunehmen. Man muss den Ausgang nach einem solchen Transfer auf jeden Fall anpassen.
+Da die neue Logik weder LEDs noch Buzzer steuern kann, funktionieren Transfers von Kanälen, die als Quelle eine Buzzer- oder LED-Steuerung machen, nicht ohne hinterher einen manuellen Eingriff vorzunehmen. Speziell Importe von Buzzer-Kanälen werden als Fehler gemeldet, da es keine Buzzer-Kanäle in der neuen Logik gibt. Man muss den Ausgang nach einem solchen Transfer auf jeden Fall anpassen.
 
-Alle anderen Logikkanäle funktionieren ohne weiteres, allerdings werden im Transfer-String mehr Parameter transportiert, als im Ziel vorhanden sind (im Ziel wurde ja aufgeräumt). Deswegen bringt der Konfigurationstransfer Warnungen. Es empfiehlt sich natürlich immer, solche Warnungen zu beachten und in diesem Fall die Ausgänge im Ziel nochmal mit den Ausgängen der Quelle zu verifizieren, aber bei allen Tests waren diese gleich.
+Alle anderen Logikkanäle funktionieren ohne weiteres, allerdings werden im Transfer-String mehr Parameter transportiert, als im Ziel vorhanden sind (im Ziel wurde ja aufgeräumt). Deswegen bringt der Konfigurationstransfer immer die Inforation, dass von einer älteren Version in die Version 4.0 importiert wurde. Es empfiehlt sich natürlich immer, solche Warnungen zu beachten und in diesem Fall die Ausgänge im Ziel nochmal mit den Ausgängen der Quelle zu verifizieren, aber bei allen Tests waren diese gleich.
 
 Der Transport von Basiseinstellungen kann auch Warnungen liefern, funktioniert aber ebenso problemlos.
 
 #### **Transfer von Logikkanälen Version größer gleich 4.0 auf Versionen kleiner 4.0 (neu auf alt)**
 
-Grundsätzlich funktionieren die Transfers in diese Richtung nicht mehr ohne manuelle Nacharbeiten. 
+Grundsätzlich funktionieren die Transfers in diese Richtung sehr gut, der Konfigurationstransfer wurde entsprechend angepasst. Der Import von einem LED-Statuskanal funktioniert nicht und erfordert manuelle Nacharbeiten. 
 
 > ACHTUNG: Den Transport von Basiseinstellungen sollte gar nicht versucht werden! Dies kann bei der alten Logikmodul-Version dazu führen, dass alle Einstellungen zu allen Ausgängen aller Logikkanäle zurückgesetzt werden. 
-
-Einzelne Logikkanäle können transferiert werden, allerdings kommen die Einstellungen vom Ausgang in 95% der Fälle nicht an. Diese müssen immer manuell mit der Quelle abgeglichen werden.
-Ironischerweise meldet der Konfigurationstransfer hier in allen getesteten Fällen ein OK ohne Warnungen oder Fehler.
-
 
 ## **Allgemein**
 
