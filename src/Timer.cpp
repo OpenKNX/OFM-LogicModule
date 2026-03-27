@@ -1,4 +1,3 @@
-#include "KnxHelper.h"
 #include "Timer.h"
 #include "SunRiSet.h"
 #include "Arduino.h"

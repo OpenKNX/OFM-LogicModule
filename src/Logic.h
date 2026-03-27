@@ -30,9 +30,11 @@ struct sKoLookup
 class Logic : public OpenKNX::Module
 {
   public:
-    Logic();
-    ~Logic();
+  Logic();
+  ~Logic();
 
+    static Dpt &getDPT(PT_LogicDpt iDptIndex);
+    
     // instance
     void addKoLookup(uint16_t iKoNumber, uint8_t iChannelId, uint8_t iIOIndex);
     bool getKoLookup(uint16_t iKoNumber, sKoLookup **iKoLookup = nullptr);
@@ -80,8 +82,8 @@ class Logic : public OpenKNX::Module
     uint16_t mNumKoLookups = 0;
     uint32_t readRequestDelay = 0;
 
+    static Dpt sDpt[];
     void prepareChannels();
-
     void processTimerRestore();
 };
 

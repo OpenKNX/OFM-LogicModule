@@ -11,6 +11,31 @@ Logic openknxLogic;
 
 uint8_t Logic::sMagicWord[] = {0xAE, 0x49, 0xD2, 0x9F};
 
+Dpt Logic::sDpt[] = {
+    Dpt(1, 1),
+    Dpt(2, 1),
+    Dpt(5, 10),
+    Dpt(5, 1),
+    Dpt(6, 1),
+    Dpt(7, 1),
+    Dpt(8, 1),
+    Dpt(9, 2),
+    Dpt(16, 1),
+    Dpt(17, 1),
+    Dpt(232, 600),
+    Dpt(10, 1, 1),
+    Dpt(11, 1),
+    Dpt(12, 1),
+    Dpt(13, 1),
+    Dpt(14, 1),
+    Dpt(19, 1),
+    Dpt(5, 10)}; // DPT3 is sent as a number 
+
+Dpt &Logic::getDPT(PT_LogicDpt iDptIndex)
+{
+    return sDpt[(uint8_t)iDptIndex];
+}
+
 // TODO Common Time
 Timer &Logic::sTimer = Timer::instance();                      // singleton
 

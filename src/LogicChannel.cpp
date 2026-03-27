@@ -175,11 +175,6 @@ uint8_t *LogicChannel::getStringParam(uint16_t iParamIndex)
     return knx.paramData(lIndex);
 }
 
-uint32_t LogicChannel::getTimeDelayParam(uint16_t iParamIndex, bool iAsSeconds /* = false */)
-{
-    return getDelayPattern(calcParamIndex(iParamIndex), iAsSeconds);
-}
-
 /*******************************
  * ComObject helper
  * ****************************/
@@ -222,7 +217,7 @@ GroupObject *LogicChannel::getKo(uint8_t iIOIndex)
     // new behaviour since 4.0: We support also external KO for input
     GroupObject *lKo = nullptr;
     int16_t lExternalAccess = 0;
-    uint8_t lAbsRel = 0;
+    PT_KORelInput lAbsRel = PT_KORelInput::None;
     if (iIOIndex == IO_Input1)
     {
         lExternalAccess = ParamLOG_fE1OtherKORel;
@@ -236,12 +231,12 @@ GroupObject *LogicChannel::getKo(uint8_t iIOIndex)
     uint16_t lKoNumber = calcKoNumber(iIOIndex);
     switch (lAbsRel)
     {
-        case VAL_AbsRel_Absolute:
+        case PT_KORelInput::Absolute:
             if (lExternalAccess > 0 && lExternalAccess < MAIN_MaxKoNumber)
                 lKoNumber = lExternalAccess;
             break;
 
-        case VAL_AbsRel_Relative:
+        case PT_KORelInput::Relative:
         {
             int16_t lNewKoNumber = lKoNumber + lExternalAccess;
             if (lNewKoNumber > 0 && lNewKoNumber < MAIN_MaxKoNumber)
@@ -257,7 +252,7 @@ GroupObject *LogicChannel::getKo(uint8_t iIOIndex)
 
 Dpt &LogicChannel::getKoDPT(uint8_t iIOIndex, bool iHandleDpt2asByte /* = false */)
 {
-    uint8_t lDpt;
+    PT_LogicDpt lDpt;
     switch (iIOIndex)
     {
         case IO_Input1:
@@ -270,27 +265,27 @@ Dpt &LogicChannel::getKoDPT(uint8_t iIOIndex, bool iHandleDpt2asByte /* = false 
             lDpt = ParamLOG_fODpt;
             break;
         default:
-            lDpt = 0;
+            lDpt = PT_LogicDpt::DPT_1;
             break;
     }
-    if (iHandleDpt2asByte && lDpt == VAL_DPT_2) // DPT2
-        lDpt = VAL_DPT_5; // handle DPT2 as DPT5 for internal processing
-    return getDPT(lDpt);
+    if (iHandleDpt2asByte && lDpt == PT_LogicDpt::DPT_2) // DPT2
+        lDpt = PT_LogicDpt::DPT_5; // handle DPT2 as DPT5 for internal processing
+    return Logic::getDPT(lDpt);
 }
 
 uint16_t LogicChannel::checkAdditionalWrite(bool iOn)
 {
     int16_t lKoNumber = 0;
-    uint16_t lAbsRel = 0;
+    PT_KORelInput lAbsRel = PT_KORelInput::None;
     if (iOn)
     {
         lAbsRel = ParamLOG_fOOnKOSend;
         switch (lAbsRel)
         {
-            case VAL_AbsRel_Absolute:
+            case PT_KORelInput::Absolute:
                 lKoNumber = ParamLOG_fOOnKOSendNumber;
                 break;
-            case VAL_AbsRel_Relative:
+            case PT_KORelInput::Relative:
                 lKoNumber = ParamLOG_fOOnKOSendNumberRel + calcKoNumber(IO_Output);
                 break;
             default:
@@ -303,10 +298,10 @@ uint16_t LogicChannel::checkAdditionalWrite(bool iOn)
         lAbsRel = ParamLOG_fOOffKOSend;
         switch (lAbsRel)
         {
-            case VAL_AbsRel_Absolute:
+            case PT_KORelInput::Absolute:
                 lKoNumber = ParamLOG_fOOffKOSendNumber;
                 break;
-            case VAL_AbsRel_Relative:
+            case PT_KORelInput::Relative:
                 lKoNumber = ParamLOG_fOOffKOSendNumberRel + calcKoNumber(IO_Output);
                 break;
             default:
@@ -321,11 +316,11 @@ uint16_t LogicChannel::checkAdditionalWrite(bool iOn)
 
 void LogicChannel::knxWrite(uint8_t iIOIndex, KNXValue &iValue, bool iOn, bool iAdditional /* = true */)
 {
-    bool lSendOnChanged = ParamLOG_fOSendOnChange;
+    PT_SendOnChange lSendOnChanged = ParamLOG_fOSendOnChange;
     GroupObject *lKo = getKo(iIOIndex);
     bool lChanged = false;
     Dpt &lDpt = getKoDPT(iIOIndex, true);
-    if (lSendOnChanged)
+    if (lSendOnChanged == PT_SendOnChange::Nur_geaenderte_Werte_senden)
         lChanged = lKo->valueNoSendCompare(iValue, lDpt);
     else
         lKo->value(iValue, lDpt);
@@ -338,7 +333,7 @@ void LogicChannel::knxWrite(uint8_t iIOIndex, KNXValue &iValue, bool iOn, bool i
         {
             lKo = &knx.getGroupObject(lKoNumber);
             lChanged = false;
-            if (lSendOnChanged)
+            if (lSendOnChanged == PT_SendOnChange::Nur_geaenderte_Werte_senden)
                 lChanged = lKo->valueNoSendCompare(iValue, lDpt);
             else
                 lKo->value(iValue, lDpt);
@@ -478,9 +473,9 @@ void LogicChannel::setStatusLed(uint16_t iParamIndex)
 
 // we get an dpt dependant parameter value for different
 // input evaluation
-LogicValue LogicChannel::getParamForDelta(uint8_t iDpt, uint16_t iParamIndex)
+LogicValue LogicChannel::getParamForDelta(PT_LogicDpt iDpt, uint16_t iParamIndex)
 {
-    if (iDpt == VAL_DPT_9 || iDpt == VAL_DPT_14)
+    if (iDpt == PT_LogicDpt::DPT_9 || iDpt == PT_LogicDpt::DPT_14)
     {
         LogicValue lValue = getFloatParam(iParamIndex);
         return lValue;
@@ -497,56 +492,56 @@ LogicValue LogicChannel::getParamForDelta(uint8_t iDpt, uint16_t iParamIndex)
 // DPT2,17 => straight forward byte values
 // DPT5001 => scale down to [0..100]
 // DPT9 => transport as float
-LogicValue LogicChannel::getParamByDpt(uint8_t iDpt, uint16_t iParamIndex)
+LogicValue LogicChannel::getParamByDpt(PT_LogicDpt iDpt, uint16_t iParamIndex)
 {
     switch (iDpt)
     {
-        case VAL_DPT_1:
+        case PT_LogicDpt::DPT_1:
         {
             LogicValue lValue = getByteParam(iParamIndex) != 0;
             return lValue;
         }
-        case VAL_DPT_2:
-        case VAL_DPT_3:
-        case VAL_DPT_5:
-        case VAL_DPT_17:
-        case VAL_DPT_5001:
+        case PT_LogicDpt::DPT_2:
+        case PT_LogicDpt::DPT_3:
+        case PT_LogicDpt::DPT_5:
+        case PT_LogicDpt::DPT_17:
+        case PT_LogicDpt::DPT_5001:
         {
             LogicValue lValue = getByteParam(iParamIndex);
             return lValue;
         }
-        case VAL_DPT_6:
+        case PT_LogicDpt::DPT_6:
         {
             LogicValue lValue = getSByteParam(iParamIndex);
             return lValue;
         }
-        case VAL_DPT_7:
+        case PT_LogicDpt::DPT_7:
         {
             LogicValue lValue = getWordParam(iParamIndex);
             return lValue;
         }
-        case VAL_DPT_8:
+        case PT_LogicDpt::DPT_8:
         {
             LogicValue lValue = getSWordParam(iParamIndex);
             return lValue;
         }
-        case VAL_DPT_232:
+        case PT_LogicDpt::DPT_232:
         {
             LogicValue lValue = getIntParam(iParamIndex);
             return lValue;
         }
-        case VAL_DPT_9:
-        case VAL_DPT_14:
+        case PT_LogicDpt::DPT_9:
+        case PT_LogicDpt::DPT_14:
         {
             LogicValue lValue = getFloatParam(iParamIndex);
             return lValue;
         }
-        case VAL_DPT_12:
+        case PT_LogicDpt::DPT_12:
         {
             LogicValue lValue = getIntParam(iParamIndex);
             return lValue;
         }
-        case VAL_DPT_13:
+        case PT_LogicDpt::DPT_13:
         {
             LogicValue lValue = getSIntParam(iParamIndex);
             return lValue;
@@ -563,21 +558,21 @@ LogicValue LogicChannel::getParamByDpt(uint8_t iDpt, uint16_t iParamIndex)
 // DPT1,2,5,6,7,8,17,232 => straight forward
 // DPT5001 => scale down to [0..100]
 // DPT9 => transport as float
-LogicValue LogicChannel::getInputValue(uint8_t iIOIndex, uint8_t *eDpt)
+LogicValue LogicChannel::getInputValue(uint8_t iIOIndex, PT_LogicDpt *eDpt)
 {
     // check for timer
-    if (ParamLOG_fLogic == VAL_Logic_Timer && iIOIndex == IO_Input1)
+    if (ParamLOG_fLogic == PT_Logic::ZEITSCHALTUHR && iIOIndex == IO_Input1)
     {
         // timer value is handled as scene, of output type is scene
-        if (ParamLOG_fODpt == VAL_DPT_17)
+        if (ParamLOG_fODpt == PT_LogicDpt::DPT_17)
         {
-            *eDpt = VAL_DPT_17;      
+            *eDpt = PT_LogicDpt::DPT_17;      
             LogicValue lValue = (uint8_t)(pCurrentTimerValueNum > 0 ? pCurrentTimerValueNum - 1 : 0);
             return lValue;  
         } 
         else
         {
-            *eDpt = VAL_DPT_5;      
+            *eDpt = PT_LogicDpt::DPT_5;      
             LogicValue lValue = pCurrentTimerValueNum;
             return lValue;  
         }
@@ -585,11 +580,10 @@ LogicValue LogicChannel::getInputValue(uint8_t iIOIndex, uint8_t *eDpt)
     else
     {
         // check for constant
-        uint16_t lParamIndex = (iIOIndex == IO_Input1) ? LOG_fE1Convert : LOG_fE2Convert;
-        uint8_t lConvert = (getByteParam(lParamIndex) & LOG_fE1ConvertMask) >> LOG_fE1ConvertShift;
-        lParamIndex = (iIOIndex == IO_Input1) ? LOG_fE1Dpt : LOG_fE2Dpt;
-        *eDpt = getByteParam(lParamIndex);
-        if (lConvert == VAL_InputConvert_Constant)
+        PT_InputConv lConvert = (iIOIndex == IO_Input1) ? ParamLOG_fE1Convert : ParamLOG_fE2Convert;
+        uint16_t lParamIndex = (iIOIndex == IO_Input1) ? LOG_fE1Dpt : LOG_fE2Dpt;
+        *eDpt = (PT_LogicDpt)getByteParam(lParamIndex);
+        if (lConvert == PT_InputConv::Konstante)
         {
             // input value is a constant stored in param memory
             uint16_t lParamIndex = (iIOIndex == IO_Input1) ? LOG_fE1LowDelta : LOG_fE2LowDelta;
@@ -603,48 +597,48 @@ LogicValue LogicChannel::getInputValue(uint8_t iIOIndex, uint8_t *eDpt)
     }
 }
 
-LogicValue LogicChannel::getOtherKoValue(uint16_t iKoNumber, uint8_t iDptParamIndex)
+LogicValue LogicChannel::getOtherKoValue(uint16_t iKoNumber, uint16_t iDptParamIndex)
 {
     GroupObject *lKo = &knx.getGroupObject(iKoNumber);
-    uint8_t lDpt = getByteParam(iDptParamIndex);
+    PT_LogicDpt lDpt = (PT_LogicDpt)getByteParam(iDptParamIndex);
     return getKoValue(lKo, lDpt, false);
 }
 
-LogicValue LogicChannel::getKoValue(uint8_t iIOIndex, uint8_t iDpt)
+LogicValue LogicChannel::getKoValue(uint8_t iIOIndex, PT_LogicDpt iDpt)
 {
     GroupObject *lKo = getKo(iIOIndex);
     return getKoValue(lKo, iDpt, iIOIndex < IO_Output);
 }
 
-LogicValue LogicChannel::getKoValue(GroupObject *iKo, uint8_t iDpt, bool iIsInput)
+LogicValue LogicChannel::getKoValue(GroupObject *iKo, PT_LogicDpt iDpt, bool iIsInput)
 {
     LogicValue lValue = false;
     // based on dpt, we read the correct c type.
     switch (iDpt)
     {
-        case VAL_DPT_2:
+        case PT_LogicDpt::DPT_2:
         {
             lValue = iKo->valueRef()[0];
             break;
         }
-        case VAL_DPT_3:
+        case PT_LogicDpt::DPT_3:
         {
             lValue = (uint8_t)(iKo->valueRef()[0] & 0x0F);
             break;
         }
-        case VAL_DPT_6:
+        case PT_LogicDpt::DPT_6:
         {
-            lValue = (int8_t)iKo->value(getDPT(VAL_DPT_6));
+            lValue = (int8_t)iKo->value(Logic::getDPT(PT_LogicDpt::DPT_6));
             break;
         }
-        case VAL_DPT_8:
+        case PT_LogicDpt::DPT_8:
         {
-            lValue = (int16_t)iKo->value(getDPT(VAL_DPT_8));
+            lValue = (int16_t)iKo->value(Logic::getDPT(PT_LogicDpt::DPT_8));
             break;
         }
-        case VAL_DPT_12:
+        case PT_LogicDpt::DPT_12:
         {
-            lValue = (uint32_t)iKo->value(getDPT(VAL_DPT_12));
+            lValue = (uint32_t)iKo->value(Logic::getDPT(PT_LogicDpt::DPT_12));
             break;
         }
         // case VAL_DPT_7:
@@ -654,15 +648,15 @@ LogicValue LogicChannel::getKoValue(GroupObject *iKo, uint8_t iDpt, bool iIsInpu
         //     lValue =
         //         lKo->valueRef()[0] + 256 * lKo->valueRef()[1] + 65536 * lKo->valueRef()[2];
         //     break;
-        case VAL_DPT_9:
-        case VAL_DPT_14:
+        case PT_LogicDpt::DPT_9:
+        case PT_LogicDpt::DPT_14:
         {
-            lValue = (float)iKo->value(getDPT(iDpt));
+            lValue = (float)iKo->value(Logic::getDPT(iDpt));
             break;
         } // case VAL_DPT_17:
         default:
         {
-            lValue = (int32_t)iKo->value(getDPT(iDpt));
+            lValue = (int32_t)iKo->value(Logic::getDPT(iDpt));
             break;
         }
     }
@@ -682,66 +676,66 @@ LogicValue LogicChannel::getKoValue(GroupObject *iKo, uint8_t iDpt, bool iIsInpu
 
 void LogicChannel::writeConstantValue(uint16_t iParamIndex, bool iOn)
 {
-    uint8_t lDpt = getByteParam(LOG_fODpt);
+    PT_LogicDpt lDpt = ParamLOG_fODpt;
     switch (lDpt)
     {
         uint8_t lValueByte;
-        case VAL_DPT_1:
+        case PT_LogicDpt::DPT_1:
             bool lValueBool;
             lValueBool = getByteParam(iParamIndex) != 0;
             knxWriteBool(IO_Output, lValueBool, iOn);
             break;
-        case VAL_DPT_2:
-        case VAL_DPT_3:
+        case PT_LogicDpt::DPT_2:
+        case PT_LogicDpt::DPT_3:
             lValueByte = getByteParam(iParamIndex);
             knxWriteInt(IO_Output, lValueByte, iOn);
             break;
-        case VAL_DPT_5:
-        case VAL_DPT_5001: // correct value is calculated by dpt handling
+        case PT_LogicDpt::DPT_5:
+        case PT_LogicDpt::DPT_5001: // correct value is calculated by dpt handling
             lValueByte = getByteParam(iParamIndex);
             knxWriteInt(IO_Output, lValueByte, iOn);
             break;
-        case VAL_DPT_17:
+        case PT_LogicDpt::DPT_17:
             lValueByte = getByteParam(iParamIndex) - 1;
             knxWriteInt(IO_Output, lValueByte, iOn);
             break;
-        case VAL_DPT_6:
+        case PT_LogicDpt::DPT_6:
             int8_t lValueShort;
             lValueShort = getSByteParam(iParamIndex);
             knxWriteInt(IO_Output, lValueShort, iOn);
             break;
-        case VAL_DPT_7:
+        case PT_LogicDpt::DPT_7:
             uint16_t lValueUWord;
             lValueUWord = getWordParam(iParamIndex);
             knxWriteInt(IO_Output, lValueUWord, iOn);
             break;
-        case VAL_DPT_8:
+        case PT_LogicDpt::DPT_8:
             int16_t lValueSWord;
             lValueSWord = getSWordParam(iParamIndex);
             knxWriteInt(IO_Output, lValueSWord, iOn);
             break;
-        case VAL_DPT_9:
-        case VAL_DPT_14:
+        case PT_LogicDpt::DPT_9:
+        case PT_LogicDpt::DPT_14:
             float lValueFloat;
             lValueFloat = getFloatParam(iParamIndex);
             knxWriteFloat(IO_Output, lValueFloat, iOn);
             break;
-        case VAL_DPT_12:
+        case PT_LogicDpt::DPT_12:
             uint32_t lValueInt;
             lValueInt = getIntParam(iParamIndex);
             knxWriteInt(IO_Output, lValueInt, iOn);
             break;
-        case VAL_DPT_13:
+        case PT_LogicDpt::DPT_13:
             int32_t lValueSInt;
             lValueSInt = getSIntParam(iParamIndex);
             knxWriteInt(IO_Output, lValueSInt, iOn);
             break;
-        case VAL_DPT_16:
+        case PT_LogicDpt::DPT_16:
             uint8_t *lValueStr;
             lValueStr = getStringParam(iParamIndex);
             knxWriteString(IO_Output, (char *)lValueStr);
             break;
-        case VAL_DPT_232:
+        case PT_LogicDpt::DPT_232:
             int32_t lValueRGB;
             lValueRGB = getIntParam(iParamIndex) >> 8;
             knxWriteInt(IO_Output, lValueRGB, iOn);
@@ -753,7 +747,7 @@ void LogicChannel::writeConstantValue(uint16_t iParamIndex, bool iOn)
 
 void LogicChannel::writeParameterValue(uint8_t iIOIndex, bool iOn)
 {
-    uint8_t lInputDpt;
+    PT_LogicDpt lInputDpt;
     LogicValue lValue = getInputValue(iIOIndex, &lInputDpt);
     writeValue(lValue, iOn);
 }
@@ -773,11 +767,11 @@ void LogicChannel::writeOtherKoValue(uint16_t iKoParamIndex, bool iIsRelative, u
 void LogicChannel::writeFunctionValue(uint16_t iParamIndex, bool iOn)
 {
     uint8_t lFunction = getByteParam(iParamIndex);
-    uint8_t lDptE1;
-    uint8_t lDptE2;
+    PT_LogicDpt lDptE1;
+    PT_LogicDpt lDptE2;
     LogicValue lE1 = getInputValue(BIT_EXT_INPUT_1, &lDptE1);
     LogicValue lE2 = getInputValue(BIT_EXT_INPUT_2, &lDptE2);
-    uint8_t lDptOut = getByteParam(LOG_fODpt);
+    PT_LogicDpt lDptOut = ParamLOG_fODpt;
     LogicValue lKoValue = getKoValue(IO_Output, lDptOut);
     LogicValue lValue = LogicFunction::callFunction(_channelIndex, lFunction, lDptE1, lE1, lDptE2, lE2, &lDptOut, lKoValue);
     if (isfinite((double)lValue))
@@ -786,28 +780,28 @@ void LogicChannel::writeFunctionValue(uint16_t iParamIndex, bool iOn)
 
 void LogicChannel::writeValue(LogicValue iValue, bool iOn)
 {
-    uint8_t lDpt = getByteParam(LOG_fODpt);
+    PT_LogicDpt lDpt = ParamLOG_fODpt;
     uint8_t lValueByte;
     switch (lDpt)
     {
-        case VAL_DPT_1:
+        case PT_LogicDpt::DPT_1:
             knxWriteBool(IO_Output, (bool)iValue, iOn);
             break;
-        case VAL_DPT_2:
+        case PT_LogicDpt::DPT_2:
             lValueByte = iValue;
             lValueByte &= 3;
             knxWriteInt(IO_Output, lValueByte, iOn);
             break;
-        case VAL_DPT_3:
+        case PT_LogicDpt::DPT_3:
             lValueByte = iValue;
             lValueByte &= 0x0F;
             knxWriteInt(IO_Output, lValueByte, iOn);
             break;
-        case VAL_DPT_5:
-        case VAL_DPT_5001:
+        case PT_LogicDpt::DPT_5:
+        case PT_LogicDpt::DPT_5001:
             knxWriteInt(IO_Output, (uint8_t)iValue, iOn);
             break;
-        case VAL_DPT_6:
+        case PT_LogicDpt::DPT_6:
             knxWriteInt(IO_Output, (int8_t)iValue, iOn);
             break;
             // lValueByte = lValue;
@@ -816,28 +810,28 @@ void LogicChannel::writeValue(LogicValue iValue, bool iOn)
             // lValueByte = (lValueByte / 100.0) * 255.0;
             // knxWrite(0, lValueByte);
             // break;
-        case VAL_DPT_7:
+        case PT_LogicDpt::DPT_7:
             // iValue = (uint16_t)abs((int16_t)iValue);
             knxWriteInt(IO_Output, (uint16_t)iValue, iOn);
             break;
-        case VAL_DPT_8:
+        case PT_LogicDpt::DPT_8:
             knxWriteInt(IO_Output, (int16_t)iValue, iOn);
             break;
-        case VAL_DPT_9:
-        case VAL_DPT_14:
+        case PT_LogicDpt::DPT_9:
+        case PT_LogicDpt::DPT_14:
             knxWriteFloat(IO_Output, (float)iValue, iOn);
             break;
-        case VAL_DPT_16:
+        case PT_LogicDpt::DPT_16:
             knxWriteString(IO_Output, ((const char *)iValue));
             break;
-        case VAL_DPT_17:
+        case PT_LogicDpt::DPT_17:
             lValueByte = abs((int8_t)iValue);
             lValueByte &= 0x3F;
             knxWriteInt(IO_Output, lValueByte, iOn);
             break;
-        case VAL_DPT_12:
-        case VAL_DPT_13:
-        case VAL_DPT_232:
+        case PT_LogicDpt::DPT_12:
+        case PT_LogicDpt::DPT_13:
+        case PT_LogicDpt::DPT_232:
             knxWriteInt(IO_Output, iValue, iOn);
             break;
         default:
@@ -850,12 +844,12 @@ void LogicChannel::writeValue(LogicValue iValue, bool iOn)
  *******************************/
 bool LogicChannel::isInputActive(uint8_t iIOIndex)
 {
-    uint8_t lIsActive = ((iIOIndex == IO_Input1) ? ParamLOG_fE1 : ParamLOG_fE2) & BIT_INPUT_MASK;
+    uint8_t lIsActive = ((uint8_t)((iIOIndex == IO_Input1) ? ParamLOG_fE1 : ParamLOG_fE2)) & BIT_INPUT_MASK;
     if (lIsActive == 0)
     {
         // input might be also activated by a delta input converter, means from the other input
-        lIsActive = (iIOIndex == IO_Input2) ? ParamLOG_fE1Convert : ParamLOG_fE2Convert;
-        lIsActive = (lIsActive < VAL_InputConvert_Values) && (lIsActive & 1);
+        PT_InputConv lConverter = (iIOIndex == IO_Input2) ? ParamLOG_fE1Convert : ParamLOG_fE2Convert;
+        lIsActive = (lConverter < PT_InputConv::Einzelwerte) && (lIsActive & 1);
     }
     return (lIsActive > 0);
 }
@@ -896,7 +890,7 @@ void LogicChannel::processInput(uint8_t iIOIndex)
     if (iIOIndex == IO_Absolute || iIOIndex == IO_Output)
         return;
     // we have now an event for an input, first we check, if this input is active
-    uint8_t lActive = ((iIOIndex == IO_Input1) ? ParamLOG_fE1 : ParamLOG_fE2) & BIT_INPUT_MASK;
+    uint8_t lActive = ((uint8_t)((iIOIndex == IO_Input1) ? ParamLOG_fE1 : ParamLOG_fE2)) & BIT_INPUT_MASK;
     if (lActive > 0)
     {
         // this input is we start convert for this input
@@ -905,13 +899,13 @@ void LogicChannel::processInput(uint8_t iIOIndex)
         pValidActiveIO |= iIOIndex;
     }
     // this input might also be used for delta conversion in the other input
-    uint8_t lConverter = (iIOIndex == IO_Input2) ? ParamLOG_fE1Convert : ParamLOG_fE2Convert;
-    if ((lConverter <= VAL_InputConvert_Constant) && (lConverter & 1))
+    PT_InputConv lConverter = (iIOIndex == IO_Input2) ? ParamLOG_fE1Convert : ParamLOG_fE2Convert;
+    if ((lConverter <= PT_InputConv::Konstante) && ((uint8_t)lConverter & 1))
     {
         // reading "the other" Input is just necessary, if this input was not activated by the user
         // otherwise this value is fetched by normal KO input processing
         // for constants this is always necessary
-        if (lConverter == VAL_InputConvert_Constant || lActive == 0)
+        if (lConverter == PT_InputConv::Konstante || lActive == 0)
         {
             // delta and constant conversion, we start convert for the other input
             startConvert(IO_Output - iIOIndex, iIOIndex);
@@ -994,7 +988,7 @@ void LogicChannel::startConvert(uint8_t iIOIndex, uint8_t iStopIndex)
     }
 }
 
-bool LogicChannel::checkConvertValues(uint16_t iParamValues, uint8_t iDpt, int32_t iValue)
+bool LogicChannel::checkConvertValues(uint16_t iParamValues, PT_LogicDpt iDpt, int32_t iValue)
 {
     bool lValueOut = false;
     uint8_t lValueSize = 1;
@@ -1003,24 +997,24 @@ bool LogicChannel::checkConvertValues(uint16_t iParamValues, uint8_t iDpt, int32
 
     switch (iDpt)
     {
-        case VAL_DPT_2:
+        case PT_LogicDpt::DPT_2:
             lNumValues = 4;
             lValid = 0xFF;
             break;
-        case VAL_DPT_3:
+        case PT_LogicDpt::DPT_3:
             lNumValues = 4;
             break;
-        case VAL_DPT_5:
-        case VAL_DPT_5001:
-        case VAL_DPT_6:
+        case PT_LogicDpt::DPT_5:
+        case PT_LogicDpt::DPT_5001:
+        case PT_LogicDpt::DPT_6:
             lNumValues = 7;
             break;
-        case VAL_DPT_7:
-        case VAL_DPT_8:
+        case PT_LogicDpt::DPT_7:
+        case PT_LogicDpt::DPT_8:
             lNumValues = 3;
             lValueSize = 2;
             break;
-        case VAL_DPT_17:
+        case PT_LogicDpt::DPT_17:
             lNumValues = 8;
             lValid = 0xFF;
             break;
@@ -1042,30 +1036,30 @@ bool LogicChannel::checkConvertValues(uint16_t iParamValues, uint8_t iDpt, int32
 void LogicChannel::processConvertInput(uint8_t iIOIndex)
 {
     uint16_t lParamLow = (iIOIndex == IO_Input1) ? LOG_fE1LowDelta : LOG_fE2LowDelta;
-    uint8_t lConvert = (iIOIndex == IO_Input1) ? ParamLOG_fE1Convert : ParamLOG_fE2Convert;
+    PT_InputConv lConvert = (iIOIndex == IO_Input1) ? ParamLOG_fE1Convert : ParamLOG_fE2Convert;
     bool lValueOut = 0;
     // get input value
-    uint8_t lDpt;
+    PT_LogicDpt lDpt;
     LogicValue lValue1In = getInputValue(iIOIndex, &lDpt);
     LogicValue lValue2In = (int32_t)0;
     LogicValue lDiff = (int32_t)0;
-    uint8_t lDptValue2 = 0;
+    PT_LogicDpt lDptValue2 = PT_LogicDpt::DPT_1;
     // uint8_t lDptResult = 0;
-    if ((lConvert < VAL_InputConvert_Values) && (lConvert & 1))
+    if ((lConvert < PT_InputConv::Einzelwerte) && ((uint8_t)lConvert & 1))
     {
         // in case of delta conversion get the other input value
         lValue2In = getInputValue(3 - iIOIndex, &lDptValue2);
     }
-    else if (lConvert == VAL_InputConvert_Constant)
+    else if (lConvert == PT_InputConv::Konstante)
     {
         pValidActiveIO |= iIOIndex;
     }
     uint8_t lUpperBound = 0;
-    bool lDoDefault = lConvert == VAL_InputConvert_Trigger;
+    bool lDoDefault = lConvert == PT_InputConv::Trigger;
     if (!lDoDefault)
         switch (lDpt)
         {
-            case VAL_DPT_1:
+            case PT_LogicDpt::DPT_1:
                 lValueOut = lValue1In;
                 #if LOGIC_TRACE
                 if (debugFilter())
@@ -1074,11 +1068,11 @@ void LogicChannel::processConvertInput(uint8_t iIOIndex)
                 }
                 #endif
                 break;
-            case VAL_DPT_17:
+            case PT_LogicDpt::DPT_17:
                 // there might be 8 possible scenes to check
                 lUpperBound = 8; // we start with 2
                 lValue1In = (uint8_t)((uint8_t)lValue1In + 1);
-            case VAL_DPT_2:
+            case PT_LogicDpt::DPT_2:
                 // there might be 4 possible "Zwangsführung" values to check
                 if (lUpperBound == 0)
                     lUpperBound = 4; // we start with 2
@@ -1111,7 +1105,7 @@ void LogicChannel::processConvertInput(uint8_t iIOIndex)
         // for all remaining DPT we determine the input value by an converter module
         switch (lConvert)
         {
-            case VAL_InputConvert_Interval:
+            case  PT_InputConv::Wertintervall:
                 lValueOut = (lValue1In >= getParamByDpt(lDpt, lParamLow + 0)) && (lValue1In <= getParamByDpt(lDpt, lParamLow + 4));
                 // lValueOut = uValueGreaterThanOrEquals(lValue1In, getParamByDpt(lDpt, lParamLow + 0), lDpt, lDpt) &&
                 //             uValueLessThanOrEquals(lValue1In, getParamByDpt(lDpt, lParamLow + 4), lDpt, lDpt);
@@ -1122,12 +1116,12 @@ void LogicChannel::processConvertInput(uint8_t iIOIndex)
                 }
                 #endif
                 break;
-            case VAL_InputConvert_DeltaInterval:
+            case PT_InputConv::Differenzintervall:
                 lDiff = lValue1In - lValue2In;
                 // lDiff = uValueSubtract(lValue1In, lValue2In, lDpt, lDptValue2);
-                // lDptResult = (lDpt == VAL_DPT_9 || lDptValue2 == VAL_DPT_9) ? VAL_DPT_9 : lDpt;
-                if (lDpt != VAL_DPT_9 && lDpt != VAL_DPT_14)
-                    lDpt = VAL_DPT_13;
+                // lDptResult = (lDpt == PT_LogicDpt::DPT_9 || lDptValue2 == PT_LogicDpt::DPT_9) ? PT_LogicDpt::DPT_9 : lDpt;
+                if (lDpt != PT_LogicDpt::DPT_9 && lDpt != PT_LogicDpt::DPT_14)
+                    lDpt = PT_LogicDpt::DPT_13;
                 lValueOut = (lDiff >= getParamByDpt(lDpt, lParamLow + 0)) && (lDiff <= getParamByDpt(lDpt, lParamLow + 4));
                 // lValueOut = uValueGreaterThanOrEquals(lDiff, getParamByDpt(lDpt, lParamLow + 0), lDptResult, lDpt) &&
                 //             uValueLessThanOrEquals(lDiff, getParamByDpt(lDpt, lParamLow + 4), lDptResult, lDpt);
@@ -1138,7 +1132,7 @@ void LogicChannel::processConvertInput(uint8_t iIOIndex)
                 }
                 #endif
                 break;
-            case VAL_InputConvert_Hysterese:
+            case PT_InputConv::Hysterese:
                 lValueOut = pCurrentIn & iIOIndex; // retrieve old result, will be send if current value is in Hysterese interval
                 if (isInputInverted(iIOIndex))
                     lValueOut = !lValueOut;
@@ -1157,15 +1151,15 @@ void LogicChannel::processConvertInput(uint8_t iIOIndex)
                 }
                 #endif
                 break;
-            case VAL_InputConvert_DeltaHysterese:
+            case PT_InputConv::Differenzhysterese:
                 lValueOut = pCurrentIn & iIOIndex; // retrieve old result, will be send if current value is in Hysterese interval
                 if (isInputInverted(iIOIndex))
                     lValueOut = !lValueOut;
                 lDiff = lValue1In - lValue2In;
                 // lDiff = uValueSubtract(lValue1In, lValue2In, lDpt, lDptValue2);
-                // lDptResult = (lDpt == VAL_DPT_9 || lDptValue2 == VAL_DPT_9) ? VAL_DPT_9 : lDpt;
-                if (lDpt != VAL_DPT_9 && lDpt != VAL_DPT_14)
-                    lDpt = VAL_DPT_13;
+                // lDptResult = (lDpt == PT_LogicDpt::DPT_9 || lDptValue2 == PT_LogicDpt::DPT_9) ? PT_LogicDpt::DPT_9 : lDpt;
+                if (lDpt != PT_LogicDpt::DPT_9 && lDpt != PT_LogicDpt::DPT_14)
+                    lDpt = PT_LogicDpt::DPT_13;
                 if (lDiff <= getParamByDpt(lDpt, lParamLow + 0))
                     lValueOut = false;
                 if (lDiff >= getParamByDpt(lDpt, lParamLow + 4))
@@ -1181,7 +1175,7 @@ void LogicChannel::processConvertInput(uint8_t iIOIndex)
                 }
                 #endif
                 break;
-            case VAL_InputConvert_Values:
+            case PT_InputConv::Einzelwerte:
                 lValueOut = checkConvertValues(lParamLow, lDpt, lValue1In);
                 #if LOGIC_TRACE
                 if (debugFilter())
@@ -1190,8 +1184,8 @@ void LogicChannel::processConvertInput(uint8_t iIOIndex)
                 }
                 #endif
                 break;
-            case VAL_InputConvert_Constant:
-            case VAL_InputConvert_Trigger:
+            case PT_InputConv::Konstante:
+            case PT_InputConv::Trigger:
                 lValueOut = true;
                 #if LOGIC_TRACE
                 if (debugFilter())
@@ -1221,9 +1215,9 @@ void LogicChannel::processConvertInput(uint8_t iIOIndex)
 // The BIT_INPUT_MASK value is used to determine the inversion status of the input.
 bool LogicChannel::isInputInverted(uint8_t iIOIndex) {
     // timer input is never inverted
-    if (ParamLOG_fLogic == VAL_Logic_Timer)
+    if (ParamLOG_fLogic == PT_Logic::ZEITSCHALTUHR)
         return false;
-    uint8_t lInput = 0;
+    PT_InputEnable lInput = PT_InputEnable::Inactive;
     switch (iIOIndex) {
     case BIT_EXT_INPUT_1:
         lInput = ParamLOG_fE1;
@@ -1240,7 +1234,7 @@ bool LogicChannel::isInputInverted(uint8_t iIOIndex) {
     default:
         break;
     }
-    return (lInput & BIT_INPUT_MASK) == 2;
+    return lInput == PT_InputEnable::ActiveInverted;
 }
 
 void LogicChannel::startLogic(uint8_t iIOIndex, bool iValue)
@@ -1302,15 +1296,15 @@ void LogicChannel::processLogic()
     // first deactivate execution in pipeline
     pCurrentPipeline &= ~PIP_LOGIC_EXECUTE;
 
-    uint8_t lLogic = ParamLOG_fDisable ? 0 : ParamLOG_fLogic;
+    PT_Logic lLogic = ParamLOG_fDisable ? PT_Logic::AUS : ParamLOG_fLogic;
     // we have to delete all trigger if output pipeline is not started
-    if (ParamLOG_fCalculate == 0 || lValidInputs == lActiveInputs)
+    if (ParamLOG_fCalculate == PT_Calculate::Invalid || lValidInputs == lActiveInputs)
     {
         // we process only if all inputs are valid or the user requested invalid evaluation
         // uint8_t lOnes = 0;
         switch (lLogic)
         {
-            case VAL_Logic_And:
+            case PT_Logic::UND:
                 // AND handles invalid inputs as 1
                 // Check if all bits are set -> logical AND of all input bits
                 lNewOutput = (lCurrentInputs == lActiveInputs);
@@ -1319,7 +1313,7 @@ void LogicChannel::processLogic()
                 lDebugLogic = "AND";
 #endif
                 break;
-            case VAL_Logic_Or:
+            case PT_Logic::ODER:
                 // Check if any bit is set -> logical OR of all input bits
                 lNewOutput = (lCurrentInputs > 0);
                 lValidOutput = true;
@@ -1327,7 +1321,7 @@ void LogicChannel::processLogic()
                 lDebugLogic = "OR";
 #endif
                 break;
-            case VAL_Logic_ExOr:
+            case PT_Logic::EXOR:
                 // EXOR handles invalid inputs as non existing
                 // // count valid bits in input mask
                 // for (size_t lBit = 1; lBit < BIT_INPUT_MASK; lBit <<= 1)
@@ -1343,7 +1337,7 @@ void LogicChannel::processLogic()
                 lDebugLogic = "EXOR";
 #endif
                 break;
-            case VAL_Logic_Switch:
+            case PT_Logic::SCHALTER:
                 // Switch cannot handle invalid inputs but is based on telegrams (trigger in this class)
                 // An ON-trigger on input 1 turns OUTPUT to 1 (Set of FlipFlop)
                 if ((BIT_EXT_INPUT_1 & pTriggerIO & lCurrentInputs) || (BIT_INT_INPUT_1 & pTriggerIO & lCurrentInputs))
@@ -1360,7 +1354,7 @@ void LogicChannel::processLogic()
                 lDebugLogic = "SWITCH";
 #endif
                 break;
-            case VAL_Logic_Gate:
+            case PT_Logic::TOR:
                 // GATE works a little bit more complex
                 // E1 OR I1 are the data inputs
                 // E2 OR I2 are the gate inputs
@@ -1391,7 +1385,8 @@ void LogicChannel::processLogic()
                             pCurrentIn &= ~(BIT_EXT_INPUT_2 | BIT_INT_INPUT_2);
                     }
                     uint8_t lGateState = 4 * ((pCurrentIn & BIT_INITIAL_GATE) > 0) + 2 * lPreviousGate + lGate;
-                    uint8_t lOnGateTrigger = 0xFF;
+                    bool lOnGateTriggerSet = false;
+                    PT_GateTrigger lOnGateTrigger = PT_GateTrigger::None;
                     // delete the INITIAL_GATE marker
                     pCurrentIn &= ~BIT_INITIAL_GATE;
                     switch (lGateState)
@@ -1399,24 +1394,25 @@ void LogicChannel::processLogic()
                         case VAL_Gate_Closed_Open: // was closed and opens now
                         case VAL_Gate_Init_Open:   // was undefined and opens now
                             lOnGateTrigger = ParamLOG_fTriggerGateOpen;
+                            lOnGateTriggerSet = true;
                         case VAL_Gate_Open_Close: // was open and closes now
                         case VAL_Gate_Init_Close: // was undefined and closes now
                         {
-                            if (lOnGateTrigger == 0xFF)
+                            if (!lOnGateTriggerSet)
                                 lOnGateTrigger = ParamLOG_fTriggerGateClose;
                             lValidOutput = true;
                             switch (lOnGateTrigger)
                             {
-                                case VAL_Gate_Send_Off:
+                                case PT_GateTrigger::Off:
                                     lNewOutput = false;
                                     break;
-                                case VAL_Gate_Send_On:
+                                case PT_GateTrigger::On:
                                     lNewOutput = true;
                                     break;
-                                case VAL_Gate_Send_Input:
+                                case PT_GateTrigger::Input:
                                     lNewOutput = (lCurrentInputs & (BIT_EXT_INPUT_1 | BIT_INT_INPUT_1));
                                     break;
-                                default: // same as VAL_Gate_Send_Nothing
+                                default: // same as PT_GateTrigger::None
                                     lValidOutput = false;
                                     break;
                             }
@@ -1435,7 +1431,7 @@ void LogicChannel::processLogic()
 #endif
                 }
                 break;
-            case VAL_Logic_Timer:
+            case PT_Logic::ZEITSCHALTUHR:
                 lNewOutput = (lCurrentInputs & BIT_EXT_INPUT_2);
                 lValidOutput = true;
 #if LOGIC_TRACE
@@ -1509,7 +1505,7 @@ void LogicChannel::processLogic()
 #endif
         }
     } // if we have no valid inputs, we do not execute the logic
-    else if (lLogic == VAL_Logic_Gate)
+    else if (lLogic == PT_Logic::TOR)
     {
         // special case for a GATE which reacts only on both inputs valid
         // we Open/Close the gate
@@ -1665,7 +1661,7 @@ void LogicChannel::startOnDelay()
     //    2. second on restarts delay time
     //    3. second on switches immediately on
     //    4. an off stops on delay
-    uint8_t lOnDelayRepeat = ParamLOG_fODelayOnRepeat;
+    PT_OnOffRepeat lOnDelayRepeat = ParamLOG_fODelayOnRepeat;
     if ((pCurrentPipeline & PIP_ON_DELAY) == 0)
     {
         // on delay is not running, we start it
@@ -1681,7 +1677,7 @@ void LogicChannel::startOnDelay()
         // we have a new on value, we look how to process in case of repetition
         switch (lOnDelayRepeat)
         {
-            case VAL_Delay_Immediate:
+            case PT_OnOffRepeat::Sofort_schalten_ohne_Verzoegerung:
                 // end pipeline and switch immediately
                 // cData->currentPipeline &= ~PIP_ON_DELAY;
                 // StartOnOffRepeat(cData, iChannel, true);
@@ -1691,7 +1687,7 @@ void LogicChannel::startOnDelay()
                     logChannel("startOnDelay: Second ON, turn on immediately");
 #endif
                 break;
-            case VAL_Delay_Extend:
+            case PT_OnOffRepeat::Verzoegerung_wird_verlaengert:
                 pOnDelay = delayTimerInit();
 #if LOGIC_TRACE
                 if (debugFilter())
@@ -1706,9 +1702,9 @@ void LogicChannel::startOnDelay()
                 break;
         }
     }
-    uint8_t lOffDelayReset = ParamLOG_fODelayOffReset;
+    PT_OnOffReset lOffDelayReset = ParamLOG_fODelayOffReset;
     // if requested, this on stops an off delay
-    if ((lOffDelayReset > 0) && (pCurrentPipeline & PIP_OFF_DELAY) > 0)
+    if ((lOffDelayReset == PT_OnOffReset::Verzoegerung_beenden_ohne_zu_schalten) && (pCurrentPipeline & PIP_OFF_DELAY) > 0)
     {
 #if LOGIC_TRACE
         if (debugFilter())
@@ -1745,7 +1741,7 @@ void LogicChannel::startOffDelay()
     //    1. second off switches immediately off
     //    2. second off restarts delay time
     //    3. an on stops off delay
-    uint8_t lOffDelayRepeat = ParamLOG_fODelayOffRepeat;
+    PT_OnOffRepeat lOffDelayRepeat = ParamLOG_fODelayOffRepeat;
     if ((pCurrentPipeline & PIP_OFF_DELAY) == 0)
     {
         pOffDelay = ParamLOG_fODelay ? delayTimerInit() : 0;
@@ -1757,10 +1753,10 @@ void LogicChannel::startOffDelay()
     }
     else
     {
-        // we have a new on value, we look how to process in case of repetition
+        // we have a new off value, we look how to process in case of repetition
         switch (lOffDelayRepeat)
         {
-            case VAL_Delay_Immediate:
+            case PT_OnOffRepeat::Sofort_schalten_ohne_Verzoegerung:
                 // end pipeline and switch immediately
                 // cData->currentPipeline &= ~PIP_OFF_DELAY;
                 // StartOnOffRepeat(cData, iChannel, false);
@@ -1770,7 +1766,7 @@ void LogicChannel::startOffDelay()
                     logChannel("startOffDelay: Second OFF, turn off immediately");
 #endif
                 break;
-            case VAL_Delay_Extend:
+            case PT_OnOffRepeat::Verzoegerung_wird_verlaengert:
                 pOffDelay = delayTimerInit();
 #if LOGIC_TRACE
                 if (debugFilter())
@@ -1785,9 +1781,9 @@ void LogicChannel::startOffDelay()
                 break;
         }
     }
-    uint8_t lOnDelayReset = ParamLOG_fODelayOnReset;
+    PT_OnOffReset lOnDelayReset = ParamLOG_fODelayOnReset;
     // if requested, this off stops an on delay
-    if ((lOnDelayReset > 0) && (pCurrentPipeline & PIP_ON_DELAY) > 0)
+    if ((lOnDelayReset == PT_OnOffReset::Verzoegerung_beenden_ohne_zu_schalten) && (pCurrentPipeline & PIP_ON_DELAY) > 0)
     {
 #if LOGIC_TRACE
         if (debugFilter())
@@ -1820,22 +1816,22 @@ void LogicChannel::processOffDelay()
 // Output filter prevents repetition of 0 or 1 values
 void LogicChannel::startOutputFilter(bool iOutput)
 {
-    uint8_t lAllow = ParamLOG_fOOutputFilter;
+    PT_OutputFilter lAllow = ParamLOG_fOOutputFilter;
     bool lLastOutput = (pCurrentOut & BIT_OUTPUT_PREVIOUS);
     bool lInitialOutput = (pCurrentOut & BIT_OUTPUT_INITIAL);
     bool lContinue = false;
     switch (lAllow)
     {
-        case VAL_AllowRepeat_All:
+        case PT_OutputFilter::Alle_Wiederholungen_durchlassen:
             lContinue = true;
             break;
-        case VAL_AllowRepeat_On:
+        case PT_OutputFilter::Nur_EIN_Wiederholungen_durchlassen:
             lContinue = (iOutput || (iOutput != lLastOutput) || lInitialOutput);
             break;
-        case VAL_AllowRepeat_Off:
+        case PT_OutputFilter::Nur_AUS_Wiederholungen_durchlassen:
             lContinue = (!iOutput || (iOutput != lLastOutput) || lInitialOutput);
             break;
-        default: // VAL_AllowRepeat_None
+        default: // keine Wiederholung durchlassen
             lContinue = ((iOutput != lLastOutput) || lInitialOutput);
             break;
     }
@@ -1948,12 +1944,11 @@ void LogicChannel::processInternalInput(uint8_t iIOIndex, bool iValue)
 // we trigger all associated internal inputs with the new value
 void LogicChannel::processInternalInputs(uint8_t iChannelIndex, bool iValue)
 {
-    uint8_t lInput1 = ParamLOG_fI1;
-    if (lInput1 > 0)
+    PT_InputEnable lInput1 = ParamLOG_fI1;
+    if (lInput1 > PT_InputEnable::Inactive)
     {
-        uint8_t lIsRelative = ParamLOG_fI1Kind - 1;
         int8_t lFunction1 = ParamLOG_fI1Function;
-        if (lIsRelative)
+        if (ParamLOG_fI1Kind == PT_KORelInput::Relative)
             lFunction1 += _channelIndex + 1;
         if (lFunction1 == (iChannelIndex + 1))
         {
@@ -1964,12 +1959,11 @@ void LogicChannel::processInternalInputs(uint8_t iChannelIndex, bool iValue)
             processInternalInput(BIT_INT_INPUT_1, iValue);
         }
     }
-    uint8_t lInput2 = ParamLOG_fI2;
-    if (lInput2 > 0)
+    PT_InputEnable lInput2 = ParamLOG_fI2;
+    if (lInput2 > PT_InputEnable::Inactive)
     {
-        uint8_t lIsRelative = ParamLOG_fI2Kind - 1;
         int8_t lFunction2 = ParamLOG_fI2Function;
-        if (lIsRelative)
+        if (ParamLOG_fI2Kind == PT_KORelInput::Relative)
             lFunction2 += _channelIndex + 1;
         if (lFunction2 == (iChannelIndex + 1))
         {
@@ -2075,31 +2069,31 @@ void LogicChannel::processOutput(bool iValue)
 #endif
     if (iValue)
     {
-        uint8_t lOn = ParamLOG_fOOnAll;
+        PT_OutputSend lOn = ParamLOG_fOOnAll;
         switch (lOn)
         {
-            case VAL_Out_Constant:
+            case PT_OutputSend::Constant:
                 writeConstantValue(LOG_fOOnDpt1, iValue);
                 break;
-            case VAL_Out_ValE1:
+            case PT_OutputSend::ValueInput1:
                 writeParameterValue(IO_Input1, iValue);
                 break;
-            case VAL_Out_ValE2:
+            case PT_OutputSend::ValueInput2:
                 writeParameterValue(IO_Input2, iValue);
                 break;
-            case VAL_Out_OtherKO:
-                writeOtherKoValue(LOG_fOOnKONumber, ParamLOG_fOOnKOKind == 2, LOG_fOOnKODpt, iValue);
+            case PT_OutputSend::OtherKo:
+                writeOtherKoValue(LOG_fOOnKONumber, ParamLOG_fOOnKOKind == PT_KORelInput::Relative, LOG_fOOnKODpt, iValue);
                 break;
-            case VAL_Out_Function:
+            case PT_OutputSend::Function:
                 writeFunctionValue(LOG_fOOnFunction, iValue);
                 break;
-            case VAL_Out_ReadRequest:
+            case PT_OutputSend::ReadRequest:
                 knxRead(IO_Output);
                 break;
-            case VAL_Out_ResetDevice:
+            case PT_OutputSend::RestartDevice:
                 knxResetDevice(LOG_fOOnDpt1);
                 break;
-            case VAL_Out_RGBLed:
+            case PT_OutputSend::StatusLed:
                 setStatusLed(LOG_fOOnDpt1);
                 break;
             default:
@@ -2109,31 +2103,31 @@ void LogicChannel::processOutput(bool iValue)
     }
     else
     {
-        uint8_t lOff = ParamLOG_fOOffAll;
+        PT_OutputSend lOff = ParamLOG_fOOffAll;
         switch (lOff)
         {
-            case VAL_Out_Constant:
+            case PT_OutputSend::Constant:
                 writeConstantValue(LOG_fOOffDpt1, iValue);
                 break;
-            case VAL_Out_ValE1:
+            case PT_OutputSend::ValueInput1:
                 writeParameterValue(IO_Input1, iValue);
                 break;
-            case VAL_Out_ValE2:
+            case PT_OutputSend::ValueInput2:
                 writeParameterValue(IO_Input2, iValue);
                 break;
-            case VAL_Out_OtherKO:
-                writeOtherKoValue(LOG_fOOffKONumber, ParamLOG_fOOffKOKind == 2, LOG_fOOffKODpt, iValue);
+            case PT_OutputSend::OtherKo:
+                writeOtherKoValue(LOG_fOOffKONumber, ParamLOG_fOOffKOKind == PT_KORelInput::Relative, LOG_fOOffKODpt, iValue);
                 break;
-            case VAL_Out_Function:
+            case PT_OutputSend::Function:
                 writeFunctionValue(LOG_fOOffFunction, iValue);
                 break;
-            case VAL_Out_ReadRequest:
+            case PT_OutputSend::ReadRequest:
                 knxRead(IO_Output);
                 break;
-            case VAL_Out_ResetDevice:
+            case PT_OutputSend::RestartDevice:
                 knxResetDevice(LOG_fOOffDpt1);
                 break;
-            case VAL_Out_RGBLed:
+            case PT_OutputSend::StatusLed:
                 setStatusLed(LOG_fOOffDpt1);
                 break;
             default:
@@ -2143,9 +2137,9 @@ void LogicChannel::processOutput(bool iValue)
     }
 }
 
-bool LogicChannel::checkDpt(uint8_t iIOIndex, uint8_t iDpt)
+bool LogicChannel::checkDpt(uint8_t iIOIndex, PT_LogicDpt iDpt)
 {
-    uint8_t lDpt;
+    PT_LogicDpt lDpt;
     switch (iIOIndex)
     {
         case IO_Input1:
@@ -2197,7 +2191,7 @@ void LogicChannel::restore()
 
 void LogicChannel::restore(uint8_t iIOIndex)
 {
-    uint8_t lDpt = openknx.flash.readByte();
+    PT_LogicDpt lDpt = (PT_LogicDpt)openknx.flash.readByte();
     uint8_t *lValue = openknx.flash.read(4);
 
     if (!checkDpt(iIOIndex, lDpt))
@@ -2228,11 +2222,11 @@ void LogicChannel::saveKoDpt(uint8_t iIOIndex)
     if (isInputActive(iIOIndex) && isInputValid(iIOIndex))
     {
         // now get input default value
-        uint8_t lParInput = getByteParam(iIOIndex == IO_Input1 ? LOG_fE1Default : LOG_fE2Default);
-        if (lParInput & VAL_InputDefault_EEPROM)
+        bool lParInputEeprom = iIOIndex == IO_Input1 ? LOG_fE1DefaultEEPROM : LOG_fE2DefaultEEPROM;
+        if (lParInputEeprom)
         {
             // if the default is Flash, we get correct dpt
-            lDpt = getByteParam(iIOIndex == IO_Input1 ? LOG_fE1Dpt : LOG_fE2Dpt);
+            lDpt = (uint8_t)(iIOIndex == IO_Input1 ? ParamLOG_fE1Dpt : ParamLOG_fE2Dpt);
         }
     }
 
@@ -2260,19 +2254,19 @@ void LogicChannel::prepareChannel()
     // bool lResult = false;
     bool lInput1Flash = false;
     bool lInput2Flash = false;
-    uint8_t lLogicFunction = ParamLOG_fDisable ? 0 : ParamLOG_fLogic;
+    PT_Logic lLogicFunction = ParamLOG_fDisable ? PT_Logic::AUS : ParamLOG_fLogic;
 
     // logDebugP("prepareChannel %i", _channelIndex);
-    if (lLogicFunction == VAL_Logic_Timer)
+    if (lLogicFunction == PT_Logic::ZEITSCHALTUHR)
     {
-        if (ParamLOG_fTYearDay >= VAL_Tim_Timer_Daily_Linked)
+        if (ParamLOG_fTYearDay >= PT_YearDay::Tagesschaltuhr_verbunden)
         {
             // prepare linked timer channels
-            uint8_t lAbsRel = ParamLOG_fI1Kind;
+            PT_KORelInput lAbsRel = ParamLOG_fI1Kind;
             int8_t lChannelIndex = ParamLOG_fI1FunctionRel;
-            if (lAbsRel == VAL_AbsRel_Relative)
+            if (lAbsRel == PT_KORelInput::Relative)
                 lChannelIndex += _channelIndex + 1;
-            if (lAbsRel > 0 && lChannelIndex > 0 && lChannelIndex < 100 && lChannelIndex != _channelIndex + 1)
+            if (lAbsRel > PT_KORelInput::None && lChannelIndex > 0 && lChannelIndex < 100 && lChannelIndex != _channelIndex + 1)
             {
                 LogicChannel *lLinkedChannel = openknxLogic.getChannel(lChannelIndex - 1);
                 if (lLinkedChannel != nullptr)
@@ -2286,7 +2280,7 @@ void LogicChannel::prepareChannel()
             startStartup();
         }
     }
-    else if (lLogicFunction > VAL_Logic_None)
+    else if (lLogicFunction > PT_Logic::AUS)
     {
         // function is active, we process input presets
         // external input 1
@@ -2295,11 +2289,11 @@ void LogicChannel::prepareChannel()
             // input is active, we set according flag
             pValidActiveIO |= BIT_EXT_INPUT_1 << 4;
             // prepare input for external KO
-            uint8_t lAbsRel = ParamLOG_fE1UseOtherKO;
+            PT_KORelInput lAbsRel = ParamLOG_fE1UseOtherKO;
             int16_t lExternalKo = ParamLOG_fE1OtherKORel;
-            if (lAbsRel == VAL_AbsRel_Relative)
+            if (lAbsRel == PT_KORelInput::Relative)
                 lExternalKo += calcKoNumber(IO_Input1);
-            if (lAbsRel > 0 && lExternalKo > 0 && lExternalKo <= MAIN_MaxKoNumber)
+            if (lAbsRel > PT_KORelInput::None && lExternalKo > 0 && lExternalKo <= MAIN_MaxKoNumber)
                 openknxLogic.addKoLookup(lExternalKo, channelIndex(), IO_Input1);
             // prepare input for cyclic read
             pInputProcessing.repeatInput1Delay = ParamLOG_fE1RepeatTimeMS;
@@ -2309,50 +2303,53 @@ void LogicChannel::prepareChannel()
                 pCurrentPipeline |= PIP_REPEAT_INPUT1;
             }
             // now set input default value
-            uint8_t lParInput = getByteParam(LOG_fE1Default);
+            PT_InputDefault lParInput = ParamLOG_fE1Default;
+            bool lParInputEeprom = ParamLOG_fE1DefaultEEPROM;
             GroupObject *lKo = getKo(IO_Input1);
             // should default be fetched from Flash
-            if (lParInput & VAL_InputDefault_EEPROM)
+            if (lParInputEeprom)
             {
                 // we expect, that the KO was loaded from Flash, if applicable
                 lInput1Flash = lKo->initialized();
                 if (lInput1Flash)
                     lKo->objectWritten();
                 else
-                    lParInput &= ~VAL_InputDefault_EEPROM;
+                    lParInputEeprom = false;
             }
-            switch (lParInput)
-            {
-                case VAL_InputDefault_Read:
-                    /* to read immediately we activate repeated read pipeline with 0 delay */
-                    pInputProcessing.repeatInput1Delay = 0;
-                    pCurrentPipeline |= PIP_REPEAT_INPUT1;
-                    break;
+            if (!lParInputEeprom) 
+                switch (lParInput)
+                {
+                    case PT_InputDefault::Bus:
+                        /* to read immediately we activate repeated read pipeline with 0 delay */
+                        pInputProcessing.repeatInput1Delay = 0;
+                        pCurrentPipeline |= PIP_REPEAT_INPUT1;
+                        break;
 
-                case VAL_InputDefault_False:
-                    /* we clear bit for E1 and mark this value as valid */
-                    startLogic(BIT_EXT_INPUT_1, false);
-                    // we also add that this input was used and is now valid
-                    pValidActiveIO |= BIT_EXT_INPUT_1;
-                    // for Formulas, we initialize the KO, too
-                    // lKo->commFlag(Ok);
-                    lKo->value(false, getKoDPT(IO_Input1));
-                    break;
+                    case PT_InputDefault::Off:
 
-                case VAL_InputDefault_True:
-                    /* we set bit for E1 and mark this value as valid */
-                    startLogic(BIT_EXT_INPUT_1, true);
-                    // we also add that this input was used and is now valid
-                    pValidActiveIO |= BIT_EXT_INPUT_1;
-                    // for Formulas, we initialize the KO, too
-                    // lKo->commFlag(Ok);
-                    lKo->value(true, getKoDPT(IO_Input1));
-                    break;
+                        /* we clear bit for E1 and mark this value as valid */
+                        startLogic(BIT_EXT_INPUT_1, false);
+                        // we also add that this input was used and is now valid
+                        pValidActiveIO |= BIT_EXT_INPUT_1;
+                        // for Formulas, we initialize the KO, too
+                        // lKo->commFlag(Ok);
+                        lKo->value(false, getKoDPT(IO_Input1));
+                        break;
 
-                default:
-                    /* do nothing, value is invalid */
-                    break;
-            }
+                    case PT_InputDefault::On:
+                        /* we set bit for E1 and mark this value as valid */
+                        startLogic(BIT_EXT_INPUT_1, true);
+                        // we also add that this input was used and is now valid
+                        pValidActiveIO |= BIT_EXT_INPUT_1;
+                        // for Formulas, we initialize the KO, too
+                        // lKo->commFlag(Ok);
+                        lKo->value(true, getKoDPT(IO_Input1));
+                        break;
+
+                    default:
+                        /* do nothing, value is invalid */
+                        break;
+                }
         }
         // external input 2
         if (isInputActive(IO_Input2))
@@ -2360,11 +2357,11 @@ void LogicChannel::prepareChannel()
             // input is active, we set according flag
             pValidActiveIO |= BIT_EXT_INPUT_2 << 4;
             // prepare input for external KO
-            uint8_t lAbsRel = ParamLOG_fE2UseOtherKO;
+            PT_KORelInput lAbsRel = ParamLOG_fE2UseOtherKO;
             int16_t lExternalKo = ParamLOG_fE2OtherKORel;
-            if (lAbsRel == VAL_AbsRel_Relative)
+            if (lAbsRel == PT_KORelInput::Relative)
                 lExternalKo += calcKoNumber(IO_Input2);
-            if (lAbsRel > 0 && lExternalKo > 0 && lExternalKo <= MAIN_MaxKoNumber)
+            if (lAbsRel > PT_KORelInput::None && lExternalKo > 0 && lExternalKo <= MAIN_MaxKoNumber)
                 openknxLogic.addKoLookup(lExternalKo, channelIndex(), IO_Input2);
             // prepare input for cyclic read
             pInputProcessing.repeatInput2Delay = ParamLOG_fE2RepeatTimeMS;
@@ -2373,50 +2370,52 @@ void LogicChannel::prepareChannel()
                 pInputProcessing.repeatInput2Delay = millis();
                 pCurrentPipeline |= PIP_REPEAT_INPUT2;
             }
-            uint8_t lParInput = getByteParam(LOG_fE2Default);
+            PT_InputDefault lParInput = ParamLOG_fE2Default;
+            bool lParInputEeprom = ParamLOG_fE2DefaultEEPROM;
             GroupObject *lKo = getKo(IO_Input2);
             // should default be fetched from Flash
-            if (lParInput & VAL_InputDefault_EEPROM)
+            if (lParInputEeprom)
             {
                 // we expect, that the KO was loaded from Flash, if applicable
                 lInput2Flash = lKo->initialized();
                 if (lInput2Flash)
                     lKo->objectWritten();
                 else
-                    lParInput &= ~VAL_InputDefault_EEPROM;
+                    lParInputEeprom = false;
             }
-            switch (lParInput)
-            {
-                case VAL_InputDefault_Read:
-                    /* to read immediately we activate repeated read pipeline with 0 delay */
-                    pInputProcessing.repeatInput2Delay = 0;
-                    pCurrentPipeline |= PIP_REPEAT_INPUT2;
-                    break;
+            if (!lParInputEeprom)
+                switch (lParInput)
+                {
+                    case PT_InputDefault::Bus:
+                        /* to read immediately we activate repeated read pipeline with 0 delay */
+                        pInputProcessing.repeatInput2Delay = 0;
+                        pCurrentPipeline |= PIP_REPEAT_INPUT2;
+                        break;
 
-                case VAL_InputDefault_False:
-                    /* we clear bit for E2 and mark this value as valid */
-                    startLogic(BIT_EXT_INPUT_2, false);
-                    // we also add that this input was used and is now valid
-                    pValidActiveIO |= BIT_EXT_INPUT_2;
-                    // for Formulas, we initialize the KO, too
-                    // lKo->commFlag(Ok);
-                    lKo->value(false, getKoDPT(IO_Input2));
-                    break;
+                    case PT_InputDefault::Off:
+                        /* we clear bit for E2 and mark this value as valid */
+                        startLogic(BIT_EXT_INPUT_2, false);
+                        // we also add that this input was used and is now valid
+                        pValidActiveIO |= BIT_EXT_INPUT_2;
+                        // for Formulas, we initialize the KO, too
+                        // lKo->commFlag(Ok);
+                        lKo->value(false, getKoDPT(IO_Input2));
+                        break;
 
-                case VAL_InputDefault_True:
-                    /* we set bit for E2 and mark this value as valid */
-                    startLogic(BIT_EXT_INPUT_2, true);
-                    // we also add that this input was used and is now valid
-                    pValidActiveIO |= BIT_EXT_INPUT_2;
-                    // for Formulas, we initialize the KO, too
-                    // lKo->commFlag(Ok);
-                    lKo->value(true, getKoDPT(IO_Input2));
-                    break;
+                    case PT_InputDefault::On:
+                        /* we set bit for E2 and mark this value as valid */
+                        startLogic(BIT_EXT_INPUT_2, true);
+                        // we also add that this input was used and is now valid
+                        pValidActiveIO |= BIT_EXT_INPUT_2;
+                        // for Formulas, we initialize the KO, too
+                        // lKo->commFlag(Ok);
+                        lKo->value(true, getKoDPT(IO_Input2));
+                        break;
 
-                default:
-                    /* do nothing, value is invalid */
-                    break;
-            }
+                    default:
+                        /* do nothing, value is invalid */
+                        break;
+                }
         }
         // Internal inputs are prepared during setup() of Logic 
         // // internal input 1
@@ -2436,9 +2435,8 @@ void LogicChannel::prepareChannel()
 
 void LogicChannel::prepareInternalInput(uint8_t iIOindex, uint16_t iParamIndex)
 {  
-
     // first check, if channel is active
-    if (ParamLOG_fLogic == 0 || ParamLOG_fDisable)
+    if (ParamLOG_fLogic == PT_Logic::AUS || ParamLOG_fDisable)
         return;
     uint8_t lInputEnabled = (getByteParam(iParamIndex) & LOG_fI1Mask) >> LOG_fI1Shift;
     // now check, if input is active
@@ -2446,15 +2444,14 @@ void LogicChannel::prepareInternalInput(uint8_t iIOindex, uint16_t iParamIndex)
     {
         // input is active, we set according flag
         pValidActiveIO |= iIOindex << 4;
-        uint8_t lInputType = (getByteParam(iParamIndex) & LOG_fI1InternalInputTypeMask) >> LOG_fI1InternalInputTypeShift; 
+        PT_InternalInputType lInputType = (PT_InternalInputType)((getByteParam(iParamIndex) & LOG_fI1InternalInputTypeMask) >> LOG_fI1InternalInputTypeShift); 
         // check if internal input is bound to a state channel
-        if (lInputType == VAL_IntInput_LedState)
+        if (lInputType == PT_InternalInputType::Statuskanal)
         {
-            uint16_t lFunctionId = getWordParam(iParamIndex+(LOG_fI1StatusLed-LOG_fI1));
+            uint16_t lFunctionId = getWordParam(iParamIndex+(LOG_fI1StatusLed - LOG_fI1));
             LogicLed *lLed = new LogicLed(this, iIOindex);
             openknx.ledFunctions.assignLed2Function(lLed, lFunctionId);
         }
-
     }
 }
 
@@ -2510,8 +2507,8 @@ void LogicChannel::loop()
 // Start of Timer implementation
 void LogicChannel::startTimerInput()
 {
-    uint8_t lLogicFunction = ParamLOG_fDisable ? 0 : ParamLOG_fLogic;
-    if (lLogicFunction == VAL_Logic_Timer && sTimer.isTimerValid())
+    PT_Logic lLogicFunction = ParamLOG_fDisable ? PT_Logic::AUS : ParamLOG_fLogic;
+    if (lLogicFunction == PT_Logic::ZEITSCHALTUHR && sTimer.isTimerValid())
     {
         pCurrentPipeline |= PIP_TIMER_INPUT;
     }
@@ -2526,31 +2523,31 @@ void LogicChannel::processTimerInput()
     bool lEvaluate = true;
     // first we process settings valid for whole timer
     // vacation
-    bool lIsVacation = KoLOG_Vacation.value(getDPT(VAL_DPT_1));
-    uint8_t lVacationSetting = ParamLOG_fTVacation;
-    if (lVacationSetting == VAL_Tim_Special_No && lIsVacation)
+    bool lIsVacation = KoLOG_Vacation.value(Logic::getDPT(PT_LogicDpt::DPT_1));
+    PT_Vacation lVacationSetting = ParamLOG_fTVacation;
+    if (lVacationSetting == PT_Vacation::Bei_Urlaub_nicht_schalten && lIsVacation)
         lEvaluate = false;
-    if (lVacationSetting == VAL_Tim_Special_Skip || lVacationSetting == VAL_Tim_Special_Sunday)
+    if (lVacationSetting == PT_Vacation::Urlaub_nicht_beachten || lVacationSetting == PT_Vacation::Urlaub_wie_Sonntag_behandeln)
         lEvaluate = true;
-    if (lVacationSetting == VAL_Tim_Special_Only)
+    if (lVacationSetting == PT_Vacation::Nur_bei_Urlaub_schalten)
         lEvaluate = lIsVacation;
 
     // holiday
-    uint8_t lHolidaySetting = ParamLOG_fTHoliday;
+    PT_Holiday lHolidaySetting = ParamLOG_fTHoliday;
     if (lEvaluate)
     {
-        if (lHolidaySetting == VAL_Tim_Special_No && (sTimer.holidayToday() > 0))
+        if (lHolidaySetting == PT_Holiday::An_Feiertagen_nicht_schalten && (sTimer.holidayToday() > 0))
             lEvaluate = false;
-        if (lHolidaySetting == VAL_Tim_Special_Skip || lHolidaySetting == VAL_Tim_Special_Sunday)
+        if (lHolidaySetting == PT_Holiday::Feiertage_nicht_beachten || lHolidaySetting == PT_Holiday::Feiertage_wie_Sonntage_behandeln)
             lEvaluate = true;
-        if (lHolidaySetting == VAL_Tim_Special_Only)
+        if (lHolidaySetting == PT_Holiday::Nur_an_Feiertagen_schalten)
             lEvaluate = (sTimer.holidayToday() > 0);
     }
 
     if (lEvaluate)
     {
-        bool lHandleAsSunday = (lHolidaySetting == VAL_Tim_Special_Sunday && (sTimer.holidayToday() > 0)) ||
-                               (lVacationSetting == VAL_Tim_Special_Sunday && lIsVacation);
+        bool lHandleAsSunday = (lHolidaySetting == PT_Holiday::Feiertage_wie_Sonntage_behandeln && (sTimer.holidayToday() > 0)) ||
+                               (lVacationSetting == PT_Vacation::Urlaub_wie_Sonntag_behandeln && lIsVacation);
         lResult = checkTimerAll(sTimer, lHandleAsSunday, &lValue, &lValueNum);
         if (lResult)
         {
@@ -2575,7 +2572,8 @@ void LogicChannel::processTimerInput()
 bool LogicChannel::checkTimerAll(Timer &iTimer, bool iHandleAsSunday, bool *iValue, uint8_t *iValueNum)
 {
     bool lResult = false;
-    bool lIsYearTimer = ParamLOG_fTYearDay;
+    PT_YearDay lYearDay = ParamLOG_fTYearDay;
+    bool lIsYearTimer = lYearDay == PT_YearDay::Jahresschaltuhr || lYearDay == PT_YearDay::Jahresschaltuhr_verbunden;
     uint8_t lCountTimer = lIsYearTimer ? VAL_Tim_YearTimerCount : VAL_Tim_DayTimerCount; // there are 4 year timer or 8 day timer
     bool lToday;                                                                         // if it is a day timer lToday=true
     // loop through all timer
@@ -2583,8 +2581,8 @@ bool LogicChannel::checkTimerAll(Timer &iTimer, bool iHandleAsSunday, bool *iVal
     for (uint8_t lTimerIndex = 0; lTimerIndex < lCountTimer; lTimerIndex++)
     {
         // get timer function code
-        uint8_t lTimerFunction = (lTimerFunctions >> (28 - lTimerIndex * 4)) & 0xF;
-        if (lTimerFunction)
+        PT_DuskDawn lTimerFunction = (PT_DuskDawn)((lTimerFunctions >> (28 - lTimerIndex * 4)) & 0xF);
+        if (lTimerFunction > PT_DuskDawn::Inactive)
         {
             // timer function is active
             lToday = !lIsYearTimer || checkTimerToday(sTimer, lTimerIndex, iHandleAsSunday);
@@ -2595,43 +2593,43 @@ bool LogicChannel::checkTimerAll(Timer &iTimer, bool iHandleAsSunday, bool *iVal
                 *iValueNum = getByteParam(LOG_fTd1ValueNum + lTimerIndex);
                 switch (lTimerFunction)
                 {
-                    case VAL_Tim_PointInTime:
+                    case PT_DuskDawn::PointInTime:
                         lResult = checkPointInTime(iTimer, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday);
                         break;
-                    case VAL_Tim_Sunrise_Plus:
+                    case PT_DuskDawn::Sunrise_Plus:
                         lResult = checkSunAbs(iTimer, SUN_SUNRISE, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, false);
                         break;
-                    case VAL_Tim_Sunrise_Minus:
+                    case PT_DuskDawn::Sunrise_Minus:
                         lResult = checkSunAbs(iTimer, SUN_SUNRISE, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, true);
                         break;
-                    case VAL_Tim_Sunset_Plus:
+                    case PT_DuskDawn::Sunset_Plus:
                         lResult = checkSunAbs(iTimer, SUN_SUNSET, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, false);
                         break;
-                    case VAL_Tim_Sunset_Minus:
+                    case PT_DuskDawn::Sunset_Minus:
                         lResult = checkSunAbs(iTimer, SUN_SUNSET, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, true);
                         break;
-                    case VAL_Tim_Sunrise_Earliest:
+                    case PT_DuskDawn::Sunrise_Earliest:
                         lResult = checkSunLimit(iTimer, SUN_SUNRISE, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, false);
                         break;
-                    case VAL_Tim_Sunrise_Latest:
+                    case PT_DuskDawn::Sunrise_Latest:
                         lResult = checkSunLimit(iTimer, SUN_SUNRISE, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, true);
                         break;
-                    case VAL_Tim_Sunset_Earliest:
+                    case PT_DuskDawn::Sunset_Earliest:
                         lResult = checkSunLimit(iTimer, SUN_SUNSET, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, false);
                         break;
-                    case VAL_Tim_Sunset_Latest:
+                    case PT_DuskDawn::Sunset_Latest:
                         lResult = checkSunLimit(iTimer, SUN_SUNSET, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, true);
                         break;
-                    case VAL_Tim_Sunrise_DegreeUp:
+                    case PT_DuskDawn::Sunrise_DegreeUp:
                         lResult = checkSunDegree(iTimer, SUN_SUNRISE, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, false);
                         break;
-                    case VAL_Tim_Sunset_DegreeUp:
+                    case PT_DuskDawn::Sunset_DegreeUp:
                         lResult = checkSunDegree(iTimer, SUN_SUNSET, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, false);
                         break;
-                    case VAL_Tim_Sunrise_DegreeDown:
+                    case PT_DuskDawn::Sunrise_DegreeDown:
                         lResult = checkSunDegree(iTimer, SUN_SUNRISE, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, true);
                         break;
-                    case VAL_Tim_Sunset_DegreeDown:
+                    case PT_DuskDawn::Sunset_DegreeDown:
                         lResult = checkSunDegree(iTimer, SUN_SUNSET, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, true);
                         break;
                     default:
@@ -2791,14 +2789,14 @@ bool LogicChannel::checkSunDegree(Timer &iTimer, uint8_t iSunInfo, uint8_t iTime
 void LogicChannel::startTimerRestoreState()
 {
     // check if current logic channel is a timer channel
-    uint8_t lLogicFunction = (getByteParam(LOG_fDisable) & LOG_fDisableMask) ? 0 : getByteParam(LOG_fLogic);
-    if (lLogicFunction == VAL_Logic_Timer)
+    PT_Logic lLogicFunction = ParamLOG_fDisable ? PT_Logic::AUS : ParamLOG_fLogic;
+    if (lLogicFunction == PT_Logic::ZEITSCHALTUHR)
     {
-        bool lShouldRestoreState = ((getByteParam(LOG_fTRestoreState) & LOG_fTRestoreStateMask) >> LOG_fTRestoreStateShift);
-        if (lShouldRestoreState == 1)
+        bool lShouldRestoreState = ParamLOG_fTRestoreState;
+        if (lShouldRestoreState)
         {
             // Timers with vacation handling cannot be restored
-            bool lIsUsingVacation = ((getByteParam(LOG_fTVacation) & LOG_fTVacationMask) >> LOG_fTVacationShift) <= VAL_Tim_Special_No;
+            bool lIsUsingVacation = ParamLOG_fTVacation <= PT_Vacation::Bei_Urlaub_nicht_schalten;
             if (lIsUsingVacation)
             {
                 pCurrentPipeline |= PIP_TIMER_RESTORE_STATE;
@@ -2844,17 +2842,17 @@ void LogicChannel::processTimerRestoreState(TimerRestore &iTimer)
     // vacation is not processed (always skipped)
 
     // holiday
-    uint8_t lHolidaySetting = (getByteParam(LOG_fTHoliday) & LOG_fTHolidayMask) >> LOG_fTHolidayShift;
-    if (lHolidaySetting == VAL_Tim_Special_No && (iTimer.holidayToday() > 0))
+    PT_Holiday lHolidaySetting = ParamLOG_fTHoliday;
+    if (lHolidaySetting == PT_Holiday::An_Feiertagen_nicht_schalten && (iTimer.holidayToday() > 0))
         lEvaluate = false;
-    if (lHolidaySetting == VAL_Tim_Special_Skip || lHolidaySetting == VAL_Tim_Special_Sunday)
+    if (lHolidaySetting == PT_Holiday::Feiertage_nicht_beachten || lHolidaySetting == PT_Holiday::Feiertage_wie_Sonntage_behandeln)
         lEvaluate = true;
-    if (lHolidaySetting == VAL_Tim_Special_Only)
+    if (lHolidaySetting == PT_Holiday::Nur_an_Feiertagen_schalten)
         lEvaluate = (iTimer.holidayToday() > 0);
     if (!lEvaluate)
         return;
 
-    bool lHandleAsSunday = (lHolidaySetting == VAL_Tim_Special_Sunday && (iTimer.holidayToday() > 0));
+    bool lHandleAsSunday = (lHolidaySetting == PT_Holiday::Feiertage_wie_Sonntage_behandeln && (iTimer.holidayToday() > 0));
     lResult = getTimerAll(iTimer, lHandleAsSunday, &lValue, &lValueNum);
     if (lResult > -1)
     {
@@ -2874,7 +2872,8 @@ void LogicChannel::processTimerRestoreState(TimerRestore &iTimer)
 int16_t LogicChannel::getTimerAll(Timer &iTimer, bool iHandleAsSunday, bool *iValue, uint8_t *iValueNum)
 {
     int16_t lResult = -1;
-    bool lIsYearTimer = ParamLOG_fTYearDay;
+    PT_YearDay lYearDay = ParamLOG_fTYearDay;
+    bool lIsYearTimer = lYearDay == PT_YearDay::Jahresschaltuhr || lYearDay == PT_YearDay::Jahresschaltuhr_verbunden;
     uint8_t lCountTimer = lIsYearTimer ? VAL_Tim_YearTimerCount : VAL_Tim_DayTimerCount; // there are 4 year timer or 8 day timer
     bool lToday;                                                                         // if it is a day timer lToday=true
     // loop through all timer
@@ -2882,8 +2881,8 @@ int16_t LogicChannel::getTimerAll(Timer &iTimer, bool iHandleAsSunday, bool *iVa
     for (uint8_t lTimerIndex = 0; lTimerIndex < lCountTimer; lTimerIndex++)
     {
         // get timer function code
-        uint8_t lTimerFunction = (lTimerFunctions >> (28 - lTimerIndex * 4)) & 0xF;
-        if (lTimerFunction)
+        PT_DuskDawn lTimerFunction = (PT_DuskDawn)((lTimerFunctions >> (28 - lTimerIndex * 4)) & 0xF);
+        if (lTimerFunction > PT_DuskDawn::Inactive)
         {
             // timer function is active
             lToday = !lIsYearTimer || checkTimerToday(iTimer, lTimerIndex, iHandleAsSunday);
@@ -2898,67 +2897,67 @@ int16_t LogicChannel::getTimerAll(Timer &iTimer, bool iHandleAsSunday, bool *iVa
 
                 switch (lTimerFunction)
                 {
-                    case VAL_Tim_PointInTime:
+                    case PT_DuskDawn::PointInTime:
                         lCurrentResult = getPointInTime(iTimer, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday);
                         if (lCurrentResult > -1)
                             logInfoP("TimerRestore: Found PointInTime %04d with value %d", lCurrentResult, lCurrentValue);
                         break;
-                    case VAL_Tim_Sunrise_Plus:
+                    case PT_DuskDawn::Sunrise_Plus:
                         lCurrentResult = getSunAbs(iTimer, SUN_SUNRISE, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, false);
                         if (lCurrentResult > -1)
                             logInfoP("TimerRestore: Found SunrisePlus %04d with value %d", lCurrentResult, lCurrentValue);
                         break;
-                    case VAL_Tim_Sunrise_Minus:
+                    case PT_DuskDawn::Sunrise_Minus:
                         lCurrentResult = getSunAbs(iTimer, SUN_SUNRISE, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, true);
                         if (lCurrentResult > -1)
                             logInfoP("TimerRestore: Found SunriseMinus %04d with value %d", lCurrentResult, lCurrentValue);
                         break;
-                    case VAL_Tim_Sunset_Plus:
+                    case PT_DuskDawn::Sunset_Plus:
                         lCurrentResult = getSunAbs(iTimer, SUN_SUNSET, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, false);
                         if (lCurrentResult > -1)
                             logInfoP("TimerRestore: Found SunsetPlus %04d with value %d", lCurrentResult, lCurrentValue);
                         break;
-                    case VAL_Tim_Sunset_Minus:
+                    case PT_DuskDawn::Sunset_Minus:
                         lCurrentResult = getSunAbs(iTimer, SUN_SUNSET, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, true);
                         if (lCurrentResult > -1)
                             logInfoP("TimerRestore: Found SunsetMinus %04d with value %d", lCurrentResult, lCurrentValue);
                         break;
-                    case VAL_Tim_Sunrise_Earliest:
+                    case PT_DuskDawn::Sunrise_Earliest:
                         lCurrentResult = getSunLimit(iTimer, SUN_SUNRISE, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, false);
                         if (lCurrentResult > -1)
                             logInfoP("TimerRestore: Found SunriseEarliest %04d with value %d", lCurrentResult, lCurrentValue);
                         break;
-                    case VAL_Tim_Sunrise_Latest:
+                    case PT_DuskDawn::Sunrise_Latest:
                         lCurrentResult = getSunLimit(iTimer, SUN_SUNRISE, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, true);
                         if (lCurrentResult > -1)
                             logInfoP("TimerRestore: Found SunriseLatest %04d with value %d", lCurrentResult, lCurrentValue);
                         break;
-                    case VAL_Tim_Sunset_Earliest:
+                    case PT_DuskDawn::Sunset_Earliest:
                         lCurrentResult = getSunLimit(iTimer, SUN_SUNSET, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, false);
                         if (lCurrentResult > -1)
                             logInfoP("TimerRestore: Found SunsetEarliest %04d with value %d", lCurrentResult, lCurrentValue);
                         break;
-                    case VAL_Tim_Sunset_Latest:
+                    case PT_DuskDawn::Sunset_Latest:
                         lCurrentResult = getSunLimit(iTimer, SUN_SUNSET, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, true);
                         if (lCurrentResult > -1)
                             logInfoP("TimerRestore: Found SunsetLatest %04d with value %d", lCurrentResult, lCurrentValue);
                         break;
-                    case VAL_Tim_Sunrise_DegreeUp:
+                    case PT_DuskDawn::Sunrise_DegreeUp:
                         lCurrentResult = getSunDegree(iTimer, SUN_SUNRISE, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, false);
                         if (lCurrentResult > -1)
                             logInfoP("TimerRestore: Found SunriseDegreeUp %04d with value %d", lCurrentResult, lCurrentValue);
                         break;
-                    case VAL_Tim_Sunset_DegreeUp:
+                    case PT_DuskDawn::Sunset_DegreeUp:
                         lCurrentResult = getSunDegree(iTimer, SUN_SUNSET, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, false);
                         if (lCurrentResult > -1)
                             logInfoP("TimerRestore: Found SunsetDegreeUp %04d with value %d", lCurrentResult, lCurrentValue);
                         break;
-                    case VAL_Tim_Sunrise_DegreeDown:
+                    case PT_DuskDawn::Sunrise_DegreeDown:
                         lCurrentResult = getSunDegree(iTimer, SUN_SUNRISE, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, true);
                         if (lCurrentResult > -1)
                             logInfoP("TimerRestore: Found SunriseDegreeDown %04d with value %d", lCurrentResult, lCurrentValue);
                         break;
-                    case VAL_Tim_Sunset_DegreeDown:
+                    case PT_DuskDawn::Sunset_DegreeDown:
                         lCurrentResult = getSunDegree(iTimer, SUN_SUNSET, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, true);
                         if (lCurrentResult > -1)
                             logInfoP("TimerRestore: Found SunsetDegreeDown %04d with value %d", lCurrentResult, lCurrentValue);

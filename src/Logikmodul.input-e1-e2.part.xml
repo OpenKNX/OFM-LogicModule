@@ -42,11 +42,11 @@
               <Parameter Id="%AID%_P-%TT%%CC%%PPP1+461%" Name="f%C%E%En%OtherKORead" ParameterType="%AID%_PT-KOAbsNumber" Text="    Nummer des Kommunikationsobjekts" Value="%K%En-1%%" Access="Read" />
               <Union SizeInBit="56" op:nowarn="true" >
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="%ParamOffset+6%" BitOffset="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+093%" Name="f%C%E%En%ConvertInt" ParameterType="%AID%_PT-InputConvInt" Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+446%" Name="f%C%E%En%Convert" ParameterType="%AID%_PT-InputConv" Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="0" Access="None" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP2+369%" Name="f%C%E%En%ConvertFloat" ParameterType="%AID%_PT-InputConvFloat" Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP2+370%" Name="f%C%E%En%ConvertSpecial" ParameterType="%AID%_PT-InputConvSpecial" Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="4" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+444%" Name="f%C%E%En%ConvertBool" ParameterType="%AID%_PT-InputConvBool" Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="6" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+093%" Name="f%C%E%En%ConvertInt" ParameterType="%AID%_PT-InputConvInt" Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+446%" Name="f%C%E%En%Convert" ParameterType="%AID%_PT-InputConv" Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="0" Access="None" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP2+369%" Name="f%C%E%En%ConvertFloat" ParameterType="%AID%_PT-InputConvFloat" Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP2+370%" Name="f%C%E%En%ConvertSpecial" ParameterType="%AID%_PT-InputConvSpecial" Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="4" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+444%" Name="f%C%E%En%ConvertBool" ParameterType="%AID%_PT-InputConvBool" Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="6" op:nowarn="true" />
                 <!-- 2 bit frei -->
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+008%" Name="f%C%E%En%" ParameterType="%AID%_PT-InputEnable" Offset="0" BitOffset="6" Text="Eingang %En%" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+009%" Name="f%C%E%En%Dpt" ParameterType="%AID%_PT-InputDpt" Offset="1" BitOffset="0" Text="DPT für Eingang" Value="0" />
@@ -54,11 +54,11 @@
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP2+383%" Name="f%C%E%En%RepeatBase" ParameterType="%AID%_PT-DelayBase" Offset="2" BitOffset="0" Text="Eingang wird gelesen alle" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP2+384%" Name="f%C%E%En%RepeatTime" ParameterType="%AID%_PT-DelayTime" Offset="2" BitOffset="2" Text="Eingang wird gelesen alle" Value="0" />
                 <!-- Internal KO Numbers -->
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP2+378%" Name="f%C%E%En%OtherKO" ParameterType="%AID%_PT-KOAbsNumber" Offset="4" BitOffset="0" Text="    Nummer des Kommunikationsobjekts" Value="%K%En-1%%" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+459%" Name="f%C%E%En%OtherKORel" ParameterType="%AID%_PT-KORelNumber" Offset="4" BitOffset="0" Text="    Nummer des Kommunikationsobjekts" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP2+378%" Name="f%C%E%En%OtherKO" ParameterType="%AID%_PT-KOAbsNumber" Offset="4" BitOffset="0" Text="    Nummer des Kommunikationsobjekts" Value="%K%En-1%%" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+459%" Name="f%C%E%En%OtherKORel" ParameterType="%AID%_PT-KORelNumber" Offset="4" BitOffset="0" Text="    Nummer des Kommunikationsobjekts" Value="0" op:nowarn="true" />
                 <!-- Default value handling -->
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+026%" Name="f%C%E%En%Default" ParameterType="%AID%_PT-InputDefault" Offset="6" BitOffset="6" Text="Falls Vorbelegung aus dem Speicher nicht möglich oder nicht gewünscht, dann vorbelegen mit" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+393%" Name="f%C%E%En%DefaultExt" ParameterType="%AID%_PT-InputDefaultExt" Offset="6" BitOffset="6" Text="Eingang vorbelegen mit" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+026%" Name="f%C%E%En%Default" ParameterType="%AID%_PT-InputDefault" Offset="6" BitOffset="6" Text="Falls Vorbelegung aus dem Speicher nicht möglich oder nicht gewünscht, dann vorbelegen mit" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+393%" Name="f%C%E%En%DefaultExt" ParameterType="%AID%_PT-InputDefaultExt" Offset="6" BitOffset="6" Text="Eingang vorbelegen mit" Value="0" op:nowarn="true" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+130%" Name="f%C%E%En%DefaultEEPROM" ParameterType="%AID%_PT-OnOffYesNo" Offset="6" BitOffset="5" Text="Eingangswert speichern und beim nächsten Neustart als Vorbelegung nutzen?" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+164%" Name="f%C%E%En%DefaultRepeat" ParameterType="%AID%_PT-OnOffYesNo" Offset="6" BitOffset="4" Text="Nur so lange zyklisch lesen, bis erstes Telegramm eingeht" Value="0" />
                 <!-- Internal KO Setting -->
@@ -69,115 +69,115 @@
               <Union SizeInBit="64" op:nowarn="true" >
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="%ParamOffset+13%" BitOffset="0" />
                 <!-- Delta values -->
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP27+115%" Name="f%C%E%En%LowDelta" ParameterType="%AID%_PT-Delta" Offset="0" BitOffset="0" Text="Von-Wert" Value="-10" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP27+116%" Name="f%C%E%En%HighDelta" ParameterType="%AID%_PT-Delta" Offset="4" BitOffset="0" Text="Bis-Wert" Value="10" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP2+373%" Name="f%C%E%En%LowDeltaFloat" ParameterType="%AID%_PT-ValueDpt9" Offset="0" BitOffset="0" Text="Von-Wert" Value="-10" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP2+374%" Name="f%C%E%En%HighDeltaFloat" ParameterType="%AID%_PT-ValueDpt9" Offset="4" BitOffset="0" Text="Bis-Wert" Value="10" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP2+423%" Name="f%C%E%En%LowDeltaDouble" ParameterType="%AID%_PT-ValueDpt14" Offset="0" BitOffset="0" Text="Von-Wert" Value="-10" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP2+424%" Name="f%C%E%En%HighDeltaDouble" ParameterType="%AID%_PT-ValueDpt14" Offset="4" BitOffset="0" Text="Bis-Wert" Value="10" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP27+115%" Name="f%C%E%En%LowDelta" ParameterType="%AID%_PT-Delta" Offset="0" BitOffset="0" Text="Von-Wert" Value="-10" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP27+116%" Name="f%C%E%En%HighDelta" ParameterType="%AID%_PT-Delta" Offset="4" BitOffset="0" Text="Bis-Wert" Value="10" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP2+373%" Name="f%C%E%En%LowDeltaFloat" ParameterType="%AID%_PT-ValueDpt9" Offset="0" BitOffset="0" Text="Von-Wert" Value="-10" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP2+374%" Name="f%C%E%En%HighDeltaFloat" ParameterType="%AID%_PT-ValueDpt9" Offset="4" BitOffset="0" Text="Bis-Wert" Value="10" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP2+423%" Name="f%C%E%En%LowDeltaDouble" ParameterType="%AID%_PT-ValueDpt14" Offset="0" BitOffset="0" Text="Von-Wert" Value="-10" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP2+424%" Name="f%C%E%En%HighDeltaDouble" ParameterType="%AID%_PT-ValueDpt14" Offset="4" BitOffset="0" Text="Bis-Wert" Value="10" op:nowarn="true" />
                 <!-- Valid checkboxes -->
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+281%" Name="f%C%E%En%Low0Valid" ParameterType="%AID%_PT-CheckBox" Offset="7" BitOffset="0" Text="Nächste Zeile auswerten?" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+282%" Name="f%C%E%En%Low1Valid" ParameterType="%AID%_PT-CheckBox" Offset="7" BitOffset="1" Text="Nächste Zeile auswerten?" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+283%" Name="f%C%E%En%Low2Valid" ParameterType="%AID%_PT-CheckBox" Offset="7" BitOffset="2" Text="Nächste Zeile auswerten?" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+284%" Name="f%C%E%En%Low3Valid" ParameterType="%AID%_PT-CheckBox" Offset="7" BitOffset="3" Text="Nächste Zeile auswerten?" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+285%" Name="f%C%E%En%Low4Valid" ParameterType="%AID%_PT-CheckBox" Offset="7" BitOffset="4" Text="Nächste Zeile auswerten?" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+286%" Name="f%C%E%En%Low5Valid" ParameterType="%AID%_PT-CheckBox" Offset="7" BitOffset="5" Text="Nächste Zeile auswerten?" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+287%" Name="f%C%E%En%Low6Valid" ParameterType="%AID%_PT-CheckBox" Offset="7" BitOffset="6" Text="Nächste Zeile auswerten?" Value="0" />
-                <!-- <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+288%" Name="f%C%E%En%Low7Valid" ParameterType="%AID%_PT-CheckBox" Offset="7" BitOffset="7" Text="Nächste Zeile auswerten?" Value="0" /> -->
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+281%" Name="f%C%E%En%Low0Valid" ParameterType="%AID%_PT-CheckBox" Offset="7" BitOffset="0" Text="Nächste Zeile auswerten?" Value="1" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+282%" Name="f%C%E%En%Low1Valid" ParameterType="%AID%_PT-CheckBox" Offset="7" BitOffset="1" Text="Nächste Zeile auswerten?" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+283%" Name="f%C%E%En%Low2Valid" ParameterType="%AID%_PT-CheckBox" Offset="7" BitOffset="2" Text="Nächste Zeile auswerten?" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+284%" Name="f%C%E%En%Low3Valid" ParameterType="%AID%_PT-CheckBox" Offset="7" BitOffset="3" Text="Nächste Zeile auswerten?" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+285%" Name="f%C%E%En%Low4Valid" ParameterType="%AID%_PT-CheckBox" Offset="7" BitOffset="4" Text="Nächste Zeile auswerten?" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+286%" Name="f%C%E%En%Low5Valid" ParameterType="%AID%_PT-CheckBox" Offset="7" BitOffset="5" Text="Nächste Zeile auswerten?" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+287%" Name="f%C%E%En%Low6Valid" ParameterType="%AID%_PT-CheckBox" Offset="7" BitOffset="6" Text="Nächste Zeile auswerten?" Value="0" op:nowarn="true" />
+                <!-- <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+288%" Name="f%C%E%En%Low7Valid" ParameterType="%AID%_PT-CheckBox" Offset="7" BitOffset="7" Text="Nächste Zeile auswerten?" Value="0" op:nowarn="true" /> -->
                 <!-- Dpt 2 -->
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+010%" Name="f%C%E%En%Low0Dpt2" ParameterType="%AID%_PT-ValueDpt2" Offset="0" BitOffset="0" Text="Eingang ist EIN, wenn Wert gleich" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP-3+098%" Name="f%C%E%En%Low1Dpt2" ParameterType="%AID%_PT-ValueDpt2" Offset="1" BitOffset="0" Text="... oder wenn Wert gleich " Value="4" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP-3+099%" Name="f%C%E%En%Low2Dpt2" ParameterType="%AID%_PT-ValueDpt2" Offset="2" BitOffset="0" Text="... oder wenn Wert gleich " Value="4" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP-3+100%" Name="f%C%E%En%Low3Dpt2" ParameterType="%AID%_PT-ValueDpt2" Offset="3" BitOffset="0" Text="... oder wenn Wert gleich " Value="4" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+289%" Name="f%C%E%En%LowDpt2Fix" ParameterType="%AID%_PT-ValueDpt2Out" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+010%" Name="f%C%E%En%Low0Dpt2" ParameterType="%AID%_PT-ValueDpt2" Offset="0" BitOffset="0" Text="Eingang ist EIN, wenn Wert gleich" Value="1" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP-3+098%" Name="f%C%E%En%Low1Dpt2" ParameterType="%AID%_PT-ValueDpt2" Offset="1" BitOffset="0" Text="... oder wenn Wert gleich " Value="4" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP-3+099%" Name="f%C%E%En%Low2Dpt2" ParameterType="%AID%_PT-ValueDpt2" Offset="2" BitOffset="0" Text="... oder wenn Wert gleich " Value="4" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP-3+100%" Name="f%C%E%En%Low3Dpt2" ParameterType="%AID%_PT-ValueDpt2" Offset="3" BitOffset="0" Text="... oder wenn Wert gleich " Value="4" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+289%" Name="f%C%E%En%LowDpt2Fix" ParameterType="%AID%_PT-ValueDpt2Out" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" op:nowarn="true" />
                 <!-- Dpt 3 -->
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+491%" Name="f%C%E%En%Low0Dpt3Dir" ParameterType="%AID%_PT-ValueDpt3Dir" Offset="0" BitOffset="0" Text="Eingang ist EIN, wenn Wert gleich" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+493%" Name="f%C%E%En%Low0Dpt3Dim" ParameterType="%AID%_PT-ValueDpt3Dim" Offset="0" BitOffset="5" Text="" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+495%" Name="f%C%E%En%Low1Dpt3Dir" ParameterType="%AID%_PT-ValueDpt3Dir" Offset="1" BitOffset="0" Text="... oder wenn Wert gleich " Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+497%" Name="f%C%E%En%Low1Dpt3Dim" ParameterType="%AID%_PT-ValueDpt3Dim" Offset="1" BitOffset="5" Text="" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+499%" Name="f%C%E%En%Low2Dpt3Dir" ParameterType="%AID%_PT-ValueDpt3Dir" Offset="2" BitOffset="0" Text="... oder wenn Wert gleich " Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+501%" Name="f%C%E%En%Low2Dpt3Dim" ParameterType="%AID%_PT-ValueDpt3Dim" Offset="2" BitOffset="5" Text="" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+503%" Name="f%C%E%En%Low3Dpt3Dir" ParameterType="%AID%_PT-ValueDpt3Dir" Offset="3" BitOffset="0" Text="... oder wenn Wert gleich " Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+505%" Name="f%C%E%En%Low3Dpt3Dim" ParameterType="%AID%_PT-ValueDpt3Dim" Offset="3" BitOffset="5" Text="" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+507%" Name="f%C%E%En%LowDpt3FixDir" ParameterType="%AID%_PT-ValueDpt3Dir" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+509%" Name="f%C%E%En%LowDpt3FixDim" ParameterType="%AID%_PT-ValueDpt3Dim" Offset="0" BitOffset="5" Text="" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+491%" Name="f%C%E%En%Low0Dpt3Dir" ParameterType="%AID%_PT-ValueDpt3Dir" Offset="0" BitOffset="0" Text="Eingang ist EIN, wenn Wert gleich" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+493%" Name="f%C%E%En%Low0Dpt3Dim" ParameterType="%AID%_PT-ValueDpt3Dim" Offset="0" BitOffset="5" Text="" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+495%" Name="f%C%E%En%Low1Dpt3Dir" ParameterType="%AID%_PT-ValueDpt3Dir" Offset="1" BitOffset="0" Text="... oder wenn Wert gleich " Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+497%" Name="f%C%E%En%Low1Dpt3Dim" ParameterType="%AID%_PT-ValueDpt3Dim" Offset="1" BitOffset="5" Text="" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+499%" Name="f%C%E%En%Low2Dpt3Dir" ParameterType="%AID%_PT-ValueDpt3Dir" Offset="2" BitOffset="0" Text="... oder wenn Wert gleich " Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+501%" Name="f%C%E%En%Low2Dpt3Dim" ParameterType="%AID%_PT-ValueDpt3Dim" Offset="2" BitOffset="5" Text="" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+503%" Name="f%C%E%En%Low3Dpt3Dir" ParameterType="%AID%_PT-ValueDpt3Dir" Offset="3" BitOffset="0" Text="... oder wenn Wert gleich " Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+505%" Name="f%C%E%En%Low3Dpt3Dim" ParameterType="%AID%_PT-ValueDpt3Dim" Offset="3" BitOffset="5" Text="" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+507%" Name="f%C%E%En%LowDpt3FixDir" ParameterType="%AID%_PT-ValueDpt3Dir" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+509%" Name="f%C%E%En%LowDpt3FixDim" ParameterType="%AID%_PT-ValueDpt3Dim" Offset="0" BitOffset="5" Text="" Value="0" op:nowarn="true" />
                 <!-- Dpt 5 -->
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+011%" Name="f%C%E%En%LowDpt5" ParameterType="%AID%_PT-ValueDpt5" Offset="0" BitOffset="0" Text="Von-Wert" Value="128" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+012%" Name="f%C%E%En%HighDpt5" ParameterType="%AID%_PT-ValueDpt5" Offset="4" BitOffset="0" Text="Bis-Wert" Value="255" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+290%" Name="f%C%E%En%Low0Dpt5In" ParameterType="%AID%_PT-ValueDpt5" Offset="0" BitOffset="0" Text="Eingang ist EIN bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+291%" Name="f%C%E%En%Low1Dpt5In" ParameterType="%AID%_PT-ValueDpt5" Offset="1" BitOffset="0" Text="... oder bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+292%" Name="f%C%E%En%Low2Dpt5In" ParameterType="%AID%_PT-ValueDpt5" Offset="2" BitOffset="0" Text="... oder bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+293%" Name="f%C%E%En%Low3Dpt5In" ParameterType="%AID%_PT-ValueDpt5" Offset="3" BitOffset="0" Text="... oder bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+294%" Name="f%C%E%En%Low4Dpt5In" ParameterType="%AID%_PT-ValueDpt5" Offset="4" BitOffset="0" Text="... oder bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+295%" Name="f%C%E%En%Low5Dpt5In" ParameterType="%AID%_PT-ValueDpt5" Offset="5" BitOffset="0" Text="... oder bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+296%" Name="f%C%E%En%Low6Dpt5In" ParameterType="%AID%_PT-ValueDpt5" Offset="6" BitOffset="0" Text="... oder bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+297%" Name="f%C%E%En%LowDpt5Fix" ParameterType="%AID%_PT-ValueDpt5" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+011%" Name="f%C%E%En%LowDpt5" ParameterType="%AID%_PT-ValueDpt5" Offset="0" BitOffset="0" Text="Von-Wert" Value="128" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+012%" Name="f%C%E%En%HighDpt5" ParameterType="%AID%_PT-ValueDpt5" Offset="4" BitOffset="0" Text="Bis-Wert" Value="255" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+290%" Name="f%C%E%En%Low0Dpt5In" ParameterType="%AID%_PT-ValueDpt5" Offset="0" BitOffset="0" Text="Eingang ist EIN bei Wert" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+291%" Name="f%C%E%En%Low1Dpt5In" ParameterType="%AID%_PT-ValueDpt5" Offset="1" BitOffset="0" Text="... oder bei Wert" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+292%" Name="f%C%E%En%Low2Dpt5In" ParameterType="%AID%_PT-ValueDpt5" Offset="2" BitOffset="0" Text="... oder bei Wert" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+293%" Name="f%C%E%En%Low3Dpt5In" ParameterType="%AID%_PT-ValueDpt5" Offset="3" BitOffset="0" Text="... oder bei Wert" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+294%" Name="f%C%E%En%Low4Dpt5In" ParameterType="%AID%_PT-ValueDpt5" Offset="4" BitOffset="0" Text="... oder bei Wert" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+295%" Name="f%C%E%En%Low5Dpt5In" ParameterType="%AID%_PT-ValueDpt5" Offset="5" BitOffset="0" Text="... oder bei Wert" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+296%" Name="f%C%E%En%Low6Dpt5In" ParameterType="%AID%_PT-ValueDpt5" Offset="6" BitOffset="0" Text="... oder bei Wert" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+297%" Name="f%C%E%En%LowDpt5Fix" ParameterType="%AID%_PT-ValueDpt5" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" op:nowarn="true" />
                 <!-- Dpt 5.001 -->
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+013%" Name="f%C%E%En%LowDpt5001" ParameterType="%AID%_PT-ValueDpt5001" Offset="0" BitOffset="0" Text="Von-Wert" Value="50" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+014%" Name="f%C%E%En%HighDpt5001" ParameterType="%AID%_PT-ValueDpt5001" Offset="4" BitOffset="0" Text="Bis-Wert" Value="100" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+298%" Name="f%C%E%En%Low0Dpt5xIn" ParameterType="%AID%_PT-ValueDpt5001" Offset="0" BitOffset="0" Text="Eingang ist EIN bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+299%" Name="f%C%E%En%Low1Dpt5xIn" ParameterType="%AID%_PT-ValueDpt5001" Offset="1" BitOffset="0" Text="... oder bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+300%" Name="f%C%E%En%Low2Dpt5xIn" ParameterType="%AID%_PT-ValueDpt5001" Offset="2" BitOffset="0" Text="... oder bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+301%" Name="f%C%E%En%Low3Dpt5xIn" ParameterType="%AID%_PT-ValueDpt5001" Offset="3" BitOffset="0" Text="... oder bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+302%" Name="f%C%E%En%Low4Dpt5xIn" ParameterType="%AID%_PT-ValueDpt5001" Offset="4" BitOffset="0" Text="... oder bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+303%" Name="f%C%E%En%Low5Dpt5xIn" ParameterType="%AID%_PT-ValueDpt5001" Offset="5" BitOffset="0" Text="... oder bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+304%" Name="f%C%E%En%Low6Dpt5xIn" ParameterType="%AID%_PT-ValueDpt5001" Offset="6" BitOffset="0" Text="... oder bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+305%" Name="f%C%E%En%LowDpt5xFix" ParameterType="%AID%_PT-ValueDpt5001" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+013%" Name="f%C%E%En%LowDpt5001" ParameterType="%AID%_PT-ValueDpt5001" Offset="0" BitOffset="0" Text="Von-Wert" Value="50" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+014%" Name="f%C%E%En%HighDpt5001" ParameterType="%AID%_PT-ValueDpt5001" Offset="4" BitOffset="0" Text="Bis-Wert" Value="100" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+298%" Name="f%C%E%En%Low0Dpt5xIn" ParameterType="%AID%_PT-ValueDpt5001" Offset="0" BitOffset="0" Text="Eingang ist EIN bei Wert" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+299%" Name="f%C%E%En%Low1Dpt5xIn" ParameterType="%AID%_PT-ValueDpt5001" Offset="1" BitOffset="0" Text="... oder bei Wert" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+300%" Name="f%C%E%En%Low2Dpt5xIn" ParameterType="%AID%_PT-ValueDpt5001" Offset="2" BitOffset="0" Text="... oder bei Wert" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+301%" Name="f%C%E%En%Low3Dpt5xIn" ParameterType="%AID%_PT-ValueDpt5001" Offset="3" BitOffset="0" Text="... oder bei Wert" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+302%" Name="f%C%E%En%Low4Dpt5xIn" ParameterType="%AID%_PT-ValueDpt5001" Offset="4" BitOffset="0" Text="... oder bei Wert" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+303%" Name="f%C%E%En%Low5Dpt5xIn" ParameterType="%AID%_PT-ValueDpt5001" Offset="5" BitOffset="0" Text="... oder bei Wert" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+304%" Name="f%C%E%En%Low6Dpt5xIn" ParameterType="%AID%_PT-ValueDpt5001" Offset="6" BitOffset="0" Text="... oder bei Wert" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+305%" Name="f%C%E%En%LowDpt5xFix" ParameterType="%AID%_PT-ValueDpt5001" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" op:nowarn="true" />
                 <!-- Dpt 6 -->
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+015%" Name="f%C%E%En%LowDpt6" ParameterType="%AID%_PT-ValueDpt6" Offset="0" BitOffset="0" Text="Von-Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+016%" Name="f%C%E%En%HighDpt6" ParameterType="%AID%_PT-ValueDpt6" Offset="4" BitOffset="0" Text="Bis-Wert" Value="127" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+306%" Name="f%C%E%En%Low0Dpt6In" ParameterType="%AID%_PT-ValueDpt6" Offset="0" BitOffset="0" Text="Eingang ist EIN bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+307%" Name="f%C%E%En%Low1Dpt6In" ParameterType="%AID%_PT-ValueDpt6" Offset="1" BitOffset="0" Text="... oder bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+308%" Name="f%C%E%En%Low2Dpt6In" ParameterType="%AID%_PT-ValueDpt6" Offset="2" BitOffset="0" Text="... oder bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+309%" Name="f%C%E%En%Low3Dpt6In" ParameterType="%AID%_PT-ValueDpt6" Offset="3" BitOffset="0" Text="... oder bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+310%" Name="f%C%E%En%Low4Dpt6In" ParameterType="%AID%_PT-ValueDpt6" Offset="4" BitOffset="0" Text="... oder bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+311%" Name="f%C%E%En%Low5Dpt6In" ParameterType="%AID%_PT-ValueDpt6" Offset="5" BitOffset="0" Text="... oder bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+312%" Name="f%C%E%En%Low6Dpt6In" ParameterType="%AID%_PT-ValueDpt6" Offset="6" BitOffset="0" Text="... oder bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+313%" Name="f%C%E%En%LowDpt6Fix" ParameterType="%AID%_PT-ValueDpt6" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+015%" Name="f%C%E%En%LowDpt6" ParameterType="%AID%_PT-ValueDpt6" Offset="0" BitOffset="0" Text="Von-Wert" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+016%" Name="f%C%E%En%HighDpt6" ParameterType="%AID%_PT-ValueDpt6" Offset="4" BitOffset="0" Text="Bis-Wert" Value="127" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+306%" Name="f%C%E%En%Low0Dpt6In" ParameterType="%AID%_PT-ValueDpt6" Offset="0" BitOffset="0" Text="Eingang ist EIN bei Wert" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+307%" Name="f%C%E%En%Low1Dpt6In" ParameterType="%AID%_PT-ValueDpt6" Offset="1" BitOffset="0" Text="... oder bei Wert" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+308%" Name="f%C%E%En%Low2Dpt6In" ParameterType="%AID%_PT-ValueDpt6" Offset="2" BitOffset="0" Text="... oder bei Wert" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+309%" Name="f%C%E%En%Low3Dpt6In" ParameterType="%AID%_PT-ValueDpt6" Offset="3" BitOffset="0" Text="... oder bei Wert" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+310%" Name="f%C%E%En%Low4Dpt6In" ParameterType="%AID%_PT-ValueDpt6" Offset="4" BitOffset="0" Text="... oder bei Wert" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+311%" Name="f%C%E%En%Low5Dpt6In" ParameterType="%AID%_PT-ValueDpt6" Offset="5" BitOffset="0" Text="... oder bei Wert" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+312%" Name="f%C%E%En%Low6Dpt6In" ParameterType="%AID%_PT-ValueDpt6" Offset="6" BitOffset="0" Text="... oder bei Wert" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+313%" Name="f%C%E%En%LowDpt6Fix" ParameterType="%AID%_PT-ValueDpt6" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" op:nowarn="true" />
                 <!-- Dpt 7 -->
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+017%" Name="f%C%E%En%LowDpt7" ParameterType="%AID%_PT-ValueDpt7" Offset="0" BitOffset="0" Text="Von-Wert" Value="32768" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+018%" Name="f%C%E%En%HighDpt7" ParameterType="%AID%_PT-ValueDpt7" Offset="4" BitOffset="0" Text="Bis-Wert" Value="65535" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+314%" Name="f%C%E%En%Low0Dpt7In" ParameterType="%AID%_PT-ValueDpt7" Offset="0" BitOffset="0" Text="Eingang ist EIN bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+315%" Name="f%C%E%En%Low1Dpt7In" ParameterType="%AID%_PT-ValueDpt7" Offset="2" BitOffset="0" Text="... oder bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+316%" Name="f%C%E%En%Low2Dpt7In" ParameterType="%AID%_PT-ValueDpt7" Offset="4" BitOffset="0" Text="... oder bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+317%" Name="f%C%E%En%LowDpt7Fix" ParameterType="%AID%_PT-ValueDpt7" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+017%" Name="f%C%E%En%LowDpt7" ParameterType="%AID%_PT-ValueDpt7" Offset="0" BitOffset="0" Text="Von-Wert" Value="32768" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+018%" Name="f%C%E%En%HighDpt7" ParameterType="%AID%_PT-ValueDpt7" Offset="4" BitOffset="0" Text="Bis-Wert" Value="65535" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+314%" Name="f%C%E%En%Low0Dpt7In" ParameterType="%AID%_PT-ValueDpt7" Offset="0" BitOffset="0" Text="Eingang ist EIN bei Wert" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+315%" Name="f%C%E%En%Low1Dpt7In" ParameterType="%AID%_PT-ValueDpt7" Offset="2" BitOffset="0" Text="... oder bei Wert" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+316%" Name="f%C%E%En%Low2Dpt7In" ParameterType="%AID%_PT-ValueDpt7" Offset="4" BitOffset="0" Text="... oder bei Wert" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+317%" Name="f%C%E%En%LowDpt7Fix" ParameterType="%AID%_PT-ValueDpt7" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" op:nowarn="true" />
                 <!-- Dpt 8 -->
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+019%" Name="f%C%E%En%LowDpt8" ParameterType="%AID%_PT-ValueDpt8" Offset="0" BitOffset="0" Text="Von-Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+020%" Name="f%C%E%En%HighDpt8" ParameterType="%AID%_PT-ValueDpt8" Offset="4" BitOffset="0" Text="Bis-Wert" Value="32767" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+318%" Name="f%C%E%En%Low0Dpt8In" ParameterType="%AID%_PT-ValueDpt8" Offset="0" BitOffset="0" Text="Eingang ist EIN bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+319%" Name="f%C%E%En%Low1Dpt8In" ParameterType="%AID%_PT-ValueDpt8" Offset="2" BitOffset="0" Text="... oder bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+320%" Name="f%C%E%En%Low2Dpt8In" ParameterType="%AID%_PT-ValueDpt8" Offset="4" BitOffset="0" Text="... oder bei Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+321%" Name="f%C%E%En%LowDpt8Fix" ParameterType="%AID%_PT-ValueDpt8" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+019%" Name="f%C%E%En%LowDpt8" ParameterType="%AID%_PT-ValueDpt8" Offset="0" BitOffset="0" Text="Von-Wert" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+020%" Name="f%C%E%En%HighDpt8" ParameterType="%AID%_PT-ValueDpt8" Offset="4" BitOffset="0" Text="Bis-Wert" Value="32767" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+318%" Name="f%C%E%En%Low0Dpt8In" ParameterType="%AID%_PT-ValueDpt8" Offset="0" BitOffset="0" Text="Eingang ist EIN bei Wert" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+319%" Name="f%C%E%En%Low1Dpt8In" ParameterType="%AID%_PT-ValueDpt8" Offset="2" BitOffset="0" Text="... oder bei Wert" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+320%" Name="f%C%E%En%Low2Dpt8In" ParameterType="%AID%_PT-ValueDpt8" Offset="4" BitOffset="0" Text="... oder bei Wert" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+321%" Name="f%C%E%En%LowDpt8Fix" ParameterType="%AID%_PT-ValueDpt8" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" op:nowarn="true" />
                 <!-- Dpt 9 -->
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+021%" Name="f%C%E%En%LowDpt9" ParameterType="%AID%_PT-ValueDpt9" Offset="0" BitOffset="0" Text="Von-Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+022%" Name="f%C%E%En%HighDpt9" ParameterType="%AID%_PT-ValueDpt9" Offset="4" BitOffset="0" Text="Bis-Wert" Value="670760" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+322%" Name="f%C%E%En%LowDpt9Fix" ParameterType="%AID%_PT-ValueDpt9" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+021%" Name="f%C%E%En%LowDpt9" ParameterType="%AID%_PT-ValueDpt9" Offset="0" BitOffset="0" Text="Von-Wert" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+022%" Name="f%C%E%En%HighDpt9" ParameterType="%AID%_PT-ValueDpt9" Offset="4" BitOffset="0" Text="Bis-Wert" Value="670760" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+322%" Name="f%C%E%En%LowDpt9Fix" ParameterType="%AID%_PT-ValueDpt9" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" op:nowarn="true" />
                 <!-- Dpt 12 -->
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP9+405%" Name="f%C%E%En%LowDpt12" ParameterType="%AID%_PT-ValueDpt12" Offset="0" BitOffset="0" Text="Von-Wert" Value="2147483648" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP9+406%" Name="f%C%E%En%HighDpt12" ParameterType="%AID%_PT-ValueDpt12" Offset="4" BitOffset="0" Text="Bis-Wert" Value="4294967295" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP9+407%" Name="f%C%E%En%LowDpt12Fix" ParameterType="%AID%_PT-ValueDpt12" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP9+405%" Name="f%C%E%En%LowDpt12" ParameterType="%AID%_PT-ValueDpt12" Offset="0" BitOffset="0" Text="Von-Wert" Value="2147483648" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP9+406%" Name="f%C%E%En%HighDpt12" ParameterType="%AID%_PT-ValueDpt12" Offset="4" BitOffset="0" Text="Bis-Wert" Value="4294967295" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP9+407%" Name="f%C%E%En%LowDpt12Fix" ParameterType="%AID%_PT-ValueDpt12" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" op:nowarn="true" />
                 <!-- Dpt 13 -->
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP9+408%" Name="f%C%E%En%LowDpt13" ParameterType="%AID%_PT-ValueDpt13" Offset="0" BitOffset="0" Text="Von-Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP9+409%" Name="f%C%E%En%HighDpt13" ParameterType="%AID%_PT-ValueDpt13" Offset="4" BitOffset="0" Text="Bis-Wert" Value="2147483647" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP9+410%" Name="f%C%E%En%LowDpt13Fix" ParameterType="%AID%_PT-ValueDpt13" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP9+408%" Name="f%C%E%En%LowDpt13" ParameterType="%AID%_PT-ValueDpt13" Offset="0" BitOffset="0" Text="Von-Wert" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP9+409%" Name="f%C%E%En%HighDpt13" ParameterType="%AID%_PT-ValueDpt13" Offset="4" BitOffset="0" Text="Bis-Wert" Value="2147483647" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP9+410%" Name="f%C%E%En%LowDpt13Fix" ParameterType="%AID%_PT-ValueDpt13" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" op:nowarn="true" />
                 <!-- Dpt 14 -->
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP9+411%" Name="f%C%E%En%LowDpt14" ParameterType="%AID%_PT-ValueDpt14" Offset="0" BitOffset="0" Text="Von-Wert" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP9+412%" Name="f%C%E%En%HighDpt14" ParameterType="%AID%_PT-ValueDpt14" Offset="4" BitOffset="0" Text="Bis-Wert" Value="1000000000" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP9+413%" Name="f%C%E%En%LowDpt14Fix" ParameterType="%AID%_PT-ValueDpt14" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP9+411%" Name="f%C%E%En%LowDpt14" ParameterType="%AID%_PT-ValueDpt14" Offset="0" BitOffset="0" Text="Von-Wert" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP9+412%" Name="f%C%E%En%HighDpt14" ParameterType="%AID%_PT-ValueDpt14" Offset="4" BitOffset="0" Text="Bis-Wert" Value="1000000000" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP9+413%" Name="f%C%E%En%LowDpt14Fix" ParameterType="%AID%_PT-ValueDpt14" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" op:nowarn="true" />
                 <!-- Dpt 17 -->
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+023%" Name="f%C%E%En%Low0Dpt17" ParameterType="%AID%_PT-ValueSceneIn" Offset="0" BitOffset="0" Text="Eingang ist EIN bei Szene" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP7+101%" Name="f%C%E%En%Low1Dpt17" ParameterType="%AID%_PT-ValueSceneIn" Offset="1" BitOffset="0" Text="... oder bei Szene" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP7+102%" Name="f%C%E%En%Low2Dpt17" ParameterType="%AID%_PT-ValueSceneIn" Offset="2" BitOffset="0" Text="... oder bei Szene" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP7+103%" Name="f%C%E%En%Low3Dpt17" ParameterType="%AID%_PT-ValueSceneIn" Offset="3" BitOffset="0" Text="... oder bei Szene" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP7+104%" Name="f%C%E%En%Low4Dpt17" ParameterType="%AID%_PT-ValueSceneIn" Offset="4" BitOffset="0" Text="... oder bei Szene" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP7+105%" Name="f%C%E%En%Low5Dpt17" ParameterType="%AID%_PT-ValueSceneIn" Offset="5" BitOffset="0" Text="... oder bei Szene" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP7+106%" Name="f%C%E%En%Low6Dpt17" ParameterType="%AID%_PT-ValueSceneIn" Offset="6" BitOffset="0" Text="... oder bei Szene" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP7+107%" Name="f%C%E%En%Low7Dpt17" ParameterType="%AID%_PT-ValueSceneIn" Offset="7" BitOffset="0" Text="... oder bei Szene" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+323%" Name="f%C%E%En%LowDpt17Fix" ParameterType="%AID%_PT-ValueSceneOut" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+023%" Name="f%C%E%En%Low0Dpt17" ParameterType="%AID%_PT-ValueSceneIn" Offset="0" BitOffset="0" Text="Eingang ist EIN bei Szene" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP7+101%" Name="f%C%E%En%Low1Dpt17" ParameterType="%AID%_PT-ValueSceneIn" Offset="1" BitOffset="0" Text="... oder bei Szene" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP7+102%" Name="f%C%E%En%Low2Dpt17" ParameterType="%AID%_PT-ValueSceneIn" Offset="2" BitOffset="0" Text="... oder bei Szene" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP7+103%" Name="f%C%E%En%Low3Dpt17" ParameterType="%AID%_PT-ValueSceneIn" Offset="3" BitOffset="0" Text="... oder bei Szene" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP7+104%" Name="f%C%E%En%Low4Dpt17" ParameterType="%AID%_PT-ValueSceneIn" Offset="4" BitOffset="0" Text="... oder bei Szene" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP7+105%" Name="f%C%E%En%Low5Dpt17" ParameterType="%AID%_PT-ValueSceneIn" Offset="5" BitOffset="0" Text="... oder bei Szene" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP7+106%" Name="f%C%E%En%Low6Dpt17" ParameterType="%AID%_PT-ValueSceneIn" Offset="6" BitOffset="0" Text="... oder bei Szene" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP7+107%" Name="f%C%E%En%Low7Dpt17" ParameterType="%AID%_PT-ValueSceneIn" Offset="7" BitOffset="0" Text="... oder bei Szene" Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+323%" Name="f%C%E%En%LowDpt17Fix" ParameterType="%AID%_PT-ValueSceneOut" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="1" op:nowarn="true" />
                 <!-- Dpt RGB -->
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+024%" Name="f%C%E%En%LowDptRGB" ParameterType="%AID%_PT-ValueRGB" Offset="0" BitOffset="0" Text="Von-Wert" Value="8388608" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+025%" Name="f%C%E%En%HighDptRGB" ParameterType="%AID%_PT-ValueRGB" Offset="4" BitOffset="0" Text="Bis-Wert" Value="16777216" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+324%" Name="f%C%E%En%LowDptRGBFix" ParameterType="%AID%_PT-ValueRGB" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+024%" Name="f%C%E%En%LowDptRGB" ParameterType="%AID%_PT-ValueRGB" Offset="0" BitOffset="0" Text="Von-Wert" Value="8388608" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+025%" Name="f%C%E%En%HighDptRGB" ParameterType="%AID%_PT-ValueRGB" Offset="4" BitOffset="0" Text="Bis-Wert" Value="16777216" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+324%" Name="f%C%E%En%LowDptRGBFix" ParameterType="%AID%_PT-ValueRGB" Offset="0" BitOffset="0" Text="Eingang ist konstant" Value="0" op:nowarn="true" />
               </Union>
             </Parameters>
             <ParameterRefs>

@@ -1,5 +1,4 @@
 #pragma once
-#include "KnxHelper.h"
 #include "LogicValue.h"
 #include "OpenKNX.h"
 #include "Timer.h"
@@ -15,38 +14,6 @@
 #define SAVE_BUFFER_START_PAGE 0 // All stored KO data begin at this page and takes 40 pages,
 #define SAVE_BUFFER_NUM_PAGES 41 // so next store should start at page 41
 
-// enum input defaults
-#define VAL_InputDefault_Undefined 0
-#define VAL_InputDefault_Read 1
-#define VAL_InputDefault_False 2
-#define VAL_InputDefault_True 3
-#define VAL_InputDefault_EEPROM 4
-
-// enum input converter
-#define VAL_InputConvert_Interval 0
-#define VAL_InputConvert_DeltaInterval 1
-#define VAL_InputConvert_Hysterese 2
-#define VAL_InputConvert_DeltaHysterese 3
-#define VAL_InputConvert_Values 4
-#define VAL_InputConvert_Constant 5
-#define VAL_InputConvert_None 6
-#define VAL_InputConvert_Trigger 7
-
-// enum logical function
-#define VAL_Logic_None 0
-#define VAL_Logic_And 1
-#define VAL_Logic_Or 2
-#define VAL_Logic_ExOr 3
-#define VAL_Logic_Gate 4
-#define VAL_Logic_Timer 5
-#define VAL_Logic_Switch 6
-
-// enum gate trigger values
-#define VAL_Gate_Send_Nothing 0
-#define VAL_Gate_Send_Off 1
-#define VAL_Gate_Send_On 2
-#define VAL_Gate_Send_Input 3
-
 // enum gate transitions
 #define VAL_Gate_Closed_Close 0
 #define VAL_Gate_Closed_Open 1
@@ -54,38 +21,6 @@
 #define VAL_Gate_Open_Open 3
 #define VAL_Gate_Init_Close 4
 #define VAL_Gate_Init_Open 5
-
-// enum delay extend
-#define VAL_Delay_Nothing 0
-#define VAL_Delay_Extend 1
-#define VAL_Delay_Immediate 2
-
-// enum delay reset
-#define VAL_Reset_Nothing 0
-#define VAL_Reset_Reset 1
-
-// enum output values
-#define VAL_Out_No 0
-#define VAL_Out_Constant 1
-#define VAL_Out_ValE1 2
-#define VAL_Out_ValE2 3
-#define VAL_Out_ReadRequest 4
-#define VAL_Out_ResetDevice 5
-#define VAL_Out_Buzzer 6
-#define VAL_Out_RGBLed 7
-#define VAL_Out_Function 8
-#define VAL_Out_OtherKO 9
-
-// enum output filter
-#define VAL_AllowRepeat_All 0
-#define VAL_AllowRepeat_On 1
-#define VAL_AllowRepeat_Off 2
-#define VAL_AllowRepeat_None 3
-
-// enum for Abs-Rel-connections
-#define VAL_AbsRel_None 0
-#define VAL_AbsRel_Absolute 1
-#define VAL_AbsRel_Relative 2
 
 // flags for in- and output
 #define BIT_EXT_INPUT_1 0x01
@@ -159,35 +94,6 @@
 #define TIMY_SUNDAY_MASK 0x0200
 #define TIMY_SUNDAY_SHIFT 9
 
-#define VAL_Tim_Inactive 0
-#define VAL_Tim_PointInTime 1
-#define VAL_Tim_Sunrise_Plus 4
-#define VAL_Tim_Sunrise_Minus 5
-#define VAL_Tim_Sunrise_Earliest 6
-#define VAL_Tim_Sunrise_Latest 7
-#define VAL_Tim_Sunset_Plus 8
-#define VAL_Tim_Sunset_Minus 9
-#define VAL_Tim_Sunset_Earliest 10
-#define VAL_Tim_Sunset_Latest 11
-#define VAL_Tim_Sunrise_DegreeUp 12
-#define VAL_Tim_Sunset_DegreeUp 13
-#define VAL_Tim_Sunrise_DegreeDown 14
-#define VAL_Tim_Sunset_DegreeDown 15
-
-#define VAL_Tim_Restore_No 0
-#define VAL_Tim_Restore_Last 1
-#define VAL_Tim_Restore_Last2 2
-
-#define VAL_Tim_Special_Skip 0
-#define VAL_Tim_Special_No 1
-#define VAL_Tim_Special_Only 2
-#define VAL_Tim_Special_Sunday 3
-
-#define VAL_Tim_Timer_Daily 0
-#define VAL_Tim_Timer_Yearly 1
-#define VAL_Tim_Timer_Daily_Linked 2
-#define VAL_Tim_Timer_Yearly_Linked 3
-
 #define VAL_Tim_Every_Minute 63
 #define VAL_Tim_Every_Hour 31
 #define VAL_Tim_Every_Weekday 0
@@ -197,13 +103,6 @@
 
 #define VAL_Tim_YearTimerCount 4
 #define VAL_Tim_DayTimerCount 8
-
-#define VAL_IntInput_Channel 0
-#define VAL_IntInput_LedState 1
-
-// extern KnxFacade<LinuxPlatform, Bau57B0> knx;
-
-// const uint32_t cTimeFactors[] = {100, 1000, 60000, 3600000};
 
 class Logic;
 
@@ -241,12 +140,12 @@ class LogicChannel : public OpenKNX::Channel
     void knxWriteString(uint8_t iIOIndex, const char *iValue);
     void knxRead(uint8_t iIOIndex);
     void knxResetDevice(uint16_t iParamIndex);
-    LogicValue getParamForDelta(uint8_t iDpt, uint16_t iParamIndex);
-    LogicValue getParamByDpt(uint8_t iDpt, uint16_t iParamIndex);
-    LogicValue getInputValue(uint8_t iIOIndex, uint8_t *eDpt);
-    LogicValue getKoValue(uint8_t iIOIndex, uint8_t iDpt);
-    LogicValue getKoValue(GroupObject *iKo, uint8_t iDpt, bool iIsInput);
-    LogicValue getOtherKoValue(uint16_t iKoNumber, uint8_t iDptParamIndex);
+    LogicValue getParamForDelta(PT_LogicDpt iDpt, uint16_t iParamIndex);
+    LogicValue getParamByDpt(PT_LogicDpt iDpt, uint16_t iParamIndex);
+    LogicValue getInputValue(uint8_t iIOIndex, PT_LogicDpt *eDpt);
+    LogicValue getKoValue(uint8_t iIOIndex, PT_LogicDpt iDpt);
+    LogicValue getKoValue(GroupObject *iKo, PT_LogicDpt iDpt, bool iIsInput);
+    LogicValue getOtherKoValue(uint16_t iKoNumber, uint16_t iDptParamIndex);
     void writeConstantValue(uint16_t iParamIndex, bool iOn);
     void writeParameterValue(uint8_t iIOIndex, bool iOn);
     void writeFunctionValue(uint16_t iParamIndex, bool iOn);
@@ -265,7 +164,7 @@ class LogicChannel : public OpenKNX::Channel
     void processRepeatInput2();
     void stopRepeatInput(uint8_t iIOIndex);
     void startConvert(uint8_t iIOIndex, uint8_t iStopIndex);
-    bool checkConvertValues(uint16_t iParamValues, uint8_t iValueSize, int32_t iValue);
+    bool checkConvertValues(uint16_t iParamValues, PT_LogicDpt iDpt, int32_t iValue);
     void processConvertInput(uint8_t iIOIndex);
     void startLogic(uint8_t iIOIndex, bool iValue);
     void processLogic();
@@ -362,7 +261,7 @@ class LogicChannel : public OpenKNX::Channel
 
     // instance
     uint8_t pLoadCounter = 0;
-    bool checkDpt(uint8_t iIOIndex, uint8_t iDpt);
+    bool checkDpt(uint8_t iIOIndex, PT_LogicDpt iDpt);
     void processInput(uint8_t iIOIndex);
     void processInternalInput(uint8_t iIOIndex, bool iValue);
     void processInternalInputs(uint8_t iChannelId, bool iValue);

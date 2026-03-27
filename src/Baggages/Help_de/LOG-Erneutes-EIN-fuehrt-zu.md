@@ -1,7 +1,5 @@
 ﻿### Erneutes EIN führt zu
 
-Dieses Auswahlfeld erscheint nur, wenn eine EINschaltverzögerung stattfinden soll.
-
 Während das Funktionsmodul ein EIN-Signal verzögert, muss definiert werden, wie ein weiteres EIN-Signal während der Verzögerung behandelt werden soll.
 
 ##### Verzögerung bleibt bestehen

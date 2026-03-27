@@ -1,7 +1,5 @@
 ﻿### Beim öffnen vom Tor wird
 
-Das Auswahlfeld erscheint nur, wenn als logische Operation TOR gewählt wurde.
-
 Mit dem Auswahlfeld kann man einstellen, ob das Tor zusätzliche Telegramme verschicken soll, wenn es gerade geöffnet wird (Toreingang geht auf EIN).
 
 Normalerweise ist das Tor entweder geöffnet oder geschlossen. Ein geöffnetes Tor kann nicht nochmal öffnen. Wird also wiederholt ein EIN-Signal an den Toreingang gesendet, werden die folgenden Einstellungen nur beim ersten EIN (beim wirklichen öffnen) berücksichtigt, nicht bei den Folgetelegrammen.
