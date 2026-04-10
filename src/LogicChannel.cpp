@@ -1253,7 +1253,7 @@ void LogicChannel::startLogic(uint8_t iIOIndex, bool iValue)
         if (pLoadCounter > pLoadCounterMax)
         {
             pLoadCounterMax = pLoadCounter;
-            pLoadChannel = _channelIndex;
+            pLoadChannel = _channelIndex + 1;
         }
         // invert input
         bool lValue = iValue;
@@ -2033,7 +2033,7 @@ bool LogicChannel::processCommand(const std::string iCmd, bool iDebugKo)
     else if (iCmd.length() > 11 && iCmd.substr(11, 1) == "l")
     {
         logInfoP("This channel is %sdisabled due to call limit", (pLoadCounter < LOAD_COUNTER_MAX) ? "not " : "");
-        logInfoP("This channel is %sdisabled with test setting", (ParamLOG_fDisable) ? "" : "not");
+        logInfoP("This channel is %sdisabled with test setting", (ParamLOG_fDisable) ? "" : "not ");
         if (iDebugKo)
         {
             openknx.console.writeDiagnoseKo("Dis call: %s", (pLoadCounter < LOAD_COUNTER_MAX) ? "no" : "yes");
