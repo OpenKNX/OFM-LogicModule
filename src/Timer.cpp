@@ -135,18 +135,15 @@ bool Timer::loop()
 // TODO: Fully migrate to Common Time / SunCalculation, but keep in mind we "time travel" in LOG for restore
 void Timer::convertToLocalTime(double iTime, sTime *eTime)
 {
-    OpenKNX::DateTime utcTime = OpenKNX::DateTime(
+    OpenKNX::TimeOnly localTime = OpenKNX::DateTime(
         getYear(),
         getMonth(),
         getDay(), 
-        (((int)floor(iTime) % 24) + 24) % 24, // ensure positive hour in [0;24[
+        (int)floor(iTime), // Important: New Constructor with `int` in Param Signature required!
         (int)(60 * (iTime - floor(iTime))), 
         0, 
         OpenKNX::DateTimeTypeUTC
-    );
-    if (iTime < 1) // compensate different utc-day, to prevent issues with local time conversion around DST-change
-        utcTime.addDays(-1); // expected exactly one day in past only
-    OpenKNX::TimeOnly localTime = utcTime.toLocalTime();
+    ).toLocalTime();
 
     eTime->hour = localTime.hour;
     eTime->minute = localTime.minute;
