@@ -138,7 +138,7 @@ void Timer::convertToLocalTime(double iTime, sTime *eTime)
         getYear(),
         getMonth(),
         getDay(), 
-        (int)floor(iTime), 
+        (int)floor(iTime), // Important: New Constructor with `int` in Param Signature required!
         (int)(60 * (iTime - floor(iTime))), 
         0, 
         OpenKNX::DateTimeTypeUTC
