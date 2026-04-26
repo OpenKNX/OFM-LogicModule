@@ -50,25 +50,25 @@
                 <TypeText SizeInBit="792" />
               </ParameterType>
               <!-- parameter types for logic module -->
-              <ParameterType Id="%AID%_PT-Logic" Name="Logic">
-                <TypeRestriction Base="Value" SizeInBit="8">
-                  <Enumeration Text="aus" Value="0" Id="%ENID%" />
+              <ParameterType Id="%AID%_PT-Logic" Name="Logic" op:headerExport="enum" >
+                <TypeRestriction Base="Value" SizeInBit="8" >
+                  <Enumeration Text="aus" Value="0" Id="%ENID%" op:headerName="AUS" />
                   <Enumeration Text="UND" Value="1" Id="%ENID%" />
                   <Enumeration Text="ODER" Value="2" Id="%ENID%" />
-                  <Enumeration Text="EXCLUSIV-ODER" Value="3" Id="%ENID%" />
+                  <Enumeration Text="EXCLUSIV-ODER" Value="3" Id="%ENID%" op:headerName="EXOR" />
                   <Enumeration Text="TOR" Value="4" Id="%ENID%" />
-                  <Enumeration Text="SCHALTER (RS-FLIP-FLOP)" Value="6" Id="%ENID%" />
+                  <Enumeration Text="SCHALTER (RS-FLIP-FLOP)" Value="6" Id="%ENID%" op:headerName="SCHALTER" />
                   <Enumeration Text="ZEITSCHALTUHR" Value="5" Id="%ENID%" />
                 </TypeRestriction>
-              </ParameterType>
-              <ParameterType Id="%AID%_PT-Calculate" Name="Calculate">
+              </ParameterType> 
+              <ParameterType Id="%AID%_PT-Calculate" Name="Calculate" op:headerExport="enum" >
                 <TypeRestriction Base="Value" SizeInBit="2">
-                  <Enumeration Text="auch wenn noch nicht alle Werte gültig sind" Value="0" Id="%ENID%" />
-                  <Enumeration Text="erst wenn alle Werte gültig sind" Value="1" Id="%ENID%" />
+                  <Enumeration Text="auch wenn noch nicht alle Werte gültig sind" Value="0" Id="%ENID%" op:headerName="Invalid" />
+                  <Enumeration Text="erst wenn alle Werte gültig sind" Value="1" Id="%ENID%" op:headerName="Valid" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-Trigger" Name="Trigger">
-                <TypeRestriction Base="Value" SizeInBit="8">
+              <ParameterType Id="%AID%_PT-Trigger" Name="Trigger" op:headerExport="none" >
+                <TypeRestriction Base="Value" SizeInBit="8" >
                   <Enumeration Text="nur bei geändertem Ergebnis" Value="0" Id="%ENID%" />
                   <Enumeration Text="nur bei geändertem Ergebnis, aber erstes Telegramm immer senden" Value="32" Id="%ENID%" />
                   <Enumeration Text="nur bei geändertem Ergebnis, aber erstes Telegramm nicht senden" Value="16" Id="%ENID%" />
@@ -78,7 +78,7 @@
                   <Enumeration Text="bei folgenden Eingangstelegrammen, aber erstes Telegramm nicht senden" Value="17" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-TriggerTime" Name="TriggerTime">
+              <ParameterType Id="%AID%_PT-TriggerTime" Name="TriggerTime" op:headerExport="none" >
                 <TypeRestriction Base="Value" SizeInBit="8">
                   <Enumeration Text="nur bei geändertem Ergebnis" Value="0" Id="%ENID%" />
                   <Enumeration Text="nur bei geändertem Ergebnis, aber erstes Telegramm immer senden" Value="32" Id="%ENID%" />
@@ -87,44 +87,37 @@
                   <Enumeration Text="bei jedem Eingangstelegramm, aber erstes Telegramm nicht senden" Value="31" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-GateTrigger" Name="GateTrigger">
-                <TypeRestriction Base="Value" SizeInBit="2">
-                  <Enumeration Text="Nichts gesendet" Value="0" Id="%ENID%" />
-                  <Enumeration Text="AUS gesendet" Value="1" Id="%ENID%" />
-                  <Enumeration Text="EIN gesendet" Value="2" Id="%ENID%" />
-                  <Enumeration Text="Eingangswert gesendet" Value="3" Id="%ENID%" />
+              <ParameterType Id="%AID%_PT-GateTrigger" Name="GateTrigger" op:headerExport="enum" >
+                <TypeRestriction Base="Value" SizeInBit="2" >
+                  <Enumeration Text="Nichts gesendet" Value="0" Id="%ENID%" op:headerName="None" />
+                  <Enumeration Text="AUS gesendet" Value="1" Id="%ENID%" op:headerName="Off" />
+                  <Enumeration Text="EIN gesendet" Value="2" Id="%ENID%" op:headerName="On"/>
+                  <Enumeration Text="Eingangswert gesendet" Value="3" Id="%ENID%" op:headerName="Input" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-InputKind" Name="InputKind">
-                <TypeRestriction Base="Value" SizeInBit="2" UIHint="DropDown">
-                  <!-- <Enumeration Text="keine" Value="0" Id="%ENID%" /> -->
-                  <Enumeration Text="absolut" Value="1" Id="%ENID%" />
-                  <Enumeration Text="relativ" Value="2" Id="%ENID%" />
-                </TypeRestriction>
-              </ParameterType>
-              <ParameterType Id="%AID%_PT-InputEnable" Name="InputEnable">
+              <ParameterType Id="%AID%_PT-InputEnable" Name="InputEnable" op:headerExport="enum" >
                 <TypeRestriction Base="Value" SizeInBit="2">
-                  <Enumeration Text="inaktiv" Value="0" Id="%ENID%" />
-                  <Enumeration Text="normal aktiv" Value="1" Id="%ENID%" />
-                  <Enumeration Text="invertiert aktiv" Value="2" Id="%ENID%" />
+                  <Enumeration Text="inaktiv" Value="0" Id="%ENID%" op:headerName="Inactive" />
+                  <Enumeration Text="normal aktiv" Value="1" Id="%ENID%" op:headerName="ActiveNormal" />
+                  <Enumeration Text="invertiert aktiv" Value="2" Id="%ENID%" op:headerName="ActiveInverted" />
                 </TypeRestriction>
               </ParameterType>
               <!-- Internal, not used für display -->
-              <ParameterType Id="%AID%_PT-InputConv" Name="InputConv">
+              <ParameterType Id="%AID%_PT-InputConv" Name="InputConv" op:headerExport="enum">
                 <TypeRestriction Base="Value" SizeInBit="4">
                   <Enumeration Text="Wertintervall" Value="0" Id="%ENID%" />
                   <Enumeration Text="Differenzintervall" Value="1" Id="%ENID%" />
                   <Enumeration Text="Hysterese" Value="2" Id="%ENID%" />
                   <Enumeration Text="Differenzhysterese" Value="3" Id="%ENID%" />
                   <Enumeration Text="Einzelwerte" Value="4" Id="%ENID%" />
-                  <Enumeration Text="Konstante (für Formeln)" Value="5" Id="%ENID%" />
+                  <Enumeration Text="Konstante (für Formeln)" Value="5" Id="%ENID%" op:headerName="Konstante" />
                   <!-- Eingangswert ist der Default, 0 und 1 wird ausgewertet -->
                   <Enumeration Text="Eingangswert" Value="6" Id="%ENID%" />
                   <!-- Trigger wird immer 1, egal ob durch 0 oder 1 getriggert -->
                   <Enumeration Text="Trigger" Value="7" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-InputConvInt" Name="InputConvInt">
+              <ParameterType Id="%AID%_PT-InputConvInt" Name="InputConvInt" op:headerExport="base" op:headerName="InputConv">
                 <TypeRestriction Base="Value" SizeInBit="4">
                   <Enumeration Text="Wertintervall" Value="0" Id="%ENID%" />
                   <Enumeration Text="Differenzintervall" Value="1" Id="%ENID%" />
@@ -136,7 +129,7 @@
                   <Enumeration Text="Konstante (für Formeln)" Value="5" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-InputConvFloat" Name="InputConvFloat">
+              <ParameterType Id="%AID%_PT-InputConvFloat" Name="InputConvFloat" op:headerExport="base" op:headerName="InputConv">
                 <TypeRestriction Base="Value" SizeInBit="4">
                   <Enumeration Text="Wertintervall" Value="0" Id="%ENID%" />
                   <Enumeration Text="Differenzintervall" Value="1" Id="%ENID%" />
@@ -147,7 +140,7 @@
                   <Enumeration Text="Konstante (für Formeln)" Value="5" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-InputConvSpecial" Name="InputConvSpecial">
+              <ParameterType Id="%AID%_PT-InputConvSpecial" Name="InputConvSpecial" op:headerExport="base" op:headerName="InputConv">
                 <TypeRestriction Base="Value" SizeInBit="4">
                   <Enumeration Text="Einzelwerte" Value="4" Id="%ENID%" />
                   <!-- Trigger wird immer 1, egal ob durch 0 oder 1 getriggert -->
@@ -155,7 +148,7 @@
                   <Enumeration Text="Konstante (für Formeln)" Value="5" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-InputConvBool" Name="InputConvBool">
+              <ParameterType Id="%AID%_PT-InputConvBool" Name="InputConvBool" op:headerExport="base" op:headerName="InputConv">
                 <TypeRestriction Base="Value" SizeInBit="4">
                   <!-- Eingangswert ist der Default, 0 und 1 wird ausgewertet -->
                   <Enumeration Text="Eingangswert" Value="6" Id="%ENID%" />
@@ -164,7 +157,7 @@
                 </TypeRestriction>
               </ParameterType>
               <!-- Input- und Output-DPT haben die selben Werte für Value!!!! -->
-              <ParameterType Id="%AID%_PT-InputDpt" Name="InputDpt">
+              <ParameterType Id="%AID%_PT-InputDpt" Name="InputDpt" op:headerExport="base" op:headerName="LogicDpt">
                 <TypeRestriction Base="Value" SizeInBit="8">
                   <Enumeration Text="DPT 1.xxx (Schalten)" Value="0" Id="%ENID%" />
                   <Enumeration Text="DPT 2.xxx (Zwangsführung)" Value="1" Id="%ENID%" />
@@ -182,23 +175,23 @@
                   <Enumeration Text="DPT 232.xxx (3-Byte-RGB)" Value="10" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-OutputDpt" Name="OutputDpt">
+              <ParameterType Id="%AID%_PT-OutputDpt" Name="OutputDpt" op:headerExport="enum" op:headerName="LogicDpt">
                 <TypeRestriction Base="Value" SizeInBit="8">
-                  <Enumeration Text="DPT 1.xxx (Schalten)" Value="0" Id="%ENID%" />
-                  <Enumeration Text="DPT 2.xxx (Zwangsführung)" Value="1" Id="%ENID%" />
-                  <Enumeration Text="DPT 3.xxx (Dimmen)" Value="17" Id="%ENID%" />
-                  <Enumeration Text="DPT 5.xxx (1-Byte)" Value="2" Id="%ENID%" />
-                  <Enumeration Text="DPT 5.001 (Prozent)" Value="3" Id="%ENID%" />
-                  <Enumeration Text="DPT 6.xxx (1-Byte-Vorzeichen)" Value="4" Id="%ENID%" />
-                  <Enumeration Text="DPT 7.xxx (2-Byte)" Value="5" Id="%ENID%" />
-                  <Enumeration Text="DPT 8.xxx (2-Byte-Vorzeichen)" Value="6" Id="%ENID%" />
-                  <Enumeration Text="DPT 9.xxx (2-Byte-Gleitkomma)" Value="7" Id="%ENID%" />
-                  <Enumeration Text="DPT 12.xxx (4-Byte)" Value="13" Id="%ENID%" />
-                  <Enumeration Text="DPT 13.xxx (4-Byte-Vorzeichen)" Value="14" Id="%ENID%" />
-                  <Enumeration Text="DPT 14.xxx (4-Byte-Gleitkomma)" Value="15" Id="%ENID%" />
-                  <Enumeration Text="DPT 16.001 (14-Byte-Text)" Value="8" Id="%ENID%" />
-                  <Enumeration Text="DPT 17.001 (Szene)" Value="9" Id="%ENID%" />
-                  <Enumeration Text="DPT 232.xxx (3-Byte-RGB)" Value="10" Id="%ENID%" />
+                  <Enumeration Text="DPT 1.xxx (Schalten)" Value="0" Id="%ENID%" op:headerName="DPT_1" />
+                  <Enumeration Text="DPT 2.xxx (Zwangsführung)" Value="1" Id="%ENID%" op:headerName="DPT_2" />
+                  <Enumeration Text="DPT 3.xxx (Dimmen)" Value="17" Id="%ENID%" op:headerName="DPT_3" />
+                  <Enumeration Text="DPT 5.xxx (1-Byte)" Value="2" Id="%ENID%" op:headerName="DPT_5" />
+                  <Enumeration Text="DPT 5.001 (Prozent)" Value="3" Id="%ENID%" op:headerName="DPT_5001" />
+                  <Enumeration Text="DPT 6.xxx (1-Byte-Vorzeichen)" Value="4" Id="%ENID%" op:headerName="DPT_6" />
+                  <Enumeration Text="DPT 7.xxx (2-Byte)" Value="5" Id="%ENID%" op:headerName="DPT_7" />
+                  <Enumeration Text="DPT 8.xxx (2-Byte-Vorzeichen)" Value="6" Id="%ENID%" op:headerName="DPT_8" />
+                  <Enumeration Text="DPT 9.xxx (2-Byte-Gleitkomma)" Value="7" Id="%ENID%" op:headerName="DPT_9" />
+                  <Enumeration Text="DPT 12.xxx (4-Byte)" Value="13" Id="%ENID%" op:headerName="DPT_12" />
+                  <Enumeration Text="DPT 13.xxx (4-Byte-Vorzeichen)" Value="14" Id="%ENID%" op:headerName="DPT_13" />
+                  <Enumeration Text="DPT 14.xxx (4-Byte-Gleitkomma)" Value="15" Id="%ENID%" op:headerName="DPT_14" />
+                  <Enumeration Text="DPT 16.001 (14-Byte-Text)" Value="8" Id="%ENID%" op:headerName="DPT_16" />
+                  <Enumeration Text="DPT 17.001 (Szene)" Value="9" Id="%ENID%" op:headerName="DPT_17" />
+                  <Enumeration Text="DPT 232.xxx (3-Byte-RGB)" Value="10" Id="%ENID%" op:headerName="DPT_232" />
                 </TypeRestriction>
               </ParameterType>
               <!-- <ParameterType Id="%AID%_PT-ValueBuzzer" Name="ValueBuzzer">
@@ -209,15 +202,15 @@
                   <Enumeration Text="Ton laut einschalten" Value="1" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType> -->
-              <ParameterType Id="%AID%_PT-InputDefault" Name="InputDefault">
+              <ParameterType Id="%AID%_PT-InputDefault" Name="InputDefault" op:headerExport="enum" >
                 <TypeRestriction Base="Value" SizeInBit="2">
-                  <Enumeration Text="Nichts (undefiniert)" Value="0" Id="%ENID%" />
-                  <Enumeration Text="Wert vom Bus lesen" Value="1" Id="%ENID%" />
-                  <Enumeration Text="AUS (0)" Value="2" Id="%ENID%" />
-                  <Enumeration Text="EIN (1)" Value="3" Id="%ENID%" />
+                  <Enumeration Text="Nichts (undefiniert)" Value="0" Id="%ENID%" op:headerName="None" />
+                  <Enumeration Text="Wert vom Bus lesen" Value="1" Id="%ENID%" op:headerName="Bus" />
+                  <Enumeration Text="AUS (0)" Value="2" Id="%ENID%" op:headerName="Off" />
+                  <Enumeration Text="EIN (1)" Value="3" Id="%ENID%" op:headerName="On" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-InputDefaultExt" Name="InputDefaultExt">
+              <ParameterType Id="%AID%_PT-InputDefaultExt" Name="InputDefaultExt" op:headerExport="base" op:headerName="InputDefault" >
                 <TypeRestriction Base="Value" SizeInBit="2">
                   <Enumeration Text="Nichts (undefiniert)" Value="0" Id="%ENID%" />
                   <Enumeration Text="AUS (0)" Value="2" Id="%ENID%" />
@@ -239,7 +232,7 @@
                 </TypeRestriction>
               </ParameterType> -->
               <!-- erneutes einschalten führt zu ... -->
-              <ParameterType Id="%AID%_PT-OnOffRepeat" Name="OnOffRepeat">
+              <ParameterType Id="%AID%_PT-OnOffRepeat" Name="OnOffRepeat" op:headerExport="enum" >
                 <TypeRestriction Base="Value" SizeInBit="2">
                   <Enumeration Text="Verzögerung bleibt bestehen" Value="0" Id="%ENID%" />
                   <Enumeration Text="Verzögerung wird verlängert" Value="1" Id="%ENID%" />
@@ -247,7 +240,7 @@
                 </TypeRestriction>
               </ParameterType>
               <!-- darauffolgendes ausschalten führt zu ... -->
-              <ParameterType Id="%AID%_PT-OnOffReset" Name="OnOffReset">
+              <ParameterType Id="%AID%_PT-OnOffReset" Name="OnOffReset" op:headerExport="enum" >
                 <TypeRestriction Base="Value" SizeInBit="1">
                   <Enumeration Text="Verzögerung bleibt bestehen" Value="0" Id="%ENID%" />
                   <Enumeration Text="Verzögerung beenden ohne zu schalten" Value="1" Id="%ENID%" />
@@ -256,13 +249,13 @@
               <!-- <ParameterType Id="%AID%_PT-TimeBasedTime" Name="TimeBasedTime">
                 <TypeNumber SizeInBit="32" Type="signedInt" minInclusive="0" maxInclusive="32767" />
               </ParameterType> -->
-              <ParameterType Id="%AID%_PT-ValueDpt3Dir" Name="ValueDpt3Dir">
+              <ParameterType Id="%AID%_PT-ValueDpt3Dir" Name="ValueDpt3Dir" op:headerExport="none" >
                 <TypeRestriction Base="Value" SizeInBit="5">
                   <Enumeration Text="dunkler" Value="0" Id="%ENID%" />
                   <Enumeration Text="heller" Value="1" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-ValueDpt3Dim" Name="ValueDpt3Dim">
+              <ParameterType Id="%AID%_PT-ValueDpt3Dim" Name="ValueDpt3Dim" op:headerExport="none" >
                 <TypeRestriction Base="Value" SizeInBit="3">
                   <Enumeration Text="Stop" Value="0" Id="%ENID%" />
                   <Enumeration Text="100%" Value="1" Id="%ENID%" />
@@ -274,7 +267,7 @@
                   <Enumeration Text="2%" Value="7" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-ValueSceneIn" Name="ValueSceneIn">
+              <ParameterType Id="%AID%_PT-ValueSceneIn" Name="ValueSceneIn" op:headerExport="none">
                 <TypeRestriction Base="Value" SizeInBit="8">
                   <Enumeration Text="Nicht genutzt" Value="0" Id="%ENID%" />
                   <Enumeration Text="Szene 1" Value="1" Id="%ENID%" />
@@ -343,7 +336,7 @@
                   <Enumeration Text="Szene 64" Value="64" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-ValueSceneOut" Name="ValueSceneOut">
+              <ParameterType Id="%AID%_PT-ValueSceneOut" Name="ValueSceneOut" op:headerExport="none">
                 <TypeRestriction Base="Value" SizeInBit="8">
                   <Enumeration Text="Szene 1" Value="1" Id="%ENID%" />
                   <Enumeration Text="Szene 2" Value="2" Id="%ENID%" />
@@ -414,7 +407,7 @@
               <ParameterType Id="%AID%_PT-ValueText" Name="ValueText">
                 <TypeText SizeInBit="112" />
               </ParameterType>
-              <ParameterType Id="%AID%_PT-OutputFilter" Name="OutputFilter">
+              <ParameterType Id="%AID%_PT-OutputFilter" Name="OutputFilter" op:headerExport="enum">
                 <TypeRestriction Base="Value" SizeInBit="2">
                   <Enumeration Text="Alle Wiederholungen durchlassen" Value="0" Id="%ENID%" />
                   <Enumeration Text="Nur EIN-Wiederholungen durchlassen" Value="1" Id="%ENID%" />
@@ -422,67 +415,26 @@
                   <Enumeration Text="Keine Wiederholungen durchlassen" Value="3" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-SendOnChange" Name="SendOnChange">
+              <ParameterType Id="%AID%_PT-SendOnChange" Name="SendOnChange" op:headerExport="enum">
                 <TypeRestriction Base="Value" SizeInBit="1" UIHint="DropDown">
                   <Enumeration Text="Alle Werte senden" Value="0" Id="%ENID%" />
                   <Enumeration Text="Nur geänderte Werte senden" Value="1" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <!-- TO BE REMOVED: Old Buzzer and LED handling -->
-              <ParameterType Id="%AID%_PT-OutputSend" Name="OutputSend">
+              <ParameterType Id="%AID%_PT-OutputSend" Name="OutputSend" op:headerExport="enum">
                 <TypeRestriction Base="Value" SizeInBit="8">
-                  <Enumeration Text="Nein" Value="0" Id="%ENID%" />
-                  <Enumeration Text="Ja - Wert vorgeben" Value="1" Id="%ENID%" />
-                  <Enumeration Text="Ja - Wert von Eingang 1" Value="2" Id="%ENID%" />
-                  <Enumeration Text="Ja - Wert von Eingang 2" Value="3" Id="%ENID%" />
-                  <Enumeration Text="Ja - Wert eines KO" Value="9" Id="%ENID%" />
-                  <Enumeration Text="Ja - Wert einer Funktion" Value="8" Id="%ENID%" />
-                  <Enumeration Text="Ja - Read Request senden" Value="4" Id="%ENID%" />
-                  <Enumeration Text="Ja - 'Gerät zurücksetzen' senden" Value="5" Id="%ENID%" />
+                  <Enumeration Text="Nein" Value="0" Id="%ENID%" op:headerName="None" />
+                  <Enumeration Text="Ja - Wert vorgeben" Value="1" Id="%ENID%" op:headerName="Constant" />
+                  <Enumeration Text="Ja - Wert von Eingang 1" Value="2" Id="%ENID%" op:headerName="ValueInput1" />
+                  <Enumeration Text="Ja - Wert von Eingang 2" Value="3" Id="%ENID%" op:headerName="ValueInput2" />
+                  <Enumeration Text="Ja - Wert eines KO" Value="9" Id="%ENID%" op:headerName="OtherKo" />
+                  <Enumeration Text="Ja - Wert einer Funktion" Value="8" Id="%ENID%" op:headerName="Function" />
+                  <Enumeration Text="Ja - Read Request senden" Value="4" Id="%ENID%" op:headerName="ReadRequest" />
+                  <Enumeration Text="Ja - 'Gerät zurücksetzen' senden" Value="5" Id="%ENID%" op:headerName="RestartDevice" />
+                  <Enumeration Text="Ja - Status-LED schalten" Value="7" Id="%ENID%" op:headerName="StatusLed" />
                 </TypeRestriction>
               </ParameterType>
-              <!-- TO BE REMOVED: Old Buzzer and LED handling -->
-              <ParameterType Id="%AID%_PT-OutputSendBuzzer" Name="OutputSendBuzzer">
-                <TypeRestriction Base="Value" SizeInBit="8">
-                  <Enumeration Text="Nein" Value="0" Id="%ENID%" />
-                  <Enumeration Text="Ja - Wert vorgeben" Value="1" Id="%ENID%" />
-                  <Enumeration Text="Ja - Wert von Eingang 1" Value="2" Id="%ENID%" />
-                  <Enumeration Text="Ja - Wert von Eingang 2" Value="3" Id="%ENID%" />
-                  <Enumeration Text="Ja - Wert eines KO" Value="9" Id="%ENID%" />
-                  <Enumeration Text="Ja - Wert einer Funktion" Value="8" Id="%ENID%" />
-                  <Enumeration Text="Ja - Read Request senden" Value="4" Id="%ENID%" />
-                  <Enumeration Text="Ja - 'Gerät zurücksetzen' senden" Value="5" Id="%ENID%" />
-                  <Enumeration Text="Ja - Tonwiedegabe (Buzzer)" Value="6" Id="%ENID%" />
-                </TypeRestriction>
-              </ParameterType>
-              <!-- TO BE REMOVED: Old Buzzer and LED handling -->
-              <ParameterType Id="%AID%_PT-OutputSendLed" Name="OutputSendLed">
-                <TypeRestriction Base="Value" SizeInBit="8">
-                  <Enumeration Text="Nein" Value="0" Id="%ENID%" />
-                  <Enumeration Text="Ja - Wert vorgeben" Value="1" Id="%ENID%" />
-                  <Enumeration Text="Ja - Wert von Eingang 1" Value="2" Id="%ENID%" />
-                  <Enumeration Text="Ja - Wert von Eingang 2" Value="3" Id="%ENID%" />
-                  <Enumeration Text="Ja - Wert eines KO" Value="9" Id="%ENID%" />
-                  <Enumeration Text="Ja - Wert einer Funktion" Value="8" Id="%ENID%" />
-                  <Enumeration Text="Ja - Read Request senden" Value="4" Id="%ENID%" />
-                  <Enumeration Text="Ja - 'Gerät zurücksetzen' senden" Value="5" Id="%ENID%" />
-                  <Enumeration Text="Ja - LED schalten" Value="7" Id="%ENID%" />
-                </TypeRestriction>
-              </ParameterType>
-              <ParameterType Id="%AID%_PT-OutputSendAll" Name="OutputSendAll">
-                <TypeRestriction Base="Value" SizeInBit="8">
-                  <Enumeration Text="Nein" Value="0" Id="%ENID%" />
-                  <Enumeration Text="Ja - Wert vorgeben" Value="1" Id="%ENID%" />
-                  <Enumeration Text="Ja - Wert von Eingang 1" Value="2" Id="%ENID%" />
-                  <Enumeration Text="Ja - Wert von Eingang 2" Value="3" Id="%ENID%" />
-                  <Enumeration Text="Ja - Wert eines KO" Value="9" Id="%ENID%" />
-                  <Enumeration Text="Ja - Wert einer Funktion" Value="8" Id="%ENID%" />
-                  <Enumeration Text="Ja - Read Request senden" Value="4" Id="%ENID%" />
-                  <Enumeration Text="Ja - 'Gerät zurücksetzen' senden" Value="5" Id="%ENID%" />
-                  <Enumeration Text="Ja - Status-LED schalten" Value="7" Id="%ENID%" />
-                </TypeRestriction>
-              </ParameterType>
-              <ParameterType Id="%AID%_PT-ValueFunction" Name="ValueFunction">
+              <ParameterType Id="%AID%_PT-ValueFunction" Name="ValueFunction" op:headerExport="none" >
                 <TypeRestriction Base="Value" SizeInBit="8">
                   <Enumeration Text="A = E1 + E2 (Summe)" Value="1" Id="%ENID%" />
                   <Enumeration Text="A = E1 - E2 (Differenz)" Value="2" Id="%ENID%" />
@@ -568,13 +520,13 @@
                 <TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="255" />
               </ParameterType>
               <!-- Ab hier Zeitschaltuhr -->
-              <ParameterType Id="%AID%_PT-OnOff" Name="OnOff">
+              <ParameterType Id="%AID%_PT-OnOff" Name="OnOff" op:headerExport="none">
                 <TypeRestriction Base="Value" SizeInBit="1">
                   <Enumeration Text="AUS" Value="0" Id="%ENID%" />
                   <Enumeration Text="EIN" Value="1" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-YearDay" Name="YearDay">
+              <ParameterType Id="%AID%_PT-YearDay" Name="YearDay" op:headerExport="enum">
                 <TypeRestriction Base="Value" SizeInBit="2">
                   <Enumeration Text="Tagesschaltuhr" Value="0" Id="%ENID%" />
                   <Enumeration Text="Jahresschaltuhr" Value="1" Id="%ENID%" />
@@ -582,7 +534,7 @@
                   <Enumeration Text="Jahresschaltuhr (verbunden)" Value="3" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-Holiday" Name="Holiday">
+              <ParameterType Id="%AID%_PT-Holiday" Name="Holiday" op:headerExport="enum">
                 <TypeRestriction Base="Value" SizeInBit="2">
                   <Enumeration Text="Feiertage nicht beachten" Value="0" Id="%ENID%" />
                   <Enumeration Text="An Feiertagen nicht schalten" Value="1" Id="%ENID%" />
@@ -590,7 +542,7 @@
                   <Enumeration Text="Feiertage wie Sonntage behandeln" Value="3" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-Vacation" Name="Vacation">
+              <ParameterType Id="%AID%_PT-Vacation" Name="Vacation" op:headerExport="enum">
                 <TypeRestriction Base="Value" SizeInBit="2">
                   <Enumeration Text="Urlaub nicht beachten" Value="0" Id="%ENID%" />
                   <Enumeration Text="Bei Urlaub nicht schalten" Value="1" Id="%ENID%" />
@@ -598,41 +550,41 @@
                   <Enumeration Text="Urlaub wie Sonntag behandeln" Value="3" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-IsWeekday" Name="IsWeekday">
+              <ParameterType Id="%AID%_PT-IsWeekday" Name="IsWeekday" op:headerExport="none">
                 <TypeRestriction Base="Value" SizeInBit="1">
                   <Enumeration Text="Tag" Value="0" Id="%ENID%" />
                   <Enumeration Text="Wochentag" Value="1" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-RestoreState" Name="RestoreState">
+              <ParameterType Id="%AID%_PT-RestoreState" Name="RestoreState" op:headerExport="none">
                 <TypeRestriction Base="Value" SizeInBit="2">
                   <Enumeration Text="Nein" Value="0" Id="%ENID%" />
                   <Enumeration Text="Den letzten Schaltpunkt berechnen" Value="1" Id="%ENID%" />
                   <!-- <Enumeration Text="Den letzten Schaltpunkt aus dem Speicher holen" Value="2" Id="%ENID%" /> -->
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-DuskDawn" Name="DuskDawn">
+              <ParameterType Id="%AID%_PT-DuskDawn" Name="DuskDawn" op:headerExport="enum">
                 <TypeRestriction Base="Value" SizeInBit="4">
-                  <Enumeration Text="Schaltpunkt nicht aktiviert" Value="0" Id="%ENID%" />
-                  <Enumeration Text="Zeitpunkt" Value="1" Id="%ENID%" />
-                  <Enumeration Text="Sonnenaufgang: plus Zeitversatz" Value="4" Id="%ENID%" />
-                  <Enumeration Text="Sonnenaufgang: minus Zeitversatz" Value="5" Id="%ENID%" />
-                  <Enumeration Text="Sonnenaufgang: Frühestens um..." Value="6" Id="%ENID%" />
-                  <Enumeration Text="Sonnenaufgang: Spätestens um..." Value="7" Id="%ENID%" />
-                  <Enumeration Text="Sonnenaufgang: Über Horizont..." Value="12" Id="%ENID%" />
-                  <Enumeration Text="Sonnenaufgang: Unter Horizont..." Value="14" Id="%ENID%" />
-                  <Enumeration Text="Sonnenuntergang: plus Zeitversatz" Value="8" Id="%ENID%" />
-                  <Enumeration Text="Sonnenuntergang: minus Zeitversatz" Value="9" Id="%ENID%" />
-                  <Enumeration Text="Sonnenuntergang: Frühestens um..." Value="10" Id="%ENID%" />
-                  <Enumeration Text="Sonnenuntergang: Spätestens um..." Value="11" Id="%ENID%" />
-                  <Enumeration Text="Sonnenuntergang: Über Horizont..." Value="13" Id="%ENID%" />
-                  <Enumeration Text="Sonnenuntergang: Unter Horizont..." Value="15" Id="%ENID%" />
+                  <Enumeration Text="Schaltpunkt nicht aktiviert" Value="0" Id="%ENID%" op:headerName="Inactive" />
+                  <Enumeration Text="Zeitpunkt" Value="1" Id="%ENID%" op:headerName="PointInTime" />
+                  <Enumeration Text="Sonnenaufgang: plus Zeitversatz" Value="4" Id="%ENID%" op:headerName="Sunrise_Plus" />
+                  <Enumeration Text="Sonnenaufgang: minus Zeitversatz" Value="5" Id="%ENID%" op:headerName="Sunrise_Minus" />
+                  <Enumeration Text="Sonnenaufgang: Frühestens um..." Value="6" Id="%ENID%" op:headerName="Sunrise_Earliest" />
+                  <Enumeration Text="Sonnenaufgang: Spätestens um..." Value="7" Id="%ENID%" op:headerName="Sunrise_Latest" />
+                  <Enumeration Text="Sonnenaufgang: Über Horizont..." Value="12" Id="%ENID%" op:headerName="Sunrise_DegreeUp" />
+                  <Enumeration Text="Sonnenaufgang: Unter Horizont..." Value="14" Id="%ENID%" op:headerName="Sunrise_DegreeDown" />
+                  <Enumeration Text="Sonnenuntergang: plus Zeitversatz" Value="8" Id="%ENID%" op:headerName="Sunset_Plus" />
+                  <Enumeration Text="Sonnenuntergang: minus Zeitversatz" Value="9" Id="%ENID%" op:headerName="Sunset_Minus" />
+                  <Enumeration Text="Sonnenuntergang: Frühestens um..." Value="10" Id="%ENID%" op:headerName="Sunset_Earliest" />
+                  <Enumeration Text="Sonnenuntergang: Spätestens um..." Value="11" Id="%ENID%" op:headerName="Sunset_Latest" />
+                  <Enumeration Text="Sonnenuntergang: Über Horizont..." Value="13" Id="%ENID%" op:headerName="Sunset_DegreeUp" />
+                  <Enumeration Text="Sonnenuntergang: Unter Horizont..." Value="15" Id="%ENID%" op:headerName="Sunset_DegreeDown" />
                 </TypeRestriction>
               </ParameterType>
               <!-- <ParameterType Id="%AID%_PT-Degree" Name="Degree">
                 <TypeNumber SizeInBit="8" Type="signedInt" minInclusive="-90" maxInclusive="90" />
               </ParameterType> -->
-              <ParameterType Id="%AID%_PT-Degree" Name="Degree">
+              <ParameterType Id="%AID%_PT-Degree" Name="Degree" op:headerExport="none">
                 <TypeRestriction Base="Value" SizeInBit="6">
                   <Enumeration Text="0°" Value="0" Id="%ENID%" />
                   <Enumeration Text="1°" Value="1" Id="%ENID%" />
@@ -700,7 +652,7 @@
                   <Enumeration Text="63°" Value="63" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-Minute" Name="Minute">
+              <ParameterType Id="%AID%_PT-Minute" Name="Minute" op:headerExport="none">
                 <TypeRestriction Base="Value" SizeInBit="6">
                   <Enumeration Text="jede" Value="63" Id="%ENID%" />
                   <Enumeration Text="00" Value="0" Id="%ENID%" />
@@ -765,7 +717,7 @@
                   <Enumeration Text="59" Value="59" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-MinuteRel" Name="MinuteRel">
+              <ParameterType Id="%AID%_PT-MinuteRel" Name="MinuteRel" op:headerExport="none">
                 <TypeRestriction Base="Value" SizeInBit="6">
                   <Enumeration Text="00" Value="0" Id="%ENID%" />
                   <Enumeration Text="01" Value="1" Id="%ENID%" />
@@ -829,7 +781,7 @@
                   <Enumeration Text="59" Value="59" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-Hour" Name="Hour">
+              <ParameterType Id="%AID%_PT-Hour" Name="Hour" op:headerExport="none">
                 <TypeRestriction Base="Value" SizeInBit="5">
                   <Enumeration Text="jede" Value="31" Id="%ENID%" />
                   <Enumeration Text="00" Value="0" Id="%ENID%" />
@@ -858,7 +810,7 @@
                   <Enumeration Text="23" Value="23" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-HourRel" Name="HourRel">
+              <ParameterType Id="%AID%_PT-HourRel" Name="HourRel" op:headerExport="none">
                 <TypeRestriction Base="Value" SizeInBit="5">
                   <Enumeration Text="00" Value="0" Id="%ENID%" />
                   <Enumeration Text="01" Value="1" Id="%ENID%" />
@@ -886,7 +838,7 @@
                   <Enumeration Text="23" Value="23" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-HourRelShort" Name="HourRelShort">
+              <ParameterType Id="%AID%_PT-HourRelShort" Name="HourRelShort" op:headerExport="none">
                 <TypeRestriction Base="Value" SizeInBit="5">
                   <Enumeration Text="00" Value="0" Id="%ENID%" />
                   <Enumeration Text="01" Value="1" Id="%ENID%" />
@@ -897,7 +849,7 @@
                   <Enumeration Text="06" Value="6" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-Weekday" Name="Weekday">
+              <ParameterType Id="%AID%_PT-Weekday" Name="Weekday" op:headerExport="none">
                 <TypeRestriction Base="Value" SizeInBit="3">
                   <Enumeration Text="jeder" Value="0" Id="%ENID%" />
                   <Enumeration Text="Montag" Value="1" Id="%ENID%" />
@@ -909,7 +861,7 @@
                   <Enumeration Text="Sonntag" Value="7" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-Day" Name="Day">
+              <ParameterType Id="%AID%_PT-Day" Name="Day" op:headerExport="none">
                 <TypeRestriction Base="Value" SizeInBit="7">
                   <Enumeration Text="jeder" Value="0" Id="%ENID%" />
                   <Enumeration Text="01" Value="1" Id="%ENID%" />
@@ -946,7 +898,7 @@
                   <Enumeration Text="ultimo" Value="32" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-Month" Name="Month">
+              <ParameterType Id="%AID%_PT-Month" Name="Month" op:headerExport="none">
                 <TypeRestriction Base="Value" SizeInBit="4">
                   <Enumeration Text="jeder" Value="0" Id="%ENID%" />
                   <Enumeration Text="Jan" Value="1" Id="%ENID%" />
@@ -962,25 +914,33 @@
                   <Enumeration Text="Nov" Value="11" Id="%ENID%" />
                   <Enumeration Text="Dez" Value="12" Id="%ENID%" />
                 </TypeRestriction>
-              </ParameterType>
+              </ParameterType> 
               <!-- Use this for external input assignment in a table -->
-              <ParameterType Id="%AID%_PT-KOInput" Name="KOInput">
+              <ParameterType Id="%AID%_PT-KOInput" Name="KOInput" op:headerExport="none">
                 <TypeRestriction Base="Value" SizeInBit="1" UIHint="DropDown">
                   <Enumeration Text="Neues KO" Value="0" Id="%ENID%" />
                   <Enumeration Text="Absolutes KO" Value="1" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-KORelInput" Name="KORelInput">
+              <ParameterType Id="%AID%_PT-KORelInput" Name="KORelInput" op:headerExport="enum">
                 <TypeRestriction Base="Value" SizeInBit="2" UIHint="DropDown">
-                  <Enumeration Text="Eigenes KO" Value="0" Id="%ENID%" />
+                  <Enumeration Text="Eigenes KO" Value="0" Id="%ENID%" op:headerName="None" />
+                  <Enumeration Text="Absolutes KO" Value="1" Id="%ENID%" op:headerName="Absolute" />
+                  <Enumeration Text="Relatives KO" Value="2" Id="%ENID%" op:headerName="Relative" />
+                  <op:Enumeration Value="3" op:headerName="Bitmask" />
+                </TypeRestriction>
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-KORelInput2" Name="KORelInput2" op:headerExport="base" op:headerName="KORelInput" >
+                <TypeRestriction Base="Value" SizeInBit="2" UIHint="DropDown">
                   <Enumeration Text="Absolutes KO" Value="1" Id="%ENID%" />
                   <Enumeration Text="Relatives KO" Value="2" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-KORelInput2" Name="KORelInput2">
+              <ParameterType Id="%AID%_PT-InputKind" Name="InputKind" op:headerExport="base" op:headerName="KORelInput" >
                 <TypeRestriction Base="Value" SizeInBit="2" UIHint="DropDown">
-                  <Enumeration Text="Absolutes KO" Value="1" Id="%ENID%" />
-                  <Enumeration Text="Relatives KO" Value="2" Id="%ENID%" />
+                  <!-- <Enumeration Text="keine" Value="0" Id="%ENID%" /> -->
+                  <Enumeration Text="absolut" Value="1" Id="%ENID%" />
+                  <Enumeration Text="relativ" Value="2" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
               <ParameterType Id="%AID%_PT-KOAbsNumber" Name="KOAbsNumber">
@@ -991,20 +951,21 @@
                 <!-- Referencing other KO as a relative number -->
                 <TypeNumber SizeInBit="16" Type="signedInt" minInclusive="-%MaxKoNumber-1%" maxInclusive="%MaxKoNumber-1%" />
               </ParameterType>
-              <ParameterType Id="%AID%_PT-OverviewFilter" Name="OverviewFilter">
+              <ParameterType Id="%AID%_PT-OverviewFilter" Name="OverviewFilter" op:headerExport="none">
                 <TypeRestriction Base="Value" SizeInBit="1" UIHint="DropDown">
                   <Enumeration Text="Alle Kanäle" Value="0" Id="%ENID%" />
                   <Enumeration Text="Nur Kanäle mit Verknüpfungen" Value="1" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-OverviewDisplay" Name="OverviewDisplay">
+              <ParameterType Id="%AID%_PT-OverviewDisplay" Name="OverviewDisplay" op:headerExport="none">
                 <TypeRestriction Base="Value" SizeInBit="1" UIHint="DropDown">
                   <Enumeration Text="Mit Logikbeschriftungen" Value="0" Id="%ENID%" />
                   <Enumeration Text="Ohne Logikbeschriftungen" Value="1" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-SLEDFunc" Name="SLEDFunc">
+              <ParameterType Id="%AID%_PT-SLEDFunc" Name="SLEDFunc" op:headerExport="none">
                 <TypeRestriction Base="Value" SizeInBit="16" UIHint="DropDown">
+                  <Enumeration Text="Logikmodul-Zustand" Value="99" Id="%ENID%" />
                   <Enumeration Text="Logikstatus 1" Value="90" Id="%ENID%" />
                   <Enumeration Text="Logikstatus 2" Value="91" Id="%ENID%" />
                   <Enumeration Text="Logikstatus 3" Value="92" Id="%ENID%" />
@@ -1015,7 +976,7 @@
                   <Enumeration Text="Logikstatus 8" Value="97" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-StatusLedProvider" Name="StatusLedProvider">
+              <ParameterType Id="%AID%_PT-StatusLedProvider" Name="StatusLedProvider" op:headerExport="none">
                 <TypeRestriction Base="Value" SizeInBit="3" UIHint="DropDown">
                   <Enumeration Text="Logikstatus 1" Value="0" Id="%ENID%" />
                   <Enumeration Text="Logikstatus 2" Value="1" Id="%ENID%" />
@@ -1027,7 +988,7 @@
                   <Enumeration Text="Logikstatus 8" Value="7" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
-              <ParameterType Id="%AID%_PT-StatusLedEffect" Name="StatusLedEffect">
+              <ParameterType Id="%AID%_PT-StatusLedEffect" Name="StatusLedEffect" op:headerExport="enum">
                 <TypeRestriction Base="Value" SizeInBit="3" UIHint="DropDown">
                   <Enumeration Text="Aus" Value="0" Id="%ENID%" />
                   <Enumeration Text="Ein" Value="1" Id="%ENID%" />
@@ -1039,7 +1000,7 @@
               <ParameterType Id="%AID%_PT-StatusLedEffectDuration" Name="StatusLedEffectDuration">
                 <TypeNumber SizeInBit="16" Type="unsignedInt" minInclusive="5" maxInclusive="60000" />
               </ParameterType>
-              <ParameterType Id="%AID%_PT-InternalInputType" Name="InternalInputType">
+              <ParameterType Id="%AID%_PT-InternalInputType" Name="InternalInputType" op:headerExport="enum">
                 <TypeRestriction Base="Value" SizeInBit="1" UIHint="DropDown">
                   <Enumeration Text="Anderen Logikkanal" Value="0" Id="%ENID%" />
                   <Enumeration Text="Statuskanal" Value="1" Id="%ENID%" />

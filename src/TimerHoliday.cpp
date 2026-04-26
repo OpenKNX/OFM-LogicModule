@@ -1,7 +1,7 @@
-#include "KnxHelper.h"
 #include "TimerHoliday.h"
 #include "Arduino.h"
 #include <ctime>
+#include "Logic.h"
 
 sDay TimerHoliday::cHolidays[cHolidaysCount] = {
     {1, 1},
@@ -260,8 +260,8 @@ void TimerHoliday::sendHoliday()
 {
     // write the newly calculated holiday information into KO (can be read externally)
 
-    KoLOG_Holiday1.valueNoSend(holidayToday(), getDPT(VAL_DPT_5));
-    KoLOG_Holiday2.valueNoSend(holidayTomorrow(), getDPT(VAL_DPT_5));
+    KoLOG_Holiday1.valueNoSend(holidayToday(), Logic::getDPT(PT_LogicDpt::DPT_5));
+    KoLOG_Holiday2.valueNoSend(holidayTomorrow(), Logic::getDPT(PT_LogicDpt::DPT_5));
     if (ParamLOG_HolidaySend)
     {
         // and send it, if requested by application setting

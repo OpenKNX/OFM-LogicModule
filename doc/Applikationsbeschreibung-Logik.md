@@ -80,6 +80,15 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 
 Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer das Gesamtdokument lesen muss, um Neuerungen zu erfahren.
 
+10.04.2026: Firmware 4.2.0, Applikation 4.2:
+
+NEU: Für das Status-LED Framework gibt es jetzt einen Logikmodul-Status. Dieser blinkt rot, wenn irgendein Kanal eine Rückkopplung hat und abgeschaltet wurde, um eine Telegrammflut auf dem Bus zu vermeiden. Siehe Kommando [logic lim](#kommando-logic-lim---endlosschleifen-erkennung).
+
+31.03.2026: Firmware 4.1.0, Applikation 4.1:
+
+* FIX: Eine verbundene Zeitschaltuhr (also die 2., 3. etc.) hat die erste Schaltzeit nicht ausgeführt. Das ist jetzt korrigiert.
+* NEU: Die direkte Kommunikation von der ETS zum Gerät (z.B. prüfen von Benutzerformeln) wird jetzt passend zur APDU des Kommunikationskanals vorgenommen. Linienkoppler oder Router zwischen ETS und dem Gerät können die Kommunikation jetzt nicht mehr stören.
+
 13.02.2026: Firmware 4.0.0, Applikation 4.0:
 
 * WICHTIG: Die frühere Steuerung von Buzzer und LED wurde aus dem Logikmodul entfernt - zugunsten der neuen Module LED-Status und Buzzer/Vibration. Dies kann zu manuellen Nacharbeiten nach einem Update des Gerätes notwendig machen (siehe [Besonderheiten ab der Version 4.0 bezüglich Update und Konfigurationstransfer](#besonderheiten-ab-der-version-40-bezüglich-update-und-konfigurationstransfer)).
@@ -499,6 +508,7 @@ Mit einem "Ja" wird ein Kommunikationsobjekt freigeschaltet, über das ein Urlau
 <!-- DOC -->
 #### **Nach Neustart Urlaubsinfo lesen?**
 
+<!-- DOC Skip="2" -->
 Erscheint nur, wenn "Urlaubsbehandlung aktivieren?" auf "Ja" steht.
 
 Hier kann angegeben werden, ob nach einem Neustart des Moduls die Information, ob der aktuelle Tag ein Urlaubstag ist, vom Bus gelesen werden soll.
@@ -522,6 +532,7 @@ Beide Kommunikationsobjekte (16 und 17) werden immer kurz nach Mitternacht (aber
 <!-- DOC -->
 #### **Nach Neuberechnung Feiertagsinfo senden?**
 
+<!-- DOC Skip="2" -->
 Erscheint nur, wenn "Feiertage auf dem Bus verfügbar machen?" auf "Ja" steht.
 
 Hier kann angegeben werden, ob ein neuer Feiertag aktiv auf den Bus gesendet wird. Falls "Nein" eingestellt ist, wird der Feiertag trotzdem berechnet, muss aber mit einem Lese-Request aktiv vom KO gelesen werden.
@@ -1035,6 +1046,7 @@ Wenn man den Toreingang invertiert, kann man ein Tor realisieren, dass beim Empf
 <!-- DOC -->
 ### **Beim öffnen vom Tor wird**
 
+<!-- DOC Skip="2" -->
 Das Auswahlfeld erscheint nur, wenn als logische Operation TOR gewählt wurde.
 
 Mit dem Auswahlfeld kann man einstellen, ob das Tor zusätzliche Telegramme verschicken soll, wenn es gerade geöffnet wird (Toreingang geht auf EIN).
@@ -1062,6 +1074,7 @@ Beim öffnen vom Tor wird der Eingangswert gesendet. Damit kann man erreichen, d
 <!-- DOC -->
 ### **Beim schließen vom Tor wird**
 
+<!-- DOC Skip="2" -->
 Das Auswahlfeld erscheint nur, wenn als Logik-Operation TOR gewählt wurde und das Tor nicht sofort nach dem Öffnen geschlossen wird.
 
 Mit dem Auswahlfeld kann man einstellen, ob das Tor zusätzliche Telegramme verschicken soll, wenn es gerade geschlossen wird (Toreingang geht auf AUS).
@@ -1563,6 +1576,7 @@ Der Eingang wird konstant mit einer 1 vorbelegt und hat somit sofort einen defin
 <!-- DOC HelpContext="Eingang wird gelesen alle" -->
 ### **Eingang wird alle n Sekunden gelesen (0=nicht zyklisch lesen)**
 
+<!-- DOC Skip="2" -->
 Erscheint nur, wenn bei "Kommunikationsobjekt für Eingang" der Wert "Eigenes KO" ausgewählt ist.
 
 Manche Geräte können nicht von sich aus zyklisch senden. Hier kann man einstellen, dass ein Eingang aktiv den Wert zyklisch liest. In den Feld kann man angeben, wie viele Sekunden zwischen 2 Leseintervallen vergehen sollen.
@@ -1570,6 +1584,7 @@ Manche Geräte können nicht von sich aus zyklisch senden. Hier kann man einstel
 <!-- DOC -->
 ### **Nur so lange zyklisch lesen, bis erstes Telegramm eingeht**
 
+<!-- DOC Skip="2" -->
 Erscheint nur, wenn bei "Eingang wird alle n Sekunden gelesen" ein Wert größer 0 eingegeben wurde.
 
 Standardmäßig wird zyklisches lesen ununterbrochen durchgeführt. Mit einem 'Ja' kann man hier festlegen, dass nur so lange zyklisch gelesen wird, bis ein erstes Telegramm eingeht, dass den Wert bestimmt. Das kann sowohl ein Antworttelegramm (GroupValueResponse) wie auch ein Schreibtelegramm (GroupValueWrite) sein.
@@ -1688,6 +1703,7 @@ Verbundene Zeitschaltuhren erlauben es, mehr als die möglichen 4 oder 8 Schaltz
 <!-- DOC -->
 ### **Feiertagsbehandlung**
 
+<!-- DOC Skip="2" -->
 Erscheint nur bei Zeitschaltuhren, die nicht verbunden sind. Bei verbundenen Zeitschaltuhren gilt die Definition der ersten (nicht verbundenen) Zeitschaltuhr.
 
 Über dieses Auswahlfeld kann man definieren, wie sich die Zeitschaltuhr (also alle Schaltpunkte) bei einem Feiertag verhalten.
@@ -1711,6 +1727,7 @@ Bei dieser Zeitschaltuhr werden die Schaltzeiten normal behandelt, an einem Feie
 <!-- DOC -->
 ### **Urlaubsbehandlung**
 
+<!-- DOC Skip="2" -->
 Erscheint nur bei Zeitschaltuhren, die nicht verbunden sind und unter "Urlaub/Feiertage" die Einstellung "Urlaubsbehandlung aktivieren?" mit "Ja" eingestellt wurde. Bei verbundenen Zeitschaltuhren gilt die Definition der ersten (nicht verbundenen) Zeitschaltuhr.
 
 Über dieses Auswahlfeld kann man definieren, wie sich die Zeitschaltuhr (also alle Schaltpunkte) bei einem Urlaubstag verhalten. Ein Urlaubstag muss dem Modul extern über das KO 4 mitgeteilt werden.
@@ -1734,6 +1751,7 @@ Bei dieser Zeitschaltuhr werden die Schaltzeiten normal behandelt, an einem Urla
 <!-- DOC -->
 ### **Bei Neustart letzte Schaltzeit nachholen**
 
+<!-- DOC Skip="2" -->
 Erscheint nur bei Zeitschaltuhren, die nicht verbunden sind und die Urlaubsbehandlung aktiviert haben. Bei verbundenen Zeitschaltuhren gilt die Definition der ersten (nicht verbundenen) Zeitschaltuhr.
 
 Nach einem Neustart des Moduls kann die letzte Schaltzeit erneut ausgeführt werden. Sobald das Datum und die Uhrzeit erstmals über den Bus gesetzt worden sind, wird nach der spätesten Schaltzeit gesucht, die noch vor dem aktuellen Datum/Uhrzeit liegt. Dieser Schaltzeitpunkt wird dann ausgeführt.
@@ -2021,6 +2039,7 @@ Wird eine 0 eingegeben, findet keine Verzögerung statt.
 <!-- DOC -->
 #### **Erneutes EIN führt zu**
 
+<!-- DOC Skip="2" -->
 Dieses Auswahlfeld erscheint nur, wenn eine EINschaltverzögerung stattfinden soll.
 
 Während das Funktionsmodul ein EIN-Signal verzögert, muss definiert werden, wie ein weiteres EIN-Signal während der Verzögerung behandelt werden soll.
@@ -2040,6 +2059,7 @@ Kommt während eine Verzögerung eines EIN-Signals aktiv ist ein weiteres EIN-Si
 <!-- DOC -->
 #### **Darauffolgendes AUS führt zu**
 
+<!-- DOC Skip="2" -->
 Dieses Auswahlfeld erscheint nur, wenn eine EINschaltverzögerung stattfinden soll.
 
 Während das Funktionsmodul ein EIN-Signal verzögert, muss definiert werden, wie ein weiteres AUS-Signal während der Verzögerung behandelt werden soll.
@@ -2062,6 +2082,7 @@ Wird eine 0 eingegeben, findet keine Verzögerung statt.
 <!-- DOC -->
 #### **Erneutes AUS führt zu**
 
+<!-- DOC Skip="2" -->
 Dieses Auswahlfeld erscheint nur, wenn eine AUSschaltverzögerung stattfinden soll.
 
 Während das Funktionsmodul ein AUS-Signal verzögert, muss definiert werden, wie ein weiteres AUS-Signal während der Verzögerung behandelt werden soll.
@@ -2081,6 +2102,7 @@ Kommt während eine Verzögerung eines AUS-Signals aktiv ist ein weiteres AUS-Si
 <!-- DOC -->
 #### **Darauffolgendes EIN führt zu**
 
+<!-- DOC Skip="2" -->
 Dieses Auswahlfeld erscheint nur, wenn eine AUSschaltverzögerung stattfinden soll.
 
 Während das Funktionsmodul ein AUS-Signal verzögert, muss definiert werden, wie ein weiteres EIN-Signal während der Verzögerung behandelt werden soll.
@@ -2142,6 +2164,7 @@ In dem oben dargestellten Bildschirmausschnitt würde das EIN-Signal alle 15 Min
 <!-- DOC -->
 #### **EIN-Telegramm wird wiederholt alle**
 
+<!-- DOC Skip="2" -->
 Das Feld erscheint nur, wenn bei "Ausgang wiederholt zyklisch" ein "Ja" ausgewählt wurde.
 
 Die hier eingegebene Zahl bestimmt das Zeitintervall, in dem dem das EIN-Signal wiederholt wird.
@@ -2151,6 +2174,7 @@ Die Eingabe einer 0 deaktiviert eine Wiederholung.
 <!-- DOC -->
 #### **AUS-Telegramm wird wiederholt alle**
 
+<!-- DOC Skip="2" -->
 Das Feld erscheint nur, wenn bei "Ausgang wiederholt zyklisch" ein "Ja" ausgewählt wurde.
 
 Die hier eingegebene Zahl bestimmt das Zeitintervall, in dem dem das AUS-Signal wiederholt wird.
@@ -2308,7 +2332,7 @@ In weiteren Feldern wird der Status-LED Kanal angegeben und der darauf auszugebe
 <!-- DOC -->
 ### **Wert für EIN senden als**
 
-<!-- DOC Skip="1" -->
+<!-- DOC Skip="3" -->
 <kbd>![Wert senden in Prozent](pics/WertSendenProzent.PNG)</kbd>
 
 Das Feld erscheint nur, wenn für "Wert für EIN senden" ein "Ja - Wert vorgeben" ausgewählt wurde.
@@ -2319,6 +2343,7 @@ Man kann dies z.B. auch zur Invertierung nutzen, indem bei einem DPT 1 für ein 
 
 ### **Nummer des Kommunikationsobjekts**
 
+<!-- DOC Skip="2" -->
 Das Feld erscheint nur, wenn für "Wert für EIN senden" ein "Ja - Wert eines KO senden" ausgewählt wurde.
 
 Hier wird die Nummer des KO erwartet, dessen Wert übernommen und über den Ausgang des Logikkanals gesendet werden soll.
@@ -2351,6 +2376,7 @@ Hier wird angegeben, über welchen Logikstatus-Kanal die LED angesprochen wird.
 <!-- DOC -->
 #### **Status-LED Farbe**
 
+<!-- DOC Skip="3" -->
 <kbd>![Led Farbe festlegen](pics/LedColor.PNG)</kbd>
 
 Das Feld erscheint nur, wenn für "Wert für EIN senden" ein "Ja - Status-LED schalten" ausgewählt wurde.
@@ -2469,6 +2495,7 @@ In weiteren Feldern wird der Status-LED Kanal angegeben und der darauf auszugebe
 <!-- DOC -->
 ### **Wert für AUS senden als**
 
+<!-- DOC Skip="2" -->
 Das Feld erscheint nur, wenn für "Wert für AUS senden" ein "Ja - Wert vorgeben" ausgewählt wurde.
 
 Hier wird ein konstanter Wert erwartet, der zu dem Ausgewählten DPT für den Ausgang passt. Dieser eingegebene Wert wird auf den KNX-Bus bei einem AUS-Signal gesendet.
@@ -2477,18 +2504,21 @@ Man kann dies z.B. auch zur Invertierung nutzen, indem bei einem DPT 1 für ein 
 
 ### **Nummer des Kommunikationsobjekts**
 
+<!-- DOC Skip="2" -->
 Das Feld erscheint nur, wenn für "Wert für AUS senden" ein "Ja - Wert eines KO senden" ausgewählt wurde.
 
 Hier wird die Nummer des KO erwartet, dessen Wert übernommen und über den Ausgang des Logikkanals gesendet werden soll.
 
 ### **DPT des Kommunikationsobjekts**
 
+<!-- DOC Skip="2" -->
 Das Feld erscheint nur, wenn für "Wert für AUS senden" ein "Ja - Wert eines KO senden" ausgewählt wurde.
 
 Hier wird der DPT des KO erwartet, dessen Wert übernommen und über den Ausgang des Logikkanals gesendet werden soll. Falls dieser DPT anders ist als der DPT des Ausgangs, wird generisch konvertiert. 
 
 ### **Physikalische Adresse**
 
+<!-- DOC Skip="2" -->
 Das Feld erscheint nur, wenn für "Wert für AUS senden" ein "Ja - 'Gerät zurücksetzen' senden" ausgewählt wurde.
 
 Hier wird eine physikalische Adresse in der üblichen Punkt-Notation erwartet. Das KNX-Gerät mit dieser physikalischen Adresse wird zurückgesetzt.
@@ -2504,6 +2534,7 @@ Hier wird angegeben, über welchen Logikstatus-Kanal die LED angesprochen wird.
 
 <kbd>![Led Farbe festlegen](pics/LedColor.PNG)</kbd>
 
+<!-- DOC Skip="2" -->
 Das Feld erscheint nur, wenn für "Wert für EIN senden" ein "Ja - Status-LED schalten" ausgewählt wurde.
 
 Hier wird die Farbe der LED bestimmt, in der sie leuchten soll. Wird die Farbe Schwarz gewählt (#000000), geht die LED aus. Für die Auswahl der Farbe kann auch ein Farbauswahldialog verwendet werden.
@@ -2527,6 +2558,7 @@ Dauer des Effekts in ms.
 <!-- DOC -->
 ### **Wert für AUS senden (als 3 Byte RGB)**
 
+<!-- DOC Skip="2" -->
 Das Feld erscheint nur, wenn für "DPT für Ausgang" ein "DPT 323.xxx (3-Byte-Wert)" ausgewählt wurde.
 
 Hier wird die Farbe bestimmt, deren Wert gesendet werden soll. Wird die Farbe Schwarz gewählt (#000000), entspricht das einem Ausschalt-Signal. Für die Auswahl der Farbe kann auch ein Farbauswahldialog verwendet werden.
@@ -3096,7 +3128,9 @@ Gibt den Kanal aus, der am Häufigsten pro Sekunde aufgerufen wurde und wie häu
 
 gibt den Wert im Format 'LIM NN, CH CC' aus, wobei CC der Kanal mit den meisten Aufrufen und NN die Anzahl der Aufrufe darstellt.
 
-Solange noch kein einziger Kanal aufgerufen wurde, ist der Wert 'LIM 00, CH 01'. Falls der Wert 50 ist, bedeutet das, dass eine Endlosschleife erkannt wurde und der Kanal deaktiviert worden ist. Es können noch weitere Kanäle deaktiviert worden sein, hier wird nur der erste deaktivierte Kanal angezeigt.
+Solange noch kein einziger Kanal aufgerufen wurde, ist der Wert 'LIM 00, CH 00'. Falls der Wert 50 ist, bedeutet das, dass eine Endlosschleife erkannt wurde und der Kanal deaktiviert worden ist. Es können noch weitere Kanäle deaktiviert worden sein, hier wird nur der erste deaktivierte Kanal angezeigt.
+
+Falls ein Kanal aufgrund einer Endlosschleife deaktiviert worden ist, wird auch der Logikkanal-Status im StatusLED-Framework auf rot blinkend gesetzt. Ist dieser Status irgendeiner Geräte-LED zugewiesen, wird diese rot blinken, falls es eine RGB-LED ist, ansosten in der Farbe der LED bei einer monochromen LED.
 
 ### **Kommando 'logic lim res' - Endlosschleifen-Erkennung zurücksetzen**
 

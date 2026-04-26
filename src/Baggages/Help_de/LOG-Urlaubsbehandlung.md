@@ -1,7 +1,5 @@
 ﻿### Urlaubsbehandlung
 
-Erscheint nur bei Zeitschaltuhren, die nicht verbunden sind und unter "Urlaub/Feiertage" die Einstellung "Urlaubsbehandlung aktivieren?" mit "Ja" eingestellt wurde. Bei verbundenen Zeitschaltuhren gilt die Definition der ersten (nicht verbundenen) Zeitschaltuhr.
-
 Über dieses Auswahlfeld kann man definieren, wie sich die Zeitschaltuhr (also alle Schaltpunkte) bei einem Urlaubstag verhalten. Ein Urlaubstag muss dem Modul extern über das KO 4 mitgeteilt werden.
 
 #### Urlaub nicht beachten

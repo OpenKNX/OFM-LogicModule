@@ -1,6 +1,5 @@
-#include "KnxHelper.h"
 #include "Timer.h"
-#include "SunRiSet.h"
+#include "OpenKNX/Sun/SunRiseAndSet.h"
 #include "Arduino.h"
 #include <ctime>
 
@@ -153,7 +152,7 @@ void Timer::calculateSunriseSunset()
 {
     double rise, set;
     // sunrise/sunset calculation
-    SunRiSet::sunRiseSet(getYear(), getMonth(), getDay(),
+    OpenKNX::Sun::SunRiseAndSet::sunRiseSet(getYear(), getMonth(), getDay(),
                mLongitude, mLatitude, -35.0 / 60.0, 1, &rise, &set);
     convertToLocalTime(rise, &mSunrise);
     convertToLocalTime(set, &mSunset);
@@ -212,7 +211,7 @@ void Timer::getSunDegree(uint8_t iSunInfo, double iDegree, sTime *eSun)
 {
     double rise, set;
     // sunrise/sunset calculation
-    SunRiSet::sunRiseSet(getYear(), getMonth(), getDay(),
+    OpenKNX::Sun::SunRiseAndSet::sunRiseSet(getYear(), getMonth(), getDay(),
                mLongitude, mLatitude, iDegree, 0, &rise, &set);
     if (iSunInfo == SUN_SUNRISE)
         convertToLocalTime(rise, eSun);

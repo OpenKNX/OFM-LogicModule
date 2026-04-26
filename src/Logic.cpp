@@ -11,6 +11,31 @@ Logic openknxLogic;
 
 uint8_t Logic::sMagicWord[] = {0xAE, 0x49, 0xD2, 0x9F};
 
+Dpt Logic::sDpt[] = {
+    Dpt(1, 1),
+    Dpt(2, 1),
+    Dpt(5, 10),
+    Dpt(5, 1),
+    Dpt(6, 1),
+    Dpt(7, 1),
+    Dpt(8, 1),
+    Dpt(9, 2),
+    Dpt(16, 1),
+    Dpt(17, 1),
+    Dpt(232, 600),
+    Dpt(10, 1, 1),
+    Dpt(11, 1),
+    Dpt(12, 1),
+    Dpt(13, 1),
+    Dpt(14, 1),
+    Dpt(19, 1),
+    Dpt(5, 10)}; // DPT3 is sent as a number 
+
+Dpt &Logic::getDPT(PT_LogicDpt iDptIndex)
+{
+    return sDpt[(uint8_t)iDptIndex];
+}
+
 // TODO Common Time
 Timer &Logic::sTimer = Timer::instance();                      // singleton
 
@@ -301,9 +326,9 @@ bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
     else if (iCmd.length() >= 7 && iCmd.length() <= 9 && iCmd.substr(6, 1) == "l") // limit
     {
         // display max call limit and according channel
-        logInfoP("Call limit %02d on channel %02d", LogicChannel::pLoadCounterMax, LogicChannel::pLoadChannel + 1);
+        logInfoP("Call limit %02d on channel %02d", LogicChannel::pLoadCounterMax, LogicChannel::pLoadChannel);
         if (iDebugKo)
-            openknx.console.writeDiagnoseKo("LIM %02d, CH %02d", LogicChannel::pLoadCounterMax, LogicChannel::pLoadChannel + 1);
+            openknx.console.writeDiagnoseKo("LIM %02d, CH %02d", LogicChannel::pLoadCounterMax, LogicChannel::pLoadChannel);
         lResult = true;
     }
     else if (iCmd.length() >= 7 && iCmd.substr(6, 5) == "lim r") // limit
@@ -356,7 +381,7 @@ void Logic::initLoadCounter(bool iAll)
         else if (mChannel[lChannel]->pLoadCounter >= LOAD_COUNTER_MAX)
         {
             LogicChannel::pLoadCounterMax = LOAD_COUNTER_MAX;
-            LogicChannel::pLoadChannel = lChannel;
+            LogicChannel::pLoadChannel = lChannel + 1;
             break;
         }
     }
@@ -410,6 +435,24 @@ void Logic::loop()
         }
     }
 
+    // calculate logicmodule led status
+    if (mStatLedFunc == nullptr)
+    {
+        if (LogicChannel::pLoadCounterMax >= LOAD_COUNTER_MAX) 
+        {
+            mStatLedFunc = openknx.ledFunctions.get(99);
+            mStatLedFunc->color(OpenKNX::Led::Color::Red);
+            mStatLedFunc->blinking(200);
+        }
+    }
+    else
+    {
+        if (LogicChannel::pLoadCounterMax < LOAD_COUNTER_MAX) 
+        {
+            mStatLedFunc->off();
+            mStatLedFunc = nullptr;
+        }
+    }
 
     // we loop on all channels and execute pipeline
     uint8_t lChannelsProcessed = 0;

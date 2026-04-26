@@ -24,9 +24,9 @@
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+480%" Name="f%C%I%In%AsTrigger" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="4" Text="Internen Eingang als Trigger nutzen&#10;(ist immer logisch EIN)" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+522%" Name="f%C%I%In%InternalInputType" ParameterType="%AID%_PT-InternalInputType" Offset="0" BitOffset="5" Text="Interner Eingang wird versorgt vom" Value="0" />
                 <!-- 2 Bit frei -->
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP2+049%" Name="f%C%I%In%Function" ParameterType="%AID%_PT-InputFunction" Offset="1" BitOffset="0" Text="Internen Eingang verbinden mit Kanal Nr." Value="%C%" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+475%" Name="f%C%I%In%FunctionRel" ParameterType="%AID%_PT-InputFunctionRel" Offset="1" BitOffset="0" Text="Internen Eingang verbinden mit Kanal Nr." Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+524%" Name="f%C%I%In%StatusLed" ParameterType="%AID%_PT-SLEDFunc" Offset="1" BitOffset="0" Text="Statuskanal" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP2+049%" Name="f%C%I%In%Function" ParameterType="%AID%_PT-InputFunction" Offset="1" BitOffset="0" Text="Internen Eingang verbinden mit Kanal Nr." Value="%C%" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+475%" Name="f%C%I%In%FunctionRel" ParameterType="%AID%_PT-InputFunctionRel" Offset="1" BitOffset="0" Text="Internen Eingang verbinden mit Kanal Nr." Value="0" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+524%" Name="f%C%I%In%StatusLed" ParameterType="%AID%_PT-SLEDFunc" Offset="1" BitOffset="0" Text="Statuskanal" Value="0" op:nowarn="true" />
               </Union>
             </Parameters>
             <ParameterRefs>

@@ -30,9 +30,11 @@ struct sKoLookup
 class Logic : public OpenKNX::Module
 {
   public:
-    Logic();
-    ~Logic();
+  Logic();
+  ~Logic();
 
+    static Dpt &getDPT(PT_LogicDpt iDptIndex);
+    
     // instance
     void addKoLookup(uint16_t iKoNumber, uint8_t iChannelId, uint8_t iIOIndex);
     bool getKoLookup(uint16_t iKoNumber, sKoLookup **iKoLookup = nullptr);
@@ -74,14 +76,17 @@ class Logic : public OpenKNX::Module
     uint8_t mNumChannels; // Number of channels defined in knxprod
     uint8_t mChannelIterator = 0;
 
+    // Status LED for Logic itself 
+    OpenKNX::Led::FunctionGroup* mStatLedFunc = nullptr;
+    
     // we need a lookup for external KO
     static const uint16_t cCountKoLookups = LOG_ChannelCount * 3;
     sKoLookup mKoLookup[cCountKoLookups]; // max 3*4*100 = 1200 Byte, too much?
     uint16_t mNumKoLookups = 0;
     uint32_t readRequestDelay = 0;
 
+    static Dpt sDpt[];
     void prepareChannels();
-
     void processTimerRestore();
 };
 

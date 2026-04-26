@@ -54,7 +54,8 @@ function LOG_processUserFormula(command, parFormulaName, iFormulaIndex, device, 
     }
     data = data.concat(0); // ensure zero-terminated string
 
-    var resp = online.invokeFunctionProperty(160, 4, data);
+    var resp = BASE_invokeFunctionPropertyWrapper(160, 4, data, device, online, progress);
+    // var resp = online.invokeFunctionProperty(160, 4, data);
     online.disconnect();
     if (resp[0] == 0)
         return resp;
