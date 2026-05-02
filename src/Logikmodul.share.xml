@@ -965,6 +965,7 @@
               </ParameterType>
               <ParameterType Id="%AID%_PT-SLEDFunc" Name="SLEDFunc" op:headerExport="none">
                 <TypeRestriction Base="Value" SizeInBit="16" UIHint="DropDown">
+                  <Enumeration Text="Logikmodul-Zustand" Value="99" Id="%ENID%" />
                   <Enumeration Text="Logikstatus 1" Value="90" Id="%ENID%" />
                   <Enumeration Text="Logikstatus 2" Value="91" Id="%ENID%" />
                   <Enumeration Text="Logikstatus 3" Value="92" Id="%ENID%" />

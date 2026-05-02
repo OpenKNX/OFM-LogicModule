@@ -80,6 +80,15 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 
 Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer das Gesamtdokument lesen muss, um Neuerungen zu erfahren.
 
+10.04.2026: Firmware 4.2.0, Applikation 4.2:
+
+NEU: Für das Status-LED Framework gibt es jetzt einen Logikmodul-Status. Dieser blinkt rot, wenn irgendein Kanal eine Rückkopplung hat und abgeschaltet wurde, um eine Telegrammflut auf dem Bus zu vermeiden. Siehe Kommando [logic lim](#kommando-logic-lim---endlosschleifen-erkennung).
+
+31.03.2026: Firmware 4.1.0, Applikation 4.1:
+
+* FIX: Eine verbundene Zeitschaltuhr (also die 2., 3. etc.) hat die erste Schaltzeit nicht ausgeführt. Das ist jetzt korrigiert.
+* NEU: Die direkte Kommunikation von der ETS zum Gerät (z.B. prüfen von Benutzerformeln) wird jetzt passend zur APDU des Kommunikationskanals vorgenommen. Linienkoppler oder Router zwischen ETS und dem Gerät können die Kommunikation jetzt nicht mehr stören.
+
 13.02.2026: Firmware 4.0.0, Applikation 4.0:
 
 * WICHTIG: Die frühere Steuerung von Buzzer und LED wurde aus dem Logikmodul entfernt - zugunsten der neuen Module LED-Status und Buzzer/Vibration. Dies kann zu manuellen Nacharbeiten nach einem Update des Gerätes notwendig machen (siehe [Besonderheiten ab der Version 4.0 bezüglich Update und Konfigurationstransfer](#besonderheiten-ab-der-version-40-bezüglich-update-und-konfigurationstransfer)).
@@ -3119,7 +3128,9 @@ Gibt den Kanal aus, der am Häufigsten pro Sekunde aufgerufen wurde und wie häu
 
 gibt den Wert im Format 'LIM NN, CH CC' aus, wobei CC der Kanal mit den meisten Aufrufen und NN die Anzahl der Aufrufe darstellt.
 
-Solange noch kein einziger Kanal aufgerufen wurde, ist der Wert 'LIM 00, CH 01'. Falls der Wert 50 ist, bedeutet das, dass eine Endlosschleife erkannt wurde und der Kanal deaktiviert worden ist. Es können noch weitere Kanäle deaktiviert worden sein, hier wird nur der erste deaktivierte Kanal angezeigt.
+Solange noch kein einziger Kanal aufgerufen wurde, ist der Wert 'LIM 00, CH 00'. Falls der Wert 50 ist, bedeutet das, dass eine Endlosschleife erkannt wurde und der Kanal deaktiviert worden ist. Es können noch weitere Kanäle deaktiviert worden sein, hier wird nur der erste deaktivierte Kanal angezeigt.
+
+Falls ein Kanal aufgrund einer Endlosschleife deaktiviert worden ist, wird auch der Logikkanal-Status im StatusLED-Framework auf rot blinkend gesetzt. Ist dieser Status irgendeiner Geräte-LED zugewiesen, wird diese rot blinken, falls es eine RGB-LED ist, ansosten in der Farbe der LED bei einer monochromen LED.
 
 ### **Kommando 'logic lim res' - Endlosschleifen-Erkennung zurücksetzen**
 

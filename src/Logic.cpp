@@ -326,9 +326,9 @@ bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
     else if (iCmd.length() >= 7 && iCmd.length() <= 9 && iCmd.substr(6, 1) == "l") // limit
     {
         // display max call limit and according channel
-        logInfoP("Call limit %02d on channel %02d", LogicChannel::pLoadCounterMax, LogicChannel::pLoadChannel + 1);
+        logInfoP("Call limit %02d on channel %02d", LogicChannel::pLoadCounterMax, LogicChannel::pLoadChannel);
         if (iDebugKo)
-            openknx.console.writeDiagnoseKo("LIM %02d, CH %02d", LogicChannel::pLoadCounterMax, LogicChannel::pLoadChannel + 1);
+            openknx.console.writeDiagnoseKo("LIM %02d, CH %02d", LogicChannel::pLoadCounterMax, LogicChannel::pLoadChannel);
         lResult = true;
     }
     else if (iCmd.length() >= 7 && iCmd.substr(6, 5) == "lim r") // limit
@@ -381,7 +381,7 @@ void Logic::initLoadCounter(bool iAll)
         else if (mChannel[lChannel]->pLoadCounter >= LOAD_COUNTER_MAX)
         {
             LogicChannel::pLoadCounterMax = LOAD_COUNTER_MAX;
-            LogicChannel::pLoadChannel = lChannel;
+            LogicChannel::pLoadChannel = lChannel + 1;
             break;
         }
     }
@@ -435,6 +435,24 @@ void Logic::loop()
         }
     }
 
+    // calculate logicmodule led status
+    if (mStatLedFunc == nullptr)
+    {
+        if (LogicChannel::pLoadCounterMax >= LOAD_COUNTER_MAX) 
+        {
+            mStatLedFunc = openknx.ledFunctions.get(99);
+            mStatLedFunc->color(OpenKNX::Led::Color::Red);
+            mStatLedFunc->blinking(200);
+        }
+    }
+    else
+    {
+        if (LogicChannel::pLoadCounterMax < LOAD_COUNTER_MAX) 
+        {
+            mStatLedFunc->off();
+            mStatLedFunc = nullptr;
+        }
+    }
 
     // we loop on all channels and execute pipeline
     uint8_t lChannelsProcessed = 0;
