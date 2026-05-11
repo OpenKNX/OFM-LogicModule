@@ -1839,9 +1839,9 @@ void LogicChannel::startOutputFilter(bool iOutput)
     {
         pCurrentPipeline &= ~(PIP_OUTPUT_FILTER_OFF | PIP_OUTPUT_FILTER_ON);
         pCurrentPipeline |= iOutput ? PIP_OUTPUT_FILTER_ON : PIP_OUTPUT_FILTER_OFF;
-        pCurrentOut &= ~(BIT_OUTPUT_PREVIOUS | BIT_OUTPUT_INITIAL); // output is not initial anymore
-        if (iOutput)
-            pCurrentOut |= BIT_OUTPUT_PREVIOUS;
+        // pCurrentOut &= ~(BIT_OUTPUT_PREVIOUS | BIT_OUTPUT_INITIAL); // output is not initial anymore
+        // if (iOutput)
+        //     pCurrentOut |= BIT_OUTPUT_PREVIOUS;
     }
 }
 void LogicChannel::processOutputFilter()
@@ -1864,7 +1864,7 @@ void LogicChannel::startOnOffRepeat(bool iOutput)
         {
             pRepeatOnOffDelay = millis();
             pCurrentPipeline &= ~PIP_OFF_REPEAT;
-            processOutput(iOutput);
+            processLock(iOutput);
             if (ParamLOG_fORepeat && ParamLOG_fORepeatOnTimeMS > 0)
             {
                 pCurrentPipeline |= PIP_ON_REPEAT;
@@ -1881,7 +1881,7 @@ void LogicChannel::startOnOffRepeat(bool iOutput)
         {
             pRepeatOnOffDelay = millis();
             pCurrentPipeline &= ~PIP_ON_REPEAT;
-            processOutput(iOutput);
+            processLock(iOutput);
             if (ParamLOG_fORepeat && ParamLOG_fORepeatOffTimeMS > 0)
             {
                 pCurrentPipeline |= PIP_OFF_REPEAT;
@@ -1924,9 +1924,85 @@ void LogicChannel::processOnOffRepeat()
         }
 #endif
         // delay time is over, we repeat the output
-        processOutput(lValue);
+        processLock(lValue);
         // and we restart repeat counter
         pRepeatOnOffDelay = millis();
+    }
+}
+
+void LogicChannel::lockResetQueue(bool iLock, bool iOutput)
+{
+    bool lResetQueue = (iLock && ParamLOG_fOLockResetQueue == PT_LockResetQueue::ResetAfterLock) || (!iLock && ParamLOG_fOLockResetQueue == PT_LockResetQueue::ResetAfterUnlock);
+    if (lResetQueue)
+    {
+        // set logic output to the same value als last ko output
+        saveOutput(iOutput);
+        if (iOutput)
+            pCurrentOut |= BIT_OUTPUT_LOGIC;
+        else
+            pCurrentOut &= ~BIT_OUTPUT_LOGIC;
+        // reset all pipeline timers and pipeline processing
+        pCurrentPipeline &= ~(PIP_STAIRLIGHT | PIP_BLINK | PIP_ON_DELAY | PIP_OFF_DELAY | PIP_ON_REPEAT | PIP_OFF_REPEAT);
+        pStairlightDelay = 0;
+        pBlinkDelay = 0;
+        pOnDelay = 0;
+        pOffDelay = 0;
+        pRepeatOnOffDelay = 0;
+    }
+}
+
+bool LogicChannel::processLockTrigger(PT_LockTrigger iTrigger)
+{
+    bool lOutput = false;
+    switch (iTrigger)
+    {
+    case PT_LockTrigger::On:
+        lOutput = true;
+        break;
+    case PT_LockTrigger::Off:
+        lOutput = false;
+        break;
+    default:
+        lOutput = pCurrentOut & BIT_OUTPUT_PREVIOUS;
+        break;
+    }
+    if (iTrigger > PT_LockTrigger::None)
+        processOutput(lOutput);
+    return lOutput;
+};
+
+
+void LogicChannel::startLock(bool iLock)
+{
+    bool lOutput = false;
+    if (iLock)
+    {
+        if ((pCurrentPipeline & PIP_LOCK_ACTIVE) == 0)
+        {
+            pCurrentPipeline |= PIP_LOCK_ACTIVE;
+            lOutput = processLockTrigger(ParamLOG_fOLockTriggerLock);
+            lockResetQueue(iLock, lOutput);
+        }
+    }
+    else
+    {
+        if (pCurrentPipeline & PIP_LOCK_ACTIVE)
+        {
+            pCurrentPipeline &= ~PIP_LOCK_ACTIVE;
+            lOutput = processLockTrigger(ParamLOG_fOLockTriggerUnlock);
+            lockResetQueue(iLock, lOutput);
+        }
+    }
+}
+
+void LogicChannel::processLock(bool iOutput)
+{
+    // save current output value
+    saveOutput(iOutput);
+    if ((pCurrentPipeline & PIP_LOCK_ACTIVE) == 0)
+    {
+        // if lock is not active, we process output as normal
+        processOutput(iOutput);
     }
 }
 
@@ -1944,6 +2020,7 @@ void LogicChannel::processInternalInput(uint8_t iIOIndex, bool iValue)
 // we trigger all associated internal inputs with the new value
 void LogicChannel::processInternalInputs(uint8_t iChannelIndex, bool iValue)
 {
+    // Internal input 1
     PT_InputEnable lInput1 = ParamLOG_fI1;
     if (lInput1 > PT_InputEnable::Inactive)
     {
@@ -1959,6 +2036,7 @@ void LogicChannel::processInternalInputs(uint8_t iChannelIndex, bool iValue)
             processInternalInput(BIT_INT_INPUT_1, iValue);
         }
     }
+    // Internal Input 2
     PT_InputEnable lInput2 = ParamLOG_fI2;
     if (lInput2 > PT_InputEnable::Inactive)
     {
@@ -1972,6 +2050,18 @@ void LogicChannel::processInternalInputs(uint8_t iChannelIndex, bool iValue)
                 logChannel("processInternalInputs: Input I2, Value %i", iValue);
 #endif
             processInternalInput(BIT_INT_INPUT_2, iValue);
+        }
+    }
+    // Internal lock input
+    bool lLockEnabled = ParamLOG_fOLockEnabled;
+    if (lLockEnabled)
+    {
+        int8_t lLockFunction = ParamLOG_fOLockFunction;
+        if (ParamLOG_fOLockKind == PT_KORelInput::Relative)
+            lLockFunction += _channelIndex + 1;
+        if (lLockFunction == (iChannelIndex + 1) && lLockFunction != _channelIndex + 1)
+        {
+            startLock(iValue);
         }
     }
 }
@@ -2054,6 +2144,16 @@ bool LogicChannel::processCommand(const std::string iCmd, bool iDebugKo)
 
     return lResult;
 }
+
+// save output value
+void LogicChannel::saveOutput(bool iValue)
+{
+    logDebugP("Save output value %i", iValue);
+
+    pCurrentOut &= ~(BIT_OUTPUT_PREVIOUS | BIT_OUTPUT_INITIAL); // output is not initial anymore
+    if (iValue)
+        pCurrentOut |= BIT_OUTPUT_PREVIOUS;
+}    
 
 // process the output itself
 void LogicChannel::processOutput(bool iValue)
@@ -2194,17 +2294,21 @@ void LogicChannel::restore(uint8_t iIOIndex)
     PT_LogicDpt lDpt = (PT_LogicDpt)openknx.flash.readByte();
     uint8_t *lValue = openknx.flash.read(4);
 
-    if (!checkDpt(iIOIndex, lDpt))
-        return;
+    bool lParInputEeprom = iIOIndex == IO_Input1 ? LOG_fE1DefaultEEPROM : LOG_fE2DefaultEEPROM;
+    if (lParInputEeprom)
+    {
+        if (!checkDpt(iIOIndex, lDpt))
+            return;
 
-    logInfoP("      Input%i:  DPT %i  DATA: %02X %02X %02X %02X", iIOIndex, lDpt, lValue[0], lValue[1], lValue[2], lValue[3]);
+        logInfoP("      Input%i:  DPT %i  DATA: %02X %02X %02X %02X", iIOIndex, lDpt, lValue[0], lValue[1], lValue[2], lValue[3]);
 
-    GroupObject *lKo = getKo(iIOIndex);
+        GroupObject *lKo = getKo(iIOIndex);
+        lKo->recalculateDataLength(Logic::getDPT(lDpt));
+        for (uint8_t lIndex = 0; lIndex < lKo->valueSize(); lIndex++)
+            lKo->valueRef()[lIndex] = lValue[lIndex];
 
-    for (uint8_t lIndex = 0; lIndex < lKo->valueSize(); lIndex++)
-        lKo->valueRef()[lIndex] = lValue[lIndex];
-
-    lKo->commFlag(Ok);
+        lKo->commFlag(Ok);
+    }
 }
 
 void LogicChannel::save()

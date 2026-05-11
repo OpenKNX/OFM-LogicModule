@@ -85,7 +85,7 @@
                             <Column Id="%AID%_PB-nnn_C-4" Width="12%" />
                             <Column Id="%AID%_PB-nnn_C-5" Width="12%" />
                           </Columns>
-                          <ParameterSeparator Id="%AID%_PS-nnn" Text="Internen Eingang verbinden&#10; mit Kanal Nr." Cell="1,2" />
+                          <ParameterSeparator Id="%AID%_PS-nnn" Text="Internen Eingang verbinden&#10;mit Kanal Nr." Cell="1,2" />
                           <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP1+473%_R-%TT%%CC%%PPP1+473%01" Cell="1,3" HelpContext="%DOC%" />
                           <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP1+473%_R-%TT%%CC%%PPP1+473%01">
                             <when test="1">

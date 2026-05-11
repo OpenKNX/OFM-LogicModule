@@ -80,9 +80,14 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 
 Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer das Gesamtdokument lesen muss, um Neuerungen zu erfahren.
 
+11.05.2026: Firmware 4.3.0, Applikation 4.3:
+
+* NEU: Die Signalverarbeitung eines Logikkanals kann jetzt auch eine Sperre enthalten. Siehe [Sperre](#sperre).
+* FIX: Interne KO-Verknüpfungen, die sich auf ausgeblendete KO (nicht in der ETS sichtbare KO) bezogen, konnten bei Eingängen, die ihren Zustand bei Stromausfall gesichert haben, konnten fehlerhafte Werte bei KO liefern, die mehr als 1 Byte Datenlänge hatten.
+
 10.04.2026: Firmware 4.2.0, Applikation 4.2:
 
-NEU: Für das Status-LED Framework gibt es jetzt einen Logikmodul-Status. Dieser blinkt rot, wenn irgendein Kanal eine Rückkopplung hat und abgeschaltet wurde, um eine Telegrammflut auf dem Bus zu vermeiden. Siehe Kommando [logic lim](#kommando-logic-lim---endlosschleifen-erkennung).
+* NEU: Für das Status-LED Framework gibt es jetzt einen Logikmodul-Status. Dieser blinkt rot, wenn irgendein Kanal eine Rückkopplung hat und abgeschaltet wurde, um eine Telegrammflut auf dem Bus zu vermeiden. Siehe Kommando [logic lim](#kommando-logic-lim---endlosschleifen-erkennung).
 
 31.03.2026: Firmware 4.1.0, Applikation 4.1:
 
@@ -2029,7 +2034,7 @@ Jedes EIN- oder AUS-Signal, dass bei diesem Funktionsblock ankommt, kann verzög
 
 Wird hier ein "Ja" ausgewählt, kann man im Folgenden angeben, was mit folgenden EIN- bzw. AUS-Signalen passieren soll.
 
-##<!-- DOC -->
+<!-- DOC -->
 ## **EINschalten wird verzögert um**
 
 Wird hier eine Zahl größer 0 eingegeben, wird das EIN-Signal entsprechend der eingestellten Zeit verzögert am Ausgang des Funktionsmoduls ausgegeben.
@@ -2180,6 +2185,79 @@ Das Feld erscheint nur, wenn bei "Ausgang wiederholt zyklisch" ein "Ja" ausgewä
 Die hier eingegebene Zahl bestimmt das Zeitintervall, in dem dem das AUS-Signal wiederholt wird.
 
 Die Eingabe einer 0 deaktiviert eine Wiederholung.
+
+## Sperre
+
+Man kann einen Logikkanal auch sperren. Gesperrt wird mit Hilfe eines weiteren Logikkanals, dessen Ausgang intern mit der Sperre dieses Kanals verbunden wird. Auf diese Weise kann eine Sperre sowohl durch einen ganz einfachen Logikkanal mit nur einem Eingang oder auch durch eine komplexe Logik aus mehreren Logikkanälen realisiert werden, man kann über einen Schaltwert, einen Dimmwert oder einen Schwellwert sperren, eine Rückfallzeit einstellen und alle weiteren Optionen, die ein weiterer (oder mehrere) Logikkanäle bieten.
+
+<kbd>![Sperre](pics/Sperre.PNG)</kbd>
+
+
+<!-- DOC -->
+### **Sperre aktivieren**
+
+Wird hier ein "Ja" ausgewählt, kann man im folgenden eingeben, wie die Sperre exakt funktionieren soll.
+
+<!-- DOC -->
+#### **Sperre verbinden mit Kanal Nr.**
+
+<!-- DOC Skip="2" -->
+Erscheint nur, wenn bei "Sperre aktivieren" ein "Ja" ausgewählt wurde.
+
+Hier kann man den Logikkanal angeben, über den die Sperre ausgelöst werden kann. Dessen Ausgang wird intern mit dem Sperreingang dieses Logikkanals verbunden. Ist der interne Ausgang des anderen Logikkanals EIN, wird die Sperre gesetzt, ist er AUS, wird sie zurückgesetzt.
+
+Der Logikkanal kann absolut (die Nummer des Logikkanals) oder relativ (Anzahl der Kanäle, die man vor- oder zurück zählen muss, um zum Kanal zu kommen) angegeben werden.
+
+<!-- DOC Skip="2" -->
+Weitere Details zur internen Kanalverbindung kann bein den internen Eingängen - [Art der Verbindung](#art-der-verbindung) nachgelesen werden. 
+
+<!-- DOC -->
+#### **Beim Sperren**
+
+<!-- DOC Skip="2" -->
+Erscheint nur, wenn bei "Sperre aktivieren" ein "Ja" ausgewählt wurde.
+
+Bevor der Logikkanal gesperrt wird, kann noch ein Wert an den Ausgangskonverter gesendet werden. Der zu sendende Wert kann hier angegeben werden:
+
+* **Nichts senden** - Beim Sperren wird nichts gesendet
+* **EIN senden** - Beim Sperren wird ein EIN an den Ausgangskonverter gesendet
+* **AUS senden** - Beim Sperren wird ein AUS an den Ausgangskonverter gesendet
+* **Aktuellen Wert senden** - Beim Sperren wird der aktuelle Wert der Logik an den Ausgangskonverter gesendet
+
+<!-- DOC -->
+#### **Beim Entsperren**
+
+<!-- DOC Skip="2" -->
+Erscheint nur, wenn bei "Sperre aktivieren" ein "Ja" ausgewählt wurde.
+
+Sobald der Logikkanal entsperrt wird, kann noch ein Wert an den Ausgangskonverter gesendet werden. Der zu sendende Wert kann hier angegeben werden:
+
+* **Nichts senden** - Beim Entserren wird nichts gesendet
+* **EIN senden** - Beim Entserren wird ein EIN an den Ausgangskonverter gesendet
+* **AUS senden** - Beim Entserren wird ein AUS an den Ausgangskonverter gesendet
+* **Aktuellen Wert senden** - Beim Entserren wird der aktuelle Wert der Logik an den Ausgangskonverter gesendet
+
+<!-- DOC -->
+#### **Anschliessend die Signalverarbeitung**
+
+Die Sperre funktioniert wie ein Filter, auch im gesperrten Zustand ist die Logik weiterhin aktiv und reagiert entsprechend der Logikdefinition, inklusive der kompletten Signalverarbeitung. Es wird nur kein Signal an die Ausgangskonverter weitergegeben. Würde z.B. während einer Einschaltverzögerung von 5 Minuten die Sperre nach 4 Minuten zurückgesetzt, wurde nach einer weiteren Minute die Einschaltverzögerung ablaufen und ein EIN senden. Ein solches Verhalten kann gewünscht sein, aber auch nicht gewünscht sein. Aus diesem Grunde kann man das Verhalten hier einstellen:
+
+* **Nicht zurücksetzen** - Die Signalverarbeitung bleibt so wie sie ist und schaltet entsprechend der Parametrisierung
+* **Nach dem Sperren zurücksetzen** - Die Signalverarbeitung wird nach dem Sperren zurückgesetzt, läuft aber während der Sperre normal weiter.
+* **Nach dem Entsperren zurücksetzen** - Die Signalverarbeitung wird nach dem Entsperren zurückgesetzt und läuft dann normal von der Logik getriggert weiter. Das ist default, da es das wahrscheinlichste erwartete Verhalten ist.
+
+Wird ein "Zurücksetzen" gewählt, werden immer alle Operationen der Signalverarbeitung zurückgesetzt, dazu gehören:
+
+* Treppenlichtzeit
+* Die interne Zeit fürs Blinken 
+* Die Zeitmesser für die Ein- und Ausschaltverzögerung
+* Die Zeiten zum zyklischen Senden
+
+Der Eingang der Signalverarbeitung (der gleichzeitig der Ausgang der eigentlichen Logikfunktion ist) wird auf den zuletzt an den Ausgangskonverter gesendeten Wert gesetzt (aber ohne dass die Signalverarbeitung erneut gestartet wird). Nach dem Zurücksetzen läuft die Signalverarbeitung mit dem nächsten von der Logik berechneten Ausgangssignal wieder los, egal ob die Sperre noch aktiv ist oder nicht.
+
+Berücksichtigt man die möglichen Signalverzögerungen während der Signalverarbeitung durch Treppenlicht und Ein- bzw. Ausschaltverzögerung und die mögliche Erzeugung von neuen Signalen durch Blinken und zyklisch Senden, dann kann ein Entsperren, vor allem mit "Beim Entsperren den aktuellen Wert senden" zu unerwarteten Ergebnissen führen. 
+
+Wahrscheinlich ist in den meisten Fällen ein zurücksetzen der Signalverarbeitung beim Entsperren sinnvoll, deswegen ist dieser Wert auch der Standardwert. Die gewünschte Einstellung sollte auf jeden Fall getestet werden, um sicherzustellen, dass sie zu gewünschten Ergebnis führt.
 
 ## Interne Eingänge
 

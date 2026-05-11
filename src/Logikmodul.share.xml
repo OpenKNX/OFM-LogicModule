@@ -95,6 +95,21 @@
                   <Enumeration Text="Eingangswert gesendet" Value="3" Id="%ENID%" op:headerName="Input" />
                 </TypeRestriction>
               </ParameterType>
+              <ParameterType Id="%AID%_PT-LockTrigger" Name="LockTrigger" op:headerExport="enum" >
+                <TypeRestriction Base="Value" SizeInBit="2" >
+                  <Enumeration Text="Nichts senden" Value="0" op:headerName="None" Id="%ENID%" />
+                  <Enumeration Text="AUS senden" Value="1" op:headerName="Off" Id="%ENID%" />
+                  <Enumeration Text="EIN senden" Value="2" op:headerName="On" Id="%ENID%" />
+                  <Enumeration Text="Aktuellen Wert senden" Value="3" op:headerName="Value" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-LockResetQueue" Name="LockResetQueue" op:headerExport="enum" >
+                <TypeRestriction Base="Value" SizeInBit="2" >
+                  <Enumeration Text="Nicht zurücksetzen" Value="0" op:headerName="None" Id="%ENID%" />
+                  <Enumeration Text="Nach dem Sperren zurücksetzen" Value="1" op:headerName="ResetAfterLock" Id="%ENID%" />
+                  <Enumeration Text="Nach dem Entsperren zurücksetzen" Value="2" op:headerName="ResetAfterUnlock" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
               <ParameterType Id="%AID%_PT-InputEnable" Name="InputEnable" op:headerExport="enum" >
                 <TypeRestriction Base="Value" SizeInBit="2">
                   <Enumeration Text="inaktiv" Value="0" Id="%ENID%" op:headerName="Inactive" />

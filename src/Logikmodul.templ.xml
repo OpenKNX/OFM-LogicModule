@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-model href="../../../../Organization/knxprod-support/knx_project_20/knx-editor.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <KNX xmlns:op="http://github.com/OpenKNX/OpenKNXproducer" xmlns="http://knx.org/xml/project/20" CreatedBy="KNX MT" ToolVersion="5.1.255.16695">
   <ManufacturerData>
@@ -238,7 +238,7 @@
                 <Parameter Id="%AID%_UP-%TT%%CC%391" Name="f%C%ORepeatOffBase" ParameterType="%AID%_PT-DelayBase10" Offset="10" BitOffset="0" Text="AUS-Telegramm wird wiederholt alle" Value="3" />
                 <Parameter Id="%AID%_UP-%TT%%CC%392" Name="f%C%ORepeatOffTime" ParameterType="%AID%_PT-DelayTime" Offset="10" BitOffset="2" Text="AUS-Telegramm wird wiederholt alle" Value="0" />
               </Union>
-              <Union SizeInBit="24">
+              <Union SizeInBit="40">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="54" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%058" Name="f%C%ODelay" ParameterType="%AID%_PT-OnOffYesNo" Offset="0" BitOffset="0" Text="Ausgang schaltet zeitverzögert" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%117" Name="f%C%ODelayOnRepeat" ParameterType="%AID%_PT-OnOffRepeat" Offset="0" BitOffset="1" Text="Erneutes EIN führt zu" Value="0" />
@@ -251,11 +251,19 @@
                 <Parameter Id="%AID%_UP-%TT%%CC%061" Name="f%C%ORepeat" ParameterType="%AID%_PT-OnOffYesNo" Offset="1" BitOffset="2" Text="Ausgang wiederholt zyklisch" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%127" Name="f%C%OOutputFilter" ParameterType="%AID%_PT-OutputFilter" Offset="1" BitOffset="3" Text="Wiederholungsfilter" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%479" Name="f%C%OSendOnChange" ParameterType="%AID%_PT-SendOnChange" Offset="1" BitOffset="5" Text="Sendeverhalten für Ausgang" Value="0" />
-                <!-- 2 Bit free -->
+                <Parameter Id="%AID%_UP-%TT%%CC%526" Name="f%C%OLockEnabled" ParameterType="%AID%_PT-OnOffYesNo" Offset="1" BitOffset="6" Text="Sperre aktivieren" Value="0" />
+                <!-- 1 Bit free -->
                 <Parameter Id="%AID%_UP-%TT%%CC%064" Name="f%C%ODpt" ParameterType="%AID%_PT-OutputDpt" Offset="2" BitOffset="0" Text="DPT für Ausgang" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%527" Name="f%C%OLockTriggerLock" ParameterType="%AID%_PT-LockTrigger" Offset="3" BitOffset="0" Text="Beim Sperren" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%528" Name="f%C%OLockTriggerUnlock" ParameterType="%AID%_PT-LockTrigger" Offset="3" BitOffset="2" Text="Beim Entsperren" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%529" Name="f%C%OLockResetQueue" ParameterType="%AID%_PT-LockResetQueue" Offset="3" BitOffset="4" Text="Anschließend die Signalverarbeitung" Value="2" />
+                <Parameter Id="%AID%_UP-%TT%%CC%530" Name="f%C%OLockKind" ParameterType="%AID%_PT-InputKind" Offset="3" BitOffset="6" Text="Art der Verknüpfung" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%531" Name="f%C%OLockFunction" ParameterType="%AID%_PT-InputFunction" Offset="4" BitOffset="0" Text="Sperre verbinden mit Kanal Nr." Value="%C%" op:nowarn="true" />
+                <Parameter Id="%AID%_UP-%TT%%CC%532" Name="f%C%OLockFunctionRel" ParameterType="%AID%_PT-InputFunctionRel" Offset="4" BitOffset="0" Text="Sperre verbinden mit Kanal Nr." Value="0" op:nowarn="true" />
               </Union>
+              <Parameter Id="%AID%_P-%TT%%CC%533" Name="f%C%OLockFunctionRead" ParameterType="%AID%_PT-InputFunction" Text="Sperre verbinden mit Kanal Nr." Value="%C%" Access="Read"/>
               <Union SizeInBit="120">
-                <Memory CodeSegment="%AID%_RS-04-00000" Offset="57" BitOffset="0" />
+                <Memory CodeSegment="%AID%_RS-04-00000" Offset="59" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%136" Name="f%C%OOnAll" ParameterType="%AID%_PT-OutputSend" Offset="0" BitOffset="0" Text="Wert für EIN senden?" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%066" Name="f%C%OOnDpt1" ParameterType="%AID%_PT-ValueDpt1" Offset="1" BitOffset="0" Text="    Wert für EIN senden als" Value="1" op:nowarn="true" />
                 <Parameter Id="%AID%_UP-%TT%%CC%067" Name="f%C%OOnDpt2" ParameterType="%AID%_PT-ValueDpt2Out" Offset="1" BitOffset="0" Text="    Wert für EIN senden als" Value="1" op:nowarn="true" />
@@ -290,7 +298,7 @@
                 <Parameter Id="%AID%_UP-%TT%%CC%463" Name="f%C%OOnKOSendNumberRel" ParameterType="%AID%_PT-KORelNumber" Offset="7" BitOffset="0" Text="        Nummer des zusätzlichen KO" Value="0" op:nowarn="true" />
               </Union>
               <Union SizeInBit="120">
-                <Memory CodeSegment="%AID%_RS-04-00000" Offset="72" BitOffset="0" />
+                <Memory CodeSegment="%AID%_RS-04-00000" Offset="74" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%139" Name="f%C%OOffAll" ParameterType="%AID%_PT-OutputSend" Offset="0" BitOffset="0" Text="Wert für AUS senden?" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%078" Name="f%C%OOffDpt1" ParameterType="%AID%_PT-ValueDpt1" Offset="1" BitOffset="0" Text="    Wert für AUS senden als" Value="0" op:nowarn="true" />
                 <Parameter Id="%AID%_UP-%TT%%CC%079" Name="f%C%OOffDpt2" ParameterType="%AID%_PT-ValueDpt2Out" Offset="1" BitOffset="0" Text="    Wert für AUS senden als" Value="0" op:nowarn="true" />
@@ -622,6 +630,15 @@
               <ParameterRef Id="%AID%_UP-%TT%%CC%520_R-%TT%%CC%52001" RefId="%AID%_UP-%TT%%CC%520" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%521_R-%TT%%CC%52101" RefId="%AID%_UP-%TT%%CC%521" />
               <!-- input.i1.i2 uses 522-525 -->
+              <ParameterRef Id="%AID%_UP-%TT%%CC%526_R-%TT%%CC%52601" RefId="%AID%_UP-%TT%%CC%526" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%527_R-%TT%%CC%52701" RefId="%AID%_UP-%TT%%CC%527" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%528_R-%TT%%CC%52801" RefId="%AID%_UP-%TT%%CC%528" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%529_R-%TT%%CC%52901" RefId="%AID%_UP-%TT%%CC%529" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%530_R-%TT%%CC%53001" RefId="%AID%_UP-%TT%%CC%530" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%531_R-%TT%%CC%53101" RefId="%AID%_UP-%TT%%CC%531" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%532_R-%TT%%CC%53201" RefId="%AID%_UP-%TT%%CC%532" />
+              <ParameterRef Id="%AID%_P-%TT%%CC%533_R-%TT%%CC%53301" RefId="%AID%_P-%TT%%CC%533" />
+              <!-- aktuell bis 533 -->
             </ParameterRefs>
             <ParameterCalculations>
               <op:usePart name="INPUT" xpath="//ParameterCalculations/*" />
@@ -669,6 +686,17 @@
                 <RParameters>
                   <ParameterRefRef RefId="%AID%_UP-%TT%%CC%468_R-%TT%%CC%46801" AliasName="RelWriteKO" />
                   <ParameterRefRef RefId="%AID%_UP-%TT%%CC%472_R-%TT%%CC%47201" AliasName="AbsRel" />
+                </RParameters>
+              </ParameterCalculation>
+              <ParameterCalculation Id="%AID%_PC-%TT%%CC%0110" Language="JavaScript" Name="CalcRelAbs%CC%Lock" RLTransformationFunc="LOG_CalcAbsFromRel" RLTransformationParameters="{&quot;OwnKO&quot;: %C%}" LRTransformationFunc="LOG_CalcRelFromAbs" LRTransformationParameters="{&quot;OwnKO&quot;: %C%}">
+                <LParameters>
+                  <!-- Absolute Address -->
+                  <ParameterRefRef RefId="%AID%_P-%TT%%CC%533_R-%TT%%CC%53301" AliasName="AbsReadKO" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%531_R-%TT%%CC%53101" AliasName="AbsWriteKO" />
+                </LParameters>
+                <RParameters>
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%532_R-%TT%%CC%53201" AliasName="RelWriteKO" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%530_R-%TT%%CC%53001" AliasName="AbsRel" />
                 </RParameters>
               </ParameterCalculation>
             </ParameterCalculations>
@@ -1390,8 +1418,8 @@
                                   <Row Id="%AID%_PB-nnn_R-1" Name="Row1" />
                                 </Rows>
                                 <Columns>
-                                  <Column Id="%AID%_PB-nnn_C-1" Name="Col1" Width="1%" />
-                                  <Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="44%" />
+                                  <Column Id="%AID%_PB-nnn_C-1" Name="Col1" Width="3%" />
+                                  <Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="42%" />
                                   <Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="15%" />
                                   <Column Id="%AID%_PB-nnn_C-4" Name="Col4" Width="25%" />
                                 </Columns>
@@ -1406,8 +1434,8 @@
                                   <Row Id="%AID%_PB-nnn_R-1" Name="Row1" />
                                 </Rows>
                                 <Columns>
-                                  <Column Id="%AID%_PB-nnn_C-1" Name="Col1" Width="1%" />
-                                  <Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="44%" />
+                                  <Column Id="%AID%_PB-nnn_C-1" Name="Col1" Width="3%" />
+                                  <Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="42%" />
                                   <Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="15%" />
                                   <Column Id="%AID%_PB-nnn_C-4" Name="Col4" Width="25%" />
                                 </Columns>
@@ -1417,6 +1445,51 @@
                               </ParameterBlock>
                             </when>
                           </choose>
+                          <!-- Lock functionality -->
+                          <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+                          <ParameterSeparator Id="%AID%_PS-nnn" Text="Sperre" UIHint="Headline" />
+                          <ParameterRefRef RefId="%AID%_UP-%TT%%CC%526_R-%TT%%CC%52601" IndentLevel="1" HelpContext="%DOC%" />
+                          <choose ParamRefId="%AID%_UP-%TT%%CC%526_R-%TT%%CC%52601" >
+                            <when test="1">
+                              <ParameterBlock Id="%AID%_PB-nnn" Inline="true" Layout="Grid">
+                                <Rows>
+                                  <Row Id="%AID%_PB-nnn_R-1" />
+                                </Rows>
+                                <Columns>
+                                  <Column Id="%AID%_PB-nnn_C-1" Width="3%" />
+                                  <Column Id="%AID%_PB-nnn_C-2" Width="42%" />
+                                  <Column Id="%AID%_PB-nnn_C-3" Width="21%" />
+                                  <Column Id="%AID%_PB-nnn_C-4" Width="12%" />
+                                  <Column Id="%AID%_PB-nnn_C-5" Width="12%" />
+                                </Columns>
+                                <ParameterSeparator Id="%AID%_PS-nnn" Text="Sperreingang realisiert durch Logik&#10;mit Kanal Nr." Cell="1,2" />
+                                <ParameterRefRef RefId="%AID%_UP-%TT%%CC%530_R-%TT%%CC%53001" Cell="1,3" HelpContext="%DOC%" />
+                                <choose ParamRefId="%AID%_UP-%TT%%CC%530_R-%TT%%CC%53001" >
+                                  <when test="1">
+                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%531_R-%TT%%CC%53101" Cell="1,5" HelpContext="%DOC%" />
+                                  </when>
+                                  <when test="2">
+                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%532_R-%TT%%CC%53201" Cell="1,4" HelpContext="%DOC%" />
+                                    <ParameterRefRef RefId="%AID%_P-%TT%%CC%533_R-%TT%%CC%53301" Cell="1,5" HelpContext="%DOC%" />
+                                  </when>
+                                </choose>
+                              </ParameterBlock>
+                              <ParameterRefRef RefId="%AID%_UP-%TT%%CC%527_R-%TT%%CC%52701" IndentLevel="2" HelpContext="%DOC%" />
+                              <ParameterRefRef RefId="%AID%_UP-%TT%%CC%528_R-%TT%%CC%52801" IndentLevel="2" HelpContext="%DOC%" />
+                              <ParameterRefRef RefId="%AID%_UP-%TT%%CC%529_R-%TT%%CC%52901" IndentLevel="2" HelpContext="%DOC%" />
+                              <choose ParamRefId="%AID%_UP-%TT%%CC%531_R-%TT%%CC%53101" >
+                                <when test="%C%">
+                                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Warnung: Eine Sperre durch den eigenen Ausgang ist nicht möglich. Bei dieser Einstellung bleibt die Sperre inaktiv." UIHint="Information" />
+                                </when>
+                              </choose>
+                              <choose ParamRefId="%AID%_UP-%TT%%CC%532_R-%TT%%CC%53201" >
+                                <when test="0">
+                                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Warnung: Eine Sperre durch den eigenen Ausgang ist nicht möglich. Bei dieser Einstellung bleibt die Sperre inaktiv." UIHint="Information" />
+                                </when>
+                              </choose>
+                            </when>
+                          </choose>
+                          <!-- Internal inputs -->
                           <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                           <ParameterSeparator Id="%AID%_PS-nnn" Text="Interne Eingänge" UIHint="Headline" />
                           <ParameterSeparator Id="%AID%_PS-nnn" Text="Der bis hierher ermittelte  Zustand steht als Ausgangswert des Kanals für andere Logikkanäle zur Verfügung." />

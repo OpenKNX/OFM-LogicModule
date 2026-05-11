@@ -45,24 +45,25 @@
 #define IO_Output 3
 
 // pipeline steps
-#define PIP_STARTUP 1                 // startup delay for each channel
-#define PIP_REPEAT_INPUT1 2           // send read requests for input 1
-#define PIP_REPEAT_INPUT2 4           // send read requests for input 2
-#define PIP_CONVERT_INPUT1 8          // convert input value 1 to bool
-#define PIP_CONVERT_INPUT2 16         // convert input value 2 to bool
-#define PIP_LOGIC_EXECUTE 32          // do logical step
-#define PIP_STAIRLIGHT 64             // do stairlight delay
-#define PIP_BLINK 128                 // do blinking during stairlight
-#define PIP_ON_DELAY 256              // delay on signal
-#define PIP_OFF_DELAY 512             // delay off signal
-#define PIP_OUTPUT_FILTER_ON 1024     // Filter repeated signals
-#define PIP_OUTPUT_FILTER_OFF 2048    // Filter repeated signals
-#define PIP_ON_REPEAT 4096            // repeat on signal
-#define PIP_OFF_REPEAT 8192           // repeat off signal
-#define PIP_TIMER_INPUT 16384         // process timer as input signal
-#define PIP_RUNNING 32768             // is a currently running channel
-#define PIP_TIMER_RESTORE_STATE 65536 // timer restore is active for this channel
-#define PIP_TIMER_RESTORE_STEP 131072 // timer restore for this channel was processed an other day back
+#define PIP_STARTUP 0x00000001                 // startup delay for each channel
+#define PIP_REPEAT_INPUT1 0x00000002           // send read requests for input 1
+#define PIP_REPEAT_INPUT2 0x00000004           // send read requests for input 2
+#define PIP_CONVERT_INPUT1 0x00000008          // convert input value 1 to bool
+#define PIP_CONVERT_INPUT2 0x00000010         // convert input value 2 to bool
+#define PIP_LOGIC_EXECUTE 0x00000020          // do logical step
+#define PIP_STAIRLIGHT 0x00000040             // do stairlight delay
+#define PIP_BLINK 0x00000080                 // do blinking during stairlight
+#define PIP_ON_DELAY 0x00000100              // delay on signal
+#define PIP_OFF_DELAY 0x00000200             // delay off signal
+#define PIP_OUTPUT_FILTER_ON 0x00000400     // Filter repeated signals
+#define PIP_OUTPUT_FILTER_OFF 0x00000800    // Filter repeated signals
+#define PIP_ON_REPEAT 0x00001000            // repeat on signal
+#define PIP_OFF_REPEAT 0x00002000           // repeat off signal
+#define PIP_TIMER_INPUT 0x0004000         // process timer as input signal
+#define PIP_RUNNING 0x0008000             // is a currently running channel
+#define PIP_TIMER_RESTORE_STATE 0x0010000 // timer restore is active for this channel
+#define PIP_TIMER_RESTORE_STEP 0x0020000 // timer restore for this channel was processed an other day back
+#define PIP_LOCK_ACTIVE 0x0040000             // is a lock active for this channel
 
 #define TIMD_WEEKDAY_MASK 0x0007
 #define TIMD_WEEKDAY_SHIFT 0
@@ -151,7 +152,6 @@ class LogicChannel : public OpenKNX::Channel
     void writeFunctionValue(uint16_t iParamIndex, bool iOn);
     void writeOtherKoValue(uint16_t iParamIndex, bool iIsRelative, uint16_t iDptIndex, bool iOn);
     void writeValue(LogicValue iValue, bool iOn);
-    void setBuzzer(uint16_t iParamIndex);
     void setStatusLed(uint16_t iParamIndex);
 
     bool isInputActive(uint8_t iIOIndex);
@@ -180,7 +180,12 @@ class LogicChannel : public OpenKNX::Channel
     void processOutputFilter();
     void startOnOffRepeat(bool iOutput);
     void processOnOffRepeat();
+    void lockResetQueue(bool iLock, bool iOutput);
+    void startLock(bool iOutput);
+    void processLock(bool iOutput);
+    bool processLockTrigger(PT_LockTrigger iTrigger);
 
+    void saveOutput(bool iValue);
     void processOutput(bool iValue);
 
     bool readOneInputFromFlash(uint8_t iIOIndex);
@@ -231,7 +236,7 @@ class LogicChannel : public OpenKNX::Channel
     uint8_t pTriggerIO;        // Bitfield: Which input (0-3) triggered processing, Bit 4-7 are previous input (currently just internal inputs evaluated)
     uint8_t pValidActiveIO;    // Bitfield: validity flags for input (0-3) values and active inputs (4-7)
     uint8_t pCurrentIn;        // Bitfield: current input (0-3), free (4), first processing (5), previous gate (6) and initial gate (7) values
-    uint8_t pCurrentOut;       // Bitfield: logic output (0), blink output (1), previous output (2), initial output (3), debug output (4)
+    uint8_t pCurrentOut;       // Bitfield: logic output (0), blink output (1), previous output (2), initial output (3), debug output (4), lock output (5)
     uint32_t pCurrentPipeline; // Bitfield: indicator for current pipeline step
 
     uint8_t pCurrentIODebug; // Bitfield: current input (0-3), logic output (4)
