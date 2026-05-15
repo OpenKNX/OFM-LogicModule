@@ -357,9 +357,8 @@ Logikfunktionen mit bis zu 2 externen und 2 internen Eingängen
 * ODER
 * EXOR
 * TOR/Sperre
+* Schalter (RS-Flipflop)
 * Zeitschaltuhr
-* Schalter
-* RS-Flipflop
 
 Einstellbare Ausgangstrigger
 
@@ -753,31 +752,85 @@ Details kann man unter [Kommunikationsobjekt für Ausgang](#kommunikationsobjekt
 
 ## **Logiken**
 
-Im Folgenden werden die generellen Konzepte und die grobe Funktion eines Logikkanals beschrieben. Die Parameter eines jeden Kanals werden später im Detail beschrieben.
-
-Jeder Logikkanal, von denen bis zu 99 zur Verfügung stehen, ist identisch aufgebaut. Es stehen immer 2 externe Eingänge, 2 interne Eingänge und ein Ausgang zur Verfügung. Alternativ kann als Eingang der Funktionsblock "Zeitschaltuhr" genutzt werden.
-
-Zwischen die Eingänge und den Ausgang können verschiedene Funktionsblöcke geschaltet werden, die die Eingangssignale beeinflussen und Verknüpfen können und so ein Ausgangssignal erzeugen.
-
-Alle Funktionsblöcke kann man sich wie an einer Perlenschnur aufgereiht hintereinander vorstellen, das Ergebnis eines Funktionsblocks wird für den darauffolgenden Funktionsblock als Eingabe verwendet.
+Im Folgenden werden die generellen Konzepte und die übersichtsweise Funktion eines Logikkanals beschrieben. Die Parameter eines jeden Kanals werden später im Detail beschrieben.
 
 <kbd>![Übersicht](pics/Uebersicht.PNG)</kbd>
 
-**) Abweichend zum Bild: Derzeit implementiert: DPT 1, 2, 3, 5, 5.001, 6, 7, 8, 9, 12, 13, 14, 16, 17, 232; DPT 16 nicht als Eingang
+Jeder Logikkanal, von denen bis zu 99 zur Verfügung stehen, ist identisch aufgebaut. Es stehen immer 2 externe Eingänge, 2 interne Eingänge und ein Ausgang zur Verfügung. Alternativ zu einer Logik kann auch eine Zeitschaltuhr eingesetzt werden.
 
-Jeder Funktionsblock arbeitet rein binär, also nur mit den Werten 0 oder 1 (DPT 1). Damit auch andere DPT möglich sind, besitzen externe Eingänge Konverter-Funktionsblöcke, die von einem beliebigen DPT nach DPT 1 konvertieren. Derzeit sind Schwellwertschalter und Vergleicher als Konverterfunktionen implementiert. Interne Eingänge und die Zeitschaltuhr benötigen keinen Konverter, da sie rein binär funktionieren.
+Die Logik benötigt rein binäre Eingangssignale (EIN bzw. AUS). Die internen Eingänge - als interne Verknüpfung mit den Ausgängen anderer Logikkanäle konzipiert - sind sind rein binär. Externe Eingänge sind KO basiert und erlauben neben DPT 1 (binärer DPT) auch andere DPT, die mehrwertig sein können. Deshalb wird für jeden externen Eingang ein Eingangskonverter durchlaufen, der anhand der im Eingangskonverter hinterlegten Regeln den externen Wert in ein rein binäres Signal konvertiert. Der Eingangskonverter wird im nächsten Kapitel erklärt.
 
-Die binäre Signalverarbeitung beginnt mit einer logischen Verknüpfung, die alle Eingänge zusammenbringt, gefolgt von
+Diese (bis zu vier) binären Werte durchlaufen die Logik und werden entsprechend der gewählten Logikfunkion zu einem binären Wert aggregiert. Der Ausgang der Logik kann anschließend durch eine mehrstufige Signalverarbeitung beeinflusst werden.
 
-* Treppenlicht (mit einer Blinkfunktion)
-* Ein- und Ausschaltverzögerung (getrennt einstellbar)
-* Wiederholungsfilter
-* Zyklisch senden
-* Sendefilter
+Sollte man den Logikkanal als Zeitschaltuhr nutzen, wird deren (rein binäre) Schaltzeit direkt zur Signalverarbeitung gegeben.
 
-Wird ein Funktionsblock nicht genutzt (nicht parametrisiert), gibt er seine Eingabe unverändert als Ergebnis an den nächsten Funktionsblock weiter.
+Das binäre Schaltsignal kann jetzt (muss aber nicht) durch hintereinander geschaltete Funktionen beeinflusst werden. Es kann durch
 
-Das nach dem Sendefilter ermittelte Signal steht für die internen Eingänge der anderen Kanäle zur Verfügung. Ferner steht es auch einem Ausgangskonverter zur Verfügung, der als Wertwandler ausgelegt ist und den ermittelten Wert als einen anderen DPT ausgeben kann. Dabei können die Ausgabewerte festgelegt werden (Konstanten) oder ein am Eingang 1 oder Eingang 2 vorliegender Wert in den Ausgangs-DPT konvertiert werden.
+* ein Treppenlicht nach einer gewissen Zeit ein weiteres AUS-Signal erzeugt werden
+* das EIN- oder AUS-Signal zeitlich verzögert werden
+* mehrere aufeinanderfolgende EIN- oder AUS-Signale herausgefiltert werden
+* zyklisch EIN- oder AUS-Signale erzeugt werden
+* und als letztes die Weitergabe von EIN- oder AUS-Signalen gesperrt werden.
+
+Jede einzelne Funktion der Signalverarbeitung kann aktiviert werden. Werden mehrere aktiviert, werden sie in der angegeben Reihenfolge ausgeführt, wie an einer Perlenkette. Am Ende dieser Kette steht ein binäres Schaltsignal zur Verfügung, das einerseits zum Ausgang geleitet wird, andererseits zu den internen Eingängen weiterer Logikkanäle, die mit diesem Ausgang verbunden sind.
+
+Der Ausgang hat die Aufgabe, aus dem binären Signal der Signalverarbeitung einen Wert zu erzeugen, der passend zum DPT des Ausgangs-KO ist. Dazu steht ein Ausgangskonverter bereit, der unter Zuhilfenahme der Eingangswerte und eines Formelrechners eine passende Berechnung erlaubt. Der Augangskonverter wird im übernächsten Kapitel erklärt.
+
+Als letzter Schritt der Konvertierung wird der finale Wert in den korrekten DPT des Ausgangs-KO gewandelt. Das Senden dieses Wertes kann man jetzt noch unterdrücken, indem man einen Sendefilter aktiviert, der nur geänderte Werte sendet. Im Gegensatz zum Wiederholungsfilter der Signalverarbeitung, der nur EIN-/AUS-Signaler filtern kann, vergleicht dieser Filter den neuen Wert mit dem, der zuletzt durch das KO gesendet wurde. 
+
+Durch die Nutzung von Eingangs- und Ausgangskonvertern und vor allem durch den Zugriff des Ausgangskonverters auf die Eingangswerte und der Möglichkeit mit diesen zu rechnen bietet ein Logikmodul-Kanal trotz rein binärer interner Verarbeitung viele Möglichkeiten, Werte zu prüfen, zu berechnen, neue Werte zu erzeugen und Werte zu filtern.
+
+Durch interne Verknüpfungen von Logikkanälen können diese kaskadiert arbeiten und komplexe Logiken realisieren.
+
+### **Eingangskonverter**
+
+Jeder externe Eingang eines Logikkanals besitzt einen Eingangskonverter. Dieser hat die Aufgabe, einen externen Wert in einen Binären Wert zu konvertieren. Dazu können Konvertierungsregeln festgelegt werden. Im folgenden wird nur eine Übersicht über die Funktionen gegeben, die detaillierte Parametrierung wird in Folgekapiteln beschrieben.
+
+<kbd>![Übersicht](pics/Uebersicht-Eingang.png)</kbd>
+
+Ein externer Eingang eines Logikkanals wird normalerweise durch ein eigenes KO repräsentiert. Der Logikkanal kann über diesen Eingang auch Leseanforderungen senden und den empfangenen Wert speichern, damit er nach einem Neustart sofort zur Verfügung steht.
+
+Das Logikmodul bietet auch die Möglichkeit, mehrere Eingänge über ein KO zu versorgen (interne KO-Verknüpfung, nicht zu verwechseln mit internen Eingängen, die eine Kanalverknüpfung realisieren). Somit dann der Wert, der von extern kommt, auch von einem verknüpften KO kommen. 
+
+Egal wie der externe Wert ermittelt wird, er kommt in den Eingangskonverter und wird dort konvertiert. Dabei stehen folgende Möglichkeiten zur Verfügung:
+
+* **Wertintervall** - es wird geprüft, ob der Wert zwischen 2 gegebenen Werten liegt. Wenn ja, ist der Ausgangswert EIN, sonst AUS.
+* **Hysterese** - es wird geprüft, ob der Wert einen oberen Schwellwert überschreitet (EIN) oder einen unteren Schwellwert unterschreitet (AUS).
+* **Einzelwerte** - der neue Wert wird gegen eine Liste von Einzelwerten geprüft. Ist der Wert auf der Liste, ist der Eingang EIN, sonst AUS.
+* **Trigger** - Jeder eingehende Wert führt zu einem EIN. Der Eingang wird somit nur als Trigger verwendet, um die Logik anzustoßen.
+* **Differenzintervall** - Hier wird der andere Eingang hinzugezogen und die Differenz zwischen beiden gebildet. Liegt der Differenzwert im angegebenen Intervall, ist der Eingang EIN, sonst AUS. Auf diese Weise kann man einfach Werte vergleichen und sogar eine gewisse Toleranz erlauben.
+* **Differenzintervall** - Auch hier wird der andere Eingang hinzugezogen und eine Differenz gebildet. Wenn der Differenzwert einen oberen Schwellwert überschreitet, ist der Eingang EIN, wenn er einen unteren Schwellwert unterschreitet, ist er AUS. Damit kann man sehr komfortabel Mess- oder Sensorwerte auswerten, deren Schaltschwelle über den Bus vorgegeben wird.
+* **Konstante** - die Konstante ist ein Sonderfall. Sie führt immer zu einem EIN, belegt aber den Eingang mit einem konstanten Wert vor (passend zum DPT des Eingangs). So kann man z.B. für Formelrechnungen (siehe Ausgangskonverter) passende Werte vordefinieren um das gewünschte Formelergebnis zu erhalten.
+
+Der ermittelte Eingangswert (EIN, AUS) wird im folgenden von der Logik verarbeitet.
+
+### **Ausgangskonverter**
+
+Ein Ausgang eines Logikkanals ist normalerweise ein KO und kann - trotz rein binärer interner Verarbeitung - einen Wert eines DPT liefern. Dazu steht ein Ausgangskonverter zur Verfügung, der unter Zuhilfenahme eines Formelrechners mit Zugriff auf die Eingangswerte den gewünschten Wert berechnen kann. Im folgenden wird nur eine Übersicht über die Funktionen gegeben, die detaillierte Parametrisierung wird in Folgekapiteln beschrieben.
+
+<kbd>![Übersicht](pics/Uebersicht-Ausgang.png)</kbd>
+
+Der Ausgang eines Logikkanals kann asymmetrisch genutzt werden und für das EIN- bzw. AUS-Signal unterschiedliche Werte berechnen. Somit hat ein Ausgang 2 Ausgangskonverter, einen für das EIN- und einen für das AUS-Signal.
+
+Nachdem zuerst ermittelt wird, welcher Ausgangs-Konverter benutzt wird, wird die passende Funktion aufgerufen. Folgende stehen zur Verfügung:
+
+* **Wert vorgeben** - die einfachste Funktion erlaubt einfach die Vergabe eines festen Wertes (Konstante), die an den Bus geschickt werden soll.
+* **Wert von Eingang 1/2** - Der aktuelle Wert des gewählten Eingangs wird an den Ausgang geschickt.
+* **Wert eines KO** - Ein beliebiges KO des Gerätes kann angegeben werden. Dessen Wert wird gelesen und an den Ausgang geschickt.
+* **Wert einer Funktion** - Hier wird eine Formel angegeben, die berechnet wird anhand der Werte der Eingänge und des aktuellen Ausgangswertes. Der so neu ermittelte Wert wird an den Ausgang geschickt.
+
+Die mit diesen Funktionen berechneten Werte werden dann in den Wertebereich des Ausgangs-DPT konvertiert, mit einen Sendefilter wird geprüft, ob der Wert wirklich gesendet werden soll und dann über das eigene KO gesendet. Zusätzlich wird noch geprüft, ob der Wert auch noch über ein zusätzliches KO gesendet werden soll. Falls ja, wird der Wert auch über dieses zusätzliche KO gesendet.
+
+Der Ausgangskonverter kann aber noch spezielle Konvertierungen machen. Man kann
+
+* **Read Request senden** - in dem Fall wird nicht ein Wert auf den Bus gesendet, sondern nur eine Leseanforderung, die dann vom Ziel-Gerät beantwortet wird.
+* **Gerät neu starten** - es wird ein Spezial-Telegramm an ein Gerät gesendet, dass dieses Gerät neu startet. 
+* **Status LED schalten** - Man kann an einen der 8 Statuskanäle des Logikmoduls einen LED-Lichtwert senden. Falls das Gerät Status-Leds besitzt, kann man diesen Statuskanal auf eine LED legen und so eine optische Ausgabe erhalten.
+
+Die Sonderkonvertierungen senden keine klassischen Werte auf den Bus, sondern Sondertelegramme oder gar nichts. Deswegen können diese Telegramme nur an das eigene KO gesendet werden.
+
+
+
 
 ### **Zeitschaltuhren**
 
@@ -2449,10 +2502,13 @@ Dies entspricht genau der Funktion "Gerät zurücksetzen" in der ETS.
 <!-- DOC -->
 ### **Status-LED Kanal**
 
+<!-- DOC Skip="1" -->
+Das Feld erscheint nur, wenn für "Wert für EIN senden" ein "Ja - Status-LED schalten" ausgewählt wurde.
+
 Hier wird angegeben, über welchen Logikstatus-Kanal die LED angesprochen wird.
 
 <!-- DOC -->
-#### **Status-LED Farbe**
+### **Status-LED Farbe**
 
 <!-- DOC Skip="3" -->
 <kbd>![Led Farbe festlegen](pics/LedColor.PNG)</kbd>
@@ -2462,7 +2518,10 @@ Das Feld erscheint nur, wenn für "Wert für EIN senden" ein "Ja - Status-LED sc
 Hier wird die Farbe der LED bestimmt, in der sie leuchten soll. Wird die Farbe Schwarz gewählt (#000000), geht die LED aus. Für die Auswahl der Farbe kann auch ein Farbauswahldialog verwendet werden.
 
 <!-- DOC -->
-#### **Status-LED Effekt**
+### **Status-LED Effekt**
+
+<!-- DOC Skip="2" -->
+Das Feld erscheint nur, wenn für "Wert für EIN senden" ein "Ja - Status-LED schalten" ausgewählt wurde.
 
 Hier kann angegeben werden, wie sich die LED verhalten soll. 
 
@@ -2473,7 +2532,10 @@ Hier kann angegeben werden, wie sich die LED verhalten soll.
 * **Aufblitzen** - Die LED blitzt kurz in der angegebenen Farbe auf
 
 <!-- DOC -->
-#### **Status-LED Effektdauer**
+### **Status-LED Effektdauer**
+
+<!-- DOC Skip="2" -->
+Das Feld erscheint nur, wenn für "Wert für EIN senden" ein "Ja - Status-LED schalten" ausgewählt wurde.
 
 Dauer des Effekts in ms.
 
@@ -2605,20 +2667,21 @@ Dies entspricht genau der Funktion "Gerät zurücksetzen" in der ETS.
 
 ### **Status-LED Kanal**
 
+Das Feld erscheint nur, wenn für "Wert für AUS senden" ein "Ja - Status-LED schalten" ausgewählt wurde.
+
 Hier wird angegeben, über welchen Logikstatus-Kanal die LED angesprochen wird.
 
-<!-- DOC -->
-#### **Status-LED Farbe**
+### **Status-LED Farbe**
 
 <kbd>![Led Farbe festlegen](pics/LedColor.PNG)</kbd>
 
-<!-- DOC Skip="2" -->
-Das Feld erscheint nur, wenn für "Wert für EIN senden" ein "Ja - Status-LED schalten" ausgewählt wurde.
+Das Feld erscheint nur, wenn für "Wert für AUS senden" ein "Ja - Status-LED schalten" ausgewählt wurde.
 
-Hier wird die Farbe der LED bestimmt, in der sie leuchten soll. Wird die Farbe Schwarz gewählt (#000000), geht die LED aus. Für die Auswahl der Farbe kann auch ein Farbauswahldialog verwendet werden.
+Hier wird bei einer RGB-LED die Farbe der LED bestimmt, in der sie leuchten soll. Wird die Farbe Schwarz gewählt (#000000), geht die LED aus. Für die Auswahl der Farbe kann auch ein Farbauswahldialog verwendet werden.
 
-<!-- DOC -->
-#### **Status-LED Effekt**
+### **Status-LED Effekt**
+
+Das Feld erscheint nur, wenn für "Wert für AUS senden" ein "Ja - Status-LED schalten" ausgewählt wurde.
 
 Hier kann angegeben werden, wie sich die LED verhalten soll. 
 
@@ -2628,8 +2691,9 @@ Hier kann angegeben werden, wie sich die LED verhalten soll.
 * **Pulsieren** - Die LED pulsiert in der angegebenen Farbe und Dauer
 * **Aufblitzen** - Die LED blitzt kurz in der angegebenen Farbe auf
 
-<!-- DOC -->
-#### **Status-LED Effektdauer**
+### **Status-LED Effektdauer**
+
+Das Feld erscheint nur, wenn für "Wert für AUS senden" ein "Ja - Status-LED schalten" ausgewählt wurde.
 
 Dauer des Effekts in ms.
 
@@ -3044,47 +3108,6 @@ Alle Benutzerfunktionen werden gleichartig aufgerufen, im Folgenden wird nur ein
 Sobald der Ausgang senden soll, ruft er die angegebene Benutzerfunktion mit den Werten der Eingänge 1 und 2 und dem aktuellen Wert des Ausgangs auf. Nachdem die Berechnung erfolgt ist, sendet der Ausgang den berechneten Wert.
 
 Nichtaktive Eingänge bekommen den Wert 0 beim Aufruf der Funktion.
-
-#### **Definition einer Benutzerfunktion in der Firmware**
-
-
-Eine Benutzerfunktion kann in der Firmware entsprechend programmiert werden. Dies erfolgt im Projekt OAM-LogicModule.
-
-In der Datei
-
-    src/LogicFunctionUser.cpp
-
-stehen bereits 30 Benutzerfunktionen bereit, die nur noch mit dem notwendigen Code gefüllt werden müssen.
-
-    // user functions, may be implemented by Enduser
-    // for DPT-Check you can use constants beginning with VAL_DPT_*
-    LogicValue LogicFunction::userFunction01(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
-    {
-        return E1; // just an example, result is first parameter value
-    }
-
-In der Beispielimplementierung für die Benutzerfunktion_01 wird der Wert vom Eingang 1 zurückgegeben.
-
-Jeder Funktion stehen die Variablen E1 und E2 zur Verfügung, die die Werte der Eingänge 1 und 2 enthalten. Über die Variable iOld wird der aktuelle Wert des Ausgang dieses Logikkanals bereitgestellt. Die Variable _channelIndex gibt die Nummer des aktuellen Kanals aus. Ferner stehen über die Variablen DptE1 und DptE2 die DPT der Eingänge E1 und E2 zur Verfügung, über DptOut der DPT des Ausgangs. Die DPT-Werte können mittels Konstanten beginnend mit VAL_DPT_* abgefragt werden. Diese Konstanten sind folgendermaßen definiert:
-
-    // enum supported dpt
-    #define VAL_DPT_1 0
-    #define VAL_DPT_2 1
-    #define VAL_DPT_5 2
-    #define VAL_DPT_5001 3
-    #define VAL_DPT_6 4
-    #define VAL_DPT_7 5
-    #define VAL_DPT_8 6
-    #define VAL_DPT_9 7
-    #define VAL_DPT_16 8
-    #define VAL_DPT_17 9
-    #define VAL_DPT_232 10
-    #define VAL_DPT_10 11 // Time
-    #define VAL_DPT_11 12 // Date
-    #define VAL_DPT_12 13
-    #define VAL_DPT_13 14
-    #define VAL_DPT_14 15
-    #define VAL_DPT_19 16 // Date-Time
 
 ### **Beispiele von Benutzerfunktionen**
 
