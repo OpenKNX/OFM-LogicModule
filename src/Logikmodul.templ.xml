@@ -727,7 +727,7 @@
             <ChannelIndependentBlock>
               <choose ParamRefId="%AID%_UP-%TT%00164_R-%TT%0016401">
                 <when test="&gt;=%C%">
-                  <ParameterBlock Id="%AID%_PB-9%CC%" Name="f%C%Logic" Text="Logik %C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%001_R-%TT%%CC%00101" Icon="gate-nand" HelpContext="Empty" ShowInComObjectTree="true">
+                  <ParameterBlock Id="%AID%_PB-999%CC%" Name="f%C%Logic" Text="Logik %C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%001_R-%TT%%CC%00101" Icon="gate-nand" HelpContext="Empty" ShowInComObjectTree="true">
                     <!-- Any input active (hidden) -->
                     <!-- Input 1 active as full or delta (hidden) -->
                     <ParameterRefRef RefId="%AID%_P-%TT%%CC%456_R-%TT%%CC%45601" />
@@ -756,7 +756,7 @@
                     <ParameterRefRef RefId="%AID%_UP-%TT%%CC%166_R-%TT%%CC%16601" HelpContext="%DOC%" IndentLevel="1" />
                     <choose ParamRefId="%AID%_UP-%TT%%CC%166_R-%TT%%CC%16601">
                       <when test="1">
-                        <Rename Id="%AID%_PR-nnn" RefId="%AID%_PB-9%CC%" Text="⛔ Logik %C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%001_R-%TT%%CC%00101" />
+                        <Rename Id="%AID%_PR-999%CC%" RefId="%AID%_PB-999%CC%" Text="⛔ Logik %C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%001_R-%TT%%CC%00101" />
                       </when>
                     </choose>
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
