@@ -1,4 +1,4 @@
-function LOG_Nop(input, output, context) { }
+
 
 function LOG_ClearContent(input, output, context) {
     output.ResultDisplay = "";

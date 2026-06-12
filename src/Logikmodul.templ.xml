@@ -34,6 +34,7 @@
           <Static>
             <Parameters>
               <Parameter Id="%AID%_P-%TT%%CC%001" Name="f%C%Name" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung des Kanals" Value="" />
+              <Parameter Id="%AID%_P-%TT%%CC%999" Name="f%C%NameDisplay" ParameterType="%AID%_PT-Text45Byte" Text="Beschreibung des Kanals (Anzeige)" Value="" Access="Read" op:configTransfer="never" />
               <Parameter Id="%AID%_P-%TT%%CC%439" Name="f%C%Kommentar" ParameterType="%AID%_PT-Text512Byte" Text="" Value="" />
               <!-- <Parameter Id="%AID%_P-%TT%%CC%002" Name="f%C%ChannelDelay" ParameterType="%AID%_PT-DelaySeconds" Text="Zeit bis der Kanal nach einem Neustart aktiv wird" SuffixText="Sekunden" Value="1">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="0" BitOffset="0" />
@@ -350,6 +351,7 @@
               <op:usePart name="INPUT" xpath="//ParameterRefs/*" />
               <op:usePart name="INTERNAL" xpath="//ParameterRefs/*" />
               <ParameterRef Id="%AID%_P-%TT%%CC%001_R-%TT%%CC%00101" RefId="%AID%_P-%TT%%CC%001" />
+              <ParameterRef Id="%AID%_P-%TT%%CC%999_R-%TT%%CC%99901" RefId="%AID%_P-%TT%%CC%999" />
               <!-- <ParameterRef Id="%AID%_P-%TT%%CC%002_R-%TT%%CC%00201" RefId="%AID%_P-%TT%%CC%002" /> -->
               <ParameterRef Id="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" RefId="%AID%_UP-%TT%%CC%003" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401" RefId="%AID%_UP-%TT%%CC%004" />
@@ -699,6 +701,15 @@
                   <ParameterRefRef RefId="%AID%_UP-%TT%%CC%530_R-%TT%%CC%53001" AliasName="AbsRel" />
                 </RParameters>
               </ParameterCalculation>
+              <ParameterCalculation Id="%AID%_PC-%TT%%CC%0111" Language="JavaScript" Name="MarkInactive%CC%" RLTransformationFunc="BASE_MarkInactive" LRTransformationFunc="BASE_Nop"> 
+                <LParameters>
+                    <ParameterRefRef RefId="%AID%_P-%TT%%CC%999_R-%TT%%CC%99901" AliasName="TextOutput" />
+                </LParameters>
+                <RParameters>
+                    <ParameterRefRef RefId="%AID%_P-%TT%%CC%001_R-%TT%%CC%00101" AliasName="TextInput" />
+                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%166_R-%TT%%CC%16601" AliasName="CheckboxInactive" />
+                </RParameters>
+              </ParameterCalculation>
             </ParameterCalculations>
             <ComObjectTable>
               <op:usePart name="INPUT" xpath="//ComObjectTable/*" />
@@ -727,7 +738,7 @@
             <ChannelIndependentBlock>
               <choose ParamRefId="%AID%_UP-%TT%00164_R-%TT%0016401">
                 <when test="&gt;=%C%">
-                  <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%Logic" Text="Logik %C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%001_R-%TT%%CC%00101" Icon="gate-nand" HelpContext="Empty" ShowInComObjectTree="true">
+                  <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%Logic" Text="Logik %C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%999_R-%TT%%CC%99901" Icon="gate-nand" HelpContext="Empty" ShowInComObjectTree="true">
                     <!-- Any input active (hidden) -->
                     <!-- Input 1 active as full or delta (hidden) -->
                     <ParameterRefRef RefId="%AID%_P-%TT%%CC%456_R-%TT%%CC%45601" />

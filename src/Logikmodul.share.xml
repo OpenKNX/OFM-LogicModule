@@ -1160,7 +1160,7 @@
               <op:usePart name="FORMULA" xpath="//Static/ParameterRefs/*" />
             </ParameterRefs>
             <ParameterCalculations>
-              <ParameterCalculation Id="%AID%_PC-%TT%00001" Language="JavaScript" Name="ClearFieldContent" LRTransformationFunc="LOG_Nop" RLTransformationFunc="LOG_ClearContent" >
+              <ParameterCalculation Id="%AID%_PC-%TT%00001" Language="JavaScript" Name="ClearFieldContent" LRTransformationFunc="BASE_Nop" RLTransformationFunc="LOG_ClearContent" >
                 <LParameters>
                   <ParameterRefRef RefId="%AID%_P-%TT%00169_R-%TT%0016901" AliasName="ResultDisplay" />
                 </LParameters>

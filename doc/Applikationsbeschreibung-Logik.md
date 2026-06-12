@@ -80,6 +80,10 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 
 Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer das Gesamtdokument lesen muss, um Neuerungen zu erfahren.
 
+12.06.2026: Firmware 4.4.0, Applikation 4.4:
+
+* NEU: Ein zu testzwecken deaktiverter Kanal zeigt dies jetzt in der Liste der Kanäle an. Dies erhöht die Wahrnehmung von inaktiven Kanälen und vereinfacht die Fehlersuche aufgrund von inaktiven Kanälen.
+
 11.05.2026: Firmware 4.3.0, Applikation 4.3:
 
 * NEU: Die Signalverarbeitung eines Logikkanals kann jetzt auch eine Sperre enthalten. Siehe [Sperre](#sperre).
