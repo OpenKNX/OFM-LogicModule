@@ -415,8 +415,6 @@ User-spezifische (mathematische) Formeln sind in die Firmware einbaubar
 Sonderfunktionen
 
 * Die Funktion "Gerät zurücksetzen" (sonst nur über die ETS machbar)
-* Akustische Signalisierung über einen Buzzer (sofern entsprechende Hardware vorhanden ist)
-* Optische Signalisierung mittels einer RGB-LED (sofern entsprechende Hardware vorhanden ist)
 
 Zeitschaltuhren
 
@@ -2405,7 +2403,7 @@ In früheren Versionen vom Logikmodul wurde die Anzeige vom eigenen KO intern be
 
 Nach einem Update von einer älteren Version sind alle KO sichtbar, auch wenn sie vor dem Update unsichtbar waren. Hier ist eine manuelle Aktion notwendig, um die nicht benötigten KO auszublenden.
 
-Für Spezialfunktionen wie "Gerät zurücksetzen", "Tonwiedergabe (Buzzer)" oder "RGB-LED schalten" wird kein KO benötigt und kann über diese Auswahlbox ausgeblendet werden.
+Für Spezialfunktionen wie "Gerät zurücksetzen" oder "Status-LED schalten" wird kein KO benötigt und kann über diese Auswahlbox ausgeblendet werden.
 
 ## Wert für EIN
 
@@ -3235,7 +3233,7 @@ gibt den Wert im Format 'LIM NN, CH CC' aus, wobei CC der Kanal mit den meisten 
 
 Solange noch kein einziger Kanal aufgerufen wurde, ist der Wert 'LIM 00, CH 00'. Falls der Wert 50 ist, bedeutet das, dass eine Endlosschleife erkannt wurde und der Kanal deaktiviert worden ist. Es können noch weitere Kanäle deaktiviert worden sein, hier wird nur der erste deaktivierte Kanal angezeigt.
 
-Falls ein Kanal aufgrund einer Endlosschleife deaktiviert worden ist, wird auch der Logikkanal-Status im StatusLED-Framework auf rot blinkend gesetzt. Ist dieser Status irgendeiner Geräte-LED zugewiesen, wird diese rot blinken, falls es eine RGB-LED ist, ansosten in der Farbe der LED bei einer monochromen LED.
+Falls ein Kanal aufgrund einer Endlosschleife deaktiviert worden ist, wird auch der Logikkanal-Status im StatusLED-Framework auf rot blinkend gesetzt. Ist dieser Status irgendeiner Geräte-LED zugewiesen, wird diese rot blinken, falls es eine RGB-LED ist, ansonsten in der Farbe der LED bei einer monochromen LED.
 
 ### **Kommando 'logic lim res' - Endlosschleifen-Erkennung zurücksetzen**
 
@@ -3921,8 +3919,6 @@ KO | Name | DPT | Bedeutung
 15 | Urlaub | 1.001 | Eingang: Information über Urlaub
 16 | Welcher Feiertag ist heute? | 5.010 | Ausgang: Nummer des Feiertages, falls der aktuelle Tag ein Feiertag ist, sonst 0
 17 | Welcher Feiertag ist morgen? | 5.010 | Ausgang: Nummer des Feiertages, falls der morgige Tag ein Feiertag ist, sonst 0
-18 | LED sperren | 1.001 | Eingang: LED global sperren (kein Licht)
-19 | Buzzer sperren | 1.001 | Eingang: Buzzer global sperren (kein Ton)
 n | Eingang 1 | *) | Eingang 1 für einen Logikkanal
 n+1 | Eingang 2 | *) | Eingang 2 für einen Logikkanal
 n+2 | Ausgang | **) | Ausgang eines Logikkanals

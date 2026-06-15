@@ -6,5 +6,5 @@ In früheren Versionen vom Logikmodul wurde die Anzeige vom eigenen KO intern be
 
 Nach einem Update von einer älteren Version sind alle KO sichtbar, auch wenn sie vor dem Update unsichtbar waren. Hier ist eine manuelle Aktion notwendig, um die nicht benötigten KO auszublenden.
 
-Für Spezialfunktionen wie "Gerät zurücksetzen", "Tonwiedergabe (Buzzer)" oder "RGB-LED schalten" wird kein KO benötigt und kann über diese Auswahlbox ausgeblendet werden.
+Für Spezialfunktionen wie "Gerät zurücksetzen" oder "Status-LED schalten" wird kein KO benötigt und kann über diese Auswahlbox ausgeblendet werden.
 
