@@ -2734,16 +2734,6 @@ Relative KO sind von Vorteil, wenn man häufiger mit Logiken arbeitet, die aus m
 
 Ist eine GA mit dem eigenen KO des Ausgangs verknüpft, wird der Wert des Ausgangs auch an diese GA gesendet.
 
-<!-- DOC -->
-### **Alarmausgabe (Buzzer oder LED trotz Sperre schalten)?**
-
-<!-- DOC Skip="2" -->
-Diese Einstellung erscheint nur, wenn die LED- oder Buzzer-Ausgabe aktiviert ist.
-
-Wenn die Einstellung aktiviert ist, wird eine akustische oder optische Ausgabe trotz Sperre vorgenommen.
-
-So können bestimmte Töne oder RGB-Anzeigen als Alarm definiert werden. Alarme können nicht durch entsprechende Sperren abgeschaltet werden.
-
 ## **Formeln**
 
 Das Logikmodul enthält eine Implementierung zur Verwendung von einfachen (bzw. elementaren) Formeln. Formeln können immer die Werte von einem oder zwei Eingängen eines Logikkanals verrechnen. Wird ein Ausgang so definiert, dass er den Wert einer Formel senden soll, wird die dort ausgewählte Formelfunktion aufgerufen, die Berechnung anhand der beiden Eingangswerte durchgeführt und das Ergebnis an den Ausgang gesendet.
