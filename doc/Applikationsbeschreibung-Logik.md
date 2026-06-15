@@ -2243,7 +2243,7 @@ Die Eingabe einer 0 deaktiviert eine Wiederholung.
 
 Man kann einen Logikkanal auch sperren. Gesperrt wird mit Hilfe eines weiteren Logikkanals, dessen Ausgang intern mit der Sperre dieses Kanals verbunden wird. Auf diese Weise kann eine Sperre sowohl durch einen ganz einfachen Logikkanal mit nur einem Eingang oder auch durch eine komplexe Logik aus mehreren Logikkanälen realisiert werden, man kann über einen Schaltwert, einen Dimmwert oder einen Schwellwert sperren, eine Rückfallzeit einstellen und alle weiteren Optionen, die ein weiterer (oder mehrere) Logikkanäle bieten.
 
-<kbd>![Sperre](pics/Sperre.PNG)</kbd>
+<kbd>![Sperre](pics/Sperre.png)</kbd>
 
 
 <!-- DOC -->
