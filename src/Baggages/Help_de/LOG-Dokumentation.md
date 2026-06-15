@@ -13,9 +13,8 @@ Logikfunktionen mit bis zu 2 externen und 2 internen Eingängen
 * ODER
 * EXOR
 * TOR/Sperre
+* Schalter (RS-Flipflop)
 * Zeitschaltuhr
-* Schalter
-* RS-Flipflop
 
 Einstellbare Ausgangstrigger
 
