@@ -701,13 +701,13 @@
                   <ParameterRefRef RefId="%AID%_UP-%TT%%CC%530_R-%TT%%CC%53001" AliasName="AbsRel" />
                 </RParameters>
               </ParameterCalculation>
-              <ParameterCalculation Id="%AID%_PC-%TT%%CC%0111" Language="JavaScript" Name="MarkInactive%CC%" RLTransformationFunc="BASE_MarkInactive" LRTransformationFunc="BASE_Nop"> 
+              <ParameterCalculation Id="%AID%_PC-%TT%%CC%0111" Language="JavaScript" Name="MarkInactive%CC%" RLTransformationFunc="BASE_MarkInactiveChannel" RLTransformationParameters="{&quot;InactiveValue&quot;:1}" LRTransformationFunc="BASE_Nop"> 
                 <LParameters>
                     <ParameterRefRef RefId="%AID%_P-%TT%%CC%999_R-%TT%%CC%99901" AliasName="TextOutput" />
                 </LParameters>
                 <RParameters>
                     <ParameterRefRef RefId="%AID%_P-%TT%%CC%001_R-%TT%%CC%00101" AliasName="TextInput" />
-                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%166_R-%TT%%CC%16601" AliasName="CheckboxInactive" />
+                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%166_R-%TT%%CC%16601" AliasName="InactiveControl" />
                 </RParameters>
               </ParameterCalculation>
             </ParameterCalculations>
