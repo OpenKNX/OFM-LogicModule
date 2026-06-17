@@ -13,9 +13,8 @@ Logikfunktionen mit bis zu 2 externen und 2 internen Eingängen
 * ODER
 * EXOR
 * TOR/Sperre
+* Schalter (RS-Flipflop)
 * Zeitschaltuhr
-* Schalter
-* RS-Flipflop
 
 Einstellbare Ausgangstrigger
 
@@ -68,8 +67,6 @@ User-spezifische (mathematische) Formeln sind in die Firmware einbaubar
 Sonderfunktionen
 
 * Die Funktion "Gerät zurücksetzen" (sonst nur über die ETS machbar)
-* Akustische Signalisierung über einen Buzzer (sofern entsprechende Hardware vorhanden ist)
-* Optische Signalisierung mittels einer RGB-LED (sofern entsprechende Hardware vorhanden ist)
 
 Zeitschaltuhren
 
