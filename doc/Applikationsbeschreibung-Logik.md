@@ -82,7 +82,7 @@ Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer d
 
 12.06.2026: Firmware 4.4.0, Applikation 4.4:
 
-* NEU: Ein zu testzwecken deaktiverter Kanal zeigt dies jetzt in der Liste der Kanäle an. Dies erhöht die Wahrnehmung von inaktiven Kanälen und vereinfacht die Fehlersuche aufgrund von inaktiven Kanälen.
+* NEU: Ein suspendierter Kanal zeigt dies jetzt in der Liste der Kanäle an. Dies erhöht die Wahrnehmung von suspendierten Kanälen und vereinfacht die Fehlersuche aufgrund von suspendierten Kanälen.
 
 11.05.2026: Firmware 4.3.0, Applikation 4.3:
 
@@ -952,9 +952,9 @@ Die Verzögerungszeit wird hier angegeben.
 **Anmerkung:** Auch wenn man hier technisch bis zu 16.000 Stunden Verzögerung angeben kann, sind nur Einstellungen im Sekundenbereich sinnvoll.
 
 <!-- DOC -->
-### **Kanal deaktivieren (zu Testzwecken)**
+### **Suspendiert**
 
-Dieser Logikkanal ist außer Funktion. Er kann vollständig definiert sein und keine Einstellung geht verloren, aber der Ausgang wird kein Telegramm senden. Dies bietet die Möglichkeit, zu Testzwecken einen bereits parametrierten Logikkanal inaktiv zu setzen, um zu schauen, ob er die Ursache für eventuelles Fehlverhalten im Haus ist. Kann zur Fehlersuche hilfreich sein.
+Dieser Logikkanal ist ohne Funktion. Er kann vollständig definiert sein und keine Einstellung geht verloren, aber der Ausgang wird kein Telegramm senden. Dies bietet die Möglichkeit, zu Testzwecken einen bereits parametrierten Logikkanal su suspendieren, um zu schauen, ob er die Ursache für eventuelles Fehlverhalten im Haus ist. Kann zur Fehlersuche hilfreich sein.
 
 <!-- DOC -->
 ### **Kommentar**
