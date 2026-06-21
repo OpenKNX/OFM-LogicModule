@@ -2245,7 +2245,7 @@ Die Eingabe einer 0 deaktiviert eine Wiederholung.
 
 Man kann einen Logikkanal auch sperren. Gesperrt wird mit Hilfe eines weiteren Logikkanals, dessen Ausgang intern mit der Sperre dieses Kanals verbunden wird. Auf diese Weise kann eine Sperre sowohl durch einen ganz einfachen Logikkanal mit nur einem Eingang oder auch durch eine komplexe Logik aus mehreren Logikkanälen realisiert werden, man kann über einen Schaltwert, einen Dimmwert oder einen Schwellwert sperren, eine Rückfallzeit einstellen und alle weiteren Optionen, die ein weiterer (oder mehrere) Logikkanäle bieten.
 
-<kbd>![Sperre](pics/Sperre.PNG)</kbd>
+<kbd>![Sperre](pics/Sperre.png)</kbd>
 
 
 <!-- DOC -->
@@ -2735,16 +2735,6 @@ Wie bei "Absolutes KO" wird der Wert des Ausgangs an ein anderes KO gesendet. Ma
 Relative KO sind von Vorteil, wenn man häufiger mit Logiken arbeitet, die aus mehreren Logikkanälen bestehen (Logikblock). Verbindet man die Logiken eines Logikblocks über relative KO-Verknüpfungen, können diese Logikblöcke innerhalb des Logikmoduls verschoben werden oder auf ein anderes Logikmodul kopiert werden (mittels Konfigurationstransfer), ohne dass die KO-Verknüpfungen invalidiert werden.
 
 Ist eine GA mit dem eigenen KO des Ausgangs verknüpft, wird der Wert des Ausgangs auch an diese GA gesendet.
-
-<!-- DOC -->
-### **Alarmausgabe (Buzzer oder LED trotz Sperre schalten)?**
-
-<!-- DOC Skip="2" -->
-Diese Einstellung erscheint nur, wenn die LED- oder Buzzer-Ausgabe aktiviert ist.
-
-Wenn die Einstellung aktiviert ist, wird eine akustische oder optische Ausgabe trotz Sperre vorgenommen.
-
-So können bestimmte Töne oder RGB-Anzeigen als Alarm definiert werden. Alarme können nicht durch entsprechende Sperren abgeschaltet werden.
 
 ## **Formeln**
 
