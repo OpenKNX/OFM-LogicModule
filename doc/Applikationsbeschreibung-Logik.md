@@ -974,7 +974,7 @@ Hier werden die Einstellungen vorgenommen, die für die Logikausführung selbst 
 
 Mittels der Auswahlliste kann eine Operation und damit die Art der Verknüpfung der Eingänge dieses Logikkanals ausgewählt werden. Es stehen folgende Operationen zur Verfügung:
 
-#### **aus**
+#### **Deaktiviert**
 
 Dieser Logikkanal nicht definiert und nicht aktiv. Es stehen keine Eingänge und kein Ausgang zur Verfügung. Alle entsprechenden KO sind ausgeblendet.
 
