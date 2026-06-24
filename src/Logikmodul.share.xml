@@ -52,7 +52,7 @@
               <!-- parameter types for logic module -->
               <ParameterType Id="%AID%_PT-Logic" Name="Logic" op:headerExport="enum" >
                 <TypeRestriction Base="Value" SizeInBit="8" >
-                  <Enumeration Text="aus" Value="0" Id="%ENID%" op:headerName="AUS" />
+                  <Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" op:headerName="AUS" />
                   <Enumeration Text="UND" Value="1" Id="%ENID%" />
                   <Enumeration Text="ODER" Value="2" Id="%ENID%" />
                   <Enumeration Text="EXCLUSIV-ODER" Value="3" Id="%ENID%" op:headerName="EXOR" />
