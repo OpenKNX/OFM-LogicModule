@@ -61,6 +61,16 @@
                   <Enumeration Text="ZEITSCHALTUHR" Value="5" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType> 
+              <ParameterType Id="%AID%_PT-LogicType" Name="LogicType" op:headerExport="base" op:headerName="Logic" >
+                <TypeRestriction Base="Value" SizeInBit="8" >
+                  <Enumeration Text="UND" Value="1" Id="%ENID%" />
+                  <Enumeration Text="ODER" Value="2" Id="%ENID%" />
+                  <Enumeration Text="EXCLUSIV-ODER" Value="3" Id="%ENID%" />
+                  <Enumeration Text="TOR" Value="4" Id="%ENID%" />
+                  <Enumeration Text="SCHALTER (RS-FLIP-FLOP)" Value="6" Id="%ENID%" />
+                  <Enumeration Text="ZEITSCHALTUHR" Value="5" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType> 
               <ParameterType Id="%AID%_PT-Calculate" Name="Calculate" op:headerExport="enum" >
                 <TypeRestriction Base="Value" SizeInBit="2">
                   <Enumeration Text="auch wenn noch nicht alle Werte gültig sind" Value="0" Id="%ENID%" op:headerName="Invalid" />
@@ -1202,11 +1212,8 @@
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Logikmodul" UIHint="Headline" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Version: %ModuleVersion%" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00164_R-%TT%0016401" HelpContext="BASE-Verfuegbare-Kanaele" IndentLevel="1" />
-                <ParameterSeparator Id="%AID%_PS-52" Text="" UIHint="HorizontalRuler" />
-                <ParameterSeparator Id="%AID%_PS-50" Text="Urlaub" UIHint="Headline" />
-                <ParameterSeparator Id="%AID%_PS-51" Text="Zeitschaltuhren können auch Urlaubszeiten berücksichtigen. Damit das funktioniert, muss eine Urlaubszeit über das KO 15 dem Gerät mitgeteilt werden." />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Urlaub" UIHint="Headline" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Zeitschaltuhren können auch Urlaubszeiten berücksichtigen. Damit das funktioniert, muss eine Urlaubszeit über das KO 15 dem Gerät mitgeteilt werden." />
                 <ParameterRefRef RefId="%AID%_UP-%TT%00138_R-%TT%0013801" HelpContext="%DOC%" IndentLevel="1" />
                 <choose ParamRefId="%AID%_UP-%TT%00138_R-%TT%0013801">
                   <when test="1">
@@ -1214,9 +1221,9 @@
                     <ComObjectRefRef RefId="%AID%_O-%TT%00004_R-%TT%0000401" />
                   </when>
                 </choose>
-                <ParameterSeparator Id="%AID%_PS-52" Text="" UIHint="HorizontalRuler" />
-                <ParameterSeparator Id="%AID%_PS-53" Text="Feiertage" UIHint="Headline" />
-                <ParameterSeparator Id="%AID%_PS-54" Text="Das Gerät kann die berechneten Feiertage auch auf den Bus senden. Über das KO 16 wird mitgeteilt, welcher Feiertag 'Heute' ist, über KO 17 welcher Feiertag 'Morgen' ist. 0 bedeutet 'kein Feiertag'." />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Feiertage" UIHint="Headline" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Das Gerät kann die berechneten Feiertage auch auf den Bus senden. Über das KO 16 wird mitgeteilt, welcher Feiertag 'Heute' ist, über KO 17 welcher Feiertag 'Morgen' ist. 0 bedeutet 'kein Feiertag'." />
                 <ParameterRefRef RefId="%AID%_UP-%TT%00139_R-%TT%0013901" HelpContext="%DOC%" IndentLevel="1" />
                 <choose ParamRefId="%AID%_UP-%TT%00139_R-%TT%0013901">
                   <when test="1">
@@ -1369,16 +1376,27 @@
                 <!-- KO-Overview-Table -->
                 <op:include href="Logikmodul.overview-intko.templ.xml" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock[@Name='Channel-List']/*" type="template" prefix="LOG" IsInner="true" />
               </ParameterBlock>
+              <ParameterBlock Id="%AID%_PB-nnn" Text="Kanalauswahl" Icon="format-list-bulleted-type" HelpContext="LOG-Dokumentation">
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00164_R-%TT%0016401" HelpContext="BASE-Verfuegbare-Kanaele" IndentLevel="1" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+                <ParameterBlock Id="%AID%_PB-nnn" Inline="true" Layout="Grid">
+                  <Rows>
+                    <Row Id="%AID%_PB-nnn_R-1" />
+                  </Rows>
+                  <Columns>
+                    <Column Id="%AID%_PB-nnn_C-1" Width="10%" />
+                    <Column Id="%AID%_PB-nnn_C-2" Width="35%" />
+                    <Column Id="%AID%_PB-nnn_C-3" Width="55%" />
+                  </Columns>
+                  <ParameterSeparator Id="%AID%_PS-nnn" Cell="1,1" UIHint="Headline" Text="Kanal" />
+                  <ParameterSeparator Id="%AID%_PS-nnn" Cell="1,2" UIHint="Headline" Text="Logik-Operation" />
+                  <ParameterSeparator Id="%AID%_PS-nnn" Cell="1,3" UIHint="Headline" Text="Beschreibung des Kanals" />
+                </ParameterBlock>
+                <op:include href="Logikmodul.templ.xml" xpath="//ApplicationProgram/Dynamic/ChannelIndependentBlock/ParameterBlock[@Name='ChannelSelection']/*" type="template" prefix="LOG" IsInner="true" />
+              </ParameterBlock>
               <!-- followed by all logic channels -->
-              <op:include href="Logikmodul.templ.xml" xpath="//ApplicationProgram/Dynamic/ChannelIndependentBlock/*" type="template" prefix="LOG" IsInner="true" />
-              <choose ParamRefId="%AID%_UP-%TT%00164_R-%TT%0016401">
-                <when test="&lt;%N%">
-                  <ParameterBlock Id="%AID%_PB-nnn" Text="(mehr)" Icon="dots-horizontal" HelpContext="Empty">
-                    <ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" />
-                    <ParameterRefRef RefId="%AID%_UP-%TT%00164_R-%TT%0016401" HelpContext="BASE-Verfuegbare-Kanaele" IndentLevel="1" />
-                  </ParameterBlock>
-                </when>
-              </choose>
+              <op:include href="Logikmodul.templ.xml" xpath="//ApplicationProgram/Dynamic/ChannelIndependentBlock/ParameterBlock[@Name='ChannelDefinition']/*" type="template" prefix="LOG" IsInner="true" />
             </Channel>
           </Dynamic>
         </ApplicationProgram>
