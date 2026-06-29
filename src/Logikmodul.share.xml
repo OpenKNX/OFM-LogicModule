@@ -1376,10 +1376,10 @@
                 <!-- KO-Overview-Table -->
                 <op:include href="Logikmodul.overview-intko.templ.xml" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock[@Name='Channel-List']/*" type="template" prefix="LOG" IsInner="true" />
               </ParameterBlock>
-              <ParameterBlock Id="%AID%_PB-nnn" Text="Kanalauswahl" Icon="format-list-bulleted-type" HelpContext="LOG-Dokumentation">
+              <ParameterBlock Id="%AID%_PB-nnn" Text="Kanalauswahl" Icon="format-list-bulleted-type" HelpContext="LOG-Kanalauswahl">
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00164_R-%TT%0016401" HelpContext="BASE-Verfuegbare-Kanaele" IndentLevel="1" />
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+                <!-- <ParameterRefRef RefId="%AID%_UP-%TT%00164_R-%TT%0016401" HelpContext="BASE-Verfuegbare-Kanaele" IndentLevel="1" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" /> -->
                 <ParameterBlock Id="%AID%_PB-nnn" Inline="true" Layout="Grid">
                   <Rows>
                     <Row Id="%AID%_PB-nnn_R-1" />

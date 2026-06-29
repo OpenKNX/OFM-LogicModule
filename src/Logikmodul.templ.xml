@@ -46,7 +46,7 @@
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="2" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%003" Name="f%C%Logic" ParameterType="%AID%_PT-Logic" Offset="0" BitOffset="0" Text="Logik-Operation" Value="0" op:nowarn="true" />
                 <Parameter Id="%AID%_UP-%TT%%CC%004" Name="f%C%Calculate" ParameterType="%AID%_PT-Calculate" Offset="1" BitOffset="6" Text="Logik auswerten" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%166" Name="f%C%Disable" ParameterType="%AID%_PT-CheckBox" Offset="1" BitOffset="5" Text="Suspendiert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%166" Name="f%C%Disable" ParameterType="%AID%_PT-Suspended" Offset="1" BitOffset="5" Text="Suspendiert" Value="0" />
                 <!-- <Parameter Id="%AID%_UP-%TT%%CC%277" Name="f%C%Alarm" ParameterType="%AID%_PT-CheckBox" Offset="1" BitOffset="4" Text="Alarmausgabe (Buzzer oder LED trotz Sperre schalten)?" Value="0" /> -->
                 <Parameter Id="%AID%_UP-%TT%%CC%396" Name="f%C%TGate" ParameterType="%AID%_PT-CheckBox" Offset="1" BitOffset="3" Text="Tor geht sofort wieder zu" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%397" Name="f%C%OInternalOn" ParameterType="%AID%_PT-CheckBox" Offset="1" BitOffset="2" Text="Wert EIN intern weiterleiten" Value="1" />
@@ -708,7 +708,7 @@
                     <ParameterRefRef RefId="%AID%_UP-%TT%%CC%166_R-%TT%%CC%16601" AliasName="InactiveControl" />
                 </RParameters>
               </ParameterCalculation>
-              <ParameterCalculation Id="%AID%_PC-%TT%%CC%0112" Language="JavaScript" Name="SyncType%C%" RLTransformationFunc="LOG_SyncType" LRTransformationFunc="LOG_SyncType"> 
+              <ParameterCalculation Id="%AID%_PC-%TT%%CC%0112" Language="JavaScript" Name="SyncType%C%" RLTransformationFunc="BASE_SyncChannelType" LRTransformationFunc="BASE_SyncChannelType"> 
                 <LParameters>
                     <ParameterRefRef RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" AliasName="TypeValue" />
                 </LParameters>
@@ -743,23 +743,19 @@
           <Dynamic>
             <ChannelIndependentBlock>
               <ParameterBlock Id="%AID%_PB-nnn" Name="ChannelSelection">
-                <choose ParamRefId="%AID%_UP-%TT%00164_R-%TT%0016401">
-                  <when test="&gt;=%C%">
-                    <ParameterBlock Id="%AID%_PB-nnn" Inline="true" Layout="Grid">
-                      <Rows>
-                        <Row Id="%AID%_PB-nnn_R-1" />
-                      </Rows>
-                      <Columns>
-                        <Column Id="%AID%_PB-nnn_C-1" Width="10%" />
-                        <Column Id="%AID%_PB-nnn_C-2" Width="35%" />
-                        <Column Id="%AID%_PB-nnn_C-3" Width="55%" />
-                      </Columns>
-                      <ParameterSeparator Id="%AID%_PS-nnn" Cell="1,1" Text="Logik %C%" />
-                      <ParameterRefRef RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" Cell="1,2" HelpContext="%DOC%" IndentLevel="1" />
-                      <ParameterRefRef RefId="%AID%_P-%TT%%CC%001_R-%TT%%CC%00101" Cell="1,3" HelpContext="%DOC%" IndentLevel="1" />
-                    </ParameterBlock>
-                  </when>
-                </choose>
+                <ParameterBlock Id="%AID%_PB-nnn" Inline="true" Layout="Grid">
+                  <Rows>
+                    <Row Id="%AID%_PB-nnn_R-1" />
+                  </Rows>
+                  <Columns>
+                    <Column Id="%AID%_PB-nnn_C-1" Width="10%" />
+                    <Column Id="%AID%_PB-nnn_C-2" Width="35%" />
+                    <Column Id="%AID%_PB-nnn_C-3" Width="55%" />
+                  </Columns>
+                  <ParameterSeparator Id="%AID%_PS-nnn" Cell="1,1" Text="Logik %C%" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" Cell="1,2" HelpContext="%DOC%" IndentLevel="1" />
+                  <ParameterRefRef RefId="%AID%_P-%TT%%CC%001_R-%TT%%CC%00101" Cell="1,3" HelpContext="%DOC%" IndentLevel="1" />
+                </ParameterBlock>
               </ParameterBlock>
               <ParameterBlock Id="%AID%_PB-nnn" Name="ChannelDefinition">
                 <choose ParamRefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301">

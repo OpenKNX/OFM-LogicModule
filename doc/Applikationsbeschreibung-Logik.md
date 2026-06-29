@@ -83,6 +83,7 @@ Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer d
 12.06.2026: Firmware 4.4.0, Applikation 4.4:
 
 * NEU: Ein suspendierter Kanal zeigt dies jetzt in der Liste der Kanäle an. Dies erhöht die Wahrnehmung von suspendierten Kanälen und vereinfacht die Fehlersuche aufgrund von suspendierten Kanälen.
+* NEU: Kanäle werden jetzt auf einer eigenen Seite "Kanalauswahl" aktiviert. Deaktivierte Kanäle sind jetzt nicht mehr links im Baum sichtbar und erhöhen so die Übersichtlichkeit.
 
 11.05.2026: Firmware 4.3.0, Applikation 4.3:
 
@@ -751,6 +752,12 @@ In dieser Spalte sieht man, ob für das EIN-Signal oder das AUS-Signal ein zusä
 Das Auswahlfeld dahinter zeigt "Eigenes KO", falls kein zusätzliches KO gewählt wurde, gefolgt von der Nummer des eigenen KO dieses Ausgangs.
 Wählt man in dem Auswahlfeld "Absolutes KO", erscheint ein Eingabefeld, in dem man die Nummer des KO angeben kann, das genutzt werden soll. Wählt man "Relatives KO", erscheint ein Eingabefeld, in dem man die Anzahl der KO angibt, die man vor- oder zurückspringen möchte. Dahinter erscheint die berechnete KO-Nummer, bei der man dann landet.
 Details kann man unter [Kommunikationsobjekt für Ausgang](#kommunikationsobjekt-für-ausgang) nachlesen.
+
+<!-- DOC -->
+## **Kanalauswahl**
+
+Auf dieser Seite werden alle zur Verfügung stehenden Kanäle in einer Tabelle angezeigt. Pro Zeile kann ein Kanal aktiviert werden, indem dessen Logik-Operation ausgewählt wird. Zusätzlich kann der Kanal auch benannt werden.
+Wird als Logik-Operation "Deaktivert" gewählt, wird der ganze Kanal deaktiviert.
 
 ## **Logiken**
 

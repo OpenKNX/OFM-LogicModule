@@ -4,14 +4,6 @@ function LOG_ClearContent(input, output, context) {
     output.ResultDisplay = "";
 }
 
-function LOG_SyncType(input, output, context) {
-    // Log.info("LOG_SyncType: input.TypeValue = " + input.TypeValue + ", output.TypeValue = " + output.TypeValue);
-    if (input.TypeValue > 0 && input.TypeValue != output.TypeValue)
-    {
-        output.TypeValue = input.TypeValue;
-    }
-}
-
 function LOG_checkUserFormula(device, online, progress, context) {
     var lFormulaIndex = context.formulaIndex;
     var lParFormulaName = "LOG_UserFormula" + lFormulaIndex;
