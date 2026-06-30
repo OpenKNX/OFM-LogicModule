@@ -2289,6 +2289,12 @@ void LogicChannel::restore()
     restore(IO_Input2);
 }
 
+void LogicChannel::restoreEmpty()
+{
+    // read from flash (stream) and ignore values
+    openknx.flash.read(10);
+}
+
 void LogicChannel::restore(uint8_t iIOIndex)
 {
     PT_LogicDpt lDpt = (PT_LogicDpt)openknx.flash.readByte();
@@ -2309,6 +2315,12 @@ void LogicChannel::restore(uint8_t iIOIndex)
 
         lKo->commFlag(Ok);
     }
+}
+
+void LogicChannel::saveEmpty()
+{
+    openknx.flash.writeByte(0xFF); // empty DPT
+    openknx.flash.writeInt(0x0); // 4 bytes
 }
 
 void LogicChannel::save()

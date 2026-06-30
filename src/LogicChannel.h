@@ -262,6 +262,8 @@ class LogicChannel : public OpenKNX::Channel
     static uint8_t pLoadChannel;
     static uint16_t calcKoNumber(uint8_t iIOIndex, uint8_t iChannelId);
     static GroupObject *getKoForChannel(uint8_t iIOIndex, uint8_t iChannelId);
+    static void saveEmpty();
+    static void restoreEmpty();
     // static float getFloat(uint8_t *data);
 
     // instance

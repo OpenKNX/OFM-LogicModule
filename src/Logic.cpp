@@ -111,17 +111,19 @@ void Logic::prepareChannels()
 {
     logDebugP("prepareChannels");
     for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
-        mChannel[lIndex]->prepareChannel();
+        if (mChannel[lIndex] != nullptr)
+            mChannel[lIndex]->prepareChannel();
 }
 
 // we trigger all associated internal inputs with the new value
 void Logic::processAllInternalInputs(LogicChannel *iChannel, bool iValue)
 {
     // search for any internal input associated to this channel
-    for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
+    for (uint8_t lIndex = 0; lIndex < LOG_ChannelCount; lIndex++)
     {
         LogicChannel *lChannel = mChannel[lIndex];
-        lChannel->processInternalInputs(iChannel->channelIndex(), iValue);
+        if (lChannel != nullptr)
+            lChannel->processInternalInputs(iChannel->channelIndex(), iValue);
     }
 }
 
@@ -170,16 +172,22 @@ void Logic::readFlash(const uint8_t *iBuffer, const uint16_t iSize)
     logDebugP("Reading channel data from flash (%i/%i)", lMaxChannels, mNumChannels);
     for (uint8_t lIndex = 0; lIndex < MIN(mNumChannels, lMaxChannels); lIndex++)
     {
-        mChannel[lIndex]->restore();
+        if (mChannel[lIndex] == nullptr)
+            LogicChannel::restoreEmpty();
+        else
+            mChannel[lIndex]->restore();
     }
 }
 
 void Logic::writeFlash()
 {
     openknx.flash.writeByte(1); // Version
-    for (uint8_t lIndex = 0; lIndex < MIN(mNumChannels, LOG_ChannelCount); lIndex++)
+    for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
     {
-        mChannel[lIndex]->save();
+        if (mChannel[lIndex] == nullptr)
+            LogicChannel::saveEmpty();
+        else
+            mChannel[lIndex]->save();
     }
 }
 
@@ -191,7 +199,7 @@ void Logic::processInputKo(GroupObject &iKo)
     while (getKoLookup(iKo.asap(), &lKoLookup))
     {
         LogicChannel *lChannel = mChannel[lKoLookup->channelIndex];
-        lChannel->processInput(lKoLookup->ioIndex);
+        if (lChannel != nullptr) lChannel->processInput(lKoLookup->ioIndex);
     }
     // REVIEW: Wäre dieser Check nicht im LogicChannel besser aufgehoben?
     // Nein, denn dann müsste man alle channels durchgehen, um den richtigen zu finden
@@ -202,7 +210,7 @@ void Logic::processInputKo(GroupObject &iKo)
         uint8_t lChannelId = lKoNumber / LOG_KoBlockSize;
         uint8_t lIOIndex = lKoNumber % LOG_KoBlockSize + 1;
         LogicChannel *lChannel = mChannel[lChannelId];
-        lChannel->processInput(lIOIndex);
+        if (lChannel != nullptr) lChannel->processInput(lIOIndex);
     }
 }
 
@@ -243,10 +251,14 @@ bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
         // Command ch<nn>: Logic inputs and output of last execution
         // find channel and dispatch
         uint16_t lIndex = std::stoi(iCmd.substr(8, 2)) - 1;
-        if (lIndex < ParamLOG_VisibleChannels)
-        {
-            lResult = mChannel[lIndex]->processCommand(iCmd, iDebugKo);
-        }
+        if (lIndex < LOG_ChannelCount)
+            if (mChannel[lIndex] != nullptr)
+                lResult = mChannel[lIndex]->processCommand(iCmd, iDebugKo);
+            else
+            {
+                logInfoP("Channel %02d is not active!", lIndex + 1);
+                if (iDebugKo) openknx.console.writeDiagnoseKo("ch%02d inactive");
+            }
     }
     // TODO Common Time {{{
     else if (iCmd.length() >= 7 && iCmd.substr(6, 1) == "t") // time
@@ -371,18 +383,20 @@ void Logic::initLoadCounter(bool iAll)
 {
     LogicChannel::pLoadCounterMax = 0;
     LogicChannel::pLoadChannel = 0;
-    uint8_t lChannel;
-    for (lChannel = 0; lChannel < mNumChannels; lChannel++)
+    for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
     {
-        if (iAll)
+        if (mChannel[lIndex] != nullptr)
         {
-            mChannel[lChannel]->pLoadCounter = 0;
-        }
-        else if (mChannel[lChannel]->pLoadCounter >= LOAD_COUNTER_MAX)
-        {
-            LogicChannel::pLoadCounterMax = LOAD_COUNTER_MAX;
-            LogicChannel::pLoadChannel = lChannel + 1;
-            break;
+            if (iAll)
+            {
+                mChannel[lIndex]->pLoadCounter = 0;
+            }
+            else if (mChannel[lIndex]->pLoadCounter >= LOAD_COUNTER_MAX)
+            {
+                LogicChannel::pLoadCounterMax = LOAD_COUNTER_MAX;
+                LogicChannel::pLoadChannel = lIndex + 1;
+                break;
+            }
         }
     }
 }
@@ -403,17 +417,23 @@ void Logic::setup()
     sTimer.setup();
 
     // Number of available channels is the minimum of configured and available channels
-    mNumChannels = MIN(ParamLOG_VisibleChannels, LOG_ChannelCount);
+    // mNumChannels = MIN(ParamLOG_VisibleChannels, LOG_ChannelCount);
+    mNumChannels = LOG_ChannelCount;
 
     // setup channels, not possible in constructor, because knx is not configured there
     // for TimerRestore we prepare all Timer channels
-    for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
+    for (uint8_t _channelIndex = 0; _channelIndex < mNumChannels; _channelIndex++)
     {
-        LogicChannel *lChannel = new LogicChannel(lIndex);
-        mChannel[lIndex] = lChannel;
-        lChannel->startTimerRestoreState();
-        lChannel->prepareInternalInput(BIT_INT_INPUT_1, LOG_fI1);
-        lChannel->prepareInternalInput(BIT_INT_INPUT_2, LOG_fI2);
+        if (ParamLOG_fLogic > PT_Logic::AUS && !ParamLOG_fDisable)
+        {
+            LogicChannel *lChannel = new LogicChannel(_channelIndex);
+            mChannel[_channelIndex] = lChannel;
+            lChannel->startTimerRestoreState();
+            lChannel->prepareInternalInput(BIT_INT_INPUT_1, LOG_fI1);
+            lChannel->prepareInternalInput(BIT_INT_INPUT_2, LOG_fI2);
+        }
+        else
+            mChannel[_channelIndex] = nullptr;
     }
 }
 
@@ -431,7 +451,7 @@ void Logic::loop()
         for (uint8_t lChannelNr = 0; lChannelNr < mNumChannels; lChannelNr++)
         {
             LogicChannel *lChannel = mChannel[lChannelNr];
-            lChannel->startTimerInput();
+            if (lChannel != nullptr) lChannel->startTimerInput();
         }
     }
 
@@ -456,11 +476,10 @@ void Logic::loop()
 
     // we loop on all channels and execute pipeline
     uint8_t lChannelsProcessed = 0;
-    // for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
     while (lChannelsProcessed < mNumChannels && openknx.freeLoopTime())
     {
         LogicChannel *lChannel = mChannel[mChannelIterator++];
-        lChannel->loop();
+        if (lChannel != nullptr) lChannel->loop();
         lChannelsProcessed++;
         // the following operations are done only once after iteration of all channels
         if (mChannelIterator >= mNumChannels)
@@ -511,7 +530,7 @@ void Logic::processTimerRestore()
             for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
             {
                 LogicChannel *lChannel = mChannel[lIndex];
-                lChannel->stopTimerRestoreState();
+                if (lChannel != nullptr) lChannel->stopTimerRestoreState();
             }
         }
     }
