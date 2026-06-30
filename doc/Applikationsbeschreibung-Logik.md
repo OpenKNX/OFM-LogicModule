@@ -50,7 +50,7 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
     * [Feiertage](#feiertage)
   * [**+ Logik n: ...** (n=1 bis 99)](#logik-n)
     * [Kanaldefinition](#kanaldefinition)
-    * [Logikdefinition](#logikdefinition)
+    * [Eingänge](#eingänge)
     * [Logikauswertung](#logikauswertung)
     * [Tordefinition](#tordefinition)
     * [Logik-Trigger](#logik-trigger)
@@ -947,36 +947,6 @@ Hier werden die Einstellungen vorgenommen, die für die Funktion des gesamten Ka
 Der hier vergebene Name hat keinen funktionalen Einfluss, erlaubt es aber, dem Kanal einen eigenen Namen zu geben, und ihn so leichter wiederzufinden. Der Name wird im Kanalbaum dargestellt und statt des Standardtextes "..." genommen.
 
 <!-- DOC -->
-### **Zeit bis der Kanal nach einem Neustart aktiv wird**
-
-Neben "Allgemeine Parameter -> Zeit bis das Gerät nach einem Neustart aktiv wird" kann auch noch pro Kanal eine Startverzögerung sinnvoll sein. 
-
-<!-- DOC Skip="1" -->
-Der Grund ist in "Logikkanäle -> [Startverhalten](#startverhalten)" beschrieben.
-
-Die Verzögerungszeit wird hier angegeben.
-
-**Anmerkung:** Auch wenn man hier technisch bis zu 16.000 Stunden Verzögerung angeben kann, sind nur Einstellungen im Sekundenbereich sinnvoll.
-
-<!-- DOC -->
-### **Suspendiert**
-
-Dieser Logikkanal ist ohne Funktion. Er kann vollständig definiert sein und keine Einstellung geht verloren, aber der Ausgang wird kein Telegramm senden. Dies bietet die Möglichkeit, zu Testzwecken einen bereits parametrierten Logikkanal su suspendieren, um zu schauen, ob er die Ursache für eventuelles Fehlverhalten im Haus ist. Kann zur Fehlersuche hilfreich sein.
-
-<!-- DOC -->
-### **Kommentar**
-
-Hier kann man einen Freitext eingeben, der die Logik beschreibt. Dieser Text kann mehrzeilig sein. Leider unterstützt die ETS von sich aus keine mehrzeiligen Texte. Mit dem Button unter der Textbox kann man alle Eingaben der Zeichenfolge '\n' in neue Zeilen umwandeln lassen. 
-
-Ein Kommentar kann aus maximal 512 Zeichen bestehen.
-
-## Logikdefinition
-
-Hier werden die Einstellungen vorgenommen, die für die Logikausführung selbst wesentlich sind.
-
-<kbd>![Logikdefinition](pics/Logikdefinition.png)</kbd>
-
-<!-- DOC -->
 ### **Logik-Operation**
 
 Mittels der Auswahlliste kann eine Operation und damit die Art der Verknüpfung der Eingänge dieses Logikkanals ausgewählt werden. Es stehen folgende Operationen zur Verfügung:
@@ -1021,6 +991,36 @@ Dieser Logikkanal hat den Eingang 1, der bei einem EIN-Signal den Ausgang EINsch
 Mit dem Schalter lassen sich viele Funktionen, die vorher nur mit 2 Kanälen zu lösen waren, jetzt mit nur einem Kanal lösen, was die Übersichtlichkeit der Logiken erhöht. 
 
 Der Schalter ermöglicht die Realisierung eines einfachen Szenen-Controllers (siehe Beispiele). Ferner können damit Hysterese-Logiken aufgebaut werden, bei denen die Ein- und Ausschaltbedingung aus 2 verschiedenen Quellen kommt (z.B. verschiedene DPT).
+
+<!-- DOC -->
+### **Zeit bis der Kanal nach einem Neustart aktiv wird**
+
+Neben "Allgemeine Parameter -> Zeit bis das Gerät nach einem Neustart aktiv wird" kann auch noch pro Kanal eine Startverzögerung sinnvoll sein. 
+
+<!-- DOC Skip="1" -->
+Der Grund ist in "Logikkanäle -> [Startverhalten](#startverhalten)" beschrieben.
+
+Die Verzögerungszeit wird hier angegeben.
+
+**Anmerkung:** Auch wenn man hier technisch bis zu 16.000 Stunden Verzögerung angeben kann, sind nur Einstellungen im Sekundenbereich sinnvoll.
+
+<!-- DOC -->
+### **Suspendiert**
+
+Dieser Logikkanal ist ohne Funktion. Er kann vollständig definiert sein und keine Einstellung geht verloren, aber der Ausgang wird kein Telegramm senden. Dies bietet die Möglichkeit, zu Testzwecken einen bereits parametrierten Logikkanal su suspendieren, um zu schauen, ob er die Ursache für eventuelles Fehlverhalten im Haus ist. Kann zur Fehlersuche hilfreich sein.
+
+<!-- DOC -->
+### **Kommentar**
+
+Hier kann man einen Freitext eingeben, der die Logik beschreibt. Dieser Text kann mehrzeilig sein. Leider unterstützt die ETS von sich aus keine mehrzeiligen Texte. Mit dem Button unter der Textbox kann man alle Eingaben der Zeichenfolge '\n' in neue Zeilen umwandeln lassen. 
+
+Ein Kommentar kann aus maximal 512 Zeichen bestehen.
+
+## Eingänge
+
+Hier wird bestimmt, welche Eingänge aktiv sind und ob der Wert des Eingangs invertiert werden soll.
+
+<kbd>![Logikdefinition](pics/Logikdefinition.png)</kbd>
 
 <!-- DOC HelpContext="Eingang n" -->
 ### **Eingang 1/2**

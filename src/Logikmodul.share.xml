@@ -1211,7 +1211,6 @@
               <ParameterBlock Id="%AID%_PB-nnn" Name="Settings" Text="Allgemein" ShowInComObjectTree="true" Icon="cog-outline" HelpContext="LOG-Dokumentation">
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Logikmodul" UIHint="Headline" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Version: %ModuleVersion%" />
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Urlaub" UIHint="Headline" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Zeitschaltuhren können auch Urlaubszeiten berücksichtigen. Damit das funktioniert, muss eine Urlaubszeit über das KO 15 dem Gerät mitgeteilt werden." />
                 <ParameterRefRef RefId="%AID%_UP-%TT%00138_R-%TT%0013801" HelpContext="%DOC%" IndentLevel="1" />
@@ -1221,7 +1220,6 @@
                     <ComObjectRefRef RefId="%AID%_O-%TT%00004_R-%TT%0000401" />
                   </when>
                 </choose>
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Feiertage" UIHint="Headline" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Das Gerät kann die berechneten Feiertage auch auf den Bus senden. Über das KO 16 wird mitgeteilt, welcher Feiertag 'Heute' ist, über KO 17 welcher Feiertag 'Morgen' ist. 0 bedeutet 'kein Feiertag'." />
                 <ParameterRefRef RefId="%AID%_UP-%TT%00139_R-%TT%0013901" HelpContext="%DOC%" IndentLevel="1" />
@@ -1378,8 +1376,8 @@
               </ParameterBlock>
               <ParameterBlock Id="%AID%_PB-nnn" Text="Kanalauswahl" Icon="format-list-bulleted-type" HelpContext="LOG-Kanalauswahl">
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" />
-                <!-- <ParameterRefRef RefId="%AID%_UP-%TT%00164_R-%TT%0016401" HelpContext="BASE-Verfuegbare-Kanaele" IndentLevel="1" />
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" /> -->
+                <!-- <ParameterRefRef RefId="%AID%_UP-%TT%00164_R-%TT%0016401" HelpContext="BASE-Verfuegbare-Kanaele" IndentLevel="1" /> -->
+                <!-- <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" /> -->
                 <ParameterBlock Id="%AID%_PB-nnn" Inline="true" Layout="Grid">
                   <Rows>
                     <Row Id="%AID%_PB-nnn_R-1" />

@@ -787,26 +787,22 @@
                         <ParameterRefRef RefId="%AID%_UP-%TT%%CC%381_R-%TT%%CC%38101" Cell="1,4" HelpContext="%DOC%" />
                       </ParameterBlock>
                       <ParameterRefRef RefId="%AID%_UP-%TT%%CC%166_R-%TT%%CC%16601" HelpContext="%DOC%" IndentLevel="1" />
-                      <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                       <!-- <Module Id="%AID%_MD-%TT%00001_M-%C%" RefId="%AID%_MD-%TT%00001" /> -->
                       <ParameterSeparator Id="%AID%_PS-nnn" Text="Kommentar" UIHint="Headline" />
                       <ParameterRefRef RefId="%AID%_P-%TT%%CC%439_R-%TT%%CC%43901" HelpContext="LOG-Kommentar" IndentLevel="1" />
                       <Button Id="%AID%_B-%TT%%CC%001" Text="Alle '\n' im Text durch neue Zeile(n) ersetzen" EventHandler="newline" EventHandlerParameters="{ &quot;textbox&quot;:&quot;LOG_f%C%Kommentar&quot; }" />
-                      <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
-                      <ParameterSeparator Id="%AID%_PS-nnn" Text="Logikdefinition" UIHint="Headline" />
+                      <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingänge" UIHint="Headline" />
                       <choose ParamRefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301">
                         <when test="1 2 3 4 6">
                           <ParameterRefRef RefId="%AID%_UP-%TT%%CC%008_R-%TT%%CC%00801" HelpContext="LOG-Eingang-n" IndentLevel="1" />
                           <ParameterRefRef RefId="%AID%_UP-%TT%%CC%028_R-%TT%%CC%02801" HelpContext="LOG-Eingang-n" IndentLevel="1" />
                           <ParameterRefRef RefId="%AID%_UP-%TT%%CC%048_R-%TT%%CC%04801" HelpContext="LOG-Interner-Eingang-n" IndentLevel="1" />
                           <ParameterRefRef RefId="%AID%_UP-%TT%%CC%050_R-%TT%%CC%05001" HelpContext="LOG-Interner-Eingang-n" IndentLevel="1" />
-                          <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                           <ParameterSeparator Id="%AID%_PS-nnn" Text="Logikauswertung" UIHint="Headline" />
                           <ParameterSeparator Id="%AID%_PS-nnn" Text="Hier kann man angeben, wie sich die Logikauswertung verhalten soll, wenn noch nicht alle Eingänge gültige Werte haben. Ungültige Eingänge werden so betrachtet, als ob sie nicht da wären." />
                           <ParameterRefRef RefId="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401" HelpContext="%DOC%" IndentLevel="1" />
                         </when>
                         <when test="4">
-                          <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                           <ParameterSeparator Id="%AID%_PS-nnn" Text="Tordefinition" UIHint="Headline" />
                           <ParameterRefRef RefId="%AID%_UP-%TT%%CC%396_R-%TT%%CC%39601" HelpContext="%DOC%" IndentLevel="1" />
                           <ParameterRefRef RefId="%AID%_UP-%TT%%CC%007_R-%TT%%CC%00701" HelpContext="%DOC%" IndentLevel="1" />
@@ -817,14 +813,12 @@
                           </choose>
                         </when>
                         <when test="6">
-                          <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                           <ParameterSeparator Id="%AID%_PS-nnn" Text="Schalter (RS-Flip-Flop)" UIHint="Headline" />
                           <ParameterSeparator Id="%AID%_PS-nnn" Text="Ein Schalter erlaubt es, mit einem EIN-Telegramm am Eingang 1 den Ausgang zu setzen (Einschalten) und mit einem EIN-Telegramm am Eingang 2 den Ausgang wieder zurückzusetzen (Ausschalten)." />
                           <ParameterSeparator Id="%AID%_PS-nnn" Text="Alternativ kann der interne Eingang 3 zum Setzen und interne Eingang 4 zum Zurücksetzen genutzt werden, auch Kombinationen mit Eingang 1 bzw. 2." />
                           <ParameterSeparator Id="%AID%_PS-nnn" Text="Da nur Telegramme ausgewertet werden, gibt es keine logische Verknüpfung zwischen 1 und 3 bzw. 2 und 4, jedes EIN-Telegramm wird ausgewertet. Wie bei 2 hörenden GA an einem KO." />
                         </when>
                         <when test="!=0">
-                          <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                           <ParameterSeparator Id="%AID%_PS-nnn" Text="Logik-Trigger" UIHint="Headline" />
                         </when>
                         <when test="1 2 3 4 6">
@@ -904,7 +898,6 @@
                                     <ParameterRefRef RefId="%AID%_UP-%TT%%CC%274_R-%TT%%CC%27401" HelpContext="%DOC%" IndentLevel="1" />
                                   </when>
                                 </choose>
-                                <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                               </when>
                               <when test="2 3">
                                 <!-- Zeitschaltuhr fortsetzen von Kanal... -->
@@ -931,7 +924,6 @@
                                     </when>
                                   </choose>
                                 </ParameterBlock>
-                                <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                               </when>
                               <when test="1 3">
                                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Schaltzeitpunkte Jahresschaltuhr" UIHint="Headline" />
@@ -1342,7 +1334,6 @@
                           <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%Processing" Text="Signalverarbeitung" Icon="dots-horizontal-circle-outline" HelpContext="Empty">
                             <ParameterSeparator Id="%AID%_PS-nnn" Text="Signalverarbeitung" UIHint="Headline" />
                             <ParameterSeparator Id="%AID%_PS-nnn" Text="Die folgenden Blöcke der Signalverarbeitung können den Ausgangswert beeinflussen. Sie werden - sofern aktiv - in der hier aufgeführten Reihenfolge ausgeführt" />
-                            <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                             <ParameterSeparator Id="%AID%_PS-nnn" Text="Treppenlicht" UIHint="Headline" />
                             <ParameterRefRef RefId="%AID%_UP-%TT%%CC%052_R-%TT%%CC%05201" HelpContext="%DOC%" IndentLevel="1" />
                             <choose ParamRefId="%AID%_UP-%TT%%CC%052_R-%TT%%CC%05201">
@@ -1383,7 +1374,6 @@
                                 </ParameterBlock>
                               </when>
                             </choose>
-                            <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                             <ParameterSeparator Id="%AID%_PS-nnn" Text="Ein-/Ausschaltverzögerung" UIHint="Headline" />
                             <ParameterRefRef RefId="%AID%_UP-%TT%%CC%058_R-%TT%%CC%05801" HelpContext="%DOC%" IndentLevel="1" />
                             <choose ParamRefId="%AID%_UP-%TT%%CC%058_R-%TT%%CC%05801">
@@ -1434,11 +1424,9 @@
                                 </choose>
                               </when>
                             </choose>
-                            <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                             <ParameterSeparator Id="%AID%_PS-nnn" Text="Wiederholungsfilter" UIHint="Headline" />
                             <ParameterSeparator Id="%AID%_PS-nnn" Text="Durch die bisherigen Signalverarbeitungsschritte kann es vorkommen, dass EIN- oder AUS-Signale mehrfach hintereinander kommen. Der folgende Filter erlaubt einen Einfluss darauf zu nehmen." />
                             <ParameterRefRef RefId="%AID%_UP-%TT%%CC%127_R-%TT%%CC%12701" HelpContext="%DOC%" IndentLevel="1" />
-                            <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                             <ParameterSeparator Id="%AID%_PS-nnn" Text="Zyklisch senden" UIHint="Headline" />
                             <ParameterRefRef RefId="%AID%_UP-%TT%%CC%061_R-%TT%%CC%06101" HelpContext="%DOC%" IndentLevel="1" />
                             <choose ParamRefId="%AID%_UP-%TT%%CC%061_R-%TT%%CC%06101">
@@ -1478,7 +1466,6 @@
                               </when>
                             </choose>
                             <!-- Lock functionality -->
-                            <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                             <ParameterSeparator Id="%AID%_PS-nnn" Text="Sperre" UIHint="Headline" />
                             <ParameterRefRef RefId="%AID%_UP-%TT%%CC%526_R-%TT%%CC%52601" IndentLevel="1" HelpContext="%DOC%" />
                             <choose ParamRefId="%AID%_UP-%TT%%CC%526_R-%TT%%CC%52601" >
@@ -1522,7 +1509,6 @@
                               </when>
                             </choose>
                             <!-- Internal inputs -->
-                            <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                             <ParameterSeparator Id="%AID%_PS-nnn" Text="Interne Eingänge" UIHint="Headline" />
                             <ParameterSeparator Id="%AID%_PS-nnn" Text="Der bis hierher ermittelte  Zustand steht als Ausgangswert des Kanals für andere Logikkanäle zur Verfügung." />
                             <ParameterSeparator Id="%AID%_PS-nnn" Text="Es kann bestimmt werden, ob der EIN oder der AUS-Wert weitergeleitet werden." />
@@ -1534,8 +1520,6 @@
                             <ParameterSeparator Id="%AID%_PS-nnn" Text="Definition Ausgang" UIHint="Headline" />
                             <ParameterRefRef RefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" HelpContext="%DOC%" IndentLevel="1" />
 
-                            <!-- <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
-                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Wert für Ausgang" UIHint="Headline" /> -->
                             <!-- DPT -->
                             <ParameterRefRef RefId="%AID%_UP-%TT%%CC%064_R-%TT%%CC%06401" HelpContext="%DOC%" IndentLevel="1" />
                             <!-- Sendeverhalten -->
