@@ -942,7 +942,7 @@ Folgende Parameter kann man für einen Logikkanal angeben:
 Hier werden die Einstellungen vorgenommen, die für die Funktion des gesamten Kanals notwendig sind.
 
 <!-- DOC -->
-### **Beschreibung des Kanals**
+### **Beschreibung**
 
 Der hier vergebene Name hat keinen funktionalen Einfluss, erlaubt es aber, dem Kanal einen eigenen Namen zu geben, und ihn so leichter wiederzufinden. Der Name wird im Kanalbaum dargestellt und statt des Standardtextes "..." genommen.
 
@@ -993,9 +993,9 @@ Mit dem Schalter lassen sich viele Funktionen, die vorher nur mit 2 Kanälen zu 
 Der Schalter ermöglicht die Realisierung eines einfachen Szenen-Controllers (siehe Beispiele). Ferner können damit Hysterese-Logiken aufgebaut werden, bei denen die Ein- und Ausschaltbedingung aus 2 verschiedenen Quellen kommt (z.B. verschiedene DPT).
 
 <!-- DOC -->
-### **Zeit bis der Kanal nach einem Neustart aktiv wird**
+### **Startverzögerung**
 
-Neben "Allgemeine Parameter -> Zeit bis das Gerät nach einem Neustart aktiv wird" kann auch noch pro Kanal eine Startverzögerung sinnvoll sein. 
+Neben "OpenKNX->Allgemein->Startverzögerung" kann auch noch pro Kanal eine Startverzögerung sinnvoll sein. Diese Zeit beginnt zu laufen, nachdem die Geräteweite Startverzögerung abgelaufen ist.
 
 <!-- DOC Skip="1" -->
 Der Grund ist in "Logikkanäle -> [Startverhalten](#startverhalten)" beschrieben.
