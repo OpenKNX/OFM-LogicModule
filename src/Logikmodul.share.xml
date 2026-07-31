@@ -7,8 +7,7 @@
 
 
   <op:config name="%LOG_EnableSave%" value="1" />
-  <op:config name="%LOG_NumChannelsDefault%" value="%N%" />
-  
+
   <op:nowarn id="3" regex="LOG_processUserFormula" />
 
   <ManufacturerData>
@@ -24,7 +23,7 @@
             <ParameterTypes>
               <!-- Number of channels (module specific) -->
               <ParameterType Id="%AID%_PT-LOGNumChannels" Name="LOGNumChannels">
-                <TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="1" maxInclusive="%N%" />
+                <TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="%N%" maxInclusive="%N%" />
               </ParameterType>
               <ParameterType Id="%AID%_PT-Text80Byte" Name="Text80Byte">
                 <TypeText SizeInBit="640" />
@@ -1038,7 +1037,7 @@
               <Parameter Id="%AID%_P-%TT%00167" Name="EnableSave" ParameterType="%AID%_PT-EnableSave" Text="Speichern von Werten in Hardware möglich?" Value="0" Access="None" />
               <Union SizeInBit="16">
                 <Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
-                <Parameter Id="%AID%_UP-%TT%00164" Name="VisibleChannels" ParameterType="%AID%_PT-LOGNumChannels" Offset="0" BitOffset="0" Text="Verfügbare Kanäle" Value="%LOG_NumChannelsDefault%" SuffixText=" von %N%" />
+                <Parameter Id="%AID%_UP-%TT%00164" Name="VisibleChannels" ParameterType="%AID%_PT-LOGNumChannels" Offset="0" BitOffset="0" Text="Verfügbare Kanäle" Value="%N%" Access="None" />
                 <Parameter Id="%AID%_UP-%TT%00138" Name="VacationKo" ParameterType="%AID%_PT-OnOffYesNo" Offset="1" BitOffset="0" Text="Urlaubsbehandlung aktivieren?" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%00139" Name="HolidayKo" ParameterType="%AID%_PT-OnOffYesNo" Offset="1" BitOffset="1" Text="Feiertage auf dem Bus verfügbar machen?" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%00140" Name="VacationRead" ParameterType="%AID%_PT-OnOffYesNo" Offset="1" BitOffset="2" Text="Nach Neustart Urlaubsinfo lesen?" Value="0" />
@@ -1154,7 +1153,7 @@
               <!-- <ParameterRef Id="%AID%_UP-%TT%00161_R-%TT%0016101" RefId="%AID%_UP-%TT%00161" /> -->
               <!-- <ParameterRef Id="%AID%_UP-%TT%00162_R-%TT%0016201" RefId="%AID%_UP-%TT%00162" /> -->
               <!-- <ParameterRef Id="%AID%_P-%TT%00163_R-%TT%0016301" RefId="%AID%_P-%TT%00163" /> -->
-              <ParameterRef Id="%AID%_UP-%TT%00164_R-%TT%0016401" RefId="%AID%_UP-%TT%00164" />
+              <!-- <ParameterRef Id="%AID%_UP-%TT%00164_R-%TT%0016401" RefId="%AID%_UP-%TT%00164" /> -->
               <!-- <ParameterRef Id="%AID%_UP-%TT%00165_R-%TT%0016501" RefId="%AID%_UP-%TT%00165" /> -->
               <ParameterRef Id="%AID%_P-%TT%00166_R-%TT%0016601" RefId="%AID%_P-%TT%00166" />
               <ParameterRef Id="%AID%_P-%TT%00167_R-%TT%0016701" RefId="%AID%_P-%TT%00167" />
@@ -1211,6 +1210,7 @@
               <ParameterBlock Id="%AID%_PB-nnn" Name="Settings" Text="Allgemein" ShowInComObjectTree="true" Icon="cog-outline" HelpContext="LOG-Dokumentation">
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Logikmodul" UIHint="Headline" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Version: %ModuleVersion%" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Urlaub" UIHint="Headline" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Zeitschaltuhren können auch Urlaubszeiten berücksichtigen. Damit das funktioniert, muss eine Urlaubszeit über das KO 15 dem Gerät mitgeteilt werden." />
                 <ParameterRefRef RefId="%AID%_UP-%TT%00138_R-%TT%0013801" HelpContext="%DOC%" IndentLevel="1" />
@@ -1220,6 +1220,7 @@
                     <ComObjectRefRef RefId="%AID%_O-%TT%00004_R-%TT%0000401" />
                   </when>
                 </choose>
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Feiertage" UIHint="Headline" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Das Gerät kann die berechneten Feiertage auch auf den Bus senden. Über das KO 16 wird mitgeteilt, welcher Feiertag 'Heute' ist, über KO 17 welcher Feiertag 'Morgen' ist. 0 bedeutet 'kein Feiertag'." />
                 <ParameterRefRef RefId="%AID%_UP-%TT%00139_R-%TT%0013901" HelpContext="%DOC%" IndentLevel="1" />
@@ -1374,7 +1375,7 @@
                 <!-- KO-Overview-Table -->
                 <op:include href="Logikmodul.overview-intko.templ.xml" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock[@Name='Channel-List']/*" type="template" prefix="LOG" IsInner="true" />
               </ParameterBlock>
-              <ParameterBlock Id="%AID%_PB-nnn" Text="Kanalauswahl" Icon="format-list-bulleted-type" HelpContext="LOG-Kanalauswahl">
+              <ParameterBlock Id="%AID%_PB-nnn" Text="Kanalauswahl" Icon="format-list-bulleted-type" HelpContext="BASE-ChannelSelect">
                 <!-- <ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" /> -->
                 <!-- <ParameterRefRef RefId="%AID%_UP-%TT%00164_R-%TT%0016401" HelpContext="BASE-Verfuegbare-Kanaele" IndentLevel="1" /> -->
                 <!-- <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" /> -->

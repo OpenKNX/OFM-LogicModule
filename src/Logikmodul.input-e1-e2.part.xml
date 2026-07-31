@@ -482,17 +482,14 @@
                     <choose ParamRefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301">
                       <when test="4">
                         <ParameterSeparator Id="%AID%_PS-nnn" Text="Bei TOR gilt: %TorText% ist Eingang %En% (ODER interner Eingang %En+2%)" UIHint="Information" />
-                        <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                       </when>
                       <when test="6">
                         <ParameterSeparator Id="%AID%_PS-nnn" Text="Bei SCHALTER gilt: %EinAusText%geschaltet wird mit Eingang %En% bzw. internem Eingang %En+2%. Dabei wird das Einschalttelegramm ausgewertet, wie bei 2 hörenden GA auf einem KO." UIHint="Information" />
-                        <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                       </when>
                     </choose>
                     <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP20+008%_R-%TT%%CC%%PPP20+008%01">
                       <when test="2">
                         <ParameterSeparator Id="%AID%_PS-nnn" Text="Hinweis: Egal wie der Eingangswert bestimmt wird (Vorbelegung, Bus, Intervall, Hysterese, ...), invertiert wird immer erst direkt bevor die Logik ausgeführt wird! Will man also beim invertierten Eingang eine Vorbelegung haben, wird auch diese invertiert!" UIHint="Information" />
-                        <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                       </when>
                       <when test="!=0">
                         <!-- choose KO -->

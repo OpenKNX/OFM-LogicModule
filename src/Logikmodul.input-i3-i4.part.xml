@@ -59,17 +59,15 @@
               <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP2+048%_R-%TT%%CC%%PPP2+048%01">
                 <when test="!=0">
                   <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%IntInput%In+2%" Text="Intern %In+2%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%%PPP1+162%_R-%TT%%CC%%PPP1+162%01" Icon="chevron-right-box-outline" HelpContext="Empty">
+                    <ParameterSeparator Id="%AID%_PS-nnn" Text="Definition interner Eingang %In+2%" UIHint="Headline" />
                     <choose ParamRefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301">
                       <when test="4">
                         <ParameterSeparator Id="%AID%_PS-nnn" Text="Bei TOR gilt: Dateneingang ist Eingang 1 (ODER interner Eingang 3), Toreingang ist Eingang 2 (ODER interner Eingang 4)" />
-                        <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                       </when>
                       <when test="6">
                         <ParameterSeparator Id="%AID%_PS-nnn" Text="Bei SCHALTER gilt: EINgeschaltet wird mit Eingang 1 bzw. interner Eingang 3, AUSgeschaltet wird mit Eingang 2 bzw. interner Eingang 4. Dabei wird das Einschalttelegramm ausgewertet, wie bei 2 hörenden GA auf einem KO." UIHint="Information" />
-                        <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                       </when>
                     </choose>
-                    <ParameterSeparator Id="%AID%_PS-nnn" Text="Definition interner Eingang %In+2%" UIHint="Headline" />
                     <ParameterRefRef RefId="%AID%_P-%TT%%CC%%PPP1+162%_R-%TT%%CC%%PPP1+162%01" HelpContext="%DOC%" IndentLevel="1" />
                     <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP1+522%_R-%TT%%CC%%PPP1+522%01" HelpContext="%DOC%" IndentLevel="1" />
                     <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP1+522%_R-%TT%%CC%%PPP1+522%01">
