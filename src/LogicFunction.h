@@ -31,6 +31,7 @@ class LogicFunction
     static double myIf2(double iCondition1, double iTrue1, double iCondition2, double iTrue2, double iFalse);
     static double myIf3(double iCondition1, double iTrue1, double iCondition2, double iTrue2, double iCondition3, double iTrue3, double iFalse);
     static double myRound(double iValue, double iPrecision);
+    static double myRnd(double iLower, double iUpper);
     static double myNan();
     static double myB1(double iE1, double iE2, double iOut);
     static double myB2(double iE1, double iE2, double iOut);

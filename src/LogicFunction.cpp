@@ -319,7 +319,7 @@ LogicValue LogicFunction::callFunction(uint8_t _channelIndex, uint8_t iId, PT_Lo
 }
 
 // new user formulas
-const uint8_t LogicFunction::sVarsSize = 36;
+const uint8_t LogicFunction::sVarsSize = 37;
 // bind variables and functions to parser
 te_variable LogicFunction::sVars[] = {
     {"e1", &e1},
@@ -329,6 +329,7 @@ te_variable LogicFunction::sVars[] = {
     {"if2", (double *)myIf2, TE_FUNCTION5},
     {"if3", (double *)myIf3, TE_FUNCTION7},
     {"round", (double *)myRound, TE_FUNCTION2},
+    {"rnd", (double *)myRnd, TE_FUNCTION2},
     {"nan", (double *)myNan, TE_FUNCTION0},
     {"b1", (double *)myB1, TE_FUNCTION3},
     {"b2", (double *)myB2, TE_FUNCTION3},
@@ -379,6 +380,13 @@ double LogicFunction::myIf3(double iCondition1, double iTrue1, double iCondition
 double LogicFunction::myRound(double iValue, double iPrecision)
 {
     return round(iValue * pow(10, iPrecision)) / pow(10, iPrecision);
+}
+
+double LogicFunction::myRnd(double iLower, double iUpper)
+{
+    if ((long)iUpper >= 0x7FFFFFFF) 
+        return iLower;
+    return random((long)iLower, (long)iUpper + 1); 
 }
 
 double LogicFunction::myNan()

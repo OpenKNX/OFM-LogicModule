@@ -65,7 +65,7 @@ class Logic : public OpenKNX::Module
     char gBuffer[14] = {0};
 
   private:
-    static const uint8_t helpCommandCount = 10;
+    static const uint8_t helpCommandCount = 1;
 
     static uint8_t sMagicWord[];
     static Timer &sTimer;

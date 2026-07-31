@@ -214,25 +214,14 @@ void Logic::processInputKo(GroupObject &iKo)
     }
 }
 
-const char* Logic::helpCommands[Logic::helpCommandCount] = {"logic help", "logic time", "logic easter", "logic sun", "logic sun+DDMM", "logic lim", "logic lim res", "logic chNN", "logic chNN lim", "logic chNN res"};
+const char* Logic::helpCommands[Logic::helpCommandCount] = {"logic"};
 
 void Logic::showHelp()
 {
     if (!knx.configured())
         return;
 
-    // TODO Common Time {{{
-    openknx.console.printHelpLine("logic time", "Print current time");
-    openknx.console.printHelpLine("logic easter", "Print calculated easter Sunday date");
-    openknx.console.printHelpLine("logic sun", "Print sunrise and sunset times");
-    openknx.console.printHelpLine("logic sun+DDMM", "Print sunrise/sunset at elevation +/- degree/minute");
-    // }}} TODO Common Time
-
-    openknx.console.printHelpLine("logic lim", "Show call limit counter max value and channel");
-    openknx.console.printHelpLine("logic lim res", "Reset all call limit counter");
-    openknx.console.printHelpLine("logic chNN", "List logic channel NN, i.e. logic ch05");
-    openknx.console.printHelpLine("logic chNN lim", "Show if this cannel reached call limit");
-    openknx.console.printHelpLine("logic chNN res", "Resets call limit counter for this channel");
+    openknx.console.printHelpLine("logic", "Logic module commands");
 }
 
 
@@ -243,7 +232,47 @@ bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
     if (!knx.configured())
         return lResult;
 
-    if (iCmd.substr(0, 6) != "logic " || iCmd.length() < 7)
+    if (iCmd.substr(0, 5) != "logic")
+        return lResult;
+
+    if (iCmd == "logic")
+    {
+        // TODO Common Time {{{
+        openknx.console.printHelpLine("logic time", "Print current time");
+        openknx.console.printHelpLine("logic easter", "Print calculated easter Sunday date");
+        openknx.console.printHelpLine("logic sun", "Print sunrise and sunset times");
+        openknx.console.printHelpLine("logic sun+DDMM", "Print sunrise/sunset at elevation +/- degree/minute");
+        // }}} TODO Common Time
+
+        openknx.console.printHelpLine("logic lim", "Show call limit counter max value and channel");
+        openknx.console.printHelpLine("logic lim res", "Reset all call limit counter");
+        openknx.console.printHelpLine("logic chNN", "List logic channel NN, i.e. logic ch05");
+        openknx.console.printHelpLine("logic chNN lim", "Show if this cannel reached call limit");
+        openknx.console.printHelpLine("logic chNN res", "Resets call limit counter for this channel");
+        if (iDebugKo)
+        {
+            openknx.console.writeDiagnoseKo("-> time");
+            openknx.console.writeDiagnoseKo(""); // workaround, on mass output each 2nd line ist skipped
+            openknx.console.writeDiagnoseKo("-> easter");
+            openknx.console.writeDiagnoseKo("");
+            openknx.console.writeDiagnoseKo("-> sun");
+            openknx.console.writeDiagnoseKo("");
+            openknx.console.writeDiagnoseKo("-> sun[+-]DDMM");
+            openknx.console.writeDiagnoseKo("");
+            openknx.console.writeDiagnoseKo("-> lim");
+            openknx.console.writeDiagnoseKo("");
+            openknx.console.writeDiagnoseKo("-> lim res");
+            openknx.console.writeDiagnoseKo("");
+            openknx.console.writeDiagnoseKo("-> chNN");
+            openknx.console.writeDiagnoseKo("");
+            openknx.console.writeDiagnoseKo("-> chNN lim");
+            openknx.console.writeDiagnoseKo("");
+            openknx.console.writeDiagnoseKo("-> chNN res");
+        }
+        return true;
+    }
+
+    if (iCmd.length() < 7 || iCmd.substr(5, 1) != " ")
         return lResult;
 
     if (iCmd.length() >= 10 && iCmd.substr(6, 2) == "ch")
@@ -351,31 +380,6 @@ bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
             openknx.console.writeDiagnoseKo("Reset all");
         lResult = true;
     }
-    else if (iCmd.length() >= 7 && iCmd.substr(6, 1) == "h") // help
-    {
-        showHelp();
-        if (iDebugKo)
-        {
-            openknx.console.writeDiagnoseKo("-> time");
-            openknx.console.writeDiagnoseKo(""); // workaround, on mass output each 2nd line ist skipped
-            openknx.console.writeDiagnoseKo("-> easter");
-            openknx.console.writeDiagnoseKo("");
-            openknx.console.writeDiagnoseKo("-> sun");
-            openknx.console.writeDiagnoseKo("");
-            openknx.console.writeDiagnoseKo("-> sun[+-]DDMM");
-            openknx.console.writeDiagnoseKo("");
-            openknx.console.writeDiagnoseKo("-> lim");
-            openknx.console.writeDiagnoseKo("");
-            openknx.console.writeDiagnoseKo("-> lim res");
-            openknx.console.writeDiagnoseKo("");
-            openknx.console.writeDiagnoseKo("-> chNN");
-            openknx.console.writeDiagnoseKo("");
-            openknx.console.writeDiagnoseKo("-> chNN lim");
-            openknx.console.writeDiagnoseKo("");
-            openknx.console.writeDiagnoseKo("-> chNN res");
-        }
-        lResult = true;
-    }
     return lResult;
 }
 
@@ -414,6 +418,7 @@ void Logic::debug()
 
 void Logic::setup()
 {
+    randomSeed(analogRead(A0));
     sTimer.setup();
 
     // Number of available channels is the minimum of configured and available channels

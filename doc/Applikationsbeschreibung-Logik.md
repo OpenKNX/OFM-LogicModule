@@ -80,6 +80,11 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 
 Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer das Gesamtdokument lesen muss, um Neuerungen zu erfahren.
 
+17.07.2026: Firmware 4.4.1, Applikation 4.4:
+
+* NEU: In Benutzerformeln kann jetzt eine Zufallsfunktion genutzt werden, siehe [Funktionen](#funktionen)
+- NEU: Die Hilfe in der Konsole ist jetzt kompakter. In der allgemeinen Hilfe erscheint jetzt nur 'logic'. Wenn man logic in der Konsole eintippt, bekommt man die Hilfe für die einzelnen Logik-Kommandos.
+
 12.06.2026: Firmware 4.4.0, Applikation 4.4:
 
 * NEU: Ein suspendierter Kanal zeigt dies jetzt in der Liste der Kanäle an. Dies erhöht die Wahrnehmung von suspendierten Kanälen und vereinfacht die Fehlersuche aufgrund von suspendierten Kanälen.
@@ -685,6 +690,7 @@ Folgende Funktionen sind verfügbar:
 * 'atan(x)' - Arcustangens
 
 * 'nan()' - Not-A-Number (liefert ungültigen Funktionswert)
+* 'rnd(x,y)' - Liefert eine ganzzahlige Zufallszahl im Intervall [x,y]. rnd(1,10) also Zufallszahlen von 1 bis 10 (einschließlich).
 
 <!-- DOC HelpContext="Übersicht interne KO" -->
 ## **Übersicht interne Verknüpfungen**
