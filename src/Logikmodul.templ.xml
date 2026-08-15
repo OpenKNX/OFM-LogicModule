@@ -742,7 +742,7 @@
           </Static>
           <Dynamic>
             <ChannelIndependentBlock>
-              <ParameterBlock Id="%AID%_PB-nnn" Name="ChannelSelection">
+              <ParameterBlock Id="%AID%_PB-nnn" Name="Settings">
                 <ParameterBlock Id="%AID%_PB-nnn" Inline="true" Layout="Grid">
                   <Rows>
                     <Row Id="%AID%_PB-nnn_R-1" />
@@ -757,7 +757,7 @@
                   <ParameterRefRef RefId="%AID%_P-%TT%%CC%001_R-%TT%%CC%00101" Cell="1,3" HelpContext="BASE-ChannelName" />
                 </ParameterBlock>
               </ParameterBlock>
-              <ParameterBlock Id="%AID%_PB-nnn" Name="ChannelDefinition">
+              <ParameterBlock Id="%AID%_PB-nnn" Name="Channel">
                 <choose ParamRefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301">
                   <when test="&gt;0">
                     <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%Logic" Text="Logik %C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%999_R-%TT%%CC%99901" Icon="gate-nand" HelpContext="Empty" ShowInComObjectTree="true">

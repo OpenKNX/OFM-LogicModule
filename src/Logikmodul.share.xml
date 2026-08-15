@@ -1392,10 +1392,10 @@
                   <ParameterSeparator Id="%AID%_PS-nnn" Cell="1,2" UIHint="Headline" Text="Logik-Operation" />
                   <ParameterSeparator Id="%AID%_PS-nnn" Cell="1,3" UIHint="Headline" Text="Beschreibung" />
                 </ParameterBlock>
-                <op:include href="Logikmodul.templ.xml" xpath="//ApplicationProgram/Dynamic/ChannelIndependentBlock/ParameterBlock[@Name='ChannelSelection']/*" type="template" prefix="LOG" IsInner="true" />
+                <op:include href="Logikmodul.templ.xml" xpath="//ApplicationProgram/Dynamic/ChannelIndependentBlock/ParameterBlock[@Name='Settings']/*" type="template" prefix="LOG" IsInner="true" />
               </ParameterBlock>
               <!-- followed by all logic channels -->
-              <op:include href="Logikmodul.templ.xml" xpath="//ApplicationProgram/Dynamic/ChannelIndependentBlock/ParameterBlock[@Name='ChannelDefinition']/*" type="template" prefix="LOG" IsInner="true" />
+              <op:include href="Logikmodul.templ.xml" xpath="//ApplicationProgram/Dynamic/ChannelIndependentBlock/ParameterBlock[@Name='Channel']/*" type="template" prefix="LOG" IsInner="true" />
             </Channel>
           </Dynamic>
         </ApplicationProgram>
