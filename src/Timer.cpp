@@ -131,7 +131,7 @@ bool Timer::loop()
     return lMinuteChanged;
 }
 
-// TODO: Check Migration to Common Time / SunCalculation
+// TODO: Fully migrate to Common Time / SunCalculation, but keep in mind we "time travel" in LOG for restore
 void Timer::convertToLocalTime(double iTime, sTime *eTime)
 {
     OpenKNX::TimeOnly localTime = OpenKNX::DateTime(
