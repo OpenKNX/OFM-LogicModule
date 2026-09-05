@@ -232,14 +232,14 @@ GroupObject *LogicChannel::getKo(uint8_t iIOIndex)
     switch (lAbsRel)
     {
         case PT_KORelInput::Absolute:
-            if (lExternalAccess > 0 && lExternalAccess < MAIN_MaxKoNumber)
+            if (lExternalAccess > 0 && lExternalAccess <= MAIN_MaxKoNumber)
                 lKoNumber = lExternalAccess;
             break;
 
         case PT_KORelInput::Relative:
         {
             int16_t lNewKoNumber = lKoNumber + lExternalAccess;
-            if (lNewKoNumber > 0 && lNewKoNumber < MAIN_MaxKoNumber)
+            if (lNewKoNumber > 0 && lNewKoNumber <= MAIN_MaxKoNumber)
                 lKoNumber = lNewKoNumber;
         }
         break;
