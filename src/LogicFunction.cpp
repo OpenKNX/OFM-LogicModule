@@ -165,22 +165,28 @@ LogicValue LogicFunction::nativeSubtractE1MinusE2(uint8_t _channelIndex, PT_Logi
 
 LogicValue LogicFunction::nativeMinimumA(uint8_t _channelIndex, PT_LogicDpt DptE1, LogicValue E1, PT_LogicDpt DptE2, LogicValue E2, PT_LogicDpt *DptOut, LogicValue iOld)
 {
-    if (E1 < E2 && E1 < iOld)
-        return E1;
-    else if (E2 < E1 && E2 < iOld)
-        return E2;
-    else
-        return iOld;
+    LogicValue lResult = iOld;
+
+    if (E1 < lResult)
+        lResult = E1;
+
+    if (E2 < lResult)
+        lResult = E2;
+
+    return lResult;
 }
 
 LogicValue LogicFunction::nativeMaximumA(uint8_t _channelIndex, PT_LogicDpt DptE1, LogicValue E1, PT_LogicDpt DptE2, LogicValue E2, PT_LogicDpt *DptOut, LogicValue iOld)
 {
-    if (E1 > E2 && E1 > iOld)
-        return E1;
-    else if (E2 > E1 && E2 > iOld)
-        return E2;
-    else
-        return iOld;
+    LogicValue lResult = iOld;
+
+    if (E1 > lResult)
+        lResult = E1;
+
+    if (E2 > lResult)
+        lResult = E2;
+
+    return lResult;
 }
 
 LogicValue LogicFunction::nativeLShiftE1(uint8_t _channelIndex, PT_LogicDpt DptE1, LogicValue E1, PT_LogicDpt DptE2, LogicValue E2, PT_LogicDpt *DptOut, LogicValue iOld)
