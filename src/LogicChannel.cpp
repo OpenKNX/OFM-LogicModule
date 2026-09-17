@@ -318,27 +318,21 @@ void LogicChannel::knxWrite(uint8_t iIOIndex, KNXValue &iValue, bool iOn, bool i
 {
     PT_SendOnChange lSendOnChanged = ParamLOG_fOSendOnChange;
     GroupObject *lKo = getKo(iIOIndex);
-    bool lChanged = false;
     Dpt &lDpt = getKoDPT(iIOIndex, true);
     if (lSendOnChanged == PT_SendOnChange::Nur_geaenderte_Werte_senden)
-        lChanged = lKo->valueNoSendCompare(iValue, lDpt);
+        lKo->valueCompare(iValue, lDpt);
     else
         lKo->value(iValue, lDpt);
-    if (lChanged)
-        lKo->objectWritten();
     if (iAdditional)
     {
         uint16_t lKoNumber = checkAdditionalWrite(iOn);
         if (lKoNumber > 0)
         {
             lKo = &knx.getGroupObject(lKoNumber);
-            lChanged = false;
             if (lSendOnChanged == PT_SendOnChange::Nur_geaenderte_Werte_senden)
-                lChanged = lKo->valueNoSendCompare(iValue, lDpt);
+                lKo->valueCompare(iValue, lDpt);
             else
                 lKo->value(iValue, lDpt);
-            if (lChanged)
-                lKo->objectWritten();
         }
     }
 }
@@ -566,13 +560,13 @@ LogicValue LogicChannel::getInputValue(uint8_t iIOIndex, PT_LogicDpt *eDpt)
         // timer value is handled as scene, of output type is scene
         if (ParamLOG_fODpt == PT_LogicDpt::DPT_17)
         {
-            *eDpt = PT_LogicDpt::DPT_17;      
+            *eDpt = PT_LogicDpt::DPT_17;
             LogicValue lValue = (uint8_t)(pCurrentTimerValueNum > 0 ? pCurrentTimerValueNum - 1 : 0);
             return lValue;  
         } 
         else
         {
-            *eDpt = PT_LogicDpt::DPT_5;      
+            *eDpt = PT_LogicDpt::DPT_5;
             LogicValue lValue = pCurrentTimerValueNum;
             return lValue;  
         }
@@ -2427,7 +2421,7 @@ void LogicChannel::prepareChannel()
                 else
                     lParInputEeprom = false;
             }
-            if (!lParInputEeprom) 
+            if (!lParInputEeprom)
                 switch (lParInput)
                 {
                     case PT_InputDefault::Bus:
@@ -2545,7 +2539,7 @@ void LogicChannel::prepareChannel()
 }
 
 void LogicChannel::prepareInternalInput(uint8_t iIOindex, uint16_t iParamIndex)
-{  
+{
     // first check, if channel is active
     if (ParamLOG_fLogic == PT_Logic::AUS || ParamLOG_fDisable)
         return;
@@ -2555,7 +2549,7 @@ void LogicChannel::prepareInternalInput(uint8_t iIOindex, uint16_t iParamIndex)
     {
         // input is active, we set according flag
         pValidActiveIO |= iIOindex << 4;
-        PT_InternalInputType lInputType = (PT_InternalInputType)((getByteParam(iParamIndex) & LOG_fI1InternalInputTypeMask) >> LOG_fI1InternalInputTypeShift); 
+        PT_InternalInputType lInputType = (PT_InternalInputType)((getByteParam(iParamIndex) & LOG_fI1InternalInputTypeMask) >> LOG_fI1InternalInputTypeShift);
         // check if internal input is bound to a state channel
         if (lInputType == PT_InternalInputType::Statuskanal)
         {
