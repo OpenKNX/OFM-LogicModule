@@ -849,7 +849,7 @@ bool LogicChannel::isInputActive(uint8_t iIOIndex)
     {
         // input might be also activated by a delta input converter, means from the other input
         PT_InputConv lConverter = (iIOIndex == IO_Input2) ? ParamLOG_fE1Convert : ParamLOG_fE2Convert;
-        lIsActive = (lConverter < PT_InputConv::Einzelwerte) && (lIsActive & 1);
+        lIsActive = (lConverter < PT_InputConv::Einzelwerte) && (((uint8_t)lConverter & 1) != 0);
     }
     return (lIsActive > 0);
 }
