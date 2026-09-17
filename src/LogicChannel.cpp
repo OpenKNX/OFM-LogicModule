@@ -1856,42 +1856,37 @@ void LogicChannel::processOutputFilter()
 // starts On-Off-Repeat
 void LogicChannel::startOnOffRepeat(bool iOutput)
 {
+    
     // with repeat, we first process the output and then we repeat the signal
-    // if repeat is already active, we wait until next cycle
+    // if repeat is already active, we reset the cycle
     if (iOutput)
     {
-        if ((pCurrentPipeline & PIP_ON_REPEAT) == 0)
+        if (ParamLOG_fORepeat && ParamLOG_fORepeatOnTimeMS > 0)
         {
             pRepeatOnOffDelay = millis();
             pCurrentPipeline &= ~PIP_OFF_REPEAT;
-            processLock(iOutput);
-            if (ParamLOG_fORepeat && ParamLOG_fORepeatOnTimeMS > 0)
-            {
-                pCurrentPipeline |= PIP_ON_REPEAT;
+            pCurrentPipeline |= PIP_ON_REPEAT;
 #if LOGIC_TRACE
-                if (debugFilter())
-                    logChannel("startOnRepeat: Every %s", logTimeBase(LOG_fORepeatOnTime));
+            if (debugFilter())
+                logChannel("startOnRepeat: Every %s", logTimeBase(LOG_fORepeatOnTime));
 #endif
-            }
         }
     }
     else
     {
-        if ((pCurrentPipeline & PIP_OFF_REPEAT) == 0)
+        if (ParamLOG_fORepeat && ParamLOG_fORepeatOffTimeMS > 0)
         {
             pRepeatOnOffDelay = millis();
             pCurrentPipeline &= ~PIP_ON_REPEAT;
-            processLock(iOutput);
-            if (ParamLOG_fORepeat && ParamLOG_fORepeatOffTimeMS > 0)
-            {
-                pCurrentPipeline |= PIP_OFF_REPEAT;
+            pCurrentPipeline |= PIP_OFF_REPEAT;
 #if LOGIC_TRACE
-                if (debugFilter())
-                    logChannel("startOffRepeat: Every %s", logTimeBase(LOG_fORepeatOffTime));
+            if (debugFilter())
+                logChannel("startOffRepeat: Every %s", logTimeBase(LOG_fORepeatOffTime));
 #endif
-            }
         }
     }
+    // ensure, that the current trigger is forwarded through the pipeline
+    processLock(iOutput);
 }
 
 void LogicChannel::processOnOffRepeat()

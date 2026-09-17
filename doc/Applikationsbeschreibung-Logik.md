@@ -80,6 +80,10 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 
 Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer das Gesamtdokument lesen muss, um Neuerungen zu erfahren.
 
+25.08.2026: Firmware 4.4.2, Applikation 4.4:
+
+* FIX: Das Verhalten vom "Zyklisch senden" wurde leicht angepasst: Wenn während eines Zyklus ein erneutes Telegramm ankommt, dass nicht durch den Wiederholungsfilter gefiltert wurde, wird das Telegramm sofort gesendet.
+
 17.07.2026: Firmware 4.4.1, Applikation 4.4:
 
 * NEU: In Benutzerformeln kann jetzt eine Zufallsfunktion genutzt werden, siehe [Funktionen](#funktionen)
@@ -88,7 +92,9 @@ Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer d
 12.06.2026: Firmware 4.4.0, Applikation 4.4:
 
 * NEU: Ein suspendierter Kanal zeigt dies jetzt in der Liste der Kanäle an. Dies erhöht die Wahrnehmung von suspendierten Kanälen und vereinfacht die Fehlersuche aufgrund von suspendierten Kanälen.
-* NEU: Kanäle werden jetzt auf einer eigenen Seite "Kanalauswahl" aktiviert. Deaktivierte Kanäle sind jetzt nicht mehr links im Baum sichtbar und erhöhen so die Übersichtlichkeit.
+* NEU: Kanäle werden jetzt auf einer eigenen Seite "Kanalauswahl" aktiviert. Deaktivierte Kanäle sind jetzt nicht mehr links im Baum sichtbar und erhöhen so die Übersichtlichkeit und die Rendering-Geschwindigkeit der ETS. 
+* NEU: Durch die neue Kanalauswahl wird die bisherige Eingabe "Verfügbare Kanäle" überflüssig.
+* NEU: Es können jetzt auch beliebige Kanäle deaktiviert und damit ausgeblendet werden. Bisher wurden nur Kanäle ausgeblendet, die oberhalb der Angabe "Verfügbare Kanäle" lagen.
 
 11.05.2026: Firmware 4.3.0, Applikation 4.3:
 
@@ -763,7 +769,7 @@ Details kann man unter [Kommunikationsobjekt für Ausgang](#kommunikationsobjekt
 ## **Kanalauswahl**
 
 Auf dieser Seite werden alle zur Verfügung stehenden Kanäle in einer Tabelle angezeigt. Pro Zeile kann ein Kanal aktiviert werden, indem dessen Logik-Operation ausgewählt wird. Zusätzlich kann der Kanal auch benannt werden.
-Wird als Logik-Operation "Deaktivert" gewählt, wird der ganze Kanal deaktiviert.
+Wird als Logik-Operation "Deaktiviert" gewählt, wird der ganze Kanal deaktiviert.
 
 ## **Logiken**
 
@@ -2233,6 +2239,10 @@ Man kann sowohl das EIN- wie auch das AUS-Signal in unterschiedlichen Zeitinterv
 Man kann natürlich auch nur das EIN- oder das AUS-Signal wiederholen lassen.
 
 In dem oben dargestellten Bildschirmausschnitt würde das EIN-Signal alle 15 Minuten wiederholt werden, das AUS-Signal jede Stunde.
+
+Jedes Telegramm, dass durch den Wiederholungsfilter gelangt, wird sofort gesendet und stößt den Wiederholungszyklus an, sofern dieser definiert ist - getrennt betrachtet für EIN und AUS. Falls bereits ein Zyklus läuft, wird dieser zurückgesetzt, da ja gerade ein Telegramm gesendet wurde.
+
+Falls die sofortige Aussendung während eines Zyklus unerwünscht ist, kann man das mit dem Wiederholungsfilter verhindern.
 
 <!-- DOC -->
 #### **EIN-Telegramm wird wiederholt alle**
