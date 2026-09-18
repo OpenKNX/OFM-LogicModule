@@ -319,7 +319,6 @@ LogicValue LogicFunction::callFunction(uint8_t _channelIndex, uint8_t iId, PT_Lo
 }
 
 // new user formulas
-const uint8_t LogicFunction::sVarsSize = 37;
 // bind variables and functions to parser
 te_variable LogicFunction::sVars[] = {
     {"e1", &e1},
@@ -361,6 +360,9 @@ te_variable LogicFunction::sVars[] = {
     {"b28", (double *)myB28, TE_FUNCTION3},
     {"b29", (double *)myB29, TE_FUNCTION3},
     {"b30", (double *)myB30, TE_FUNCTION3}};
+
+const uint8_t LogicFunction::sVarsSize =
+    sizeof(LogicFunction::sVars) / sizeof(LogicFunction::sVars[0]);
 
 double LogicFunction::myIf(double iCondition, double iTrue, double iFalse)
 {
