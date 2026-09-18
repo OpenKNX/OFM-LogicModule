@@ -80,6 +80,10 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 
 Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer das Gesamtdokument lesen muss, um Neuerungen zu erfahren.
 
+(NÄCHSTES RELEASE)
+
+* UPDATE: Benutzerformeln wurden aktualisiert auf TinyExpr v1.1.1 https://github.com/codeplea/tinyexpr/releases#release-v1.1.1
+
 25.08.2026: Firmware 4.4.2, Applikation 4.4:
 
 * FIX: Das Verhalten vom "Zyklisch senden" wurde leicht angepasst: Wenn während eines Zyklus ein erneutes Telegramm ankommt, dass nicht durch den Wiederholungsfilter gefiltert wurde, wird das Telegramm sofort gesendet.
