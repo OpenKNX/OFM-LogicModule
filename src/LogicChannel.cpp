@@ -30,10 +30,6 @@ LogicChannel::LogicChannel(uint8_t iChannelNumber)
     pTriggerIO = 0;
     pCurrentIn = BIT_INITIAL_GATE;
     pCurrentOut = BIT_OUTPUT_INITIAL; // tri-state output, at the beginning we are undefined
-    pLogPrefix[0] = 'C';
-    pLogPrefix[1] = '0' + (iChannelNumber + 1) / 10;
-    pLogPrefix[2] = '0' + (iChannelNumber + 1) % 10;
-    pLogPrefix[3] = 0;
 }
 
 LogicChannel::~LogicChannel()
@@ -43,11 +39,6 @@ LogicChannel::~LogicChannel()
 /******************************
  * Debug helper
  * ***************************/
-
-const std::string LogicChannel::logPrefix()
-{
-    return std::string(pLogPrefix);
-}
 
 #if LOGIC_TRACE
 char *LogicChannel::logTimeBase(uint16_t iParamIndex)
