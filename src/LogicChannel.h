@@ -230,8 +230,6 @@ class LogicChannel : public OpenKNX::Channel
     static TimerRestore &sTimerRestore;
 
     // instance
-    char pLogPrefix[4];
-    virtual const std::string logPrefix() override;
     /* Runtime information per channel */
     uint8_t pTriggerIO;        // Bitfield: Which input (0-3) triggered processing, Bit 4-7 are previous input (currently just internal inputs evaluated)
     uint8_t pValidActiveIO;    // Bitfield: validity flags for input (0-3) values and active inputs (4-7)
