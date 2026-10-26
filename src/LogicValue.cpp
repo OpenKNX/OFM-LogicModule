@@ -556,15 +556,15 @@ LogicValue LogicValue::operator-(const int32_t value)
         case IntType:
             // case LongType:
             lValue._type = _type;
-            setInternal(intValue() - value);
+            lValue.setInternal(intValue() - value);
             return lValue;
         case FloatType:
             lValue._type = _type;
-            setInternal(floatValue() - value);
+            lValue.setInternal(floatValue() - value);
             return lValue;
         case DoubleType:
             lValue._type = _type;
-            setInternal(doubleValue() - value);
+            lValue.setInternal(doubleValue() - value);
             return lValue;
     }
     return lValue;
@@ -587,15 +587,15 @@ LogicValue LogicValue::operator-(const float value)
         case IntType:
             // case LongType:
             lValue._type = _type;
-            setInternal(intValue() - value);
+            lValue.setInternal(intValue() - value);
             return lValue;
         case FloatType:
             lValue._type = _type;
-            setInternal(floatValue() - value);
+            lValue.setInternal(floatValue() - value);
             return lValue;
         case DoubleType:
             lValue._type = _type;
-            setInternal(doubleValue() - value);
+            lValue.setInternal(doubleValue() - value);
             return lValue;
     }
     return lValue;

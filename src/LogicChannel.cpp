@@ -1205,6 +1205,11 @@ void LogicChannel::processConvertInput(uint8_t iIOIndex)
                 break;
         }
     }
+    // at this point we check behaviour of uninitialized inputs
+    if (lValue1In.isInitial()) {
+        PT_InputDefault lInputDefault = ParamLOG_fE1DefaultExt;
+        if (lInputDefault > PT_InputDefault::None) lValueOut = (lInputDefault == PT_InputDefault::On);
+    }
     // remove processing flag from pipeline
     pCurrentPipeline &= (iIOIndex == IO_Input1) ? ~PIP_CONVERT_INPUT1 : ~PIP_CONVERT_INPUT2;
     // start logic processing for this input
@@ -1861,10 +1866,11 @@ void LogicChannel::startOnOffRepeat(bool iOutput)
     // if repeat is already active, we reset the cycle
     if (iOutput)
     {
+        // turn off the  off-repeat
+        pCurrentPipeline &= ~PIP_OFF_REPEAT;
         if (ParamLOG_fORepeat && ParamLOG_fORepeatOnTimeMS > 0)
         {
             pRepeatOnOffDelay = millis();
-            pCurrentPipeline &= ~PIP_OFF_REPEAT;
             pCurrentPipeline |= PIP_ON_REPEAT;
 #if LOGIC_TRACE
             if (debugFilter())
@@ -1874,10 +1880,11 @@ void LogicChannel::startOnOffRepeat(bool iOutput)
     }
     else
     {
+        // turn of the on-repeat
+        pCurrentPipeline &= ~PIP_ON_REPEAT;
         if (ParamLOG_fORepeat && ParamLOG_fORepeatOffTimeMS > 0)
         {
             pRepeatOnOffDelay = millis();
-            pCurrentPipeline &= ~PIP_ON_REPEAT;
             pCurrentPipeline |= PIP_OFF_REPEAT;
 #if LOGIC_TRACE
             if (debugFilter())
@@ -2048,15 +2055,15 @@ void LogicChannel::processInternalInputs(uint8_t iChannelIndex, bool iValue)
         }
     }
     // Internal lock input
-    bool lLockEnabled = ParamLOG_fOLockEnabled;
-    if (lLockEnabled)
+    PT_InputEnable lLockEnabled = ParamLOG_fOLockEnabled;
+    if (lLockEnabled > PT_InputEnable::Inactive)
     {
         int8_t lLockFunction = ParamLOG_fOLockFunction;
         if (ParamLOG_fOLockKind == PT_KORelInput::Relative)
             lLockFunction += _channelIndex + 1;
         if (lLockFunction == (iChannelIndex + 1) && lLockFunction != _channelIndex + 1)
         {
-            startLock(iValue);
+            startLock(lLockEnabled == PT_InputEnable::ActiveNormal ? iValue : !iValue);
         }
     }
 }
@@ -2143,7 +2150,7 @@ bool LogicChannel::processCommand(const std::string iCmd, bool iDebugKo)
 // save output value
 void LogicChannel::saveOutput(bool iValue)
 {
-    logDebugP("Save output value %i", iValue);
+    // logDebugP("Save output value %i", iValue);
 
     pCurrentOut &= ~(BIT_OUTPUT_PREVIOUS | BIT_OUTPUT_INITIAL); // output is not initial anymore
     if (iValue)
@@ -2301,14 +2308,17 @@ void LogicChannel::restore(uint8_t iIOIndex)
         if (!checkDpt(iIOIndex, lDpt))
             return;
 
-        logInfoP("      Input%i:  DPT %i  DATA: %02X %02X %02X %02X", iIOIndex, lDpt, lValue[0], lValue[1], lValue[2], lValue[3]);
+        logInfoP("      Input%i:  DPT: %s  DATA: %02X %02X %02X %02X", iIOIndex, Logic::toString(lDpt), lValue[0], lValue[1], lValue[2], lValue[3]);
 
         GroupObject *lKo = getKo(iIOIndex);
         lKo->recalculateDataLength(Logic::getDPT(lDpt));
         for (uint8_t lIndex = 0; lIndex < lKo->valueSize(); lIndex++)
             lKo->valueRef()[lIndex] = lValue[lIndex];
-
         lKo->commFlag(Ok);
+        if (lDpt == PT_LogicDpt::DPT_9 || lDpt == PT_LogicDpt::DPT_14)
+            logDebugP("       Restored Input%i: Value: %f", iIOIndex, (float)lKo->value(Logic::getDPT(lDpt)));
+        else
+            logDebugP("       Restored Input%i: Value: %i", iIOIndex, (int32_t)lKo->value(Logic::getDPT(lDpt)));
     }
 }
 
@@ -2444,7 +2454,8 @@ void LogicChannel::prepareChannel()
                         pValidActiveIO |= BIT_EXT_INPUT_1;
                         // for Formulas, we initialize the KO, too
                         // lKo->commFlag(Ok);
-                        lKo->value(false, getKoDPT(IO_Input1));
+                        // lKo->value(false, getKoDPT(IO_Input1));
+                        processInput(IO_Input1);
                         break;
 
                     case PT_InputDefault::On:
@@ -2454,7 +2465,8 @@ void LogicChannel::prepareChannel()
                         pValidActiveIO |= BIT_EXT_INPUT_1;
                         // for Formulas, we initialize the KO, too
                         // lKo->commFlag(Ok);
-                        lKo->value(true, getKoDPT(IO_Input1));
+                        // lKo->value(true, getKoDPT(IO_Input1));
+                        processInput(IO_Input2);
                         break;
 
                     default:

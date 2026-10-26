@@ -7,6 +7,7 @@ double LogicFunction::e2 = 0;
 double LogicFunction::out = 0;
 uint8_t LogicFunction::sRecursionCounter = 0;
 char LogicFunction::sFormulaBuffer[100] = {0};
+te_expr *LogicFunction::sCompiledFormula[30] = {nullptr};
 
 // native functions, implemented as a simple example how to use user functions
 LogicValue LogicFunction::nativeAdd(uint8_t _channelIndex, PT_LogicDpt DptE1, LogicValue E1, PT_LogicDpt DptE2, LogicValue E2, PT_LogicDpt *DptOut, LogicValue iOld)
@@ -577,6 +578,26 @@ uint8_t LogicFunction::toLower(const char *iSource, char *iTarget)
     return lCharIndex;
 }
 
+void LogicFunction::setupFormulas()
+{
+    for (uint8_t i = 0; i < 30; i++)
+    {
+        bool lActive = knx.paramByte(
+            LOG_UserFormula1Active + i * (LOG_UserFormula2Active - LOG_UserFormula1Active))
+            & LOG_UserFormula1ActiveMask;
+        if (!lActive)
+            continue;
+        const char *lEtsFormula = (char *)knx.paramData(LOG_UserFormula1 + i * (LOG_UserFormula2 - LOG_UserFormula1));
+        toLower(lEtsFormula, sFormulaBuffer);
+        int lError;
+        sCompiledFormula[i] = te_compile(sFormulaBuffer, sVars, sVarsSize, &lError);
+        if (sCompiledFormula[i] == nullptr)
+            logDebug(logPrefix(i), "Compile error at position %i: %.99s", lError, lEtsFormula);
+        else
+            logDebug(logPrefix(i), "Compiled: %.99s", lEtsFormula);
+    }
+}
+
 LogicValue LogicFunction::callUserFormula(uint8_t iFormulaIndex, double iE1, double iE2, double iOut)
 {
     double lResult = 0;
@@ -585,15 +606,7 @@ LogicValue LogicFunction::callUserFormula(uint8_t iFormulaIndex, double iE1, dou
     sRecursionCounter++;
     if (sRecursionCounter <= NUM_RECURSION_DEPTH)
     {
-        const char *lEtsFormula = (char *)knx.paramData(LOG_UserFormula1 + iFormulaIndex * (LOG_UserFormula2 - LOG_UserFormula1));
-        logDebug(logPrefix(iFormulaIndex), "Evaluating: %.99s", lEtsFormula);
-        // char lFormula[100] = {0};
-        toLower(lEtsFormula, sFormulaBuffer);
-
-        // parse formula
-        int lError;
-        te_expr *lParsedFormula = te_compile(sFormulaBuffer, sVars, sVarsSize, &lError);
-
+        te_expr *lParsedFormula = sCompiledFormula[iFormulaIndex];
         if (lParsedFormula)
         {
             e1 = iE1;
@@ -602,14 +615,9 @@ LogicValue LogicFunction::callUserFormula(uint8_t iFormulaIndex, double iE1, dou
             logDebug(logPrefix(iFormulaIndex), "Values: e1=%f, e2=%f, a=%f", e1, e2, out);
             lResult = te_eval(lParsedFormula);
             logDebug(logPrefix(iFormulaIndex), "Result: %f", lResult);
-            te_free(lParsedFormula);
         }
         else
         {
-            /* Show the user where the error is at. */
-            // const char lErrorChar = lEtsFormula[lError - 1];
-            // lFormula[lError - 1] = 0;
-            logDebug(logPrefix(iFormulaIndex), "Error near '%c': %.*s -->%c<-- %.*s", lEtsFormula[lError - 1], lError - 1, lEtsFormula, lEtsFormula[lError - 1], 99 - lError, lEtsFormula + lError);
             lFailed = true;
         }
     }

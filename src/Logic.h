@@ -34,7 +34,8 @@ class Logic : public OpenKNX::Module
   ~Logic();
 
     static Dpt &getDPT(PT_LogicDpt iDptIndex);
-    
+    static const char* toString(PT_LogicDpt iDptIndex);
+
     // instance
     void addKoLookup(uint16_t iKoNumber, uint8_t iChannelId, uint8_t iIOIndex);
     bool getKoLookup(uint16_t iKoNumber, sKoLookup **iKoLookup = nullptr);

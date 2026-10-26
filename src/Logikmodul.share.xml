@@ -126,6 +126,13 @@
                   <Enumeration Text="invertiert aktiv" Value="2" Id="%ENID%" op:headerName="ActiveInverted" />
                 </TypeRestriction>
               </ParameterType>
+              <ParameterType Id="%AID%_PT-InputEnableLock" Name="InputEnableLock" op:headerExport="base" op:headerName="InputEnable" >
+                <TypeRestriction Base="Value" SizeInBit="2">
+                  <Enumeration Text="inaktiv" Value="0" Id="%ENID%"/>
+                  <Enumeration Text="normal aktiv (1 - gesperrt / 0 - nicht gesperrt)" Value="1" Id="%ENID%" />
+                  <Enumeration Text="invertiert aktiv (0 - gesperrt / 1 - nicht gesperrt)" Value="2" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
               <!-- Internal, not used für display -->
               <ParameterType Id="%AID%_PT-InputConv" Name="InputConv" op:headerExport="enum">
                 <TypeRestriction Base="Value" SizeInBit="4">
@@ -144,7 +151,7 @@
               <ParameterType Id="%AID%_PT-InputConvInt" Name="InputConvInt" op:headerExport="base" op:headerName="InputConv">
                 <TypeRestriction Base="Value" SizeInBit="4">
                   <Enumeration Text="Wertintervall" Value="0" Id="%ENID%" />
-                  <Enumeration Text="Differenzintervall" Value="1" Id="%ENID%" />
+                  <Enumeration Text="Differenzintervall" Value="1" Id="%ENID%" /> 
                   <Enumeration Text="Hysterese" Value="2" Id="%ENID%" />
                   <Enumeration Text="Differenzhysterese" Value="3" Id="%ENID%" />
                   <Enumeration Text="Einzelwerte" Value="4" Id="%ENID%" />

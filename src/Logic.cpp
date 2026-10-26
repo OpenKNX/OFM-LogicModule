@@ -68,6 +68,28 @@ Logic::~Logic()
 {
 }
 
+const char* Logic::toString(PT_LogicDpt iDptIndex)
+{
+    switch (iDptIndex) {
+        case PT_LogicDpt::DPT_1:    return "1";
+        case PT_LogicDpt::DPT_2:    return "2";
+        case PT_LogicDpt::DPT_3:    return "3";
+        case PT_LogicDpt::DPT_5:    return "5";
+        case PT_LogicDpt::DPT_5001: return "5.001";
+        case PT_LogicDpt::DPT_6:    return "6";
+        case PT_LogicDpt::DPT_7:    return "7";
+        case PT_LogicDpt::DPT_8:    return "8";
+        case PT_LogicDpt::DPT_9:    return "9";
+        case PT_LogicDpt::DPT_12:   return "12";
+        case PT_LogicDpt::DPT_13:   return "13";
+        case PT_LogicDpt::DPT_14:   return "14";
+        case PT_LogicDpt::DPT_16:   return "16";
+        case PT_LogicDpt::DPT_17:   return "17";
+        case PT_LogicDpt::DPT_232:  return "232";
+        default:                    return "???";
+    }
+}
+
 LogicChannel *Logic::getChannel(uint8_t iChannelIndex)
 {
     return mChannel[iChannelIndex];
@@ -75,34 +97,31 @@ LogicChannel *Logic::getChannel(uint8_t iChannelIndex)
 
 void Logic::addKoLookup(uint16_t iKoNumber, uint8_t iChannelId, uint8_t iIOIndex)
 {
-    // first implementation, in future we use sorted insert
-    mKoLookup[mNumKoLookups].koNumber = iKoNumber;
-    mKoLookup[mNumKoLookups].channelIndex = iChannelId;
-    mKoLookup[mNumKoLookups].ioIndex = iIOIndex;
     if (mNumKoLookups < cCountKoLookups)
+    {
+        mKoLookup[mNumKoLookups].koNumber = iKoNumber;
+        mKoLookup[mNumKoLookups].channelIndex = iChannelId;
+        mKoLookup[mNumKoLookups].ioIndex = iIOIndex;
         mNumKoLookups++;
+    }
 }
 
 bool Logic::getKoLookup(uint16_t iKoNumber, sKoLookup **iKoLookup)
 {
-    sKoLookup *lIterator = *iKoLookup;
-    uint16_t lIterationCount = 0;
+    sKoLookup *lIterator;
     if (*iKoLookup == 0)
         lIterator = &mKoLookup[0];
     else
-        lIterator++;
-    while (lIterator->koNumber > 0 && lIterationCount < mNumKoLookups)
+        lIterator = *iKoLookup + 1;
+    sKoLookup *lEnd = &mKoLookup[mNumKoLookups];
+    while (lIterator < lEnd)
     {
-        lIterationCount++;
         if (lIterator->koNumber == iKoNumber)
         {
             *iKoLookup = lIterator;
             return true;
         }
-        else
-        {
-            lIterator++;
-        }
+        lIterator++;
     }
     return false;
 }
@@ -420,6 +439,7 @@ void Logic::setup()
 {
     randomSeed(analogRead(A0));
     sTimer.setup();
+    LogicFunction::setupFormulas();
 
     // Number of available channels is the minimum of configured and available channels
     // mNumChannels = MIN(ParamLOG_VisibleChannels, LOG_ChannelCount);

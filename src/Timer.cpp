@@ -50,23 +50,19 @@ bool Timer::loop()
 {
     bool lMinuteChanged = false;
 
-    // TODO Common Time: mTimeDelay=0 was set be Update from Bus
-    // TODO mTimeDelay == 0 will be reached after 49 days...
-    if (mTimeDelay == 0 || delayCheck(mTimeDelay, 1000))
+    if (mForceUpdate || delayCheck(mTimeDelay, 1000))
     {
-        // TODO Common Time: No special handling of set from bus, but try to detect missed second
-        // if time is set from bus, we have immediately to recalculate everything which is necessary
-        if (mTimeDelay == 0)
-            // external update
+        if (mForceUpdate)
+        {
+            mForceUpdate = false;
             mTimeDelay = millis();
+        }
         else
         {
             // regular running of internal clock
             mTimeDelay += 1000;
             mNow.tm_sec += 1;
             mktime(&mNow);
-
-            // TODO Common Time: check if time is expected
         }
         // always use current time from Common
         openknx.time.getLocalTime().toTm(mNow);

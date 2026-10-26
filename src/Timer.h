@@ -65,6 +65,7 @@ class Timer
     bool mIsSummertime;
     eTimeValid mTimeValid = tmInvalid;
     uint32_t mTimeDelay = 0;
+    bool mForceUpdate = true;
     bool mMinuteChanged = false;
     sTime mSunrise;
     sTime mSunset;

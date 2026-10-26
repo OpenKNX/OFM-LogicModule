@@ -250,8 +250,7 @@
                 <Parameter Id="%AID%_UP-%TT%%CC%061" Name="f%C%ORepeat" ParameterType="%AID%_PT-OnOffYesNo" Offset="1" BitOffset="2" Text="Ausgang wiederholt zyklisch" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%127" Name="f%C%OOutputFilter" ParameterType="%AID%_PT-OutputFilter" Offset="1" BitOffset="3" Text="Wiederholungsfilter" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%479" Name="f%C%OSendOnChange" ParameterType="%AID%_PT-SendOnChange" Offset="1" BitOffset="5" Text="Sendeverhalten für Ausgang" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%526" Name="f%C%OLockEnabled" ParameterType="%AID%_PT-OnOffYesNo" Offset="1" BitOffset="6" Text="Sperre aktivieren" Value="0" />
-                <!-- 1 Bit free -->
+                <Parameter Id="%AID%_UP-%TT%%CC%526" Name="f%C%OLockEnabled" ParameterType="%AID%_PT-InputEnableLock" Offset="1" BitOffset="6" Text="Sperre aktivieren" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%064" Name="f%C%ODpt" ParameterType="%AID%_PT-OutputDpt" Offset="2" BitOffset="0" Text="DPT für Ausgang" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%527" Name="f%C%OLockTriggerLock" ParameterType="%AID%_PT-LockTrigger" Offset="3" BitOffset="0" Text="Beim Sperren" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%528" Name="f%C%OLockTriggerUnlock" ParameterType="%AID%_PT-LockTrigger" Offset="3" BitOffset="2" Text="Beim Entsperren" Value="0" />
@@ -1478,7 +1477,7 @@
                             <ParameterSeparator Id="%AID%_PS-nnn" Text="Sperre" UIHint="Headline" />
                             <ParameterRefRef RefId="%AID%_UP-%TT%%CC%526_R-%TT%%CC%52601" IndentLevel="1" HelpContext="%DOC%" />
                             <choose ParamRefId="%AID%_UP-%TT%%CC%526_R-%TT%%CC%52601" >
-                              <when test="1">
+                              <when test=">0">
                                 <ParameterBlock Id="%AID%_PB-nnn" Inline="true" Layout="Grid">
                                   <Rows>
                                     <Row Id="%AID%_PB-nnn_R-1" />

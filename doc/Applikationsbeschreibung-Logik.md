@@ -80,6 +80,12 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 
 Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer das Gesamtdokument lesen muss, um Neuerungen zu erfahren.
 
+25.10.2026: Firmware 4.5, Applikation 4.5:
+
+* NEU: Der interne Eingang für die Sperre eines Kanals kann jetzt auch (wie alle internen Eingänge) normal und invertiert aktiv geschaltet werden.
+* FIX: Wenn ein Eingang vorbelegt wurde mit EIN- oder AUS-Signal, wurde der zugehörige Wert (1 bzw. 0) als Eingangswert in Formeln verwendet, obwohl nur 0 erwartungskonform ist. Das ist jetzt korrigiert.
+* FIX: Wenn ein Eingang vorbelegt wurde mit EIN- oder AUS-Signal, und dieser Eingang über interne KO-Verknüpfung mit einem anderen Eingang verknüpft war, wurde der KO-Wert des verknüpften Eingangs mit 1 bzw. 0 überschrieben, auch wenn er einen gespeicherten und wiederhergestellten Wert tragen sollte. Das ist jetzt korrigiert.
+
 25.08.2026: Firmware 4.4.2, Applikation 4.4:
 
 * FIX: Das Verhalten vom "Zyklisch senden" wurde leicht angepasst: Wenn während eines Zyklus ein erneutes Telegramm ankommt, dass nicht durch den Wiederholungsfilter gefiltert wurde, wird das Telegramm sofort gesendet.

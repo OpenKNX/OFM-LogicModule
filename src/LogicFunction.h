@@ -20,6 +20,7 @@ class LogicFunction
     static double e2;
     static double out;
     static char sFormulaBuffer[100];
+    static te_expr *sCompiledFormula[30];
     // bind variables and functions to parser
     static const uint8_t sVarsSize;
     static te_variable sVars[];
@@ -113,6 +114,7 @@ class LogicFunction
     static LogicValue nativeAbsoluteE2(uint8_t _channelIndex, PT_LogicDpt DptE1, LogicValue E1, PT_LogicDpt DptE2, LogicValue E2, PT_LogicDpt *DptOut, LogicValue iOld);
 
   public:
+    static void setupFormulas();
     static LogicValue callFunction(uint8_t _channelIndex, uint8_t iId, PT_LogicDpt iDptE1, LogicValue iE1, PT_LogicDpt iDptE2, LogicValue iE2, PT_LogicDpt *cDptOut, LogicValue iOld);
     static void processFunctionPropertyFormula(std::string iLogPrefix, bool iCalculate, uint8_t *iData, uint8_t *eResultData, uint8_t &eResultLength);
     static void handleFunctionPropertyCheckFormula(uint8_t *iData, uint8_t *eResultData, uint8_t &eResultLength);
