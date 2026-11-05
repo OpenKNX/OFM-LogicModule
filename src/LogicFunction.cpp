@@ -604,6 +604,11 @@ LogicValue LogicFunction::callUserFormula(uint8_t iFormulaIndex, double iE1, dou
     double lResult = 0;
     bool lFailed = false;
 
+    // Preserve caller context for nested B-formula calls.
+    double lPreviousE1 = e1;
+    double lPreviousE2 = e2;
+    double lPreviousOut = out;
+
     sRecursionCounter++;
     if (sRecursionCounter <= NUM_RECURSION_DEPTH)
     {
@@ -628,6 +633,12 @@ LogicValue LogicFunction::callUserFormula(uint8_t iFormulaIndex, double iE1, dou
         lFailed = true;
     }
     sRecursionCounter--;
+
+    // Restore the variables of the caller after a nested formula call.
+    e1 = lPreviousE1;
+    e2 = lPreviousE2;
+    out = lPreviousOut;
+
     if (lFailed)
         return LogicValue(NAN);
     else
