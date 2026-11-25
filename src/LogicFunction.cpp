@@ -384,6 +384,11 @@ double LogicFunction::myRound(double iValue, double iPrecision)
 
 double LogicFunction::myRnd(double iLower, double iUpper)
 {
+    static bool randomSeedCalled = false;
+    if (!randomSeedCalled) {
+        randomSeed(micros());
+        randomSeedCalled = true;
+    }
     if ((long)iUpper >= 0x7FFFFFFF) 
         return iLower;
     return random((long)iLower, (long)iUpper + 1); 

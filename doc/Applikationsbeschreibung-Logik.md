@@ -80,6 +80,10 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 
 Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer das Gesamtdokument lesen muss, um Neuerungen zu erfahren.
 
+25.11.2026: Firmware 4.4.3, Applikation 4.4:
+
+* HOTFIX: Die Verwendung des Hardware-Pins A0 im Logikmodul hatte Seiteneffekte auf dem RP2040 und ESP32. Das Logikmodul ist jetzt wieder Hardware-Frei.
+
 17.07.2026: Firmware 4.4.1, Applikation 4.4:
 
 * NEU: In Benutzerformeln kann jetzt eine Zufallsfunktion genutzt werden, siehe [Funktionen](#funktionen)

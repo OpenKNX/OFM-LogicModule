@@ -418,7 +418,6 @@ void Logic::debug()
 
 void Logic::setup()
 {
-    randomSeed(analogRead(A0));
     sTimer.setup();
 
     // Number of available channels is the minimum of configured and available channels
