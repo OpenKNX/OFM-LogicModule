@@ -95,4 +95,5 @@ Folgende Funktionen sind verfügbar:
 * 'atan(x)' - Arcustangens
 
 * 'nan()' - Not-A-Number (liefert ungültigen Funktionswert)
+* 'rnd(x,y)' - Liefert eine ganzzahlige Zufallszahl im Intervall [x,y]. rnd(1,10) also Zufallszahlen von 1 bis 10 (einschließlich).
 

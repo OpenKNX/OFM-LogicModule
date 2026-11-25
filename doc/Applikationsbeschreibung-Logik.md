@@ -80,6 +80,10 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 
 Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer das Gesamtdokument lesen muss, um Neuerungen zu erfahren.
 
+25.11.2026: Firmware 4.5.1, Applikation 4.5:
+
+* HOTFIX: Die Verwendung des Hardware-Pins A0 im Logikmodul hatte Seiteneffekte auf dem RP2040 und ESP32. Das Logikmodul ist jetzt wieder Hardware-Frei.
+
 25.10.2026: Firmware 4.5, Applikation 4.5:
 
 * NEU: Der interne Eingang für die Sperre eines Kanals kann jetzt auch (wie alle internen Eingänge) normal und invertiert aktiv geschaltet werden.

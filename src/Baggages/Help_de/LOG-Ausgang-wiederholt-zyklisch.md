@@ -10,3 +10,7 @@ Man kann natürlich auch nur das EIN- oder das AUS-Signal wiederholen lassen.
 
 In dem oben dargestellten Bildschirmausschnitt würde das EIN-Signal alle 15 Minuten wiederholt werden, das AUS-Signal jede Stunde.
 
+Jedes Telegramm, dass durch den Wiederholungsfilter gelangt, wird sofort gesendet und stößt den Wiederholungszyklus an, sofern dieser definiert ist - getrennt betrachtet für EIN und AUS. Falls bereits ein Zyklus läuft, wird dieser zurückgesetzt, da ja gerade ein Telegramm gesendet wurde.
+
+Falls die sofortige Aussendung während eines Zyklus unerwünscht ist, kann man das mit dem Wiederholungsfilter verhindern.
+

@@ -438,7 +438,6 @@ void Logic::debug()
 
 void Logic::setup()
 {
-    randomSeed(analogRead(A0));
     sTimer.setup();
     LogicFunction::setupFormulas();
 
